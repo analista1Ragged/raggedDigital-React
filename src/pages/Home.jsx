@@ -2,7 +2,7 @@ import "./Home.css"
 
 
 function Home() {
-    return <header className="banner">
+    return <header className="img">
         <img src={require("../assets/Images/inicio.png")} alt='Org' />
     </header>
 }

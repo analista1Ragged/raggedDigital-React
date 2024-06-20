@@ -2,7 +2,7 @@ import "./paginaMtto.css"
 
 
 function PaginaMtto() {
-    return <header className="banner">
+    return <header className="img">
         <img src={require("../assets/Images/paginaMtto.png")} alt='Org' />
     </header>
 }
