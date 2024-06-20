@@ -29,12 +29,22 @@ function Navbar({ visible, show }) {
     }
   };
 
+  const handleSidebarToggle = () => {
+    const newVisibility = !visible;
+    show(newVisibility);
+    setOpenMenu(null); // Cerrar todos los menús al ocultar la barra lateral
+  };
+
+  const handleHomeClick = () => {
+    setOpenMenu(null); // Contraer todos los submenús al hacer clic en Inicio
+  };
+
   return (
     <>
       <div className="mobile-nav">
         <button
           className="mobile-nav-btn"
-          onClick={() => show(!visible)}
+          onClick={handleSidebarToggle}
         >
           <FaBars size={24} />
         </button>
@@ -43,7 +53,7 @@ function Navbar({ visible, show }) {
         <button
           type="button"
           className="nav-btn"
-          onClick={() => show(!visible)}
+          onClick={handleSidebarToggle}
         >
           {!visible ? <FaAngleRight size={30} /> : <FaAngleLeft size={30} />}
         </button>
@@ -56,7 +66,7 @@ function Navbar({ visible, show }) {
           </NavLink>
           <div className="links nav-top">
             <div className="nav-item">
-              <NavLink to="/Home" className="nav-link">
+              <NavLink to="/Home" className="nav-link" onClick={handleHomeClick}>
                 <FaHome size={ICON_SIZE} />
                 <span>Inicio</span>
                 <span style={{ width: ICON_SIZE, display: 'inline-block' }}>&nbsp;</span>
@@ -96,7 +106,7 @@ function Navbar({ visible, show }) {
                 </ul>
               )}
             </div>
-			<div className="nav-item">
+            <div className="nav-item">
               <div className="nav-link" onClick={() => toggleMenu('contabilidad')}>
                 <FaCalculator size={ICON_SIZE} />
                 <span>Contabilidad</span>
@@ -108,7 +118,7 @@ function Navbar({ visible, show }) {
                     <NavLink to="/contabilidad/Planos" className="nav-link">Planos</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/contabilidad/Bancos" className="nav-link">Bancos	</NavLink>
+                    <NavLink to="/contabilidad/Bancos" className="nav-link">Bancos</NavLink>
                   </li>
                 </ul>
               )}
@@ -133,3 +143,4 @@ function Navbar({ visible, show }) {
 }
 
 export default Navbar;
+

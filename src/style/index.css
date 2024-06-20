@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
 
-*{
+* {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
 	font-family: 'Open Sans', sans-serif;
 }
 
-.App{
+.App {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 	height: 100vh;
 }
 
-.page{
+.page {
 	flex-basis: 100%;
 	display: flex;
 	justify-content: center;
@@ -22,20 +22,19 @@
 	transition: margin-left 1s;
 }
 
-.page-with-navbar{
-	margin-left: 15%;
+.page-with-navbar {
+	margin-left: 15%; /* Ancho de la barra lateral */
 }
 
-@media only screen and (max-width: 768px){
-	.page-with-navbar{
+@media only screen and (max-width: 768px) {
+	.page-with-navbar {
 		width: 100%;
 		margin-left: 0;
 	}
-
 }
 
 .navbar {
-	width: 250px;
+	width: 250px; /* Ancho inicial de la barra lateral */
 	height: 100vh;
 	background-color: #f4f4f4;
 	position: fixed;
@@ -43,18 +42,19 @@
 	top: 0;
 	padding: 20px;
 	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  }
+}
 
-  .nav-top .nav-item {
-	margin: 20px 0;
-  }
+.nav-top .nav-item {
+	margin: 20px 0; /* Espaciado entre elementos del menú */
+}
 
-  .nav-link {
+.nav-link {
 	text-decoration: none;
-	/*font-weight: bold;*/
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	cursor: pointer;
-  }
+	/* Añade estilos adicionales según sea necesario */
+}
+
 
