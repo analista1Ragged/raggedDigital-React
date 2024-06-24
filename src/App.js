@@ -6,6 +6,11 @@ import Home from './pages/Home';
 import ReportePB from './pages/reportePB';
 import PaginaMtto from './pages/paginaMtto';
 import Login from "./components/login/login";
+import Bancos from './pages/Bancos';
+import TicketTable from './pages/VerCapsulas';
+
+//export const urlApi = "http://localhost:3001/mahaloApi/api"
+
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -51,6 +56,7 @@ function App() {
         } />
         <Route path='/ecommerce/VerCapsulas' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <TicketTable />
           </div>
         } />
         <Route path='/contabilidad' element={
@@ -67,7 +73,14 @@ function App() {
             <PaginaMtto />
           </div>
         } />
+		    <Route path='/Bancos' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <Bancos />
+          </div>
+        } />
       </Routes>
+      
+
     </div>
   );
 }

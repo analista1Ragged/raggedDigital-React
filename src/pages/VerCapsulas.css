@@ -1,0 +1,43 @@
+.App {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .App-header {
+    background-color: #282c34;
+    padding: 20px;
+    color: white;
+    text-align: center;
+  }
+  
+  .ticket-table {
+    margin: 20px auto;
+    max-width: 800px;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .ticket-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .ticket-table th,
+  .ticket-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .ticket-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .ticket-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .ticket-table tr:hover {
+    background-color: #ddd;
+  }
+  

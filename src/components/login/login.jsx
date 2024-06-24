@@ -26,7 +26,7 @@ const Login = (props) => {
         <img src={require("../../assets/Images/header.jpg")} alt='TiendaRagged' />
         </div>
 
-        <form onSubmit={manejarEnvio} >
+        <form >
             <div className="form-container">
                 <h2>¡ Bienvenido a Ragged Digital !</h2>
                 <CampoTexto
