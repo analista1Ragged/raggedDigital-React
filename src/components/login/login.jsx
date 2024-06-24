@@ -3,11 +3,12 @@ import axios from "axios";
 import "./login.css";
 import CampoTexto from "../CampoTexto";
 import Boton from "../Boton/Boton";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = (props) => {
     const [usuario, actualizarNombre] = useState("");
     const [contrasena, actualizarContrasena] = useState("");
+    const navigate = useNavigate();
 
     const manejarEnvio = async (e) => {
         e.preventDefault();
@@ -18,7 +19,8 @@ const Login = (props) => {
             });
             if (response.data.message === "success") {
                 alert("Login exitoso");
-                <Route path="/Home" element={<Navigate to="/Home" />} />
+                
+                navigate("/Home"); // Redirige a la página de inicio
             }
         } catch (error) {
             console.error("Error en el login:", error);
