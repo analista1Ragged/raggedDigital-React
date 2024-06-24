@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import ReportePB from './pages/reportePB';
 import PaginaMtto from './pages/paginaMtto';
 import Login from "./components/login/login";
+import Test from "./pages/test";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -16,6 +17,7 @@ function App() {
       {location.pathname !== '/Login' && <Navbar visible={navVisible} show={showNavbar} />}
       <Routes>
         <Route path="/" element={<Navigate to="/Login" />} />
+        
         <Route path='/Login' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <Login />
@@ -64,7 +66,7 @@ function App() {
         } />
         <Route path='/Settings' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <PaginaMtto />
+            <Test />
           </div>
         } />
       </Routes>
