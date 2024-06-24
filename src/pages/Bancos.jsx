@@ -9,12 +9,8 @@ const Bancos = () => {
         <form> 
         <h2>Generar planos por banco.</h2>
             
-            <ListaOpciones
-
-            />
-            <AdjuntarArchivo
-                
-            />
+            <ListaOpciones/>
+            <AdjuntarArchivo/>
             <Boton>
                 Generar paquete CSV
             </Boton>

@@ -30,13 +30,6 @@ const Login = (props) => {
             <div className="form-container">
                 <h2>¡ Bienvenido a Ragged Digital !</h2>
                 <CampoTexto
-                    titulo="Usuario"
-                    placeholder="Ingresar Usuario:"
-                    required
-                    valor={usuario}
-                    actualizarValor={actualizarNombre}
-                />
-                <CampoTexto
                     titulo="Contraseña"
                     placeholder="Ingresar Contraseña:"
                     required
