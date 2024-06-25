@@ -8,6 +8,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 const TicketTable = ({/* tickets */}) => {
   
   return (
+    <section>
     <div className="ticket-table">
       <h2>
         <a href="/home" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>
@@ -46,6 +47,7 @@ const TicketTable = ({/* tickets */}) => {
         </tbody>
       </table>
     </div>
+    </section>
   );
 };
 
