@@ -16,7 +16,7 @@ const TicketTable = ({/* tickets */}) => {
       </h2>
       <FormBuscar/>
       <table>
-        <thead>
+        <thead>n
           <tr className="color">
             <th>#</th>
             <th>Referencia</th>
