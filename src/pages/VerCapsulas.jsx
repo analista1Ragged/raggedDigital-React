@@ -3,6 +3,7 @@ import "./VerCapsulas.css"
 import FilterRow from "../components/FilterRow/FilterRow"
 import FormBuscar from "../components/FormBuscar/FormBuscar"
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Menu3Botones from "../components/Menu3Botones/Menu3Botones"
 
 
 const TicketTable = ({/* tickets */}) => {
@@ -15,6 +16,7 @@ const TicketTable = ({/* tickets */}) => {
         {'  '}
         Buscar Productos
       </h2>
+      <Menu3Botones/>
       <FormBuscar/>
       <table>
         <thead>n
@@ -43,7 +45,7 @@ const TicketTable = ({/* tickets */}) => {
               <td>BODY TIRAS ESCOTE ESPALDA</td>
               <td>BODY</td>
               <td>SIN CARGAR</td>
-            </tr>               
+            </tr>                 
         </tbody>
       </table>
     </div>
