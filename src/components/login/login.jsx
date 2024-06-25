@@ -16,6 +16,7 @@ const Login = (props) => {
             const response = await axios.post('http://127.0.0.1:5000/logon', {
                 usuario: usuario,
                 contrasena: contrasena
+                
             });
             if (response.data.message === "success") {
                 alert("Login exitoso");
@@ -23,6 +24,8 @@ const Login = (props) => {
                 navigate("/Home"); // Redirige a la página de inicio
             }
         } catch (error) {
+            alert("Usuario y/o contraseña incorrectos");
+            //alert("error");
             console.error("Error en el login:", error);
         }
     };
