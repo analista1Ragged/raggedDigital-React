@@ -11,7 +11,7 @@ const TicketTable = ({/* tickets */}) => {
     <section>
     <div className="ticket-table">
       <h2>
-        <a href="/home" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>
+        <a href="/home" className="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>
         {'  '}
         Buscar Productos
       </h2>
