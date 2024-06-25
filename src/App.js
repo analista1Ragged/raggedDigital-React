@@ -21,6 +21,7 @@ function App() {
       {location.pathname !== '/Login' && <Navbar visible={navVisible} show={showNavbar} />}
       <Routes>
         <Route path="/" element={<Navigate to="/Login" />} />
+        
         <Route path='/Login' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <Login />

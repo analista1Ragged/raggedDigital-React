@@ -4,23 +4,23 @@ import "./login.css";
 import CampoTexto from "../CampoTexto";
 import Boton from "../Boton/Boton";
 import { useNavigate } from "react-router-dom";
- 
+
 const Login = (props) => {
     const [usuario, actualizarNombre] = useState("");
     const [contrasena, actualizarContrasena] = useState("");
     const navigate = useNavigate();
- 
+
     const manejarEnvio = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('http://127.0.0.1:5000/logon', {
                 usuario: usuario,
                 contrasena: contrasena
-               
+                
             });
             if (response.data.message === "success") {
                 alert("Login exitoso");
-               
+                
                 navigate("/Home"); // Redirige a la página de inicio
             }
         } catch (error) {
@@ -29,7 +29,7 @@ const Login = (props) => {
             console.error("Error en el login:", error);
         }
     };
- 
+
     return (
         <section className="formulario">
             <div className="image-container">
@@ -60,5 +60,5 @@ const Login = (props) => {
         </section>
     );
 };
- 
+
 export default Login;
