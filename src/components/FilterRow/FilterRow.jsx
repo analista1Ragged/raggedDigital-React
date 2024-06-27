@@ -5,7 +5,7 @@ const FilterRow = () => {
 
   return (
     <tr id="filterRow">
-      <th scope="col">&nbsp;</th>
+      <th scope="col">#</th>
       {columns.map((_, i) => (
         <th scope="col" key={i}>
           <input

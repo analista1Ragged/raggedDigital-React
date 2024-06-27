@@ -4,12 +4,11 @@ import "./FormBuscar.css";
 import BuscarButton from "../BotonBuscar/BotonBuscar";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-const FormBuscar = () => {
-  // Estado para los datos de las cápsulas y el valor de referencia
+const FormBuscar = ({ setData }) => {
   const [miData, setMiData] = useState([]);
   const [ref, setRef] = useState('');
+  const [selectedValue, setSelectedValue] = useState('');
 
-  // Función para buscar los datos al cargar el componente
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,17 +26,39 @@ const FormBuscar = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    // Log the data to the console whenever miData changes
-    console.log('miData:', miData);
-    miData.map((fila, index) => (
-      console.log(index,fila[0],fila[1])
-    ))
-  }, [miData]);
+  const handleSelectChange = (e) => {
+    setSelectedValue(e.target.value);
+  };
+
+  const sanitizeJSON = (str) => {
+    // Reemplaza 'NaN' con 'null' para que sea JSON válido
+    return str.replace(/NaN/g, 'null');
+  };
+
+  const fetchDataForSelectedValue = async () => {
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/TraerLista', {
+        marca: selectedValue,
+        ref:ref,
+      });
+      console.log(response.data);
+
+      const sanitizedData = sanitizeJSON(response.data);
+      const parsedData = JSON.parse(sanitizedData);
+
+      if (Array.isArray(parsedData) && parsedData.every(item => Array.isArray(item))) {
+        setData(parsedData);
+      } else {
+        console.error('Expected a list of lists but received:', parsedData);
+        setData([]);
+      }
+    } catch (error) {
+      console.error("Error al traer los datos:", error);
+    }
+  };
 
   const BuscarClick = () => {
-    // Lógica para manejar la búsqueda
-    console.log('Buscar clickeado');
+    fetchDataForSelectedValue();
   };
 
   return (
@@ -45,7 +66,7 @@ const FormBuscar = () => {
       <div className="row">
         <div className="col">
           <label htmlFor="marca">Capsula</label>
-          <select name="marca" className="form-control" required>
+          <select name="marca" className="form-control" required onChange={handleSelectChange}>
             <option value="">Selecciona una Capsula</option>
             {miData.map((fila, index) => (
               <option key={index} value={fila[1]}>
@@ -67,7 +88,7 @@ const FormBuscar = () => {
         </div>
         <div className="col" style={{ display: 'flex' }}>
           <div>
-            <BuscarButton />
+            <BuscarButton onClick={BuscarClick} />
           </div>
         </div>
       </div>

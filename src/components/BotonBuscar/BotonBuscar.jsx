@@ -1,5 +1,5 @@
 import React from 'react';
-import "./BotonBuscar.css"
+import "./BotonBuscar.css";
 
 const BuscarButton = ({ onClick }) => {
   return (
