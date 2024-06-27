@@ -1,46 +1,49 @@
-import React, { useState } from 'react';
-import Boton from "../Boton/Boton"
+import React, { useState, useRef } from 'react';
+import Boton from "../Boton/Boton";
 
 const AdjuntarArchivo = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [fileName, setFileName] = useState("Seleccionar archivo...");
+  const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (selectedFile) {
-      // Aquí puedes manejar el archivo como quieras (por ejemplo, subirlo a un servidor)
-      console.log("Archivo seleccionado:", selectedFile);
+    const file = event.target.files[0];
+    if (file) {
+      setFileName(file.name);
     } else {
-      console.log("No se ha seleccionado ningún archivo");
+      setFileName("Seleccionar archivo...");
     }
   };
 
+  
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
   return (
-    
-    <div className="lista-opciones">
-      <label >Seleccionar archivo</label>
-      <form className="formulario">
-        
-        <input 
-          type="file" 
-          onChange={handleFileChange} 
-          style={{ display: 'none' }} 
-          id="fileInput"
+    <form className="custom-form d-flex align-items-center">
+      <div className="custom-file d-flex align-items-center">
+        <input
+          ref={fileInputRef}
+          type="file"
+          className="custom-file-input"
+          id="customFile"
+          name="archivo"
+          style={{ display: 'none' }}
+          accept=".xls, .xlsx"
+          onChange={handleFileChange}
         />
-        <div>
-        <label className="lista-opciones" htmlFor="fileInput" style={{ cursor: 'pointer' }}>
-        <Boton>
-            Adjuntar Archivo
-        </Boton>
+        <label className="custom-file-label" htmlFor="customFile">
+          {fileName}
         </label>
-        {selectedFile && <p>Archivo seleccionado: {selectedFile.name}</p>}
-        </div>
-      </form>
-    </div>
+      </div>
+      <Boton onClick={handleButtonClick}>
+        Seleccionar archivo
+      </Boton>
+    </form>
   );
 };
 
 export default AdjuntarArchivo;
+
+

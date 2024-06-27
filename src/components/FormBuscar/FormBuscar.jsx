@@ -41,37 +41,39 @@ const FormBuscar = () => {
   };
 
   return (
-    <form id="formBuscar" className="mb-3 mt-3" autoComplete="off">
-      <div className="row">
-        <div className="col">
-          <label htmlFor="marca">Capsula</label>
-          <select name="marca" className="form-control" required>
-            <option value="">Selecciona una Capsula</option>
-            {miData.map((fila, index) => (
-              <option key={index} value={fila[1]}>
-                {fila[0]}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="col">
-          <label htmlFor="nombre">Referencia (opcional)</label>
-          <input
-            type="text"
-            name="ref"
-            className="form-control"
-            placeholder="PF21120055,PF11511297,PF21340007..."
-            value={ref}
-            onChange={(e) => setRef(e.target.value)}
-          />
-        </div>
-        <div className="col" style={{ display: 'flex' }}>
-          <div>
-            <BuscarButton />
-          </div>
-        </div>
+<form id="formBuscar" className="mb-3 mt-3" autoComplete="off">
+  <div className="row justify-content-between">
+    <div className="col-12 col-md-4">
+      <label htmlFor="marca">Capsula</label>
+      <select name="marca" className="form-control" required>
+        <option value="">Selecciona una Capsula</option>
+        {miData.map((fila, index) => (
+          <option key={index} value={fila[1]}>
+            {fila[0]}
+          </option>
+        ))}
+      </select>
+    </div>
+    <div className="col-12 col-md-4">
+      <label htmlFor="nombre">Referencia (opcional)</label>
+      <input
+        type="text"
+        name="ref"
+        className="form-control"
+        placeholder="PF21120055,PF11511297,PF21340007..."
+        value={ref}
+        onChange={(e) => setRef(e.target.value)}
+      />
+    </div>
+    <div className="col-12 col-md-2 d-flex align-items-end justify-content-center">
+      <div>
+        <BuscarButton />
       </div>
-    </form>
+    </div>
+  </div>
+</form>
+
+
   );
 };
 

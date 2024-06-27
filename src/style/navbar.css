@@ -7,7 +7,7 @@ nav {
 	justify-content: space-between;
 	width: 15%;
 	min-height: 100vh;
-	background-color: #343a40;
+	background-color:  #373738 ;
 	padding: 2rem 1rem 1rem 1rem;
 	transition: transform 1s;
 }
@@ -21,7 +21,7 @@ nav {
 	position: absolute;
 	transform: translateX(38px);
 	top: 20px;
-	right: 0;
+	right: 10px; /*mueve la posicion del boton barra hacia la izquierda o derecha*/
 	width: 40px;
 	height: 60px;
 	border-top-right-radius: 5px;
@@ -40,7 +40,7 @@ nav {
 
 .logo {
 	display: block;
-	width: 100px;
+	width: 150px;
 	margin: auto;
 	background: transparent;
 }
@@ -71,7 +71,7 @@ nav {
 }
 
 .nav-top {
-	margin-top: 10rem;
+	margin-top: 3rem; /* Margin parte superior opciones del menu */
 }
 
 .mobile-nav {

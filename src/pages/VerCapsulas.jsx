@@ -19,7 +19,7 @@ const TicketTable = ({/* tickets */}) => {
       <Menu3Botones/>
       <FormBuscar/>
       <table>
-        <thead>n
+        <thead>
           <tr className="color">
             <th>#</th>
             <th>Referencia</th>

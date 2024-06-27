@@ -1,6 +1,5 @@
 .App {
   font-family: 'Open Sans', sans-serif;
-    padding: 20px;
   }
   
   .App-header {
@@ -12,10 +11,10 @@
   
   .ticket-table {
     margin: 20px auto;
-    max-width: 90%;
+    max-width: 95%;
     border-collapse: collapse;
     width: 100%;
-    text-align: center;
+    /*text-align: center;*/
   }
 
   .color{
