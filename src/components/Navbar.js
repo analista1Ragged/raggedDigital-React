@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   FaAngleRight,
-  FaAngleLeft, 
-  FaChartBar, 
-  FaThLarge, 
-  FaShoppingCart, 
+  FaAngleLeft,
+  FaChartBar,
+  FaShoppingCart,
   FaCog,
   FaSignOutAlt,
   FaBars,
@@ -20,6 +19,7 @@ const ICON_SIZE = 20;
 
 function Navbar({ visible, show }) {
   const [openMenu, setOpenMenu] = useState(null);
+  const navRef = useRef();
 
   const toggleMenu = (menu) => {
     if (openMenu === menu) {
@@ -39,6 +39,20 @@ function Navbar({ visible, show }) {
     setOpenMenu(null); // Contraer todos los submenús al hacer clic en Inicio
   };
 
+  const handleClickOutside = (event) => {
+    if (navRef.current && !navRef.current.contains(event.target)) {
+      show(false);
+      setOpenMenu(null); // Cerrar todos los menús
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       <div className="mobile-nav">
@@ -49,7 +63,7 @@ function Navbar({ visible, show }) {
           <FaBars size={24} />
         </button>
       </div>
-      <nav className={!visible ? 'navbar' : ''}>
+      <nav ref={navRef} className={!visible ? 'navbar' : ''}>
         <button
           type="button"
           className="nav-btn"
@@ -143,4 +157,5 @@ function Navbar({ visible, show }) {
 }
 
 export default Navbar;
+
 

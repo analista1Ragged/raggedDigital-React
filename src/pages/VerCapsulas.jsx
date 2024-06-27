@@ -20,6 +20,29 @@ const transformData = (list) => {
 
 const TicketTable = () => {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    referencia: '',
+    descripcion: '',
+    categoria: '',
+    estado: ''
+  });
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters({
+      ...filters,
+      [name]: value
+    });
+  };
+
+  const filteredData = data.filter(item => {
+    return (
+      item.referencia.toLowerCase().includes(filters.referencia.toLowerCase()) &&
+      item.descripcion.toLowerCase().includes(filters.descripcion.toLowerCase()) &&
+      item.categoria.toLowerCase().includes(filters.categoria.toLowerCase()) &&
+      item.estado.toLowerCase().includes(filters.estado.toLowerCase())
+    );
+  });
 
   return (
     <section>
@@ -34,16 +57,16 @@ const TicketTable = () => {
         <table>
           <thead>
             <tr className="color">
-              <th></th>
+              <th>Item</th>
               <th>Referencia</th>
               <th>Descripción</th>
               <th>Categoria</th>
               <th>Estado</th>
             </tr>
-            <FilterRow />
+            <FilterRow filters={filters} handleFilterChange={handleFilterChange} />
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {filteredData.map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{item.referencia}</td>
@@ -60,3 +83,4 @@ const TicketTable = () => {
 };
 
 export default TicketTable;
+
