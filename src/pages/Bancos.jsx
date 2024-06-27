@@ -5,12 +5,16 @@ import Boton from "../components/Boton/Boton"
 const Bancos = () => {
 
     return <section className="formulario">
-            
-        <form> 
-        <h2>Generar planos por banco.</h2>
-            
-            <ListaOpciones/>
-            <AdjuntarArchivo/>
+        <form>
+            <h2>Generar planos por banco.</h2>
+            <AdjuntarArchivo
+
+            />
+            <ListaOpciones
+                titulo="Seleccionar archivo"
+                placeholder="Seleccionar archivo"
+                required
+            />
             <Boton>
                 Generar paquete CSV
             </Boton>

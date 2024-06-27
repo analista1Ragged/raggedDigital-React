@@ -8,17 +8,21 @@ import PaginaMtto from './pages/paginaMtto';
 import Login from "./components/login/login";
 import Bancos from './pages/Bancos';
 import TicketTable from './pages/VerCapsulas';
-
-//export const urlApi = "http://localhost:3001/mahaloApi/api"
-
+import Footer from './components/Footer/Footer';
+import Layout from './pages/Layout';
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
   const location = useLocation();
 
+  // Función para verificar si se debe mostrar el navbar
+  const shouldShowNavbar = () => {
+    return location.pathname !== '/Login';
+  };
+
   return (
     <div className="App">
-      {location.pathname !== '/Login' && <Navbar visible={navVisible} show={showNavbar} />}
+      {shouldShowNavbar() && <Navbar visible={navVisible} show={showNavbar} />}
       <Routes>
         <Route path="/" element={<Navigate to="/Login" />} />
         
@@ -69,19 +73,23 @@ function App() {
             <PaginaMtto />
           </div>
         } />
+        <Route path='/contabilidad/Bancos' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <Bancos />
+          </div>
+        } />
         <Route path='/Settings' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <PaginaMtto />
           </div>
         } />
-		    <Route path='/Bancos' element={
+        <Route path='/layout' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <Bancos />
+            <Layout />
           </div>
         } />
       </Routes>
-      
-
+      {shouldShowNavbar() && <Footer />}
     </div>
   );
 }
