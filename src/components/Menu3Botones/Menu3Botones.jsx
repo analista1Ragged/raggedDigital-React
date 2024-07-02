@@ -3,7 +3,7 @@ import { CloudUploadOutlined, MoreOutlined,CustomerServiceOutlined } from '@ant-
 import { FloatButton } from 'antd';
 import axios from 'axios';
 import Swal from 'sweetalert2';
- 
+
 const handleUpload = async (marca) => {
   Swal.fire({
     title: 'Subiendo productos...',
@@ -37,7 +37,7 @@ const handleUpload = async (marca) => {
     }
   });
 };
- 
+
 const subirPaso = async (step, marca) => {
   try {
     const response = await axios.post(`http://127.0.0.1:5000/subir/${step}`, { marca });
@@ -47,7 +47,7 @@ const subirPaso = async (step, marca) => {
     throw error;
   }
 };
- 
+
 const handleDownload = async () => {
   try {
     const response = await axios.get('http://127.0.0.1:5000/descargar-excel', { responseType: 'blob' });
@@ -68,7 +68,7 @@ const handleDownload = async () => {
     console.error('Error en la descarga:', error);
   }
 };
- 
+
 const Menu3Botones = ({ marca }) => (
   <>
     <div>
@@ -97,6 +97,15 @@ const Menu3Botones = ({ marca }) => (
             color: 'white',
           }}
           onClick={() => handleUpload(marca)} // Pasar marca a handleUpload
+        />
+        <FloatButton
+          icon={<CustomerServiceOutlined />}
+          title="Descargar Excel"
+          style={{
+            backgroundColor: '#f39c12', // Color for the download button
+            color: 'white',
+          }}
+          onClick={handleDownload} // Asignar la función de descarga al botón de descargar Excel
         />
       </FloatButton.Group>
     </div>

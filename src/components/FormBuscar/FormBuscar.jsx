@@ -5,7 +5,7 @@ import BuscarButton from "../BotonBuscar/BotonBuscar";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Select from 'react-select';
 
-const FormBuscar = ({ setData }) => {
+const FormBuscar = ({ setData, setSelectedMarca }) => {
   const [miData, setMiData] = useState([]);
   const [ref, setRef] = useState('');
   const [selectedValue, setSelectedValue] = useState('');
@@ -28,11 +28,12 @@ const FormBuscar = ({ setData }) => {
   }, []);
 
   const handleSelectChange = (e) => {
-    setSelectedValue(e.target.value);
+    const value = e.target.value;
+    setSelectedValue(value);
+    setSelectedMarca(value);
   };
 
   const sanitizeJSON = (str) => {
-    // Reemplaza 'NaN' con 'null' para que sea JSON válido
     return str.replace(/NaN/g, 'null');
   };
 
@@ -40,7 +41,7 @@ const FormBuscar = ({ setData }) => {
     try {
       const response = await axios.post('http://127.0.0.1:5000/TraerLista', {
         marca: selectedValue,
-        ref:ref,
+        ref: ref,
       });
       console.log(response.data);
 
@@ -63,39 +64,37 @@ const FormBuscar = ({ setData }) => {
   };
 
   return (
-<form id="formBuscar" className="mb-3 mt-3" autoComplete="off">
-  <div className="row justify-content-between">
-    <div className="col-12 col-md-4">
-      <label htmlFor="marca">Capsula</label>
-      <select name="marca" className="form-control" required onChange={handleSelectChange}>
-        <option value="">Selecciona una Capsula</option>
-        {miData.map((fila, index) => (
-          <option key={index} value={fila[1]}>
-            {fila[0]}
-          </option>
-        ))}
-      </select>
-    </div>
-    <div className="col-12 col-md-4">
-      <label htmlFor="nombre">Referencia (opcional)</label>
-      <input
-        type="text"
-        name="ref"
-        className="form-control"
-        placeholder="PF21120055,PF11511297,PF21340007..."
-        value={ref}
-        onChange={(e) => setRef(e.target.value)}
-      />
-    </div>
-    <div className="col-12 col-md-2 d-flex align-items-end justify-content-center">
-      <div>
-      <BuscarButton onClick={BuscarClick} />
+    <form id="formBuscar" className="mb-3 mt-3" autoComplete="off">
+      <div className="row justify-content-between">
+        <div className="col-12 col-md-4">
+          <label htmlFor="marca">Capsula</label>
+          <select name="marca" className="form-control" required onChange={handleSelectChange}>
+            <option value="">Selecciona una Capsula</option>
+            {miData.map((fila, index) => (
+              <option key={index} value={fila[1]}>
+                {fila[0]}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="col-12 col-md-4">
+          <label htmlFor="nombre">Referencia (opcional)</label>
+          <input
+            type="text"
+            name="ref"
+            className="form-control"
+            placeholder="PF21120055,PF11511297,PF21340007..."
+            value={ref}
+            onChange={(e) => setRef(e.target.value)}
+          />
+        </div>
+        <div className="col-12 col-md-2 d-flex align-items-end justify-content-center">
+          <div>
+            <BuscarButton onClick={BuscarClick} />
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</form>
-
-
+    </form>
   );
 };
 

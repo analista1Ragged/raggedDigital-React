@@ -15,5 +15,3 @@ const BuscarButton = ({ onClick }) => {
 };
 
 export default BuscarButton;
-//<select name="marca" className="form-control" required onChange={handleSelectChange}></select>
-//<BuscarButton onClick={BuscarClick} />

@@ -60,10 +60,10 @@
 
 /* Estilo para la sección de redes sociales */
 .social-media {
-  display: flex; /* Usa flexbox para el diseño */
-  justify-content: start; /* Alinea los elementos al inicio */
-  gap: 10px; /* Espacio entre los elementos */
-  margin-top: 10px; /* Espaciado superior */
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 /* Estilo para los iconos de redes sociales */
