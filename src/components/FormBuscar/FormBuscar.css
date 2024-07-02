@@ -45,7 +45,7 @@
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
-  border-radius: 20px;
+  border-radius: 5px; /*Este es el border radios de los campos buscar por letras*/
   transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 

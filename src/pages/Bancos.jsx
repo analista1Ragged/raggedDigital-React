@@ -6,7 +6,11 @@ const Bancos = () => {
 
     return <section className="formulario">
         <form>
-            <h2>Generar planos por banco.</h2>
+            <h2>
+                <a href="/home" className="left" title="Volver"><i className="bi bi-arrow-left-circle"></i></a>
+                 {'  '}
+                Generar planos por banco.
+            </h2>
             <AdjuntarArchivo
 
             />

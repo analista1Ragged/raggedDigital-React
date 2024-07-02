@@ -31,20 +31,15 @@ const AdjuntarArchivo = () => {
           accept=".xls, .xlsx"
           onChange={handleFileChange}
         />
-        <label className="custom-file-label" htmlFor="customFile">
+        <label className="custom-file-label" htmlFor="customFile" style={{ width: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginRight: '10px' }}>
           {fileName}
         </label>
+        <Boton onClick={handleButtonClick}>
+          Seleccionar archivo
+        </Boton>
       </div>
-      <Boton onClick={handleButtonClick}>
-        Seleccionar archivo
-      </Boton>
     </div>
   );
 };
 
 export default AdjuntarArchivo;
-
-
-
-
-

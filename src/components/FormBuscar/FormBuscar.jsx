@@ -4,6 +4,7 @@ import "./FormBuscar.css";
 import BuscarButton from "../BotonBuscar/BotonBuscar";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Select from 'react-select';
+import Swal from 'sweetalert2';
 
 const FormBuscar = ({ setData, setSelectedMarca }) => {
   const [miData, setMiData] = useState([]);
@@ -59,10 +60,29 @@ const FormBuscar = ({ setData, setSelectedMarca }) => {
     }
   };
 
-  const BuscarClick = () => {
-    fetchDataForSelectedValue();
-  };
+  const BuscarClick = async () => {
+    let timerInterval;
+    Swal.fire({
+      title: 'Cargando Datos...',
+      text: 'Por favor, espere mientras se cargan los datos.',
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const timer = Swal.getPopup().querySelector("b");
+        timerInterval = setInterval(() => {
+          timer.textContent = `${Swal.getTimerLeft()}`;
+        }, 100);
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false
+    });
 
+    try {
+      await fetchDataForSelectedValue();
+    } finally {
+      Swal.close();
+    }
+  };
   return (
     <form id="formBuscar" className="mb-3 mt-3" autoComplete="off">
       <div className="row justify-content-between">

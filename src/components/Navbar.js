@@ -15,12 +15,22 @@ import {
 import { NavLink } from "react-router-dom";
 import "../style/navbar.css";
 
+
 const ICON_SIZE = 20;
 
 function Navbar({ visible, show }) {
   const [openMenu, setOpenMenu] = useState(null);
   const navRef = useRef();
   const pageTopRef = useRef(); // Referencia al inicio de la página
+  //const history = useHistory();
+
+  const handleLogout = () => {
+    // Limpiar datos de sesión (localStorage, cookies, etc.)
+    localStorage.removeItem('authToken'); // Ejemplo para token de autenticación en localStorage
+
+    // Redireccionar a la página de login
+    //history.push('/login');
+  };
 
   const toggleMenu = (menu) => {
     if (openMenu === menu) {
@@ -58,6 +68,8 @@ function Navbar({ visible, show }) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+
 
   return (
     <>
@@ -151,7 +163,7 @@ function Navbar({ visible, show }) {
             <span>Settings</span>
             <span style={{ width: ICON_SIZE, display: 'inline-block' }}>&nbsp;</span>
           </NavLink>
-          <NavLink to="/Settings" className="nav-link">
+          <NavLink to="/CerrarSesion" className="nav-link" onClick={handleLogout}>
             <FaSignOutAlt size={ICON_SIZE} />
             <span>Logout</span>
             <span style={{ width: ICON_SIZE, display: 'inline-block' }}>&nbsp;</span>

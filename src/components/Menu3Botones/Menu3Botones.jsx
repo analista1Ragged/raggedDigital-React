@@ -98,15 +98,6 @@ const Menu3Botones = ({ marca }) => (
           }}
           onClick={() => handleUpload(marca)} // Pasar marca a handleUpload
         />
-        <FloatButton
-          icon={<CustomerServiceOutlined />}
-          title="Descargar Excel"
-          style={{
-            backgroundColor: '#f39c12', // Color for the download button
-            color: 'white',
-          }}
-          onClick={handleDownload} // Asignar la función de descarga al botón de descargar Excel
-        />
       </FloatButton.Group>
     </div>
   </>
