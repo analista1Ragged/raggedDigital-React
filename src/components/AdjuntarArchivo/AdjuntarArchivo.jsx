@@ -14,14 +14,12 @@ const AdjuntarArchivo = () => {
     }
   };
 
-  
-
   const handleButtonClick = () => {
-    fileInputRef.current.click();
+    fileInputRef.current.click(); // Hace clic en el input file para abrir el selector de archivos
   };
 
   return (
-    <form className="custom-form d-flex align-items-center">
+    <div className="custom-form d-flex align-items-center">
       <div className="custom-file d-flex align-items-center">
         <input
           ref={fileInputRef}
@@ -29,7 +27,7 @@ const AdjuntarArchivo = () => {
           className="custom-file-input"
           id="customFile"
           name="archivo"
-          style={{ display: 'none' }}
+          style={{ display: 'none' }} // Oculta visualmente el input file
           accept=".xls, .xlsx"
           onChange={handleFileChange}
         />
@@ -40,10 +38,13 @@ const AdjuntarArchivo = () => {
       <Boton onClick={handleButtonClick}>
         Seleccionar archivo
       </Boton>
-    </form>
+    </div>
   );
 };
 
 export default AdjuntarArchivo;
+
+
+
 
 
