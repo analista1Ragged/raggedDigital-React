@@ -3,6 +3,7 @@ import axios from 'axios';
 import "./FormBuscar.css";
 import BuscarButton from "../BotonBuscar/BotonBuscar";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Select from 'react-select';
 
 const FormBuscar = ({ setData }) => {
   const [miData, setMiData] = useState([]);

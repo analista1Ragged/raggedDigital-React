@@ -1,5 +1,5 @@
 import React from 'react';
-import { CloudUploadOutlined, CustomerServiceOutlined, CommentOutlined } from '@ant-design/icons';
+import { CloudUploadOutlined, MoreOutlined, } from '@ant-design/icons';
 import { FloatButton } from 'antd';
 
 const Menu3Botones = () => (
@@ -12,8 +12,9 @@ const Menu3Botones = () => (
             position: 'fixed',
             bottom: 20,
             right: 20,
+            
         }}
-        icon={<CustomerServiceOutlined style={{ color: 'white' }} />}
+        icon={<MoreOutlined  style={{ color: 'white' }} />}
         >
         <FloatButton
             style={{

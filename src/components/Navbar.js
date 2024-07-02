@@ -20,6 +20,7 @@ const ICON_SIZE = 20;
 function Navbar({ visible, show }) {
   const [openMenu, setOpenMenu] = useState(null);
   const navRef = useRef();
+  const pageTopRef = useRef(); // Referencia al inicio de la página
 
   const toggleMenu = (menu) => {
     if (openMenu === menu) {
@@ -33,6 +34,11 @@ function Navbar({ visible, show }) {
     const newVisibility = !visible;
     show(newVisibility);
     setOpenMenu(null); // Cerrar todos los menús al ocultar la barra lateral
+
+    // Scroll al inicio de la página al expandir la barra lateral
+    if (newVisibility) {
+      pageTopRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const handleHomeClick = () => {
@@ -152,10 +158,13 @@ function Navbar({ visible, show }) {
           </NavLink>
         </div>
       </nav>
+      {/* Referencia al inicio de la página */}
+      <div ref={pageTopRef} />
     </>
   );
 }
 
 export default Navbar;
+
 
 
