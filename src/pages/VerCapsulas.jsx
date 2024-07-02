@@ -20,6 +20,7 @@ const transformData = (list) => {
 
 const TicketTable = () => {
   const [data, setData] = useState([]);
+  const [selectedMarca, setSelectedMarca] = useState('');
 
   return (
     <section>
@@ -29,8 +30,8 @@ const TicketTable = () => {
           {'  '}
           Buscar Productos
         </h2>
-        <Menu3Botones />
-        <FormBuscar setData={(rawData) => setData(transformData(rawData))} />
+        <Menu3Botones marca={selectedMarca} />
+        <FormBuscar setData={(rawData) => setData(transformData(rawData))} setSelectedMarca={setSelectedMarca} />
         <table>
           <thead>
             <tr className="color">
