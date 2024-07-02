@@ -1,5 +1,5 @@
 import React from 'react';
-import { CloudUploadOutlined, CustomerServiceOutlined } from '@ant-design/icons';
+import { CloudUploadOutlined, MoreOutlined,CustomerServiceOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -76,12 +76,19 @@ const Menu3Botones = ({ marca }) => (
         trigger="hover"
         type="primary"
         style={{
-          position: 'fixed',
-          bottom: 20,
-          right: 20,
+            position: 'fixed',
+            bottom: 20,
+            right: 20,
+            
         }}
-        icon={<CustomerServiceOutlined style={{ color: 'white' }} />}
-      >
+        icon={<MoreOutlined  style={{ color: 'white' }} />}
+        >
+        <FloatButton
+            style={{
+            backgroundColor: '#28a745', // Color for the main button
+            color: 'white',
+            }}
+        />
         <FloatButton
           icon={<CloudUploadOutlined />}
           title="Subir Archivo"

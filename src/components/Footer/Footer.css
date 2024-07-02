@@ -1,65 +1,64 @@
-/* src/components/Footer.css */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
+/* Estilos del Footer */
 
+/* Establece la imagen de fondo del footer */
 .footer {
-  background-image: url('../../assets/Images/Footer.jpg'); /* Ruta de tu imagen */
+  background-image: url('../../assets/Images/Footer.jpg');
   background-size: cover; /* Asegura que la imagen cubra todo el fondo */
   background-position: center; /* Centra la imagen */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
-  color: #fff;
-  padding: 20px 0;
+  color: #fff; /* Color del texto */
+  padding: 40px 0; /* Espaciado interno superior e inferior */
 }
 
+/* Estilo para la sección superior del footer */
 .footer-top {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  display: flex; /* Usa flexbox para el diseño */
+  justify-content: space-between; /* Distribuye los elementos con espacio entre ellos */
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en varias líneas */
+  margin: 0 auto; /* Centra el contenido horizontalmente */
+  padding: 20px; /* Espaciado interno */
 }
 
+/* Estilo para cada columna dentro del footer */
 .footer-column {
-  flex: 1;
-  min-width: 200px;
-  margin: 10px 0;
-  text-align: left;
+  flex: 1; /* Ocupa todo el espacio disponible */
+  min-width: 200px; /* Ancho mínimo de la columna */
+  margin: 10px 0; /* Espaciado externo superior e inferior */
+  text-align: left; /* Alineación del texto a la izquierda */
 }
 
+/* Estilo para los títulos de las columnas del footer */
 .footer-column h4 {
-  margin-bottom: 10px;
-  font-size: 16px;
-  font-weight: bold;
+  margin-bottom: 10px; /* Espaciado inferior del título */
+  font-size: 16px; /* Tamaño de fuente del título */
+  font-weight: bold; /* Fuente en negrita */
 }
 
+/* Estilo para párrafos y listas dentro de las columnas */
 .footer-column p,
 .footer-column ul {
-  margin: 5px 0;
+  margin: 5px 0; /* Espaciado externo superior e inferior */
 }
 
+/* Estilo para las listas dentro de las columnas */
 .footer-column ul {
-  list-style-type: none;
-  padding: 0;
+  list-style-type: none; /* Elimina los estilos de lista predeterminados */
+  padding: 0; /* Elimina el relleno interno de la lista */
 }
 
-.footer-column ul li {
-  margin: 5px 0;
-}
-
+/* Estilo para los ítems de la lista enlaces dentro de las columnas */
 .footer-column ul li a {
-  color: #fff;
-  text-decoration: none;
-  transition: color 0.3s;
+  color: #fff; /* Color del texto */
+  text-decoration: none; /* Sin subrayado en los enlaces */
+  transition: color 0.3s; /* Transición suave del color */
 }
 
+/* Estilo para los ítems de la lista enlaces al pasar el mouse */
 .footer-column ul li a:hover {
-  color: #95FFD4;
+  color: #95FFD4; /* Cambia el color al pasar el mouse */
 }
 
+/* Estilo para la sección de redes sociales */
 .social-media {
   display: flex;
   justify-content: flex-start;
@@ -67,19 +66,50 @@ body {
   margin-top: 10px;
 }
 
+/* Estilo para los iconos de redes sociales */
 .social-icon {
-  color: #fff;
-  font-size: 24px;
-  transition: color 0.3s;
+  color: #fff; /* Color del icono */
+  font-size: 24px; /* Tamaño del ícono */
+  transition: color 0.3s; /* Transición suave del color */
+  width: 40px; /* Ancho del ícono */
+  height: 40px; /* Altura del ícono */
 }
 
+/* Estilo para los iconos de redes sociales al pasar el mouse */
 .social-icon:hover {
-  color: #ff6f61;
+  color: #ff6f61; /* Cambia el color al pasar el mouse */
 }
 
+/* Estilo para la sección inferior del footer */
 .footer-bottom {
-  text-align: center;
-  padding: 10px 0;
-  border-top: 1px solid #444;
-  margin-top: 20px;
+  text-align: center; /* Alineación del texto al centro */
+  padding: 10px 0; /* Espaciado interno superior e inferior */
+  border-top: 1px solid #444; /* Borde superior */
+  margin-top: 20px; /* Espaciado superior */
 }
+
+/* Media queries para hacer responsivo el footer */
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column; /* Cambia a disposición de columna */
+    align-items: center; /* Alinea al centro horizontalmente */
+  }
+
+  .footer-column {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    text-align: center; /* Alineación del texto al centro */
+    margin-bottom: 20px; /* Espaciado inferior */
+  }
+
+  .social-media {
+    justify-content: center; /* Alinea al centro horizontalmente */
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-column {
+    font-size: 14px; /* Reduce el tamaño de fuente en dispositivos pequeños */
+  }
+}
+
+

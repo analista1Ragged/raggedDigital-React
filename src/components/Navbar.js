@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   FaAngleRight,
-  FaAngleLeft, 
-  FaChartBar, 
-  FaThLarge, 
-  FaShoppingCart, 
+  FaAngleLeft,
+  FaChartBar,
+  FaShoppingCart,
   FaCog,
   FaSignOutAlt,
   FaBars,
@@ -20,6 +19,8 @@ const ICON_SIZE = 20;
 
 function Navbar({ visible, show }) {
   const [openMenu, setOpenMenu] = useState(null);
+  const navRef = useRef();
+  const pageTopRef = useRef(); // Referencia al inicio de la página
 
   const toggleMenu = (menu) => {
     if (openMenu === menu) {
@@ -33,11 +34,30 @@ function Navbar({ visible, show }) {
     const newVisibility = !visible;
     show(newVisibility);
     setOpenMenu(null); // Cerrar todos los menús al ocultar la barra lateral
+
+    // Scroll al inicio de la página al expandir la barra lateral
+    if (newVisibility) {
+      pageTopRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const handleHomeClick = () => {
     setOpenMenu(null); // Contraer todos los submenús al hacer clic en Inicio
   };
+
+  const handleClickOutside = (event) => {
+    if (navRef.current && !navRef.current.contains(event.target)) {
+      show(false);
+      setOpenMenu(null); // Cerrar todos los menús
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -49,7 +69,7 @@ function Navbar({ visible, show }) {
           <FaBars size={24} />
         </button>
       </div>
-      <nav className={!visible ? 'navbar' : ''}>
+      <nav ref={navRef} className={!visible ? 'navbar' : ''}>
         <button
           type="button"
           className="nav-btn"
@@ -138,9 +158,13 @@ function Navbar({ visible, show }) {
           </NavLink>
         </div>
       </nav>
+      {/* Referencia al inicio de la página */}
+      <div ref={pageTopRef} />
     </>
   );
 }
 
 export default Navbar;
+
+
 
