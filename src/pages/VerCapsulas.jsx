@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./VerCapsulas.css";
 import FilterRow from "../components/FilterRow/FilterRow";
 import FormBuscar from "../components/FormBuscar/FormBuscar";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Menu3Botones from "../components/Menu3Botones/Menu3Botones";
+import { Pagination } from 'antd'; // Importa el componente de paginación de Ant Design
+import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
 
 const transformData = (list) => {
   if (!Array.isArray(list)) {
@@ -27,6 +29,20 @@ const TicketTable = () => {
     categoria: '',
     estado: ''
   });
+  const [currentPage, setCurrentPage] = useState(1); // Estado para controlar la página actual
+  const pageSize = 10; // Tamaño de página, ajusta según sea necesario
+
+  useEffect(() => {
+    // Aquí puedes realizar la carga inicial de datos o configurar eventos
+    // como la selección de una marca inicial si es necesario
+    fetchData(selectedMarca);
+  }, [selectedMarca]);
+
+  const fetchData = async (marca) => {
+    // Aquí puedes implementar la lógica para obtener datos según la marca seleccionada
+    // Puedes usar axios o cualquier otra biblioteca para hacer la solicitud HTTP
+    // y luego actualizar el estado de los datos usando setData(transformData(response.data))
+  };
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -34,22 +50,31 @@ const TicketTable = () => {
       ...filters,
       [name]: value
     });
+    // Reinicia la página actual cuando se aplica un filtro
+    setCurrentPage(1);
   };
 
-  const filteredData = data.filter(item => {
-    return (
+  // Lógica para obtener los datos de la página actual según los filtros y la paginación
+  const indexOfLastItem = currentPage * pageSize;
+  const indexOfFirstItem = indexOfLastItem - pageSize;
+  const currentItems = data
+    .filter(item =>
       item.referencia.toLowerCase().includes(filters.referencia.toLowerCase()) &&
       item.descripcion.toLowerCase().includes(filters.descripcion.toLowerCase()) &&
       item.categoria.toLowerCase().includes(filters.categoria.toLowerCase()) &&
       item.estado.toLowerCase().includes(filters.estado.toLowerCase())
-    );
-  });
+    )
+    .slice(indexOfFirstItem, indexOfLastItem);
+
+  const handleChangePage = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <section>
       <div className="ticket-table">
         <h2>
-          <a href="/home" className="left" title="Volver"><i className="bi bi-arrow-left-circle"></i></a>
+          <a href="/ecommerce/VerCapsulas" className="left" title="Volver"><i className="bi bi-arrow-left-circle"></i></a>
           {'  '}
           Buscar Productos
         </h2>
@@ -67,9 +92,9 @@ const TicketTable = () => {
             <FilterRow filters={filters} handleFilterChange={handleFilterChange} />
           </thead>
           <tbody>
-            {filteredData.map((item, index) => (
+            {currentItems.map((item, index) => (
               <tr key={index}>
-                <td>{index + 1}</td>
+                <td>{indexOfFirstItem + index + 1}</td>
                 <td>{item.referencia}</td>
                 <td>{item.descripcion}</td>
                 <td>{item.categoria}</td>
@@ -78,10 +103,20 @@ const TicketTable = () => {
             ))}
           </tbody>
         </table>
+        <Pagination
+          current={currentPage}
+          pageSize={pageSize}
+          total={data.length}
+          onChange={handleChangePage}
+          showSizeChanger
+          showQuickJumper
+        />
       </div>
     </section>
   );
 };
 
 export default TicketTable;
+
+
 

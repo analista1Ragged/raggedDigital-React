@@ -30,7 +30,7 @@
 .navbar {
 	width: 250px; /* Ancho inicial de la barra lateral */
 	height: 100vh;
-	background-color: #f4f4f4;
+	/*background-color: #f4f4f4;*/
 	position: fixed;
 	left: 0;
 	top: 0;

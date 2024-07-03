@@ -51,7 +51,7 @@ const Login = (props) => {
     return (
         <section className="formulario">
             <div className="image-container">
-                <img src={require("../../assets/Images/header.jpg")} alt='TiendaRagged' />
+                <img src={require("../../assets/Images/R01.png")} alt='TiendaRagged' />
             </div>
             <form onSubmit={manejarEnvio}>
                 <div className="form-container">
