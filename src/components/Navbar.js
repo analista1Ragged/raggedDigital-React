@@ -27,7 +27,7 @@ function Navbar({ visible, show }) {
   const handleLogout = () => {
     // Limpiar datos de sesión (localStorage, cookies, etc.)
     localStorage.removeItem('authToken'); // Ejemplo para token de autenticación en localStorage
-
+    <NavLink to="/" className="nav-link"></NavLink>
     // Redireccionar a la página de login
     //history.push('/login');
   };
@@ -162,7 +162,7 @@ function Navbar({ visible, show }) {
             <span>Settings</span>
             <span style={{ width: ICON_SIZE, display: 'inline-block' }}>&nbsp;</span>
           </NavLink>
-          <NavLink to="/CerrarSesion" className="nav-link" onClick={handleLogout}>
+          <NavLink to="/" className="nav-link" onClick={handleLogout}>
             <FaSignOutAlt size={ICON_SIZE} />
             <span>Logout</span>
             <span style={{ width: ICON_SIZE, display: 'inline-block' }}>&nbsp;</span>
