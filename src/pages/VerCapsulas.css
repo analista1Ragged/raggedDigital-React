@@ -2,61 +2,59 @@
 
 .App {
   font-family: 'Open Sans', sans-serif;
-  }
-  
-  .App-header {
-    background-color: #282c34;
-    padding: 20px;
-    color: white;
-    text-align: center;
-  }
-  
-  .ticket-table {
-    margin: 20px auto;
-    max-width: 95%;
-    border-collapse: collapse;
-    width: 100%;
-    /*text-align: center;*/
-  }
-
-  .color{
-    color: #ffff;
-    text-align: center;
-    font-weight: normal;
-  }
-  
-  .ticket-table table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .ticket-table th,
-  .ticket-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .ticket-table th {
-    background-color: #343a40;
-    text-align: center;
-  }
-  
-  .ticket-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .ticket-table tr:hover {
-    background-color: #ddd;
-  }
-
-  section{
-    padding: 15px 10px;
-    border-radius: 20px;
-    margin: 0 auto;
-    width: 95% !important;
-    background-color: #f2f4f8 !important;
-    margin-bottom: 50px;
 }
 
-  
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+.ticket-table {
+  margin: 20px auto;
+  max-width: 95%;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.color {
+  color: #ffff;
+  text-align: center;
+  font-weight: normal;
+}
+
+.ticket-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ticket-table th,
+.ticket-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.ticket-table th {
+  background-color: #343a40;
+  text-align: center;
+}
+
+.ticket-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.ticket-table tr:hover {
+  background-color: #ddd;
+}
+
+section {
+  padding: 15px 10px;
+  border-radius: 20px;
+  margin: 0 auto;
+  width: 90%; /* Ajusta el ancho del contenedor */
+  max-width: 1200px; /* Ajusta el ancho máximo del contenedor */
+  background-color: #f2f4f8 !important; /* Fondo login */
+  margin-bottom: 330px; /* Aumenta el espacio entre el contenedor y el footer */
+}

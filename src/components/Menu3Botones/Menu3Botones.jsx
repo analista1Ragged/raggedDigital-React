@@ -1,5 +1,5 @@
 import React from 'react';
-import { CloudUploadOutlined, MoreOutlined,CustomerServiceOutlined } from '@ant-design/icons';
+import { CloudUploadOutlined, MoreOutlined,FileTextOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -84,12 +84,6 @@ const Menu3Botones = ({ marca }) => (
         icon={<MoreOutlined  style={{ color: 'white' }} />}
         >
         <FloatButton
-            style={{
-            backgroundColor: '#28a745', // Color for the main button
-            color: 'white',
-            }}
-        />
-        <FloatButton
           icon={<CloudUploadOutlined />}
           title="Subir Archivo"
           style={{
@@ -99,10 +93,10 @@ const Menu3Botones = ({ marca }) => (
           onClick={() => handleUpload(marca)} // Pasar marca a handleUpload
         />
         <FloatButton
-          icon={<CustomerServiceOutlined />}
+          icon={<FileTextOutlined />}
           title="Descargar Excel"
           style={{
-            backgroundColor: '#f39c12', // Color for the download button
+            backgroundColor: '#28a745', // Color for the download button
             color: 'white',
           }}
           onClick={() => handleDownload(marca)} // Asignar la función de descarga al botón de descargar Excel

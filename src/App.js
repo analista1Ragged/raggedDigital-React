@@ -10,6 +10,7 @@ import Bancos from './pages/Bancos';
 import TicketTable from './pages/VerCapsulas';
 import Footer from './components/Footer/Footer';
 import Layout from './pages/Layout';
+import CerrarSesion from './components/CerrarSesion/CerrarSesion';
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -86,6 +87,11 @@ function App() {
         <Route path='/layout' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <Layout />
+          </div>
+        } />
+        <Route path='/CerrarSesion' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <CerrarSesion />
           </div>
         } />
       </Routes>

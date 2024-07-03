@@ -70,7 +70,6 @@ function Navbar({ visible, show }) {
   }, []);
 
 
-
   return (
     <>
       <div className="mobile-nav">

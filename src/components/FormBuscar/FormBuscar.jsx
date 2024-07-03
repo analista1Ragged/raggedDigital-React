@@ -87,7 +87,7 @@ const FormBuscar = ({ setData, setSelectedMarca }) => {
     <form id="formBuscar" className="mb-3 mt-3" autoComplete="off">
       <div className="row justify-content-between">
         <div className="col-12 col-md-4">
-          <label htmlFor="marca">Capsula</label>
+          <label htmlFor="marca" className="label-spacing">Capsula</label>
           <select name="marca" className="form-control" required onChange={handleSelectChange}>
             <option value="">Selecciona una Capsula</option>
             {miData.map((fila, index) => (
@@ -98,7 +98,7 @@ const FormBuscar = ({ setData, setSelectedMarca }) => {
           </select>
         </div>
         <div className="col-12 col-md-4">
-          <label htmlFor="nombre">Referencia (opcional)</label>
+          <label htmlFor="nombre" className="label-spacing">Referencia (opcional)</label>
           <input
             type="text"
             name="ref"

@@ -5,11 +5,13 @@
     padding: 0;
     max-width: 100%;
     height: 100%;
+    
 }
 
 .container {
     text-align: center;
     margin-top: 20px;
+    
 }
 
 .company-title {
@@ -29,6 +31,7 @@ img {
     height: 100%; /* Para mantener la proporción de aspecto */
     display: block; /* Para eliminar el espacio adicional debajo de la imagen */
     margin: 0 auto; /* Para centrar la imagen horizontalmente */
+    margin-bottom: 25px; /* Aumenta el espacio entre el contenedor y el footer */
 }
 #home {
     overflow-y: hidden;
