@@ -14,6 +14,10 @@ const Login = (props) => {
     const [mostrarError, setMostrarError] = useState(false);
     const navigate = useNavigate();
 
+    const randomNumber = Math.floor(Math.random() * 4) + 1;
+    // Construye la ruta de la imagen usando el número aleatorio
+    const imagePath = require(`../../assets/Images/R0${randomNumber}.png`);
+
     const manejarEnvio = async (e) => {
         e.preventDefault();
         try {
@@ -51,7 +55,7 @@ const Login = (props) => {
     return (
         <section className="formulario">
             <div className="image-container">
-                <img src={require("../../assets/Images/R01.png")} alt='TiendaRagged' />
+            <img src={imagePath} alt="Ragged" />
             </div>
             <form onSubmit={manejarEnvio}>
                 <div className="form-container">
