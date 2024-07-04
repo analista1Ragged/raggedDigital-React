@@ -81,7 +81,7 @@ const FormBuscar = ({ setData }) => {
     try {
       await fetchDataForSelectedValue();
     } finally {
-      Swal.close();
+      Swal.close(); //esto cierra el alert
     }
   };
 

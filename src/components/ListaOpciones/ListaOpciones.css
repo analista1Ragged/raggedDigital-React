@@ -4,6 +4,7 @@
     font-weight: 600;
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 8px;
+    margin-top: 50px; /* Margen superior */
 }
 
 .lista-opciones select{

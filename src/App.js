@@ -12,6 +12,7 @@ import Footer from './components/Footer/Footer';
 import Layout from './pages/Layout';
 
 
+
 function App() {
   const [navVisible, showNavbar] = useState(false);
   const location = useLocation();
@@ -93,6 +94,7 @@ function App() {
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
           </div>
         } />
+        
       </Routes>
       {shouldShowNavbar() && <Footer />}
     </div>

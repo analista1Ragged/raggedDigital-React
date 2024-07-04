@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import BotonAdjuntar from '../BotonAdjuntar/BotonAdjuntar';
 
 const AdjuntarArchivo = () => {
   const [fileName, setFileName] = useState("Seleccionar archivo...");
@@ -35,11 +34,11 @@ const AdjuntarArchivo = () => {
           className="custom-file-label"
           htmlFor="customFile"
           style={{
-            width: '200px',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            marginRight: '10px'
+            border: '1px solid #ccc',
+            borderRadius: '5px',
+            padding: '5px 100px',
+            backgroundColor: '#f0f0f0',
+            marginBottom: '10px' // Espacio hacia abajo entre el input y el label
           }}
         >
           {fileName}

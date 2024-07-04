@@ -11,9 +11,11 @@ import {
   FaChevronUp,
   FaHome,
   FaCalculator
+  
 } from 'react-icons/fa';
 import { NavLink } from "react-router-dom";
 import "../style/navbar.css";
+import { Menu, Button } from 'antd';
 
 
 const ICON_SIZE = 20;
