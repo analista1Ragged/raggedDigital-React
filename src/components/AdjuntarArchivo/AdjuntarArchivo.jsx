@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import Boton from "../Boton/Boton";
+import BotonAdjuntar from '../BotonAdjuntar/BotonAdjuntar';
 
 const AdjuntarArchivo = () => {
   const [fileName, setFileName] = useState("Seleccionar archivo...");
@@ -31,12 +31,19 @@ const AdjuntarArchivo = () => {
           accept=".xls, .xlsx"
           onChange={handleFileChange}
         />
-        <label className="custom-file-label" htmlFor="customFile" style={{ width: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginRight: '10px' }}>
+        <label
+          className="custom-file-label"
+          htmlFor="customFile"
+          style={{
+            width: '200px',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            marginRight: '10px'
+          }}
+        >
           {fileName}
         </label>
-        <Boton onClick={handleButtonClick}>
-          Seleccionar archivo
-        </Boton>
       </div>
     </div>
   );

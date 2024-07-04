@@ -91,7 +91,7 @@ function Navbar({ visible, show }) {
         <div>
           <NavLink className="logo" to="/">
             <img
-              src={require("../assets/Images/logo.png")}
+              src={require("../assets/Images/Logo.png")}
               alt="logo"
             />
           </NavLink>

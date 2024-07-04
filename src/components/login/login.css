@@ -1,78 +1,83 @@
 .formulario {
     display: flex;
     justify-content: center;
-    margin: 80px 25px;
+    align-items: center;
+    margin: 80px 5%;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en líneas nuevas */
 }
 
 .formulario form {
-    max-width: 80%;
+    width: 100%;
+    max-width: 600px; /* Puedes ajustar este valor según sea necesario */
     background-color: #f7f7f7;
-    box-shadow: 7px 7px 15px rgba(0, 0, 0, 25%);
+    box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.25); /* Corrige el valor del canal alfa */
     border-radius: 20px;
-    padding: 8px 95px;
+    padding: 8px 5%;
 }
 
 .formulario h2 {
     font-size: 32px;
     font-weight: 400;
     color: #212121;
+    text-align: center; /* Centra el texto */
 }
 
 .container {
     display: flex;
-    flex-wrap: wrap; /* Hace que los elementos hijos se envuelvan en líneas nuevas si es necesario */
+    flex-wrap: wrap;
     width: 100%;
     background-color: #373738;
+    justify-content: center; /* Centra los elementos hijos */
 }
 
 .image-container, .form-container {
     flex: 1;
-    min-width: 300px; /* Asegura que cada contenedor tenga un ancho mínimo */
+    min-width: 300px;
 }
 
 .image-container img {
     width: 100%;
     border-radius: 20px;
-    /*height: auto;*/
 }
 
-/* Estilos responsivos */
 @media (max-width: 1024px) {
     .formulario form {
-        padding: 8px 50px; /* Reduce el padding lateral en pantallas más pequeñas */
+        padding: 8px 10%;
     }
     
     .formulario h2 {
-        font-size: 28px; /* Reduce el tamaño de la fuente en pantallas más pequeñas */
+        font-size: 28px;
     }
 }
 
 @media (max-width: 768px) {
     .formulario {
-        margin: 40px 15px; /* Reduce el margen en pantallas más pequeñas */
+        margin: 40px 5%;
     }
 
     .formulario form {
-        max-width: 100%; /* Asegura que el formulario ocupe todo el ancho disponible */
-        padding: 8px 30px; /* Reduce aún más el padding lateral */
+        padding: 8px 10%;
     }
     
     .formulario h2 {
-        font-size: 24px; /* Reduce aún más el tamaño de la fuente */
+        font-size: 24px;
     }
 }
 
 @media (max-width: 480px) {
     .formulario {
-        margin: 20px 10px; /* Reduce el margen en pantallas más pequeñas */
+        margin: 20px 5%;
     }
 
     .formulario form {
-        padding: 8px 15px; /* Reduce aún más el padding lateral */
+        padding: 8px 10%;
     }
     
     .formulario h2 {
-        font-size: 20px; /* Reduce aún más el tamaño de la fuente */
+        font-size: 20px;
+    }
+
+    .image-container {
+        order: -1; /* Mueve la imagen arriba del formulario */
     }
 }
-
