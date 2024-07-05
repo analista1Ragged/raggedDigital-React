@@ -56,6 +56,7 @@ nav {
   .nav-link {
 	display: flex;
 	align-items: center;
+	justify-content: flex-start; /* Alinear a la izquierda */
 	color: #fff;
 	text-decoration: none;
 	padding: 10px 1rem;
@@ -64,7 +65,7 @@ nav {
   
   .nav-link:hover {
 	background-color: #FFFF;
-	color: #4e4e4e;
+	color: #471a1a;
   }
   
   .nav-link span {
