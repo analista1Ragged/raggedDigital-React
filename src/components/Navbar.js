@@ -106,7 +106,6 @@ function Navbar({ visible, show }) {
               <NavLink to="/Home" className="nav-link" onClick={handleHomeClick}>
                 <FaHome size={ICON_SIZE} />
                 <span>Inicio</span>
-                {openMenu === 'inicio' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
                 <span style={{ width: ICON_SIZE, display: 'inline-block' }}></span>
               </NavLink>
             </div>
@@ -133,21 +132,21 @@ function Navbar({ visible, show }) {
               {openMenu === 'ecommerce' && (
                 <ul className="submenu">
                   <li>
-                    <NavLink to="/ecommerce/Tiendas" className="nav-link">Tiendas</NavLink>
+                    <NavLink to="/Settings" className="nav-link">Tiendas</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/ecommerce/RaqStyle" className="nav-link">RaqStyle</NavLink>
+                    <NavLink to="/Settings" className="nav-link">RaqStyle</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/ecommerce/VerCapsulas" className="nav-link">Ecommerce</NavLink>
+                    <NavLink to="/Settings" className="nav-link">Ecommerce</NavLink>
                   </li>                  <li>
-                    <NavLink to="/ecommerce/VentaDirecta" className="nav-link">Venta Directa</NavLink>
+                    <NavLink to="/Settings" className="nav-link">Venta Directa</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/ecommerce/Otros" className="nav-link">Otros</NavLink>
+                    <NavLink to="/Settings" className="nav-link">Otros</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/ecommerce/Consultas" className="nav-link">Consultas</NavLink>
+                    <NavLink to="/Settings" className="nav-link">Consultas</NavLink>
                   </li>
                 </ul>
               )}

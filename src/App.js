@@ -99,6 +99,8 @@ function App() {
           <MyMenu />
           </div>
         } />
+
+
       </Routes>
       {shouldShowNavbar() && <Footer />}
     </div>
