@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./login.css";
 import CampoTexto from "../CampoTexto";
@@ -12,11 +12,16 @@ const Login = (props) => {
     const [contrasena, actualizarContrasena] = useState("");
     const [mostrarExito, setMostrarExito] = useState(false);
     const [mostrarError, setMostrarError] = useState(false);
+    const [randomNumber, setRandomNumber] = useState(null); // Nuevo estado para almacenar el número aleatorio
     const navigate = useNavigate();
 
-    const randomNumber = Math.floor(Math.random() * 4) + 1;
-    // Construye la ruta de la imagen usando el número aleatorio
-    const imagePath = require(`../../assets/Images/R0${randomNumber}.png`);
+    useEffect(() => {
+        // Genera un número aleatorio entre 1 y 4 una vez cuando se monta el componente
+        const randomNum = Math.floor(Math.random() * 4) + 1;
+        setRandomNumber(randomNum);
+    }, []);
+
+    const imagePath = randomNumber !== null ? require(`../../assets/Images/R0${randomNumber}.png`) : null;
 
     const manejarEnvio = async (e) => {
         e.preventDefault();
@@ -55,7 +60,7 @@ const Login = (props) => {
     return (
         <section className="formulario">
             <div className="image-container">
-            <img src={imagePath} alt="Ragged" />
+                {imagePath && <img src={imagePath} alt="Ragged" />} {/* Solo renderiza la imagen si imagePath no es null */}
             </div>
             <form onSubmit={manejarEnvio}>
                 <div className="form-container">
@@ -91,7 +96,6 @@ const Login = (props) => {
                     <Boton>
                         Ingresar
                     </Boton>
-                    
                 </div>
             </form>
         </section>
@@ -99,11 +103,3 @@ const Login = (props) => {
 };
 
 export default Login;
-
-
-
- 
-
-
-
-
