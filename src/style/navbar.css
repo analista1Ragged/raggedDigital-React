@@ -70,6 +70,7 @@ nav {
   
   .nav-link span {
 	margin-left: 10px; /* Espacio entre el icono y el texto */
+	align-self: self-start;
   }
   
   .mobile-nav {

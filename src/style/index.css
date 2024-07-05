@@ -45,17 +45,17 @@
 .nav-link {
 	text-decoration: none;
 	display: flex;
-	align-items: justify;
-	justify-content: space-between;
+
+	
 	cursor: pointer;
 	/* Añade estilos adicionales según sea necesario */
 }
 
 
   .nav-link > *:not(:first-child) {
-	margin-left: 4px; /* Espacio entre los elementos */
+	margin-left: 10px; /* Espacio entre los elementos */
   }
 
   .nav-link > *:not(:first-child) {
-	margin-left: 4px; /* Espacio entre los elementos */
+	margin-left: 10px; /* Espacio entre los elementos */
   }
