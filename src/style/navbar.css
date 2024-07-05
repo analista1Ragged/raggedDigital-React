@@ -51,12 +51,13 @@ nav {
   
   .nav-item {
 	margin-bottom: 10px; /* Espacio entre elementos del menú */
+	justify-content: flex-start; /* Alinear a la izquierda */
+	align-items: left;
   }
   
   .nav-link {
 	display: flex;
-	align-items: center;
-	justify-content: flex-start; /* Alinear a la izquierda */
+	align-items: left;
 	color: #fff;
 	text-decoration: none;
 	padding: 10px 1rem;
