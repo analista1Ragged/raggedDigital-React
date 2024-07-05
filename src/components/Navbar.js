@@ -15,7 +15,16 @@ import {
   
 } from 'react-icons/fa';
 
-import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline } from "react-icons/io5";
+import { 
+  IoAccessibilityOutline, 
+  IoCubeOutline, 
+  IoSettingsOutline, 
+  IoShirtSharp, 
+  IoReceiptOutline, 
+  IoClipboardSharp,
+  IoIdCard, 
+
+} from "react-icons/io5";
 
 import { NavLink } from "react-router-dom";
 import "../style/navbar.css";
@@ -191,7 +200,7 @@ function Navbar({ visible, show }) {
             </div>
             <div className="nav-item">
               <div className="nav-link" onClick={() => toggleMenu('inventarios')}>
-                <FaChartBar size={ICON_SIZE} />
+                <IoClipboardSharp size={ICON_SIZE} />
                 <span>Inventarios</span>
                 {openMenu === 'Inventarios' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
@@ -212,7 +221,7 @@ function Navbar({ visible, show }) {
             </div>
             <div className="nav-item">
               <div className="nav-link" onClick={() => toggleMenu('admonMaestra')}>
-                <FaChartBar size={ICON_SIZE} />
+                <IoIdCard size={ICON_SIZE} />
                 <span>Administración Maestra</span>
                 {openMenu === 'settings' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
