@@ -10,8 +10,7 @@ import {
   FaChevronDown,
   FaChevronUp,
   FaHome,
-  FaCalculator,
-
+  FaCalculator
   
 } from 'react-icons/fa';
 
@@ -147,7 +146,7 @@ function Navbar({ visible, show }) {
                     <NavLink to="/Settings" className="nav-link">RaqStyle</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/Settings" className="nav-link">Ecommerce</NavLink>
+                    <NavLink to="/ecommerce/VerCapsulas" className="nav-link">Ecommerce</NavLink>
                   </li>                  <li>
                     <NavLink to="/Settings" className="nav-link">Venta Directa</NavLink>
                   </li>
@@ -162,21 +161,21 @@ function Navbar({ visible, show }) {
             </div>
             <div className="nav-item">
               <div className="nav-link" onClick={() => toggleMenu('compras')}>
-                <IoReceiptOutline size={ICON_SIZE} />
+                <FaChartBar size={ICON_SIZE} />
                 <span>Compras</span>
                 {openMenu === 'compras' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
             </div>
             <div className="nav-item">
               <div className="nav-link" onClick={() => toggleMenu('dlloProducto')}>
-                <IoShirtSharp size={ICON_SIZE} />
+                <FaChartBar size={ICON_SIZE} />
                 <span>Diseño & Dllo Productos</span>
                 {openMenu === 'dlloProducto' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
             </div>
             <div className="nav-item">
               <div className="nav-link" onClick={() => toggleMenu('talentoHumano')}>
-                <IoAccessibilityOutline size={ICON_SIZE} />
+                <FaChartBar size={ICON_SIZE} />
                 <span>Talento Humano</span>
                 {openMenu === 'talentoHumano' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
@@ -207,14 +206,14 @@ function Navbar({ visible, show }) {
             </div>
             <div className="nav-item">
               <div className="nav-link" onClick={() => toggleMenu('manofactura')}>
-                <IoCubeOutline size={ICON_SIZE} />
+                <FaChartBar size={ICON_SIZE} />
                 <span>Manofactura</span>
                 {openMenu === 'manofactura' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
             </div>
             <div className="nav-item">
               <div className="nav-link" onClick={() => toggleMenu('settings')}>
-                <IoSettingsOutline size={ICON_SIZE} />
+                <FaChartBar size={ICON_SIZE} />
                 <span>Settings</span>
                 {openMenu === 'settings' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
