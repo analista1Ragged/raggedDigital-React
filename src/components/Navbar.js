@@ -222,7 +222,7 @@ function Navbar({ visible, show }) {
               <div className="nav-link" onClick={() => toggleMenu('admonMaestra')}>
                 <IoIdCard size={ICON_SIZE} />
                 <span>Administración Maestra</span>
-                {openMenu === 'settings' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
+                {openMenu === 'admonMaestra' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
             </div>
           </div>
