@@ -5,27 +5,21 @@ nav {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	/*width: 15%;*/
 	min-height: 100vh;
-	background-color:  #373738 ;
+	background-color: #373738;
 	padding: 2rem 1rem 1rem 1rem;
 	transition: transform 0.5s, width 0.5s;
-	
-	
-}
-
-
-
-.navbar {
+  }
+  
+  .navbar {
 	transform: translateX(-100%);
-	
-}
-
-.nav-btn {
+  }
+  
+  .nav-btn {
 	position: absolute;
 	transform: translateX(38px);
 	top: 20px;
-	right: 10px; /*mueve la posicion del boton barra hacia la izquierda o derecha*/
+	right: 10px;
 	width: 40px;
 	height: 60px;
 	border-top-right-radius: 5px;
@@ -40,79 +34,79 @@ nav {
 	padding: 5px 10px;
 	cursor: pointer;
 	color: #fff;
-}
-
-.logo {
+  }
+  
+  .logo {
 	display: block;
 	width: 200px;
 	margin: auto;
 	background: transparent;
-}
-
-.logo img {
+  }
+  
+  .logo img {
 	display: block;
 	width: 100%;
 	height: auto; /* Ajuste para asegurar que la imagen no se deforme */
-}
-
-.nav-link {
+  }
+  
+  .nav-item {
+	margin-bottom: 10px; /* Espacio entre elementos del menú */
+  }
+  
+  .nav-link {
 	display: flex;
 	align-items: center;
 	color: #fff;
 	text-decoration: none;
 	padding: 10px 1rem;
 	border-radius: 5px;
-	margin-bottom: 5px;
-}
-
-.nav-link:hover {
+  }
+  
+  .nav-link:hover {
 	background-color: #FFFF;
 	color: #4e4e4e;
-}
-
-.nav-link span {
-	margin-left: 10px;
-}
-
-.nav-top {
-	margin-top: 3rem; /* Margin parte superior opciones del menu */
-}
-
-.mobile-nav {
+  }
+  
+  .nav-link span {
+	margin-left: 10px; /* Espacio entre el icono y el texto */
+  }
+  
+  .mobile-nav {
 	background-color: #343a40;
 	width: 100%;
 	height: 40px;
 	display: none;
-}
-
-.mobile-nav-btn {
+  }
+  
+  .mobile-nav-btn {
 	color: #fff;
 	background: transparent;
 	outline: none;
 	border: none;
 	margin: 0 10px;
-}
-
-@media only screen and (max-width: 768px) {
+  }
+  
+  @media only screen and (max-width: 768px) {
 	nav {
-		width: 40%;
-		padding: 10px;
+	  width: 40%;
+	  padding: 10px;
 	}
-}
-
-@media only screen and (max-width: 450px) {
+  }
+  
+  @media only screen and (max-width: 450px) {
 	.mobile-nav {
-		display: flex;
-		align-items: center;
+	  display: flex;
+	  align-items: center;
 	}
 	nav {
-		width: 70%;
-		top: 38px;
-		min-height: calc(100vh - 38px);
-		padding: 10px; /* Ajuste adicional */
+	  width: 70%;
+	  top: 38px;
+	  min-height: calc(100vh - 38px);
+	  padding: 10px; /* Ajuste adicional */
 	}
-
+  
 	.nav-btn {
-		display: none;
+	  display: none;
 	}
-}
+  }
+  

@@ -45,22 +45,22 @@ function Navbar({ visible, show }) {
   const handleSidebarToggle = () => {
     const newVisibility = !visible;
     show(newVisibility);
-    setOpenMenu(null); // Cerrar todos los menús al ocultar la barra lateral
+    setOpenMenu(null); // Cerrar todos los menús al ocultar la barra lateral - no
 
-    // Scroll al inicio de la página al expandir la barra lateral
+    // Scroll al inicio de la página al expandir la barra lateral - no
     if (newVisibility) {
       pageTopRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   const handleHomeClick = () => {
-    setOpenMenu(null); // Contraer todos los submenús al hacer clic en Inicio
+    setOpenMenu(null); // Contraer todos los submenús al hacer clic en Inicio - no
   };
 
   const handleClickOutside = (event) => {
     if (navRef.current && !navRef.current.contains(event.target)) {
       show(false);
-      setOpenMenu(null); // Cerrar todos los menús
+      setOpenMenu(null); // Cerrar todos los menús - no
     }
   };
 
@@ -102,13 +102,14 @@ function Navbar({ visible, show }) {
               <NavLink to="/Home" className="nav-link" onClick={handleHomeClick}>
                 <FaHome size={ICON_SIZE} />
                 <span>Inicio</span>
-                <span style={{ width: ICON_SIZE, display: 'inline-block' }}>&nbsp;</span>
+                {openMenu === 'inicio' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
+                <span style={{ width: ICON_SIZE, display: 'inline-block' }}></span>
               </NavLink>
             </div>
             <div className="nav-item">
               <div className="nav-link" onClick={() => toggleMenu('analytics')}>
                 <FaChartBar size={ICON_SIZE} />
-                <span>Analytics</span>
+                <span>BI Analytics</span>
                 {openMenu === 'analytics' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
               {openMenu === 'analytics' && (
@@ -122,28 +123,57 @@ function Navbar({ visible, show }) {
             <div className="nav-item">
               <div className="nav-link" onClick={() => toggleMenu('ecommerce')}>
                 <FaShoppingCart size={ICON_SIZE} />
-                <span>Ecommerce</span>
+                <span>Ccial & Mercadeo</span>
                 {openMenu === 'ecommerce' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
               {openMenu === 'ecommerce' && (
                 <ul className="submenu">
                   <li>
-                    <NavLink to="/ecommerce/Ragged" className="nav-link">Ragged</NavLink>
+                    <NavLink to="/ecommerce/Tiendas" className="nav-link">Tiendas</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/ecommerce/Vtex" className="nav-link">Vtex</NavLink>
+                    <NavLink to="/ecommerce/RaqStyle" className="nav-link">RaqStyle</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/ecommerce/VerCapsulas" className="nav-link">Ver Capsulas</NavLink>
+                    <NavLink to="/ecommerce/VerCapsulas" className="nav-link">Ecommerce</NavLink>
+                  </li>                  <li>
+                    <NavLink to="/ecommerce/VentaDirecta" className="nav-link">Venta Directa</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/ecommerce/Otros" className="nav-link">Otros</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/ecommerce/Consultas" className="nav-link">Consultas</NavLink>
                   </li>
                 </ul>
               )}
             </div>
             <div className="nav-item">
-              <div className="nav-link" onClick={() => toggleMenu('contabilidad')}>
+              <div className="nav-link" onClick={() => toggleMenu('compras')}>
+                <FaChartBar size={ICON_SIZE} />
+                <span>Compras</span>
+                {openMenu === 'compras' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
+              </div>
+            </div>
+            <div className="nav-item">
+              <div className="nav-link" onClick={() => toggleMenu('dlloProducto')}>
+                <FaChartBar size={ICON_SIZE} />
+                <span>Diseño & Dllo Productos</span>
+                {openMenu === 'dlloProducto' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
+              </div>
+            </div>
+            <div className="nav-item">
+              <div className="nav-link" onClick={() => toggleMenu('talentoHumano')}>
+                <FaChartBar size={ICON_SIZE} />
+                <span>Talento Humano</span>
+                {openMenu === 'talentoHumano' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
+              </div>
+            </div>
+            <div className="nav-item">
+              <div className="nav-link" onClick={() => toggleMenu('Financiero')}>
                 <FaCalculator size={ICON_SIZE} />
-                <span>Contabilidad</span>
-                {openMenu === 'contabilidad' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
+                <span>Financiero</span>
+                {openMenu === 'Financiero' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
               {openMenu === 'contabilidad' && (
                 <ul className="submenu">
@@ -156,14 +186,37 @@ function Navbar({ visible, show }) {
                 </ul>
               )}
             </div>
+            <div className="nav-item">
+              <div className="nav-link" onClick={() => toggleMenu('inventarios')}>
+                <FaChartBar size={ICON_SIZE} />
+                <span>inventarios</span>
+                {openMenu === 'Inventarios' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
+              </div>
+            </div>
+            <div className="nav-item">
+              <div className="nav-link" onClick={() => toggleMenu('manofactura')}>
+                <FaChartBar size={ICON_SIZE} />
+                <span>Manofactura</span>
+                {openMenu === 'manofactura' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
+              </div>
+            </div>
+            <div className="nav-item">
+              <div className="nav-link" onClick={() => toggleMenu('settings')}>
+                <FaChartBar size={ICON_SIZE} />
+                <span>Settings</span>
+                {openMenu === 'settings' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
+              </div>
+            </div>
+            <div className="nav-item">
+              <div className="nav-link" onClick={() => toggleMenu('admonMaestra')}>
+                <FaChartBar size={ICON_SIZE} />
+                <span>Administración Maestra</span>
+                {openMenu === 'settings' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
+              </div>
+            </div>
           </div>
         </div>
         <div className="links">
-          <NavLink to="/settings" className="nav-link">
-            <FaCog size={ICON_SIZE} />
-            <span>Settings</span>
-            <span style={{ width: ICON_SIZE, display: 'inline-block' }}>&nbsp;</span>
-          </NavLink>
           <NavLink to="/" className="nav-link" onClick={handleLogout}>
             <FaSignOutAlt size={ICON_SIZE} />
             <span>Logout</span>

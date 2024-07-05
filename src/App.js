@@ -10,7 +10,7 @@ import Bancos from './pages/Bancos';
 import TicketTable from './pages/VerCapsulas';
 import Footer from './components/Footer/Footer';
 import Layout from './pages/Layout';
-
+import MyMenu from './components/MyMenu/MyMenu';
 
 
 function App() {
@@ -94,7 +94,11 @@ function App() {
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
           </div>
         } />
-        
+        <Route path='/MyMenu' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+          <MyMenu />
+          </div>
+        } />
       </Routes>
       {shouldShowNavbar() && <Footer />}
     </div>
