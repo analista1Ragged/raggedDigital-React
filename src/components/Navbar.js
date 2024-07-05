@@ -186,7 +186,7 @@ function Navbar({ visible, show }) {
                 <span>Financiero</span>
                 {openMenu === 'Financiero' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
-              {openMenu === 'contabilidad' && (
+              {openMenu === 'Financiero' && (
                 <ul className="submenu">
                   <li>
                     <NavLink to="/contabilidad/Planos" className="nav-link">Planos</NavLink>
