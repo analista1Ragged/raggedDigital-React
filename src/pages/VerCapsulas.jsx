@@ -35,13 +35,18 @@ const TicketTable = () => {
   useEffect(() => {
     // Aquí puedes realizar la carga inicial de datos o configurar eventos
     // como la selección de una marca inicial si es necesario
+    console.log(selectedMarca);
     fetchData(selectedMarca);
   }, [selectedMarca]);
 
   const fetchData = async (marca) => {
-    // Aquí puedes implementar la lógica para obtener datos según la marca seleccionada
-    // Puedes usar axios o cualquier otra biblioteca para hacer la solicitud HTTP
-    // y luego actualizar el estado de los datos usando setData(transformData(response.data))
+    try {
+      const response = await fetch(`/api/data?marca=${marca}`);
+      const rawData = await response.json();
+      setData(transformData(rawData));
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   const handleFilterChange = (e) => {
@@ -78,8 +83,9 @@ const TicketTable = () => {
           {'  '}
           Buscar Productos
         </h2>
-        <Menu3Botones marca={selectedMarca} />
+        
         <FormBuscar setData={(rawData) => setData(transformData(rawData))} setSelectedMarca={setSelectedMarca} />
+        <Menu3Botones marca={selectedMarca} />
         <table>
           <thead>
             <tr className="color">
@@ -117,6 +123,3 @@ const TicketTable = () => {
 };
 
 export default TicketTable;
-
-
-

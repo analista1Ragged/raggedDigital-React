@@ -1,11 +1,10 @@
-// FormBuscar.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./FormBuscar.css";
 import BuscarButton from "../BotonBuscar/BotonBuscar";
 import Swal from 'sweetalert2';
 
-const FormBuscar = ({ setData }) => {
+const FormBuscar = ({ setData, setSelectedMarca }) => {
   const [miData, setMiData] = useState([]);
   const [ref, setRef] = useState('');
   const [selectedValue, setSelectedValue] = useState('');
@@ -56,6 +55,7 @@ const FormBuscar = ({ setData }) => {
   const handleSelectChange = async (e) => {
     const value = e.target.value;
     setSelectedValue(value);
+    setSelectedMarca(value); // Establecer la marca seleccionada en el componente padre
 
     // Aquí puedes llamar a fetchDataForSelectedValue si quieres cargar los datos inmediatamente al seleccionar
     // await fetchDataForSelectedValue();
@@ -71,7 +71,6 @@ const FormBuscar = ({ setData }) => {
         Swal.showLoading();
         const timer = Swal.getPopup().querySelector("b");
         timerInterval = setInterval(() => {
-          timer.textContent = `${Swal.getTimerLeft()}`;
         }, 100);
       },
       allowOutsideClick: false,
