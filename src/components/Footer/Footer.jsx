@@ -36,7 +36,7 @@ const Footer = () => {
         </div>
         </div>
         <div className="footer-column">
-          <h4>COMERCIALIZADORA RAGGED Y CIA S.A.S</h4>
+          <h4>COMERCIALIZADORA RAGGED Y CIA S.A.S.</h4>
           <p>NIT: 890.937.146-8</p>
         </div>
         <div className="footer-column">

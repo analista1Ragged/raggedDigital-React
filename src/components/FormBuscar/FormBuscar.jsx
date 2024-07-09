@@ -1,9 +1,12 @@
-// FormBuscar.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./FormBuscar.css";
 import BuscarButton from "../BotonBuscar/BotonBuscar";
 import Swal from 'sweetalert2';
+import { Select } from 'antd'; // Importa el componente Select de Ant Design
+import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
+
+const { Option } = Select;
 
 const FormBuscar = ({ setData }) => {
   const [miData, setMiData] = useState([]);
@@ -53,12 +56,8 @@ const FormBuscar = ({ setData }) => {
     }
   };
 
-  const handleSelectChange = async (e) => {
-    const value = e.target.value;
+  const handleSelectChange = (value) => {
     setSelectedValue(value);
-
-    // Aquí puedes llamar a fetchDataForSelectedValue si quieres cargar los datos inmediatamente al seleccionar
-    // await fetchDataForSelectedValue();
   };
 
   const BuscarClick = async () => {
@@ -90,20 +89,22 @@ const FormBuscar = ({ setData }) => {
       <div className="row justify-content-between">
         <div className="col-12 col-md-4">
           <label htmlFor="marca" className="label-spacing">Capsula</label>
-          <select
-            name="marca"
-            className="form-control"
-            required
+          <Select
+            showSearch
             value={selectedValue}
+            placeholder="Selecciona una Capsula"
             onChange={handleSelectChange}
+            filterOption={(input, option) =>
+              option.children.toLowerCase().includes(input.toLowerCase())
+            }
+            className="form-control ant-select-fixed-width" // Añade esta clase
           >
-            <option value="">Selecciona una Capsula</option>
             {miData.map((fila, index) => (
-              <option key={index} value={fila[1]}>
+              <Option key={index} value={fila[1]}>
                 {fila[0]}
-              </option>
+              </Option>
             ))}
-          </select>
+          </Select>
         </div>
         <div className="col-12 col-md-4">
           <label htmlFor="nombre" className="label-spacing">Referencia (opcional)</label>

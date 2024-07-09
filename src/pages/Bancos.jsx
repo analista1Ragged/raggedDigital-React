@@ -20,7 +20,7 @@ const Bancos = () => {
                 required
             />
             <Boton>
-                Generar paquete CSV
+                Generar Conciliación
             </Boton>
         </form>
     </section>

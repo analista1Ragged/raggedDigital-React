@@ -12,7 +12,7 @@ nav {
   }
   
   .navbar {
-	transform: translateX(-100%);
+	transform: translateX(-100%); /*abre la barra a la derecha*/
   }
   
   .nav-btn {
@@ -27,7 +27,7 @@ nav {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: #343a40;
+	background-color: #373738;
 	outline: none;
 	border: none;
 	font-size: 1rem;
@@ -112,4 +112,5 @@ nav {
 	  display: none;
 	}
   }
+  
   

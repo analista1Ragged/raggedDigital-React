@@ -29,11 +29,17 @@ import { NavLink } from "react-router-dom";
 import "../style/navbar.css";
 import { Menu, Button } from 'antd';
 
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+
+} from '@ant-design/icons';
+
 
 const ICON_SIZE = 20;
 
 function Navbar({ visible, show }) {
-  const [openMenu, setOpenMenu] = useState(null);
+  const [openMenu, setOpenMenu, collapsed, setCollapsed] = useState(false);
   const navRef = useRef();
   const pageTopRef = useRef(); // Referencia al inicio de la página
   //const history = useHistory();
@@ -55,9 +61,14 @@ function Navbar({ visible, show }) {
   };
 
   const handleSidebarToggle = () => {
+    
     const newVisibility = !visible;
     show(newVisibility);
     setOpenMenu(null); // Cerrar todos los menús al ocultar la barra lateral - no
+
+    const toggleCollapsed = () => {
+      setCollapsed(!collapsed);
+    };
 
     // Scroll al inicio de la página al expandir la barra lateral - no
     if (newVisibility) {
@@ -83,6 +94,7 @@ function Navbar({ visible, show }) {
     };
   }, []);
 
+  
 
   return (
     <>
@@ -90,8 +102,9 @@ function Navbar({ visible, show }) {
         <button
           className="mobile-nav-btn"
           onClick={handleSidebarToggle}
+          
         >
-          <FaBars size={24} />
+          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </button>
       </div>
       <nav ref={navRef} className={!visible ? 'navbar' : ''}>
@@ -99,6 +112,7 @@ function Navbar({ visible, show }) {
           type="button"
           className="nav-btn"
           onClick={handleSidebarToggle}
+          inlineCollapsed={collapsed}
         >
           {!visible ? <FaAngleRight size={30} /> : <FaAngleLeft size={30} />}
         </button>
@@ -172,6 +186,13 @@ function Navbar({ visible, show }) {
                 <span>Diseño & Dllo Productos</span>
                 {openMenu === 'dlloProducto' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
+              {openMenu === 'dlloProducto' && (
+                <ul className="submenu">
+                  <li>
+                    <NavLink to="/Productos" className="nav-link">Productos</NavLink>
+                  </li>
+                </ul>
+              )}
             </div>
             <div className="nav-item">
               <div className="nav-link" onClick={() => toggleMenu('talentoHumano')}>
@@ -201,7 +222,7 @@ function Navbar({ visible, show }) {
               <div className="nav-link" onClick={() => toggleMenu('inventarios')}>
                 <IoClipboardSharp size={ICON_SIZE} />
                 <span>Inventarios</span>
-                {openMenu === 'Inventarios' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
+                {openMenu === 'inventarios' ? <FaChevronUp size={ICON_SIZE} /> : <FaChevronDown size={ICON_SIZE} />}
               </div>
             </div>
             <div className="nav-item">

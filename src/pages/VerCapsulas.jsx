@@ -30,7 +30,7 @@ const TicketTable = () => {
     estado: ''
   });
   const [currentPage, setCurrentPage] = useState(1); // Estado para controlar la página actual
-  const pageSize = 10; // Tamaño de página, ajusta según sea necesario
+  const [pageSize, setPageSize] = useState(10); // Tamaño de página, ajusta según sea necesario
 
   useEffect(() => {
     // Aquí puedes realizar la carga inicial de datos o configurar eventos
@@ -66,8 +66,9 @@ const TicketTable = () => {
     )
     .slice(indexOfFirstItem, indexOfLastItem);
 
-  const handleChangePage = (page) => {
+  const handleChangePage = (page, size) => {
     setCurrentPage(page);
+    setPageSize(size);
   };
 
   return (
@@ -117,6 +118,3 @@ const TicketTable = () => {
 };
 
 export default TicketTable;
-
-
-

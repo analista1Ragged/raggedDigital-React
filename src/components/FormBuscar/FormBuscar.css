@@ -31,9 +31,20 @@
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
-  /*border-radius: 20px;*/ 
-  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
+
+#formBuscar .ant-select-selector {
+  font-size: 1.2rem; /* Ajusta el tamaño de la fuente según sea necesario */
+}
+
+#formBuscar .ant-select-fixed-width .ant-select-selector {
+  width: 350px; /* Ajusta el tamaño según tus necesidades */
+  border: none;
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+}
+
 
 .form-control {
   display: block;
@@ -85,12 +96,3 @@
     justify-content: center;
   }
 }
-
-
-
-
-
-
-
-  
-  

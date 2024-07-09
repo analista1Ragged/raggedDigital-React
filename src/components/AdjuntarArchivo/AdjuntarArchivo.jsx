@@ -35,11 +35,9 @@ const AdjuntarArchivo = () => {
           htmlFor="customFile"
           style={{
             border: '1px solid #ccc',
-            borderRadius: '5px',
-            padding: '5px 100px',
-            backgroundColor: '#f0f0f0',
-            marginBottom: '10px' // Espacio hacia abajo entre el input y el label
+            padding: '8px 12px', // Ajusta el padding para un tamaño más adecuado
           }}
+          onClick={handleButtonClick} // Hace clic en el input file al hacer clic en el label
         >
           {fileName}
         </label>

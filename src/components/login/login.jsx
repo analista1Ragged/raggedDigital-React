@@ -6,6 +6,7 @@ import Boton from "../Boton/Boton";
 import { useNavigate } from "react-router-dom";
 import { Alert } from 'antd'; // Importa el componente de alerta de Ant Design
 import 'antd/dist/reset.css'; // Importa los estilos CSS predeterminados de Ant Design
+import TDiggital from '../../assets/Images/TDiggital.png'
 
 const Login = (props) => {
     const [usuario, actualizarNombre] = useState("");
@@ -64,6 +65,9 @@ const Login = (props) => {
             </div>
             <form onSubmit={manejarEnvio}>
                 <div className="form-container">
+                    <div>
+                    <img src={TDiggital} alt="TDiggital" className="TDiggital"/>
+                    </div>
                     <h2>¡Bienvenido a Ragged Digital!</h2>
                     <CampoTexto
                         titulo="Usuario"

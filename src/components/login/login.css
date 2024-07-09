@@ -30,6 +30,33 @@
     justify-content: center; /* Centra los elementos hijos */
 }
 
+.image-wrapper {
+    display: flex;
+    justify-content: center; /* Centra la imagen horizontalmente */
+    margin-bottom: 5px; /* Ajusta el margen inferior del contenedor */
+}
+
+.TDiggital {
+    max-width: 60%; /* Establece un ancho máximo para la imagen */
+    height: auto; /* Mantiene la proporción de aspecto de la imagen */
+    display: block; /* Asegura que la imagen sea un elemento de bloque para centrado */
+    margin-bottom: 5px; /* Ajusta el margen inferior de la imagen */
+}
+
+
+@media (max-width: 768px) {
+    .TDiggital {
+        max-width: 150px; /* Ajusta el ancho máximo en pantallas más pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .TDiggital {
+        max-width: 100px; /* Ajusta el ancho máximo en pantallas aún más pequeñas */
+    }
+}
+
+
 .image-container, .form-container {
     flex: 1;
     min-width: 300px;
@@ -38,6 +65,10 @@
 .image-container img {
     width: 100%;
     border-radius: 20px;
+}
+
+image-container TDiggital{
+    max-width: 50%;
 }
 
 @media (max-width: 1024px) {
