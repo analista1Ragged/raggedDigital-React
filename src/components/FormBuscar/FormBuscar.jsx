@@ -8,7 +8,7 @@ import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant De
 
 const { Option } = Select;
 
-const FormBuscar = ({ setData }) => {
+const FormBuscar = ({ setData, setSelectedMarca }) => {
   const [miData, setMiData] = useState([]);
   const [ref, setRef] = useState('');
   const [selectedValue, setSelectedValue] = useState('');
@@ -70,7 +70,6 @@ const FormBuscar = ({ setData }) => {
         Swal.showLoading();
         const timer = Swal.getPopup().querySelector("b");
         timerInterval = setInterval(() => {
-          timer.textContent = `${Swal.getTimerLeft()}`;
         }, 100);
       },
       allowOutsideClick: false,

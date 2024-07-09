@@ -5,6 +5,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 const handleUpload = async (marca) => {
+  console.log(marca, 'madafaka');
   // Mostrar el cuadro de diálogo de confirmación antes de subir productos
   const confirmacion = await Swal.fire({
     title: "Esta seguro de subir el archivo?",
