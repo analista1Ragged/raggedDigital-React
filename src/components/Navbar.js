@@ -98,10 +98,12 @@ function Navbar({ visible, show }) {
 
   return (
     <>
-      <div className={`custom-menu ${collapsed ? 'collapsed' : ''}`}>
+      <div className="mobile-nav">
         <button
-          onClick={handleSidebarToggle} className="nav-btn">
+          className="mobile-nav-btn"
+          onClick={handleSidebarToggle}
           
+        >
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </button>
       </div>
@@ -259,8 +261,6 @@ function Navbar({ visible, show }) {
     </>
   );
 }
-
-
 
 export default Navbar;
 

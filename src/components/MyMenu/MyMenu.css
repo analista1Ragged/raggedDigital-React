@@ -1,5 +1,5 @@
 .custom-menu{
-  width: 250px; /* Ancho inicial de la barra lateral */
+  width: 300px; /* Ancho inicial de la barra lateral */
 	/*height: 100vh;*/
 	/*background-color: #f4f4f4;*/
 	position: fixed;
@@ -7,7 +7,8 @@
 	top: 0;
 	padding: 20px;
   position: absolute;
-
+  z-index: 1000; /* Ajusta el z-index según sea necesario para que esté por encima de otros elementos */
+  
   
 }
 
@@ -29,13 +30,13 @@
 .custom-menu .ant-menu-item-selected a,
 .custom-menu .ant-menu-submenu-title:hover,
 .custom-menu .ant-menu-item-selected .ant-menu-submenu-title {
-  color: #000 !important; /* Color del texto al pasar el cursor */
+  color: rgb(37, 150, 190);/* Color del texto al pasar el cursor */
   
 }
 
 .custom-menu .ant-menu-item:hover .anticon,
 .custom-menu .ant-menu-item-selected .anticon {
-  color: #000 !important; /* Color del icono al pasar el cursor */
+  color: rgb(37, 150, 190); /* Color del icono al pasar el cursor */
   
 }
 

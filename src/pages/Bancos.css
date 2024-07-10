@@ -1,8 +1,7 @@
 .formulario {
     display: flex;
     justify-content: center;
-    
-    
+    margin-bottom: 40px; /* Ajusta este valor según el espacio que desees entre el formulario y el footer */
 }
 
 .formulario form {
@@ -11,30 +10,27 @@
     box-shadow: 7px 7px 15px rgba(0, 0, 0, 25%);
     border-radius: 20px;
     padding: 8px 170px;
-    
 }
 
 .formulario h2 {
     font-size: 32px;
     font-weight: 400;
     color: #212121;
-    
 }
 
 .container {
     display: flex;
     width: 100%;
-    
 }
 
 .image-container, .form-container {
     flex: 1;
-    
 }
 
 .image-container img {
     width: 100%;
     height: auto;
-    
 }
+
+
 
