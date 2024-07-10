@@ -98,7 +98,7 @@
   .footer-column {
     width: 100%; /* Ocupa todo el ancho disponible */
     text-align: center; /* Alineación del texto al centro */
-    margin-bottom: 20px; /* Espaciado inferior */
+    margin-bottom: 10px; /* Espaciado inferior */
   }
 
   .social-media {

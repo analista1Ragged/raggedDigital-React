@@ -42,7 +42,7 @@ function Navbar({ visible, show }) {
   const [openMenu, setOpenMenu, collapsed, setCollapsed] = useState(false);
   const navRef = useRef();
   const pageTopRef = useRef(); // Referencia al inicio de la página
-  //const history = useHistory();
+
 
   const handleLogout = () => {
     // Limpiar datos de sesión (localStorage, cookies, etc.)
@@ -98,12 +98,10 @@ function Navbar({ visible, show }) {
 
   return (
     <>
-      <div className="mobile-nav">
+      <div className={`custom-menu ${collapsed ? 'collapsed' : ''}`}>
         <button
-          className="mobile-nav-btn"
-          onClick={handleSidebarToggle}
+          onClick={handleSidebarToggle} className="nav-btn">
           
-        >
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </button>
       </div>
@@ -261,6 +259,8 @@ function Navbar({ visible, show }) {
     </>
   );
 }
+
+
 
 export default Navbar;
 

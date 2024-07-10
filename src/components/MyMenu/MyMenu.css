@@ -1,0 +1,42 @@
+.custom-menu{
+  width: 250px; /* Ancho inicial de la barra lateral */
+	/*height: 100vh;*/
+	/*background-color: #f4f4f4;*/
+	position: fixed;
+	left: 0;
+	top: 0;
+	padding: 20px;
+  position: absolute;
+
+  
+}
+
+
+.custom-menu .ant-menu-item,
+.custom-menu .ant-menu-submenu-title {
+  color: #fff; /* Color del texto por defecto */
+  
+}
+
+.custom-menu .ant-menu-item:hover,
+.custom-menu .ant-menu-submenu-title:hover,
+.custom-menu .ant-menu-item-selected {
+  background-color: #fff; /* Color de fondo al pasar el cursor */
+  
+}
+
+.custom-menu .ant-menu-item:hover a,
+.custom-menu .ant-menu-item-selected a,
+.custom-menu .ant-menu-submenu-title:hover,
+.custom-menu .ant-menu-item-selected .ant-menu-submenu-title {
+  color: #000 !important; /* Color del texto al pasar el cursor */
+  
+}
+
+.custom-menu .ant-menu-item:hover .anticon,
+.custom-menu .ant-menu-item-selected .anticon {
+  color: #000 !important; /* Color del icono al pasar el cursor */
+  
+}
+
+
