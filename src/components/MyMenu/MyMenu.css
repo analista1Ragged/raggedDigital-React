@@ -5,7 +5,7 @@
 	position: fixed;
 	left: 0;
 	top: 0;
-	padding: 20px;
+	padding: 5px;
   position: absolute;
   z-index: 1000; /* Ajusta el z-index según sea necesario para que esté por encima de otros elementos */
   
@@ -30,7 +30,7 @@
 .custom-menu .ant-menu-item-selected a,
 .custom-menu .ant-menu-submenu-title:hover,
 .custom-menu .ant-menu-item-selected .ant-menu-submenu-title {
-  color: rgb(37, 150, 190);/* Color del texto al pasar el cursor */
+  color: #41D9A1/* Color del texto al pasar el cursor */
   
 }
 

@@ -128,7 +128,7 @@ const menuItems = [
   },
   {
     key: "9",
-    title: "Manofactura",
+    title: "Manufactura",
     icon: <IoCubeOutline />,
     path: "/ecommerce/Ragged",
   },

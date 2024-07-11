@@ -11,6 +11,7 @@ import TicketTable from './pages/VerCapsulas';
 import Footer from './components/Footer/Footer';
 import Layout from './pages/Layout';
 import MyMenu from './components/MyMenu/MyMenu';
+import MyForm from './components/SeleccionarFecha';
 
 
 function App() {
@@ -96,6 +97,11 @@ function App() {
         <Route path='/MyMenu' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
           <MyMenu />
+          </div>
+        } />
+        <Route path='/Prueba' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+          <MyForm />
           </div>
         } />
 
