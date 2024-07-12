@@ -23,6 +23,7 @@
 .custom-menu .ant-menu-submenu-title:hover,
 .custom-menu .ant-menu-item-selected {
   background-color: #fff; /* Color de fondo al pasar el cursor */
+  color: #41D9A1; /* Color del texto por defecto */
   
 }
 
