@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import "./style/index.css";
 import Home from './pages/Home';
@@ -13,6 +13,12 @@ import MyMenu from './components/MyMenu/MyMenu';
 import MyForm from './components/SeleccionarFecha/SeleccionarFecha';
 import CheckboxForm from './components/Checkbox/Checkbox';
 import Tabla from './components/Tabla/Tabla';
+import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
+
+const PrivateRoute = ({ element }) => {
+  const { auth } = useContext(AuthContext);
+  return auth.isAuthenticated ? element : <Navigate to="/Login" />;
+};
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -34,74 +40,94 @@ function App() {
           </div>
         } />
         <Route path='/Home' element={
-          <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <Home />
-          </div>
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <Home />
+            </div>
+          } />
         } />
         <Route path='/analytics' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
           </div>
         } />
         <Route path='/analytics/Reporte' element={
-          <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <ReportePB />
-          </div>
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <ReportePB />
+            </div>
+          } />
         } />
         <Route path='/ecommerce' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
           </div>
         } />
         <Route path='/ecommerce/Ragged' element={
-          <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <PaginaMtto />
-          </div>
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <PaginaMtto />
+            </div>
+          } />
         } />
         <Route path='/ecommerce/Vtex' element={
-          <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <PaginaMtto />
-          </div>
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <PaginaMtto />
+            </div>
+          } />
         } />
         <Route path='/ecommerce/VerCapsulas' element={
-          <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <TicketTable />
-          </div>
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <TicketTable />
+            </div>
+          } />
         } />
         <Route path='/contabilidad' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
           </div>
         } />
         <Route path='/contabilidad/Planos' element={
-          <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <PaginaMtto />
-          </div>
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <PaginaMtto />
+            </div>
+          } />
         } />
         <Route path='/contabilidad/Bancos' element={
-          <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <Bancos />
-          </div>
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <Bancos />
+            </div>
+          } />
         } />
         <Route path='/Settings' element={
-          <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <PaginaMtto />
-          </div>
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <PaginaMtto />
+            </div>
+          } />
         } />
         <Route path='/layout' element={
-          <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <Layout />
-          </div>
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <Layout />
+            </div>
+          } />
         } />
         <Route path='/CerrarSesion' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
           </div>
         } />
         <Route path='/MyMenu' element={
-          <div className={!navVisible ? "page" : "page page-with-navbar"}>
-          <MyMenu />
-          </div>
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <MyMenu />
+            </div>
+          } />
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-          <Tabla />
+            <Tabla />
           </div>
         } />
       </Routes>
@@ -113,7 +139,9 @@ function App() {
 function AppWrapper() {
   return (
     <BrowserRouter>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </BrowserRouter>
   );
 }
