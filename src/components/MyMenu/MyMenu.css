@@ -36,7 +36,7 @@
 
 .custom-menu .ant-menu-item:hover .anticon,
 .custom-menu .ant-menu-item-selected .anticon {
-  color: rgb(37, 150, 190); /* Color del icono al pasar el cursor */
+  color: #41D9A1 /* Color del icono al pasar el cursor */
   
 }
 

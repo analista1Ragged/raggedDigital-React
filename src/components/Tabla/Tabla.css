@@ -1,0 +1,67 @@
+/* Tabla.css */
+
+.custom-select {
+    width: 100%; /* Ajusta este valor según sea necesario */
+    max-width: 150px; /* Ejemplo de máximo ancho para el select */
+  }
+  
+  .inline-components {
+    display: flex;
+    align-items: center; /* Alinear los componentes verticalmente en el centro */
+    justify-content: space-between; /* Espacio uniforme entre los componentes */
+    margin-bottom: 20px; /* Ajusta el margen inferior entre los componentes y la tabla */
+  }
+  
+  .component-item {
+    flex: 1; /* Opcional: para que todos los componentes tengan el mismo tamaño */
+    margin-right: 10px; /* Ajusta el margen entre los componentes */
+  }
+  
+  .ticket-table {
+    margin: 20px auto;
+    max-width: 95%;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .color {
+    color: #ffffff;
+    text-align: center;
+    font-weight: normal;
+  }
+  
+  .ticket-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .ticket-table th,
+  .ticket-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center; /* Alinea el texto en el centro */
+  }
+  
+  .ticket-table th {
+    background-color: #343a40;
+    color: #ffffff; /* Color del texto en las cabeceras */
+  }
+  
+  .ticket-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .ticket-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  section {
+    padding: 50px 10px;
+    border-radius: 20px;
+    margin: 0 auto;
+    width: 90%; /* Ajusta el ancho del contenedor principal */
+    max-width: 1200px; /* Ajusta el ancho máximo del contenedor principal */
+    margin-bottom: 300px; /* Ajusta el espacio entre el contenedor y el footer */
+  }
+  
+  
