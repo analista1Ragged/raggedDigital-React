@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Navbar from "./components/Navbar";
 import "./style/index.css";
 import Home from './pages/Home';
 import ReportePB from './pages/reportePB';
@@ -11,7 +10,9 @@ import TicketTable from './pages/VerCapsulas';
 import Footer from './components/Footer/Footer';
 import Layout from './pages/Layout';
 import MyMenu from './components/MyMenu/MyMenu';
-
+import MyForm from './components/SeleccionarFecha/SeleccionarFecha';
+import CheckboxForm from './components/Checkbox/Checkbox';
+import Tabla from './components/Tabla/Tabla';
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -24,10 +25,9 @@ function App() {
 
   return (
     <div className="App">
-      {shouldShowNavbar() && <Navbar visible={navVisible} show={showNavbar} />}
+      {shouldShowNavbar() && <MyMenu visible={navVisible} show={showNavbar} />}
       <Routes>
         <Route path="/" element={<Navigate to="/Login" />} />
-        
         <Route path='/Login' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <Login />
@@ -99,8 +99,11 @@ function App() {
           <MyMenu />
           </div>
         } />
-
-
+        <Route path='/Prueba' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+          <Tabla />
+          </div>
+        } />
       </Routes>
       {shouldShowNavbar() && <Footer />}
     </div>
@@ -116,4 +119,3 @@ function AppWrapper() {
 }
 
 export default AppWrapper;
-
