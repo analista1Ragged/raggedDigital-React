@@ -27,11 +27,12 @@ const Login = (props) => {
     const manejarEnvio = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://127.0.0.1:5000/logon', {
+            const response = await axios.post('http://localhost:5000/logon', {
                 usuario: usuario,
                 contrasena: contrasena
             });
             if (response.data.message === "success") {
+                sessionStorage.setItem('log', usuario);
                 setMostrarExito(true); // Mostrar alerta de éxito
                 setTimeout(() => {
                     setMostrarExito(false); // Ocultar alerta de éxito después de 1000ms
