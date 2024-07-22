@@ -21,12 +21,9 @@
     "react-router-dom": "^6.24.0",
     "react-scripts": "5.0.1",
     "react-select": "^5.8.0",
-    "stream-browserify": "^3.0.0",
-    "stream-browserify": "^3.0.0",
+
     "sweetalert2": "^11.12.1",
     "sweetalert2-react-content": "^5.0.7",
-    "web-vitals": "^2.1.4",
-    "xlsx": "^0.18.5"
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
