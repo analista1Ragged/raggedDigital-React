@@ -198,7 +198,9 @@ const MyMenu = () => {
         onOpenChange={handleOpenChange}
         style={{ backgroundColor: "#373738", fontSize: "16px" }}
       >
-        <img src={require("../../assets/Images/Logo.png")} alt="logo" />
+        <NavLink to="/Home">
+          <img src={require("../../assets/Images/Logo.png")} alt="logo" />
+        </NavLink>
         {menuItems.map((item) =>
           !item.children ? (
             <Menu.Item key={item.key} icon={item.icon}>

@@ -31,19 +31,13 @@ const Login = (props) => {
     const manejarEnvio = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://127.0.0.1:5000/logon', {
+            const response = await axios.post('http://localhost:5000/logon', {
                 usuario: usuario,
                 contrasena: contrasena
             });
 
             if (response.data.message === "success") {
-                const token = response.data.token; // Suponiendo que el token viene en la respuesta
-                const user = response.data.user; // Suponiendo que la información del usuario viene en la respuesta
-
-                // Almacenar el token y la información del usuario en localStorage
-                localStorage.setItem('token', token);
-                localStorage.setItem('user', JSON.stringify(user));
-
+                sessionStorage.setItem('log', usuario);
                 setMostrarExito(true); // Mostrar alerta de éxito
                 setTimeout(() => {
                     setMostrarExito(false); // Ocultar alerta de éxito después de 1500ms

@@ -1,20 +1,32 @@
 import React, { useState, useRef } from 'react';
+import * as XLSX from 'xlsx';
 
-const AdjuntarArchivo = () => {
+const AdjuntarArchivo = ({ setFile }) => {
   const [fileName, setFileName] = useState("Seleccionar archivo...");
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+        setFile(worksheet);
+      };
+      reader.readAsArrayBuffer(file);
       setFileName(file.name);
     } else {
       setFileName("Seleccionar archivo...");
+      setFile(null);
     }
   };
 
-  const handleButtonClick = () => {
-    fileInputRef.current.click(); // Hace clic en el input file para abrir el selector de archivos
+  const handleButtonClick = (event) => {
+    event.preventDefault();
+    fileInputRef.current.click(); // Open the file selector dialog
   };
 
   return (
@@ -26,7 +38,7 @@ const AdjuntarArchivo = () => {
           className="custom-file-input"
           id="customFile"
           name="archivo"
-          style={{ display: 'none' }} // Oculta visualmente el input file
+          style={{ display: 'none' }} // Hide the file input element
           accept=".xls, .xlsx"
           onChange={handleFileChange}
         />
@@ -35,9 +47,9 @@ const AdjuntarArchivo = () => {
           htmlFor="customFile"
           style={{
             border: '1px solid #ccc',
-            padding: '8px 12px', // Ajusta el padding para un tamaño más adecuado
+            padding: '8px 12px', // Adjust the padding for a better size
           }}
-          onClick={handleButtonClick} // Hace clic en el input file al hacer clic en el label
+          onClick={handleButtonClick} // Open the file selector when the label is clicked
         >
           {fileName}
         </label>
