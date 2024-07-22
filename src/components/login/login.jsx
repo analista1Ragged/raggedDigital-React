@@ -10,6 +10,7 @@ import TDiggital from '../../assets/Images/TDiggital.png';
 import { AuthContext } from "../../context/AuthContext"; // Importa el contexto de autenticación
 
 
+
 const Login = (props) => {
     const [usuario, actualizarNombre] = useState("");
     const [contrasena, actualizarContrasena] = useState("");

@@ -10,10 +10,11 @@ import TicketTable from './pages/VerCapsulas';
 import Footer from './components/Footer/Footer';
 import Layout from './pages/Layout';
 import MyMenu from './components/MyMenu/MyMenu';
-import MyForm from './components/SeleccionarFecha/SeleccionarFecha';
-import CheckboxForm from './components/Checkbox/Checkbox';
+//import MyForm from './components/SeleccionarFecha/SeleccionarFecha';
+//import CheckboxForm from './components/Checkbox/Checkbox';
 import Tabla from './components/Tabla/Tabla';
 import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
+
 
 const PrivateRoute = ({ element }) => {
   const { auth } = useContext(AuthContext);
@@ -40,11 +41,10 @@ function App() {
           </div>
         } />
         <Route path='/Home' element={
-          <PrivateRoute element={
+
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
               <Home />
             </div>
-          } />
         } />
         <Route path='/analytics' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>

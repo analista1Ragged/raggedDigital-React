@@ -11,7 +11,7 @@ import CampoTexto from '../CampoTexto';
 import BuscarButton from '../BotonBuscar/BotonBuscar';
 import SeleccionarFecha from '../SeleccionarFecha/SeleccionarFecha'
 import CheckboxForm from '../Checkbox/Checkbox';
-
+import MyCollapse from '../MyCollapse/MyCollapse';
 
 
 const Tabla = () => {
@@ -69,6 +69,7 @@ const Tabla = () => {
           <BuscarButton className="component-item" />
         </div>
           <CheckboxForm/>
+          <MyCollapse/>
 
 
         <table>
