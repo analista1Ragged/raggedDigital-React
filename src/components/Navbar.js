@@ -4,9 +4,7 @@ import {
   FaAngleLeft,
   FaChartBar,
   FaShoppingCart,
-  FaCog,
   FaSignOutAlt,
-  FaBars,
   FaChevronDown,
   FaChevronUp,
   FaHome,
@@ -27,7 +25,7 @@ import {
 
 import { NavLink } from "react-router-dom";
 import "../style/navbar.css";
-import { Menu, Button } from 'antd';
+//import { Menu, Button } from 'antd';
 
 import {
   MenuFoldOutlined,
@@ -42,7 +40,7 @@ function Navbar({ visible, show }) {
   const [openMenu, setOpenMenu, collapsed, setCollapsed] = useState(false);
   const navRef = useRef();
   const pageTopRef = useRef(); // Referencia al inicio de la página
-  //const history = useHistory();
+
 
   const handleLogout = () => {
     // Limpiar datos de sesión (localStorage, cookies, etc.)
@@ -66,9 +64,6 @@ function Navbar({ visible, show }) {
     show(newVisibility);
     setOpenMenu(null); // Cerrar todos los menús al ocultar la barra lateral - no
 
-    const toggleCollapsed = () => {
-      setCollapsed(!collapsed);
-    };
 
     // Scroll al inicio de la página al expandir la barra lateral - no
     if (newVisibility) {

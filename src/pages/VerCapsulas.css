@@ -50,11 +50,11 @@
 }
 
 section {
-  padding: 15px 10px;
+  padding: 50px 10px;
   border-radius: 20px;
   margin: 0 auto;
   width: 90%; /* Ajusta el ancho del contenedor */
   max-width: 1200px; /* Ajusta el ancho máximo del contenedor */
-  background-color: #f2f4f8 !important; /* Fondo login */
-  margin-bottom: 330px; /* Aumenta el espacio entre el contenedor y el footer */
+  /* background-color: #f2f4f8 !important; Fondo login */
+  margin-bottom: 300px; /* Aumenta el espacio entre el contenedor y el footer */
 }

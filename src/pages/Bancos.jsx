@@ -83,3 +83,7 @@ const Bancos = () => {
 };
 
 export default Bancos;
+  );
+};
+
+export default Bancos;

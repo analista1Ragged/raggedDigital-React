@@ -8,11 +8,15 @@ nav {
 	min-height: 100vh;
 	background-color: #373738;
 	padding: 2rem 1rem 1rem 1rem;
-	transition: transform 0.5s, width 0.5s;
+	transition: width 0.5s, transform 0.5s;
   }
   
   .navbar {
 	transform: translateX(-100%); /*abre la barra a la derecha*/
+  }
+
+  .custom-menu.collapsed {
+	width: 80px; /* Ajusta según sea necesario */
   }
   
   .nav-btn {
@@ -112,5 +116,6 @@ nav {
 	  display: none;
 	}
   }
+  
   
   
