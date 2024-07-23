@@ -1,7 +1,7 @@
 import React from 'react';
 
-const FilterRow = ({ filters, handleFilterChange }) => {
-  const columns = ['referencia', 'descripcion', 'categoria', 'estado', 'valorFactura'];
+const FilterRowCartera = ({ filtersCartera, handleFilter}) => {
+  const columns = ['cedula', 'nombre', 'fecha','fechaVenc', 'nroFactura', 'valorFactura', 'valorAbono', 'diasCartera', 'nroNotaCredito', 'valorNotaCredito', 'saldoFactura'];
 
   return (
     <tr id="filterRow">
@@ -13,8 +13,8 @@ const FilterRow = ({ filters, handleFilterChange }) => {
             className="form-control"
             placeholder={`Buscar por ${column}`}
             name={column}
-            value={filters[column]}
-            onChange={handleFilterChange}
+            value={filtersCartera[column]}
+            onChange={handleFilter}
           />
         </th>
       ))}
@@ -22,4 +22,4 @@ const FilterRow = ({ filters, handleFilterChange }) => {
   );
 };
 
-export default FilterRow;
+export default FilterRowCartera;
