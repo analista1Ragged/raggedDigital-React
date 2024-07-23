@@ -146,7 +146,7 @@ function App() {
 
 function AppWrapper() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/RaggedDigital">
       <AuthProvider>
         <App />
       </AuthProvider>
@@ -155,3 +155,4 @@ function AppWrapper() {
 }
 
 export default AppWrapper;
+
