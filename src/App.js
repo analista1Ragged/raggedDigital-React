@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import React, { useState, useContext, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import "./style/index.css";
 import Home from './pages/Home';
 import ReportePB from './pages/reportePB';
@@ -10,15 +10,27 @@ import TicketTable from './pages/VerCapsulas';
 import Footer from './components/Footer/Footer';
 import Layout from './pages/Layout';
 import MyMenu from './components/MyMenu/MyMenu';
-//import MyForm from './components/SeleccionarFecha/SeleccionarFecha';
-//import CheckboxForm from './components/Checkbox/Checkbox';
 import Tabla from './components/Tabla/Tabla';
 import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
 
-
 const PrivateRoute = ({ element }) => {
-  const { auth } = useContext(AuthContext);
-  return auth.isAuthenticated ? element : <Navigate to="/Login" />;
+  const isAuthenticated = sessionStorage.getItem('log');
+  return isAuthenticated ? element : <Navigate to="/Login" />;
+};
+
+const CerrarSesion = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Borrar la variable 'log' del sessionStorage
+    sessionStorage.removeItem('log');
+    
+    // Redirigir a la página de login
+    navigate('/Login');
+  }, [navigate]);
+
+  // Renderizar null porque no se necesita mostrar nada
+  return null;
 };
 
 function App() {
@@ -41,10 +53,9 @@ function App() {
           </div>
         } />
         <Route path='/Home' element={
-
-            <div className={!navVisible ? "page" : "page page-with-navbar"}>
-              <Home />
-            </div>
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <Home />
+          </div>
         } />
         <Route path='/analytics' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
@@ -114,10 +125,7 @@ function App() {
             </div>
           } />
         } />
-        <Route path='/CerrarSesion' element={
-          <div className={!navVisible ? "page" : "page page-with-navbar"}>
-          </div>
-        } />
+        <Route path='/CerrarSesion' element={<CerrarSesion />} />
         <Route path='/MyMenu' element={
           <PrivateRoute element={
             <div className={!navVisible ? "page" : "page page-with-navbar"}>

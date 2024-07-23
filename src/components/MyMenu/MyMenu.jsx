@@ -9,7 +9,7 @@ import {
 import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator } from "react-icons/fa";
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const { SubMenu } = Menu;
 
@@ -149,6 +149,7 @@ const menuItems = [
     title: "Logout",
     icon: <FaSignOutAlt />,
     path: "/",
+    onClick: 'handleLogout',
   },
 ];
 
@@ -156,6 +157,7 @@ const MyMenu = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [openKeys, setOpenKeys] = useState([]);
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -181,6 +183,14 @@ const MyMenu = () => {
     setOpenKeys(keys);
   };
 
+  const handleLogout = () => {
+    // Borrar la variable 'log' del sessionStorage
+    sessionStorage.removeItem('log');
+    
+    // Redirigir a la página de login
+    navigate('/Login');
+  };
+
   return (
     <div ref={menuRef} className={`custom-menu ${collapsed ? 'collapsed' : ''}`}>
       <Button
@@ -204,9 +214,17 @@ const MyMenu = () => {
         {menuItems.map((item) =>
           !item.children ? (
             <Menu.Item key={item.key} icon={item.icon}>
-              <NavLink to={item.path} exact activeClassName="ant-menu-item-selected">
-                {item.title}
-              </NavLink>
+              {item.title === "Logout" ? (
+                <div onClick={handleLogout}>
+                  <NavLink to={item.path} exact activeClassName="ant-menu-item-selected">
+                    {item.title}
+                  </NavLink>
+                </div>
+              ) : (
+                <NavLink to={item.path} exact activeClassName="ant-menu-item-selected">
+                  {item.title}
+                </NavLink>
+              )}
             </Menu.Item>
           ) : (
             <SubMenu key={item.key} icon={item.icon} title={item.title}>
