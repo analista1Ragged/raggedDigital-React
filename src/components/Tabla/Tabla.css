@@ -63,5 +63,25 @@
     max-width: 1200px; /* Ajusta el ancho máximo del contenedor principal */
     margin-bottom: 300px; /* Ajusta el espacio entre el contenedor y el footer */
   }
+
+  .table-flex {
+    display: table;
+    width: 100px ;
+  }
+  
+  .table-flex thead {
+    display: table-header-group;
+  }
+  
+  .table-flex th, .table-flex td {
+    display: table-cell;
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .table-flex th {
+    flex: 1;
+  }
+  
   
   

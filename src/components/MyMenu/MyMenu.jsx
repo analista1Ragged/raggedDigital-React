@@ -24,7 +24,7 @@ const menuItems = [
     key: "2",
     title: "BI Analitycs",
     icon: <FaChartBar />,
-    children: [
+    items: [
       {
         key: "2.1",
         title: "Reporte PB",
@@ -37,7 +37,7 @@ const menuItems = [
     key: "3",
     title: "Ccial & Mercadeo",
     icon: <FaShoppingCart />,
-    children: [
+    items: [
       {
         key: "3.1",
         title: "Tiendas",
@@ -86,7 +86,7 @@ const menuItems = [
     key: "5",
     title: "Diseño & Dllo Productos",
     icon: <IoShirtSharp />,
-    children: [
+    items: [
       {
         key: "5.1",
         title: "Productos",
@@ -105,7 +105,7 @@ const menuItems = [
     key: "7",
     title: "Financiero",
     icon: <FaCalculator />,
-    children: [
+    items: [
       {
         key: "7.1",
         title: "Planos",
@@ -202,7 +202,7 @@ const MyMenu = () => {
           <img src={require("../../assets/Images/Logo.png")} alt="logo" />
         </NavLink>
         {menuItems.map((item) =>
-          !item.children ? (
+          !item.items ? (
             <Menu.Item key={item.key} icon={item.icon}>
               <NavLink to={item.path} exact activeClassName="ant-menu-item-selected">
                 {item.title}
@@ -210,8 +210,8 @@ const MyMenu = () => {
             </Menu.Item>
           ) : (
             <SubMenu key={item.key} icon={item.icon} title={item.title}>
-              {item.children.map((subItem) =>
-                !subItem.children ? (
+              {item.items.map((subItem) =>
+                !subItem.items ? (
                   <Menu.Item key={subItem.key} icon={subItem.icon}>
                     <NavLink to={subItem.path} exact activeClassName="ant-menu-item-selected">
                       {subItem.title}
@@ -219,7 +219,7 @@ const MyMenu = () => {
                   </Menu.Item>
                 ) : (
                   <SubMenu key={subItem.key} icon={subItem.icon} title={subItem.title}>
-                    {subItem.children.map((subSubItem) => (
+                    {subItem.items.map((subSubItem) => (
                       <Menu.Item key={subSubItem.key} icon={subSubItem.icon}>
                         <NavLink to={subSubItem.path} exact activeClassName="ant-menu-item-selected">
                           {subSubItem.title}

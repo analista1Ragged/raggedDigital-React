@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, DatePicker, Switch,} from 'antd';
-//import moment from 'moment';
+
 
 
 const MyForm = () => {
@@ -27,7 +27,7 @@ const MyForm = () => {
         <DatePicker
           //showTime para colocar la hora
           //value={formState.date1 ? moment(formState.date1) : null}
-          placeholder="Fecha de Generación"
+          //placeholder="Fecha de Generación"
           onChange={(date) => handleChange('date1', date)}
           style={{ width: '150%' }}
         />
