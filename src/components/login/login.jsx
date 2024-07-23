@@ -38,6 +38,7 @@ const Login = (props) => {
 
             if (response.data.message === "success") {
                 sessionStorage.setItem('log', usuario);
+                //sessionStorage.removeItem('log');
                 setMostrarExito(true); // Mostrar alerta de éxito
                 setTimeout(() => {
                     setMostrarExito(false); // Ocultar alerta de éxito después de 1500ms
