@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import "./style/index.css";
 import Home from './pages/Home';
@@ -11,7 +11,7 @@ import Footer from './components/Footer/Footer';
 import Layout from './pages/Layout';
 import MyMenu from './components/MyMenu/MyMenu';
 import Tabla from './components/Tabla/Tabla';
-import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
+import { AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = sessionStorage.getItem('log');
@@ -153,6 +153,8 @@ function AppWrapper() {
     </BrowserRouter>
   );
 }
+
+
 
 export default AppWrapper;
 
