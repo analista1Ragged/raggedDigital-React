@@ -12,6 +12,9 @@ import Layout from './pages/Layout';
 import MyMenu from './components/MyMenu/MyMenu';
 import Tabla from './components/Tabla/Tabla';
 import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
+import ModalCartera from './components/ModalCartera';
+import { Navbar } from 'react-bootstrap';
+//import Navbar from './components/Navbar';
 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = sessionStorage.getItem('log');
@@ -67,6 +70,15 @@ function App() {
               <ReportePB />
             </div>
           } />
+        } />
+        <Route path='/Mercadeo' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+          </div>
+        } />
+        <Route path='Mercadeo/Raqstyle/Cartera' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <Tabla />
+          </div>
         } />
         <Route path='/ecommerce' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
@@ -135,7 +147,7 @@ function App() {
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <Tabla />
+            <ModalCartera />
           </div>
         } />
       </Routes>

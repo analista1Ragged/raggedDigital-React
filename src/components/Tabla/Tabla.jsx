@@ -3,7 +3,7 @@ import "./Tabla.css";
 import FilterRowCartera from '../FilterRow/FilterRowCartera.jsx';
 import FormBuscar from '../FormBuscar/FormBuscar';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import Menu3Botones from '../Menu3Botones/Menu3Botones';
+import Menu2Botones from '../Menu3Botones/Menu2Botones.jsx';
 import { Pagination } from 'antd'; // Importa el componente de paginación de Ant Design
 import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
 import ListaOpciones from '../ListaOpciones/ListaOpciones';
@@ -11,6 +11,7 @@ import CampoTexto from '../CampoTexto';
 import BuscarButton from '../BotonBuscar/BotonBuscar';
 import SeleccionarFecha from '../SeleccionarFecha/SeleccionarFecha';
 import CheckboxForm from '../Checkbox/Checkbox';
+import ModalCartera from '../ModalCartera.jsx';
 
 const transformData = (list) => {
   // Verificar si la entrada es un array
@@ -104,13 +105,19 @@ const Tabla = () => {
     setPageSize(size);
   };
 
+  const handleIconClick = (item) => {
+    // Lógica que deseas ejecutar cuando se haga clic en el ícono
+    console.log('Ícono clicado:', item);
+    <ModalCartera/>
+  };
+
   return (
     <section>
       <div className="ticket-table">
         <h2>
-          <a href="/ecommerce/VerCapsulas" className="left" title="Volver"><i className="bi bi-arrow-left-circle"></i></a>
+          <a href="Mercadeo/Raqstyle/Cartera" className="left" title="Volver"><i className="bi bi-arrow-left-circle"></i></a>
           {'  '}
-          Consulta Cartera Vendedores
+          Consulta Cartera RagStyle
         </h2>
         
         <div className="inline-components">
@@ -137,7 +144,7 @@ const Tabla = () => {
           <BuscarButton className="component-item" />
         </div>
 
-
+        <Menu2Botones marca={selectedMarca} />
         <table className="table-flex">
           <thead>
             <tr className="color">
@@ -150,28 +157,12 @@ const Tabla = () => {
               <th>Valor de_Factura</th>
               <th>Valor del_Abono</th>
               <th>Dias de Cartera</th>
-              <th>Numero Nota_Crédito</th>
-              <th>Valor Nota_Crédito</th>
               <th>Saldo de_Factura</th>
-              <th>Ver Detalle</th>
+              <th>Ver Detalle_NC</th>
             </tr>
             {/* <FilterRowCartera filtersCartera={filtersCartera} handleFilter={handleFilter} /> */}
           </thead>
           <tbody>
-              <tr>
-                <td>1</td>
-                <td>1026130339</td>
-                <td>ELIZABETH CRISTINA ZAPATA QUICENO</td>
-                <td>2024-07-23</td>
-                <td>2024-07-23</td>
-                <td>FVFE-4525</td>
-                <td>10.000.000</td>
-                <td>5.000.000</td>
-                <td>15</td>
-                <td>NE-1000</td>
-                <td>3.000.000</td>
-                <td>2.000.000</td>
-              </tr>
               <tr>
                 <td>2</td>
                 <td>900395854</td>
@@ -182,9 +173,19 @@ const Tabla = () => {
                 <td>10.000.000</td>
                 <td>5.000.000</td>
                 <td>15</td>
-                <td>NE-1000</td>
-                <td>3.000.000</td>
                 <td>2.000.000</td>
+                {/*<td>
+                    <button onClick={() => handleIconClick(item)} className="icon-button">
+                      <i className="bi bi-eye"></i>
+                    </button>
+                  </td>
+              </tr>
+            */}
+                  <td>
+                    <button onClick={() => handleIconClick} className="icon-button">
+                      <i className="bi bi-eye"></i>
+                    </button>
+                  </td>
               </tr>
           </tbody>
         </table>

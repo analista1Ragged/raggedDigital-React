@@ -6,14 +6,24 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
-import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator } from "react-icons/fa";
+import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill } from "react-icons/fa";
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
+import { PiEyeSlashFill } from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const { SubMenu } = Menu;
 
 const menuItems = [
+  {
+    key: "0",
+    icon: 
+    <PiEyeSlashFill 
+    
+    />,
+    action: 'hideMenu', // Added action property to identify which action to perform
+  },
+ 	
   {
     key: "1",
     title: "Inicio",
@@ -46,9 +56,17 @@ const menuItems = [
       },
       {
         key: "3.2",
-        title: "RaqStyle",
+        title: "RagStyle",
         icon: <AiOutlineHome />,
-        path: "/ecommerce/Ragged",
+        items: [
+          {
+            key: '2.1',
+            title: 'Consulta Cartera',
+            icon: <FaMoneyBill />,
+            path: "/Mercadeo/Raqstyle/Cartera",
+            items: [{ key: '2.1.1', title: 'Option 2.1.1' }],
+          },
+        ],
       },
       {
         key: "3.3",
@@ -191,6 +209,16 @@ const MyMenu = () => {
     navigate('/Login');
   };
 
+  const handleHideMenu = () => {
+    setCollapsed(true);
+  };
+
+  const handleMenuItemClick = (action) => {
+    if (action === 'hideMenu') {
+      handleHideMenu();
+    }
+  };
+
   return (
     <div ref={menuRef} className={`custom-menu ${collapsed ? 'collapsed' : ''}`}>
       <Button
@@ -213,7 +241,11 @@ const MyMenu = () => {
         </NavLink>
         {menuItems.map((item) =>
           !item.items ? (
-            <Menu.Item key={item.key} icon={item.icon}>
+            <Menu.Item 
+              key={item.key} 
+              icon={item.icon}
+              onClick={() => handleMenuItemClick(item.action)} // Added onClick handler
+            >
               {item.title === "Logout" ? (
                 <div onClick={handleLogout}>
                   <NavLink to={item.path} exact activeClassName="ant-menu-item-selected">
