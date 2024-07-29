@@ -40,5 +40,9 @@
   
 }
 
+.custom-menu.hidden {
+  display: none; /* Oculta completamente el menú */
+}
+
 
 

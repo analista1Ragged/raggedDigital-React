@@ -3,7 +3,7 @@
 import React from 'react';
 import { Button } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import "./BotonBuscar.css";
+//import "./BotonBuscar.css";
 
 const BotonMenu = ({ collapsed, toggleCollapsed }) => {
   return (

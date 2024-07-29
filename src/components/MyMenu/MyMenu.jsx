@@ -17,7 +17,7 @@ const menuItems = [
     key: "0",
     title: "ocultar",
     icon: <PiEyeSlashFill />,
-    action: 'hideMenu', // Updated action to showModal
+    action: 'hideMenu', // Action to hide the menu
   },
   {
     key: "1",
@@ -164,10 +164,12 @@ const menuItems = [
     path: "/",
     onClick: 'handleLogout',
   },
+
 ];
 
 const MyMenu = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [hidden, setHidden] = useState(false); // New state for hiding the menu completely
   const [openKeys, setOpenKeys] = useState([]);
   const [modal1Visible, setModal1Visible] = useState(false); // Modal state
   const menuRef = useRef(null);
@@ -198,26 +200,23 @@ const MyMenu = () => {
   };
 
   const handleLogout = () => {
-    // Borrar la variable 'log' del sessionStorage
     sessionStorage.removeItem('log');
-    
-    // Redirigir a la página de login
     navigate('/Login');
   };
 
   const handleHideMenu = () => {
-    setCollapsed(true);
+    setHidden(true);
   };
 
   const handleMenuItemClick = (action) => {
     if (action === 'hideMenu') {
       handleHideMenu();
     } else if (action === 'showModal') {
-      setModal1Visible(true); // Show the modal
+      setModal1Visible(true); // mostrar el modal
     }
   };
 
-  return (
+  return !hidden ? ( // Menú de renderizado condicional basado en el estado "oculto"
     <div ref={menuRef} className={`custom-menu ${collapsed ? 'collapsed' : ''}`}>
       <Button
         type="primary"
@@ -242,7 +241,7 @@ const MyMenu = () => {
             <Menu.Item 
               key={item.key} 
               icon={item.icon}
-              onClick={() => handleMenuItemClick(item.action)} // Added onClick handler
+              onClick={() => handleMenuItemClick(item.action)} // Agregada en el controlador de clic
             >
               {item.title === "Logout" ? (
                 <div onClick={handleLogout}>
@@ -283,8 +282,9 @@ const MyMenu = () => {
       </Menu>
       <ModalCartera modal1Visible={modal1Visible} setModal1Visible={setModal1Visible} /> {/* Add ModalCartera component */}
     </div>
-  );
+  ) : null; // Return null if menu is hidden
 };
 
 export default MyMenu;
+
 
