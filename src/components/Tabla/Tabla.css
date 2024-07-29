@@ -29,6 +29,17 @@ section {
   justify-content: space-between;
   margin-bottom: 20px;
   flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
+  gap:16px; 
+}
+
+/* Componentes en línea */
+.inline-components2 {
+  display: flex;
+  align-items: center;
+  /*justify-content: space-between;*/
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
+  gap: 16px; 
 }
 
 .component-item {
@@ -37,6 +48,7 @@ section {
   margin-bottom: 10px; /* Margen inferior para separación en pantallas pequeñas */
   position: relative;
   z-index: 1; /* Asegura que los campos de texto estén sobre otros elementos */
+  margin: 0; 
 }
 
 .inline-components .component-item:last-child {

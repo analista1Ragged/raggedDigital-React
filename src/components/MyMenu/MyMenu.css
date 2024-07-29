@@ -1,48 +1,40 @@
-.custom-menu{
-  width: 300px; /* Ancho inicial de la barra lateral */
-	/*height: 100vh;*/
-	/*background-color: #f4f4f4;*/
-	position: fixed;
-	left: 0;
-	top: 0;
-	padding: 5px;
-  position: absolute;
-  z-index: 1000; /* Ajusta el z-index según sea necesario para que esté por encima de otros elementos */
-  
-  
+.custom-menu {
+  width: 300px;
+  position: fixed;
+  padding: 5px;
+  z-index: 1000; /* Ajusta el z-index según sea necesario */
+  cursor: move; /* Cambia el cursor por defecto para mostrar que se puede mover */
 }
-
 
 .custom-menu .ant-menu-item,
 .custom-menu .ant-menu-submenu-title {
-  color: #fff; /* Color del texto por defecto */
-  
+  color: #fff;
 }
 
 .custom-menu .ant-menu-item:hover,
 .custom-menu .ant-menu-submenu-title:hover,
 .custom-menu .ant-menu-item-selected {
-  background-color: #fff; /* Color de fondo al pasar el cursor */
-  
+  background-color: #fff;
 }
 
 .custom-menu .ant-menu-item:hover a,
 .custom-menu .ant-menu-item-selected a,
 .custom-menu .ant-menu-submenu-title:hover,
 .custom-menu .ant-menu-item-selected .ant-menu-submenu-title {
-  color: #41D9A1/* Color del texto al pasar el cursor */
-  
+  color: #41D9A1;
 }
 
 .custom-menu .ant-menu-item:hover .anticon,
 .custom-menu .ant-menu-item-selected .anticon {
-  color: #41D9A1 /* Color del icono al pasar el cursor */
-  
+  color: #41D9A1;
 }
 
 .custom-menu.hidden {
-  display: none; /* Oculta completamente el menú */
+  display: none;
 }
+
+
+
 
 
 

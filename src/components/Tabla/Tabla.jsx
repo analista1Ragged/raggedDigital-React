@@ -131,12 +131,9 @@ const Tabla = () => {
           placeholder="Ingresar N° Factura:"
           />
         </div>
-        <div className="inline-components">
+        <div className="inline-components2">
           <SeleccionarFecha className="component-item" 
-          placeholder="Desde"
-          />
-          <SeleccionarFecha className="component-item" 
-          placeholder="Hasta"
+          //placeholder="Desde" 
           />
           <BuscarButton className="component-item" />
         </div>

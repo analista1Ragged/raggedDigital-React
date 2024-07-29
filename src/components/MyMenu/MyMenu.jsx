@@ -15,9 +15,9 @@ const { SubMenu } = Menu;
 const menuItems = [
   {
     key: "0",
-    title: "ocultar",
+    title: "Ocultar",
     icon: <PiEyeSlashFill />,
-    action: 'hideMenu', // Action to hide the menu
+    action: 'hideMenu',
   },
   {
     key: "1",
@@ -164,14 +164,13 @@ const menuItems = [
     path: "/",
     onClick: 'handleLogout',
   },
-
 ];
 
 const MyMenu = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [hidden, setHidden] = useState(false); // New state for hiding the menu completely
+  const [hidden, setHidden] = useState(false);
   const [openKeys, setOpenKeys] = useState([]);
-  const [modal1Visible, setModal1Visible] = useState(false); // Modal state
+  const [modal1Visible, setModal1Visible] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
 
@@ -212,79 +211,88 @@ const MyMenu = () => {
     if (action === 'hideMenu') {
       handleHideMenu();
     } else if (action === 'showModal') {
-      setModal1Visible(true); // mostrar el modal
+      setModal1Visible(true);
     }
   };
 
-  return !hidden ? ( // Menú de renderizado condicional basado en el estado "oculto"
-    <div ref={menuRef} className={`custom-menu ${collapsed ? 'collapsed' : ''}`}>
+  return (
+    <>
       <Button
         type="primary"
         onClick={toggleCollapsed}
-        style={{ marginBottom: 16, backgroundColor: "#373738" }}
+        style={{ 
+          marginBottom: 16, 
+          backgroundColor: "#373738", 
+          position: 'fixed', 
+          top: 16, 
+          left: 16, 
+          zIndex: 1002 
+        }}
       >
         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </Button>
-      <Menu
-        mode="inline"
-        theme="dark"
-        inlineCollapsed={collapsed}
-        openKeys={openKeys}
-        onOpenChange={handleOpenChange}
-        style={{ backgroundColor: "#373738", fontSize: "16px" }}
-      >
-        <NavLink to="/Home">
-          <img src={require("../../assets/Images/logo.png")} alt="logo" />
-        </NavLink>
-        {menuItems.map((item) =>
-          !item.items ? (
-            <Menu.Item 
-              key={item.key} 
-              icon={item.icon}
-              onClick={() => handleMenuItemClick(item.action)} // Agregada en el controlador de clic
-            >
-              {item.title === "Logout" ? (
-                <div onClick={handleLogout}>
-                  <NavLink to={item.path} exact activeClassName="ant-menu-item-selected">
-                    {item.title}
-                  </NavLink>
-                </div>
-              ) : (
-                <NavLink to={item.path} exact activeClassName="ant-menu-item-selected">
-                  {item.title}
-                </NavLink>
-              )}
-            </Menu.Item>
-          ) : (
-            <SubMenu key={item.key} icon={item.icon} title={item.title}>
-              {item.items.map((subItem) =>
-                !subItem.items ? (
-                  <Menu.Item key={subItem.key} icon={subItem.icon}>
-                    <NavLink to={subItem.path} exact activeClassName="ant-menu-item-selected">
-                      {subItem.title}
+      {!hidden && (
+        <div ref={menuRef} className={`custom-menu ${collapsed ? 'collapsed' : ''}`} style={{ position: 'fixed', top: 60, left: 0 }}>
+          <Menu
+            mode="inline"
+            theme="dark"
+            inlineCollapsed={collapsed}
+            openKeys={openKeys}
+            onOpenChange={handleOpenChange}
+            style={{ backgroundColor: "#373738", fontSize: "16px" }}
+          >
+            <NavLink to="/Home">
+              <img src={require("../../assets/Images/logo.png")} alt="logo" />
+            </NavLink>
+            {menuItems.map((item) =>
+              !item.items ? (
+                <Menu.Item 
+                  key={item.key} 
+                  icon={item.icon}
+                  onClick={() => handleMenuItemClick(item.action)}
+                >
+                  {item.title === "Logout" ? (
+                    <div onClick={handleLogout}>
+                      <NavLink to={item.path} exact activeClassName="ant-menu-item-selected">
+                        {item.title}
+                      </NavLink>
+                    </div>
+                  ) : (
+                    <NavLink to={item.path} exact activeClassName="ant-menu-item-selected">
+                      {item.title}
                     </NavLink>
-                  </Menu.Item>
-                ) : (
-                  <SubMenu key={subItem.key} icon={subItem.icon} title={subItem.title}>
-                    {subItem.items.map((subSubItem) => (
-                      <Menu.Item key={subSubItem.key} icon={subSubItem.icon}>
-                        <NavLink to={subSubItem.path} exact activeClassName="ant-menu-item-selected">
-                          {subSubItem.title}
+                  )}
+                </Menu.Item>
+              ) : (
+                <SubMenu key={item.key} icon={item.icon} title={item.title}>
+                  {item.items.map((subItem) =>
+                    !subItem.items ? (
+                      <Menu.Item key={subItem.key} icon={subItem.icon}>
+                        <NavLink to={subItem.path} exact activeClassName="ant-menu-item-selected">
+                          {subItem.title}
                         </NavLink>
                       </Menu.Item>
-                    ))}
-                  </SubMenu>
-                )
-              )}
-            </SubMenu>
-          )
-        )}
-      </Menu>
-      <ModalCartera modal1Visible={modal1Visible} setModal1Visible={setModal1Visible} /> {/* Add ModalCartera component */}
-    </div>
-  ) : null; // Return null if menu is hidden
+                    ) : (
+                      <SubMenu key={subItem.key} icon={subItem.icon} title={subItem.title}>
+                        {subItem.items.map((subSubItem) => (
+                          <Menu.Item key={subSubItem.key} icon={subSubItem.icon}>
+                            <NavLink to={subSubItem.path} exact activeClassName="ant-menu-item-selected">
+                              {subSubItem.title}
+                            </NavLink>
+                          </Menu.Item>
+                        ))}
+                      </SubMenu>
+                    )
+                  )}
+                </SubMenu>
+              )
+            )}
+          </Menu>
+          <ModalCartera modal1Visible={modal1Visible} setModal1Visible={setModal1Visible} />
+        </div>
+      )}
+    </>
+  );
 };
 
 export default MyMenu;
-
-
