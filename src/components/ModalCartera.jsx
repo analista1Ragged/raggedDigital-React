@@ -1,45 +1,27 @@
-import React from 'react';
-import { OverlayTrigger, Popover, Tooltip } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState } from 'react';
+import { Button, Modal } from 'antd';
 
 const ModalCartera = () => {
+  const [modal1Visible, setModal1Visible] = useState(false);
+
   return (
-    <div className="modal-body">
-      <h5>Popover in a modal</h5>
-      <OverlayTrigger
-        trigger="click"
-        placement="right"
-        overlay={
-          <Popover id="popover-basic">
-            <Popover.Header as="h3">Popover title</Popover.Header>
-            <Popover.Body>
-              Popover body content is set in this attribute.
-            </Popover.Body>
-          </Popover>
-        }
+    <div id="components-modal-demo-position">
+      <Button type="primary" onClick={() => setModal1Visible(true)}>
+        Display a modal dialog at 20px to Top
+      </Button>
+      <Modal
+        title="20px to Top"
+        style={{ top: 20 }}
+        visible={modal1Visible}
+        onOk={() => setModal1Visible(false)}
+        onCancel={() => setModal1Visible(false)}
       >
-        <a href="#" role="button" className="btn btn-secondary popover-test">
-          button
-        </a>
-      </OverlayTrigger>
-      <hr />
-      <h5>Tooltips in a modal</h5>
-      <OverlayTrigger
-        placement="top"
-        overlay={<Tooltip id="tooltip-basic">Tooltip</Tooltip>}
-      >
-        <a href="#" className="tooltip-test">
-          This link
-        </a>
-      </OverlayTrigger>
-      <OverlayTrigger
-        placement="top"
-        overlay={<Tooltip id="tooltip-basic">Tooltip</Tooltip>}
-      >
-        <a href="#" className="tooltip-test">
-          that link
-        </a>
-      </OverlayTrigger>
+        <p>some contents...</p>
+        <p>some contents...</p>
+        <p>some contents...</p>
+      </Modal>
+      <br />
+      <br />
     </div>
   );
 };

@@ -10,8 +10,7 @@ import ListaOpciones from '../ListaOpciones/ListaOpciones';
 import CampoTexto from '../CampoTexto';
 import BuscarButton from '../BotonBuscar/BotonBuscar';
 import SeleccionarFecha from '../SeleccionarFecha/SeleccionarFecha';
-import CheckboxForm from '../Checkbox/Checkbox';
-import ModalCartera from '../ModalCartera.jsx';
+import ModalCartera from "../ModalMenu/ModalMenu";
 
 const transformData = (list) => {
   // Verificar si la entrada es un array
@@ -35,7 +34,6 @@ const transformData = (list) => {
   }));
 };
 
-
 const Tabla = () => {
   const [data, setData] = useState([]);
   const [selectedMarca, setSelectedMarca] = useState('');
@@ -53,6 +51,7 @@ const Tabla = () => {
   });
   const [currentPage, setCurrentPage] = useState(1); // Estado para controlar la página actual
   const [pageSize, setPageSize] = useState(10); // Tamaño de página, ajusta según sea necesario
+  const [modal1Visible, setModal1Visible] = useState(false); // Estado para mostrar el modal
 
   useEffect(() => {
     // Aquí puedes realizar la carga inicial de datos o configurar eventos
@@ -80,7 +79,7 @@ const Tabla = () => {
     // Reinicia la página actual cuando se aplica un filtro
     setCurrentPage(1);
   };
-  
+
   // Lógica para obtener los datos de la página actual según los filtros y la paginación
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
@@ -105,10 +104,8 @@ const Tabla = () => {
     setPageSize(size);
   };
 
-  const handleIconClick = (item) => {
-    // Lógica que deseas ejecutar cuando se haga clic en el ícono
-    console.log('Ícono clicado:', item);
-    <ModalCartera/>
+  const handleIconClick = () => {
+    setModal1Visible(true); // Muestra el modal al hacer clic en el ícono
   };
 
   return (
@@ -174,18 +171,11 @@ const Tabla = () => {
                 <td>5.000.000</td>
                 <td>15</td>
                 <td>2.000.000</td>
-                {/*<td>
-                    <button onClick={() => handleIconClick(item)} className="icon-button">
+                <td>
+                    <button onClick={handleIconClick} className="icon-button">
                       <i className="bi bi-eye"></i>
                     </button>
-                  </td>
-              </tr>
-            */}
-                  <td>
-                    <button onClick={() => handleIconClick} className="icon-button">
-                      <i className="bi bi-eye"></i>
-                    </button>
-                  </td>
+                </td>
               </tr>
           </tbody>
         </table>
@@ -197,6 +187,8 @@ const Tabla = () => {
           showSizeChanger
           showQuickJumper
         />
+        
+        <ModalCartera modal1Visible={modal1Visible} setModal1Visible={setModal1Visible} />
       </div>
     </section>
   );

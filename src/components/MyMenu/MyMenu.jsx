@@ -2,28 +2,23 @@ import "./MyMenu.css";
 import React, { useState, useRef, useEffect } from "react";
 import { Menu, Button } from "antd";
 import "antd/dist/reset.css";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-} from "@ant-design/icons";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill } from "react-icons/fa";
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
 import { PiEyeSlashFill } from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";
+import ModalCartera from "../ModalMenu/ModalMenu";
 
 const { SubMenu } = Menu;
 
 const menuItems = [
   {
     key: "0",
-    icon: 
-    <PiEyeSlashFill 
-    
-    />,
-    action: 'hideMenu', // Added action property to identify which action to perform
+    title: "ocultar",
+    icon: <PiEyeSlashFill />,
+    action: 'hideMenu', // Updated action to showModal
   },
- 	
   {
     key: "1",
     title: "Inicio",
@@ -174,6 +169,7 @@ const menuItems = [
 const MyMenu = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [openKeys, setOpenKeys] = useState([]);
+  const [modal1Visible, setModal1Visible] = useState(false); // Modal state
   const menuRef = useRef(null);
   const navigate = useNavigate();
 
@@ -216,6 +212,8 @@ const MyMenu = () => {
   const handleMenuItemClick = (action) => {
     if (action === 'hideMenu') {
       handleHideMenu();
+    } else if (action === 'showModal') {
+      setModal1Visible(true); // Show the modal
     }
   };
 
@@ -237,7 +235,7 @@ const MyMenu = () => {
         style={{ backgroundColor: "#373738", fontSize: "16px" }}
       >
         <NavLink to="/Home">
-          <img src={require("../../assets/Images/Logo.png")} alt="logo" />
+          <img src={require("../../assets/Images/logo.png")} alt="logo" />
         </NavLink>
         {menuItems.map((item) =>
           !item.items ? (
@@ -283,8 +281,10 @@ const MyMenu = () => {
           )
         )}
       </Menu>
+      <ModalCartera modal1Visible={modal1Visible} setModal1Visible={setModal1Visible} /> {/* Add ModalCartera component */}
     </div>
   );
 };
 
 export default MyMenu;
+

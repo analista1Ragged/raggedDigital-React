@@ -4,24 +4,22 @@ import "./login.css";
 import CampoTexto from "../CampoTexto";
 import Boton from "../Boton/Boton";
 import { useNavigate } from "react-router-dom";
-import { Alert } from 'antd'; // Importa el componente de alerta de Ant Design
-import 'antd/dist/reset.css'; // Importa los estilos CSS predeterminados de Ant Design
+import { Alert } from 'antd'; 
+import 'antd/dist/reset.css'; 
 import TDiggital from '../../assets/Images/TDiggital.png';
-import { AuthContext } from "../../context/AuthContext"; // Importa el contexto de autenticación
-
-
+import { AuthContext } from "../../context/AuthContext"; 
+import CampoContraseña from "../CampoTexto/CampoContraseña";
 
 const Login = (props) => {
     const [usuario, actualizarNombre] = useState("");
     const [contrasena, actualizarContrasena] = useState("");
     const [mostrarExito, setMostrarExito] = useState(false);
     const [mostrarError, setMostrarError] = useState(false);
-    const [randomNumber, setRandomNumber] = useState(null); // Nuevo estado para almacenar el número aleatorio
+    const [randomNumber, setRandomNumber] = useState(null);
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext); // Usa el contexto de autenticación
+    const { login } = useContext(AuthContext);
 
     useEffect(() => {
-        // Genera un número aleatorio entre 1 y 4 una vez cuando se monta el componente
         const randomNum = Math.floor(Math.random() * 4) + 1;
         setRandomNumber(randomNum);
     }, []);
@@ -38,30 +36,32 @@ const Login = (props) => {
 
             if (response.data.message === "success") {
                 sessionStorage.setItem('log', usuario);
-                //sessionStorage.removeItem('log');
-                setMostrarExito(true); // Mostrar alerta de éxito
+                setMostrarExito(true);
                 setTimeout(() => {
-                    setMostrarExito(false); // Ocultar alerta de éxito después de 1500ms
-                    navigate("/Home"); // Redirige a la página de inicio
+                    setMostrarExito(false);
+                    navigate("/Home");
                 }, 1500);
 
-                actualizarNombre(""); // Limpiar campo de usuario
-                actualizarContrasena(""); // Limpiar campo de contraseña
+                // Limpiar los campos de usuario y contraseña
+                actualizarNombre("");
+                actualizarContrasena("");
             } else {
-                setMostrarError(true); // Mostrar alerta de error
+                setMostrarError(true);
                 setTimeout(() => {
-                    setMostrarError(false); // Ocultar alerta de error después de 1500ms
-                    actualizarNombre(""); // Limpiar campo de usuario
-                    actualizarContrasena(""); // Limpiar campo de contraseña
+                    setMostrarError(false);
+                    // También limpia los campos en caso de error
+                    actualizarNombre("");
+                    actualizarContrasena("");
                 }, 1500);
             }
         } catch (error) {
-            setMostrarError(true); // Mostrar alerta de error si ocurre una excepción
+            setMostrarError(true);
             console.error("Error en el login:", error);
             setTimeout(() => {
-                setMostrarError(false); // Ocultar alerta de error después de 1500ms
-                actualizarNombre(""); // Limpiar campo de usuario
-                actualizarContrasena(""); // Limpiar campo de contraseña
+                setMostrarError(false);
+                // Limpiar los campos en caso de excepción
+                actualizarNombre("");
+                actualizarContrasena("");
             }, 1500);
         }
     };
@@ -69,7 +69,7 @@ const Login = (props) => {
     return (
         <section className="formulario">
             <div className="image-container">
-                {imagePath && <img src={imagePath} alt="Ragged" />} {/* Solo renderiza la imagen si imagePath no es null */}
+                {imagePath && <img src={imagePath} alt="Ragged" />}
             </div>
             <form onSubmit={manejarEnvio}>
                 <div className="form-container">
@@ -84,12 +84,13 @@ const Login = (props) => {
                         valor={usuario}
                         actualizarValor={actualizarNombre}
                     />
-                    <CampoTexto
+                    <CampoContraseña
                         titulo="Contraseña"
                         placeholder="Ingresar Contraseña:"
                         required
                         valor={contrasena}
                         actualizarValor={actualizarContrasena}
+                        tipo="password" // Asegura que el tipo sea 'password' para ocultar la entrada
                     />
                     {mostrarExito && (
                         <Alert
