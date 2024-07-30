@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import "./Tabla.css";
-import FilterRowCartera from '../FilterRow/FilterRowCartera.jsx';
-import FormBuscar from '../FormBuscar/FormBuscar';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Menu2Botones from '../Menu3Botones/Menu2Botones.jsx';
 import { Pagination } from 'antd'; // Importa el componente de paginación de Ant Design
 import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
-import ListaOpciones from '../ListaOpciones/ListaOpciones';
 import CampoTexto from '../CampoTexto';
 import BuscarButton from '../BotonBuscar/BotonBuscar';
 import SeleccionarFecha from '../SeleccionarFecha/SeleccionarFecha';
 import ModalCartera from "../ModalMenu/ModalMenu";
+import CampoNumber from '../CampoTexto/CampoNumber.jsx';
 
 const transformData = (list) => {
   // Verificar si la entrada es un array
@@ -49,13 +47,12 @@ const Tabla = () => {
     nroNotaCredito: '',
     valorNotaCredito: ''
   });
+  const [valorNit, setValorNit] = useState(''); // Estado para almacenar el valor de Nit
   const [currentPage, setCurrentPage] = useState(1); // Estado para controlar la página actual
   const [pageSize, setPageSize] = useState(10); // Tamaño de página, ajusta según sea necesario
   const [modal1Visible, setModal1Visible] = useState(false); // Estado para mostrar el modal
 
   useEffect(() => {
-    // Aquí puedes realizar la carga inicial de datos o configurar eventos
-    // como la selección de una marca inicial si es necesario
     console.log(selectedMarca);
     fetchData(selectedMarca);
   }, [selectedMarca]);
@@ -76,11 +73,9 @@ const Tabla = () => {
       ...filtersCartera,
       [name]: value
     });
-    // Reinicia la página actual cuando se aplica un filtro
     setCurrentPage(1);
   };
 
-  // Lógica para obtener los datos de la página actual según los filtros y la paginación
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
   const currentItems = data
@@ -112,23 +107,29 @@ const Tabla = () => {
     <section>
       <div className="ticket-table">
         <h2>
-          <a href="Mercadeo/Raqstyle/Cartera" className="left" title="Volver"><i className="bi bi-arrow-left-circle"></i></a>
+          <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos"><i className="bi bi-arrow-left-circle"></i></a>
           {'  '}
           Consulta Cartera RagStyle
         </h2>
-        
         <div className="inline-components">
-          <CampoTexto className="component-item" 
-          titulo="Buscar por Nit"
-          placeholder="Ingresar Nit:"
+          <CampoNumber 
+            className="component-item" 
+            titulo="Buscar por Nit"
+            placeholder="Ingresar Nit:"
+            valor={valorNit}
+            actualizarValor={setValorNit}
           />
-          <CampoTexto className="component-item" 
-          titulo="Buscar por Razon Social"
-          placeholder="Ingresar Razon Social:"
+          <CampoTexto 
+            className="component-item" 
+            titulo="Buscar por Razon Social"
+            placeholder="Ingresar Razon Social:"
+            // Aquí puedes agregar props necesarios
           />
-          <CampoTexto className="component-item" 
-          titulo="Buscar por N° Factura"
-          placeholder="Ingresar N° Factura:"
+          <CampoTexto 
+            className="component-item" 
+            titulo="Buscar por N° Factura"
+            placeholder="Ingresar N° Factura:"
+            // Aquí puedes agregar props necesarios
           />
         </div>
         <div className="inline-components2">
@@ -192,3 +193,4 @@ const Tabla = () => {
 };
 
 export default Tabla;
+

@@ -83,7 +83,7 @@ const TicketTable = () => {
     <section>
       <div className="ticket-table">
         <h2>
-          <a href="/ecommerce/VerCapsulas" className="left" title="Volver"><i className="bi bi-arrow-left-circle"></i></a>
+          <a href="/RaggedDigital/ecommerce/VerCapsulas" className="left" title="Limpiar Campos"><i className="bi bi-arrow-left-circle"></i></a>
           {'  '}
           Buscar Productos
         </h2>

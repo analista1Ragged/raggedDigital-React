@@ -2,10 +2,10 @@ import "./MyMenu.css";
 import React, { useState, useRef, useEffect } from "react";
 import { Menu, Button } from "antd";
 import "antd/dist/reset.css";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill } from "react-icons/fa";
-import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
+import { MenuFoldOutlined, MenuUnfoldOutlined} from "@ant-design/icons";
+import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt,  FaBars, FaCalculator, FaMoneyBill  } from "react-icons/fa";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
+import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
 import { PiEyeSlashFill } from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";
 import ModalCartera from "../ModalMenu/ModalMenu";
@@ -171,8 +171,11 @@ const MyMenu = () => {
   const [hidden, setHidden] = useState(false);
   const [openKeys, setOpenKeys] = useState([]);
   const [modal1Visible, setModal1Visible] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ top: 60, left: 0 }); // Estado para la posición del menú
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const isDragging = useRef(false);
+  const offset = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -181,14 +184,33 @@ const MyMenu = () => {
       }
     };
 
+    const handleMouseUp = () => {
+      isDragging.current = false;
+    };
+
+    const handleMouseMove = (event) => {
+      if (isDragging.current) {
+        setMenuPosition((prevPosition) => ({
+          left: event.clientX - offset.current.x,
+          top: event.clientY - offset.current.y,
+        }));
+      }
+    };
+
     document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener("mousemove", handleMouseMove);
+
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
+    setHidden(false); // Asegura que el menú se muestre al cambiar el estado colapsado
     if (!collapsed) {
       setOpenKeys([]);
     }
@@ -215,6 +237,14 @@ const MyMenu = () => {
     }
   };
 
+  const handleMouseDown = (event) => {
+    isDragging.current = true;
+    offset.current = {
+      x: event.clientX - menuPosition.left,
+      y: event.clientY - menuPosition.top,
+    };
+  };
+
   return (
     <>
       <Button
@@ -223,7 +253,7 @@ const MyMenu = () => {
         style={{ 
           marginBottom: 16, 
           backgroundColor: "#373738", 
-          position: 'fixed', 
+          position: 'absolute', 
           top: 16, 
           left: 16, 
           zIndex: 1002 
@@ -232,7 +262,16 @@ const MyMenu = () => {
         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </Button>
       {!hidden && (
-        <div ref={menuRef} className={`custom-menu ${collapsed ? 'collapsed' : ''}`} style={{ position: 'fixed', top: 60, left: 0 }}>
+        <div 
+          ref={menuRef} 
+          className={`custom-menu ${collapsed ? 'collapsed' : ''}`} 
+          style={{ 
+            position: 'absolute', 
+            top: menuPosition.top, 
+            left: menuPosition.left 
+          }}
+          onMouseDown={handleMouseDown}
+        >
           <Menu
             mode="inline"
             theme="dark"
