@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FilterRow = ({ filters, handleFilterChange }) => {
-  const columns = ['referencia', 'descripcion', 'categoria', 'estado', 'valorFactura'];
+  const columns = ['referencia', 'descripcion', 'categoria', 'estado', 'descripcion'];
 
   return (
     <tr id="filterRow">

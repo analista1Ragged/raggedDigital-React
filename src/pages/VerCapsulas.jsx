@@ -17,7 +17,7 @@ const transformData = (list) => {
     descripcion: item[3] || '',
     categoria: item[4] || '',
     estado: item[5] || '',
-    valorFactura: item[6] || ''
+    valorFactura: item[6] || ''//fue reemplazado por el campo descripción
   }));
 };
 
@@ -29,7 +29,7 @@ const TicketTable = () => {
     descripcion: '',
     categoria: '',
     estado: '',
-    valorFactura: ''
+    valorFactura: '' //fue reemplazado por el campo descripción
   });
   const [currentPage, setCurrentPage] = useState(1); // Estado para controlar la página actual
   const [pageSize, setPageSize] = useState(10); // Tamaño de página, ajusta según sea necesario
@@ -70,7 +70,7 @@ const TicketTable = () => {
       item.descripcion.toLowerCase().includes(filters.descripcion.toLowerCase()) &&
       item.categoria.toLowerCase().includes(filters.categoria.toLowerCase()) &&
       item.estado.toLowerCase().includes(filters.estado.toLowerCase()) &&
-      item.valorFactura.toLowerCase().includes(filters.valorFactura.toLowerCase()) 
+      item.valorFactura.toLowerCase().includes(filters.valorFactura.toLowerCase()) //fue reemplazado por el campo descripción
     )
     .slice(indexOfFirstItem, indexOfLastItem);
 
@@ -98,7 +98,7 @@ const TicketTable = () => {
               <th>Descripción</th>
               <th>Categoria</th>
               <th>Estado</th>
-              <th>Valor factura</th>
+              <th>Descripción</th>
             </tr>
             <FilterRow filters={filters} handleFilterChange={handleFilterChange} />
           </thead>
@@ -110,7 +110,7 @@ const TicketTable = () => {
                 <td>{item.descripcion}</td>
                 <td>{item.categoria}</td>
                 <td>{item.estado}</td>
-                <td>{item.valorFactura}</td>
+                <td>{item.valorFactura}</td> {/*fue reemplazado por el campo descripción*/}
               </tr>
             ))}
           </tbody>

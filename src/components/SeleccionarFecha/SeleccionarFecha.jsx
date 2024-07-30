@@ -23,7 +23,7 @@ const MyForm = () => {
       wrapperCol={{ span: 20 }}
       initialValues={formState}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '30px'  }}>
         <Form.Item
           label="Fecha Inicial"
           labelCol={{ span: 6 }} // Ajusta el tamaño del label

@@ -8,7 +8,8 @@ import CampoTexto from '../CampoTexto';
 import BuscarButton from '../BotonBuscar/BotonBuscar';
 import SeleccionarFecha from '../SeleccionarFecha/SeleccionarFecha';
 import ModalCartera from "../ModalMenu/ModalMenu";
-import CampoNumber from '../CampoTexto/CampoNumber.jsx';
+import MultiSelector from '../MultiSelector/MultiSelector.jsx';
+import { CiFilter } from "react-icons/ci";
 
 const transformData = (list) => {
   // Verificar si la entrada es un array
@@ -111,25 +112,22 @@ const Tabla = () => {
           {'  '}
           Consulta Cartera RagStyle
         </h2>
+        <p>
+        <h3>
+        <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos"><i className="bi bi-filter"></i></a>
+          {'  '}
+          Filtrar por: 
+          </h3>
+        </p>
         <div className="inline-components">
-          <CampoNumber 
-            className="component-item" 
-            titulo="Buscar por Nit"
-            placeholder="Ingresar Nit:"
-            valor={valorNit}
-            actualizarValor={setValorNit}
+          <MultiSelector 
+          placeholder="Filtrar por Nit:"
           />
-          <CampoTexto 
-            className="component-item" 
-            titulo="Buscar por Razon Social"
-            placeholder="Ingresar Razon Social:"
-            // Aquí puedes agregar props necesarios
+          <MultiSelector 
+          placeholder="Filtrar por Nombre/Razon S."
           />
-          <CampoTexto 
-            className="component-item" 
-            titulo="Buscar por N° Factura"
-            placeholder="Ingresar N° Factura:"
-            // Aquí puedes agregar props necesarios
+          <MultiSelector 
+          placeholder="Filtrar por Numero Factura"
           />
         </div>
         <div className="inline-components2">
