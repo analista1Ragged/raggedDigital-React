@@ -132,7 +132,6 @@ const Tabla = () => {
         </div>
         <div className="inline-components2">
           <SeleccionarFecha className="component-item" 
-          //placeholder="Desde" 
           />
           <BuscarButton className="component-item" />
         </div>

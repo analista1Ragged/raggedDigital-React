@@ -7,7 +7,7 @@ const ModalCartera = ({ modal1Visible, setModal1Visible }) => {
       title="Detalle Nota Credito."
       
       style={{ top: 20 }}
-      visible={modal1Visible}
+      open={modal1Visible}
       onOk={() => setModal1Visible(false)}
       onCancel={() => setModal1Visible(false)}
     > <hr />

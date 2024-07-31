@@ -49,6 +49,7 @@ section {
   position: relative;
   z-index: 1; /* Asegura que los campos de texto estén sobre otros elementos */
   margin: 0; 
+  
 }
 
 .inline-components .component-item:last-child {
