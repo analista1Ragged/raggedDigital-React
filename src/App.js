@@ -12,6 +12,8 @@ import Layout from './pages/Layout';
 import MyMenu from './components/MyMenu/MyMenu';
 import Tabla from './components/Tabla/Tabla';
 import { AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
+//export const urlapi = 'http://serverrgd.eastus.cloudapp.azure.com:5000'
+export const urlapi = 'http://localhost:5000'
 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = sessionStorage.getItem('log');
@@ -53,9 +55,12 @@ function App() {
           </div>
         } />
         <Route path='/Home' element={
+           <PrivateRoute element={
+          
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <Home />
           </div>
+          } />
         } />
         <Route path='/analytics' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
@@ -146,7 +151,7 @@ function App() {
 
 function AppWrapper() {
   return (
-    <BrowserRouter basename="/RaggedDigital">
+    <BrowserRouter>
       <AuthProvider>
         <App />
       </AuthProvider>

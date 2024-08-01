@@ -24,6 +24,7 @@ const transformData = (list) => {
 const TicketTable = () => {
   const [data, setData] = useState([]);
   const [selectedMarca, setSelectedMarca] = useState('');
+  const [selectedNombre, setSelectedNombre] = useState('');
   const [filters, setFilters] = useState({
     referencia: '',
     descripcion: '',
@@ -34,12 +35,20 @@ const TicketTable = () => {
   const [currentPage, setCurrentPage] = useState(1); // Estado para controlar la página actual
   const [pageSize, setPageSize] = useState(10); // Tamaño de página, ajusta según sea necesario
 
+  const nuevoNombre = (nuevoCodigo) => {
+    setSelectedNombre(nuevoCodigo);
+  };
+
+  const nuevoMarca = (nuevoCodigo) => {
+    setSelectedMarca(nuevoCodigo);
+  };
+
   useEffect(() => {
     // Aquí puedes realizar la carga inicial de datos o configurar eventos
     // como la selección de una marca inicial si es necesario
     console.log(selectedMarca);
-    fetchData(selectedMarca);
-  }, [selectedMarca]);
+    fetchData(selectedMarca, selectedNombre);
+  }, [selectedMarca, selectedNombre]);
 
   const fetchData = async (marca) => {
     try {
@@ -88,8 +97,8 @@ const TicketTable = () => {
           Buscar Productos
         </h2>
         
-        <FormBuscar setData={(rawData) => setData(transformData(rawData))} setSelectedMarca={setSelectedMarca} />
-        <Menu3Botones marca={selectedMarca} />
+        <FormBuscar setData={(rawData) => setData(transformData(rawData))} nuevoMarca={nuevoMarca} nuevoNombre={nuevoNombre} />
+        <Menu3Botones marca={selectedMarca}  nombre={selectedNombre} />
         <table>
           <thead>
             <tr className="color">

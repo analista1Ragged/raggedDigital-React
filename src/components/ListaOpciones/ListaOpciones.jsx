@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./ListaOpciones.css";
+import { urlapi } from '../../App';
 
 const ListaOpciones = ({ setSelectedBanco }) => {
   //const [bancos, setBancos] = useState([]);
    useEffect(() => {
      const fetchBancos = async () => {
        try {
-         const response = await axios.get('http://127.0.0.1:5000/get-bancos');
+         const response = await axios.get(urlapi+'/get-bancos');
          // Verificar que la respuesta tenga datos y sea un array
          if (Array.isArray(response.data)) {
            // Filtrar y limpiar los datos para eliminar NaN (si es necesario)
@@ -36,7 +37,7 @@ const ListaOpciones = ({ setSelectedBanco }) => {
     <div className="lista-opciones">
       <label>Seleccionar un banco</label>
       <select onChange={handleSelectChange}>
-        <option value="" disabled defaultValue="" hidden>Seleccionar un banco</option>
+        <option value="" defaultValue="">Seleccionar un banco</option>
         <option value="002"  defaultValue="1" >Occidente</option>
         <option value="003"  defaultValue="2" >Bogota</option>
         <option value="001"  defaultValue="3" >Bancolombia</option>

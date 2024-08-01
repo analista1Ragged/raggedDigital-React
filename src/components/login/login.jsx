@@ -8,7 +8,7 @@ import { Alert } from 'antd'; // Importa el componente de alerta de Ant Design
 import 'antd/dist/reset.css'; // Importa los estilos CSS predeterminados de Ant Design
 import TDiggital from '../../assets/Images/TDiggital.png';
 import { AuthContext } from "../../context/AuthContext"; // Importa el contexto de autenticación
-
+import { urlapi } from '../../App';
 
 
 const Login = (props) => {
@@ -31,7 +31,7 @@ const Login = (props) => {
     const manejarEnvio = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/logon', {
+            const response = await axios.post(urlapi+'/logon', {
                 usuario: usuario,
                 contrasena: contrasena
             });
