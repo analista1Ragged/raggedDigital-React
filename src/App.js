@@ -13,7 +13,7 @@ import MyMenu from './components/MyMenu/MyMenu';
 import Tabla from './components/Tabla/Tabla';
 import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
 import ModalCartera from './components/ModalCartera';
-import { Navbar } from 'react-bootstrap';
+
 import MultiSelector from './components/MultiSelector/MultiSelector';
 //export const urlapi = 'http://serverrgd.eastus.cloudapp.azure.com:5000'
 export const urlapi = 'http://localhost:5000'

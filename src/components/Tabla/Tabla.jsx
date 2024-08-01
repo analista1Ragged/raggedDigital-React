@@ -9,7 +9,7 @@ import BuscarButton from '../BotonBuscar/BotonBuscar';
 import SeleccionarFecha from '../SeleccionarFecha/SeleccionarFecha';
 import ModalCartera from "../ModalMenu/ModalMenu";
 import MultiSelector from '../MultiSelector/MultiSelector.jsx';
-import { CiFilter } from "react-icons/ci";
+
 
 const transformData = (list) => {
   // Verificar si la entrada es un array
