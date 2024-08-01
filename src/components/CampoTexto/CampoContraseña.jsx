@@ -1,7 +1,7 @@
 import React from 'react';
 import './CampoTexto.css';
 
-const CampoTexto = (props) => {
+const CampoContraseña = (props) => {
   const placeholderModificado = props.placeholder || 'Escribe aquí...'; // Valor predeterminado para placeholder
 
   const manejarCambio = (e) => {
@@ -12,14 +12,14 @@ const CampoTexto = (props) => {
     <div className="campo-texto">
       <label>{props.titulo}</label>
       <input
+        type={props.tipo || 'password'} // Asegura que el tipo sea 'password' para ocultar la entrada
         placeholder={placeholderModificado}
         required={props.required}
-        value={props.valor || ''} // Asigna un valor vacío si props.valor es undefined
+        value={props.valor || ''} // Enlaza el valor al estado y permite que se borre
         onChange={manejarCambio}
-        type={props.tipo || 'text'} // Asegura que el tipo sea 'number' 
       />
     </div>
   );
 };
 
-export default CampoTexto;
+export default CampoContraseña;

@@ -103,7 +103,7 @@ function Navbar({ visible, show }) {
         </button>
       </div>
       <nav ref={navRef} className={!visible ? 'navbar' : ''}>
-        <button
+        <button //es este el boton que tiene la funcion
           type="button"
           className="nav-btn"
           onClick={handleSidebarToggle}

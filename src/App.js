@@ -11,7 +11,10 @@ import Footer from './components/Footer/Footer';
 import Layout from './pages/Layout';
 import MyMenu from './components/MyMenu/MyMenu';
 import Tabla from './components/Tabla/Tabla';
-import { AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
+import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
+import ModalCartera from './components/ModalCartera';
+import { Navbar } from 'react-bootstrap';
+import MultiSelector from './components/MultiSelector/MultiSelector';
 //export const urlapi = 'http://serverrgd.eastus.cloudapp.azure.com:5000'
 export const urlapi = 'http://localhost:5000'
 
@@ -72,6 +75,15 @@ function App() {
               <ReportePB />
             </div>
           } />
+        } />
+        <Route path='/Mercadeo' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+          </div>
+        } />
+        <Route path='Mercadeo/Raqstyle/Cartera' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <Tabla />
+          </div>
         } />
         <Route path='/ecommerce' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
@@ -140,7 +152,7 @@ function App() {
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <Tabla />
+            <MultiSelector />
           </div>
         } />
       </Routes>

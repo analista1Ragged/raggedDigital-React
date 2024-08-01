@@ -8,6 +8,7 @@ const BuscarButton = ({ onClick }) => {
       className="mt-3 btn btn-secondary btn bold rounded-circle"
       type="button"
       onClick={onClick}
+      
     >
       <i className="bi bi-search" style={{ fontSize: 'larger' }}></i>
     </button>
@@ -15,3 +16,5 @@ const BuscarButton = ({ onClick }) => {
 };
 
 export default BuscarButton;
+
+
