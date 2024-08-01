@@ -8,10 +8,10 @@ const MultiSelector = ({ placeholder }) => {
   const [value, setValue] = useState([]);
 
   const options = [
-    { value: 'opcion1', label: 'opcion1'},
-    { value: 'opcion2', label: 'opcion2'},
-    { value: 'opcion3', label: 'opcion3'},
-    { value: 'opcion4', label: 'opcion4'},
+    { value: 'opcion1', label: 'opcion1', icon: '🟠'},
+    { value: 'opcion2', label: 'opcion2', icon: '🔵'},
+    { value: 'opcion3', label: 'opcion3', icon: '🟢'},
+    { value: 'opcion4', label: 'opcion4', icon: '🔴'},
   ];
 
   const handleChange = (selectedValues) => {
@@ -20,10 +20,10 @@ const MultiSelector = ({ placeholder }) => {
   };
 
   return (
-    <Space direction="vertical" style={{ width: '30%', padding: '30px' }}>
+    <Space className="space-container" direction="vertical">
       <Select
         mode="multiple"
-        style={{ width: '100%' }}
+        className="ant-select"
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
@@ -41,4 +41,7 @@ const MultiSelector = ({ placeholder }) => {
 };
 
 export default MultiSelector;
+
+
+
 

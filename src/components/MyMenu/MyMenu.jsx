@@ -2,8 +2,8 @@ import "./MyMenu.css";
 import React, { useState, useRef, useEffect } from "react";
 import { Menu, Button } from "antd";
 import "antd/dist/reset.css";
-import { MenuFoldOutlined, MenuUnfoldOutlined} from "@ant-design/icons";
-import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt,  FaBars, FaCalculator, FaMoneyBill  } from "react-icons/fa";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill } from "react-icons/fa";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
 import { PiEyeSlashFill } from "react-icons/pi";
@@ -171,7 +171,7 @@ const MyMenu = () => {
   const [hidden, setHidden] = useState(false);
   const [openKeys, setOpenKeys] = useState([]);
   const [modal1Visible, setModal1Visible] = useState(false);
-  const [menuPosition, setMenuPosition] = useState({ top: 60, left: 0 }); // Estado para la posición del menú
+  const [menuPosition, setMenuPosition] = useState({ top: 60, left: 0 });
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const isDragging = useRef(false);
@@ -210,7 +210,7 @@ const MyMenu = () => {
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
-    setHidden(false); // Asegura que el menú se muestre al cambiar el estado colapsado
+    setHidden(false);
     if (!collapsed) {
       setOpenKeys([]);
     }
@@ -279,6 +279,7 @@ const MyMenu = () => {
             openKeys={openKeys}
             onOpenChange={handleOpenChange}
             style={{ backgroundColor: "#373738", fontSize: "16px" }}
+            //  className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
           >
             <NavLink to="/Home">
               <img src={require("../../assets/Images/logo.png")} alt="logo" />
@@ -289,15 +290,22 @@ const MyMenu = () => {
                   key={item.key} 
                   icon={item.icon}
                   onClick={() => handleMenuItemClick(item.action)}
+                  className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
                 >
                   {item.title === "Logout" ? (
                     <div onClick={handleLogout}>
-                      <NavLink to={item.path} exact activeClassName="ant-menu-item-selected">
+                      <NavLink 
+                        to={item.path} 
+                        className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
+                      >
                         {item.title}
                       </NavLink>
                     </div>
                   ) : (
-                    <NavLink to={item.path} exact activeClassName="ant-menu-item-selected">
+                    <NavLink 
+                      to={item.path} 
+                      className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
+                    >
                       {item.title}
                     </NavLink>
                   )}
@@ -307,7 +315,10 @@ const MyMenu = () => {
                   {item.items.map((subItem) =>
                     !subItem.items ? (
                       <Menu.Item key={subItem.key} icon={subItem.icon}>
-                        <NavLink to={subItem.path} exact activeClassName="ant-menu-item-selected">
+                        <NavLink 
+                          to={subItem.path} 
+                          className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
+                        >
                           {subItem.title}
                         </NavLink>
                       </Menu.Item>
@@ -315,7 +326,10 @@ const MyMenu = () => {
                       <SubMenu key={subItem.key} icon={subItem.icon} title={subItem.title}>
                         {subItem.items.map((subSubItem) => (
                           <Menu.Item key={subSubItem.key} icon={subSubItem.icon}>
-                            <NavLink to={subSubItem.path} exact activeClassName="ant-menu-item-selected">
+                            <NavLink 
+                              to={subSubItem.path} 
+                              className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
+                            >
                               {subSubItem.title}
                             </NavLink>
                           </Menu.Item>
@@ -335,3 +349,4 @@ const MyMenu = () => {
 };
 
 export default MyMenu;
+

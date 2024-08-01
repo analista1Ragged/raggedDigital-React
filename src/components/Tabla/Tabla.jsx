@@ -133,7 +133,8 @@ const Tabla = () => {
         <div className="inline-components2">
           <SeleccionarFecha className="component-item" 
           />
-          <BuscarButton className="component-item" />
+          <BuscarButton className="component-item" 
+          />
         </div>
 
         <Menu2Botones marca={selectedMarca} />

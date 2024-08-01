@@ -1,24 +1,27 @@
-.campo-texto{
-    margin: 24px;
-    font-family: 'Montserrat', sans-serif;
-}
+/* MultiSelector.css */
 
-.campo-texto label{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 8px;
-}
-
-.campo-texto input{
-    width: 100%;
-    background-color: #FFFFFF;
-    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.06);
-    border:none;
-    padding: 20px 20px;
-    outline-color: #41D9A1;
-    font-size: 16px;
-    box-sizing: border-box;
-    border-radius: 20px;
-}
+/* Contenedor principal del Space */
+.space-container {
+    width: 32%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+    padding: 20px; /* Espaciado alrededor del componente */
+    box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho total */
+  }
+  
+  /* Ajustes para el Select */
+  .ant-select {
+    width: 100%; /* Asegura que el Select ocupe todo el ancho del contenedor */
+  }
+  
+  /* Opcional: Ajustar el tamaño del Select en pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .space-container {
+      padding: 15px; /* Reducir padding en pantallas pequeñas */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .space-container {
+      padding: 10px; /* Reducir aún más el padding en pantallas muy pequeñas */
+    }
+  }
+  
