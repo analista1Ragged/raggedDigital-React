@@ -44,13 +44,14 @@ section {
 
 .component-item {
   flex: 1;
-  margin-right: 10px;
+  margin-right: '10px';
   margin-bottom: 10px; /* Margen inferior para separación en pantallas pequeñas */
   position: relative;
   z-index: 1; /* Asegura que los campos de texto estén sobre otros elementos */
-  margin: 0; 
+  
   
 }
+  
 
 .inline-components .component-item:last-child {
   margin-right: 0;

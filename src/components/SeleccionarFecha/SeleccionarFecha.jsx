@@ -25,27 +25,27 @@ const MyForm = () => {
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '30px'  }}>
         <Form.Item
-          label="Fecha Inicial"
+          //label="Fecha Inicial"
           labelCol={{ span: 6 }} // Ajusta el tamaño del label
           wrapperCol={{ span: 18 }} // Ajusta el tamaño del contenedor del DatePicker
-          style={{ marginRight: '16px' }} // Agrega margen derecho
+          style={{ marginRight: '50px' }} // Agrega margen derecho entre campos de fecha
         >
           <DatePicker
             placeholder="Fecha Inicial"
             onChange={(date) => handleChange('date1', date)}
-            style={{ width: '180px' }} // Establece un ancho específico
+            style={{ width: '300px' }} // Establece un ancho específico
           />
         </Form.Item>
 
         <Form.Item
-          label="Fecha Final"
+          //label="Fecha Final"
           labelCol={{ span: 6 }} // Ajusta el tamaño del label
           wrapperCol={{ span: 18 }} // Ajusta el tamaño del contenedor del DatePicker
         >
           <DatePicker
             placeholder="Fecha Final"
             onChange={(date) => handleChange('date2', date)}
-            style={{ width: '180px' }} // Establece un ancho específico
+            style={{ width: '300px' }} // Establece un ancho específico
           />
         </Form.Item>
       </div>
