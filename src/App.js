@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import "./style/index.css";
 import Home from './pages/Home';
@@ -13,8 +13,10 @@ import MyMenu from './components/MyMenu/MyMenu';
 import Tabla from './components/Tabla/Tabla';
 import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
 import ModalCartera from './components/ModalCartera';
-import { Navbar } from 'react-bootstrap';
+
 import MultiSelector from './components/MultiSelector/MultiSelector';
+//export const urlapi = 'http://serverrgd.eastus.cloudapp.azure.com:5000'
+export const urlapi = 'http://localhost:5000'
 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = sessionStorage.getItem('log');
@@ -56,9 +58,12 @@ function App() {
           </div>
         } />
         <Route path='/Home' element={
+           <PrivateRoute element={
+          
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <Home />
           </div>
+          } />
         } />
         <Route path='/analytics' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
@@ -158,13 +163,15 @@ function App() {
 
 function AppWrapper() {
   return (
-    <BrowserRouter basename="/RaggedDigital">
+    <BrowserRouter>
       <AuthProvider>
         <App />
       </AuthProvider>
     </BrowserRouter>
   );
 }
+
+
 
 export default AppWrapper;
 

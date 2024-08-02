@@ -9,6 +9,7 @@ import 'antd/dist/reset.css';
 import TDiggital from '../../assets/Images/TDiggital.png';
 import { AuthContext } from "../../context/AuthContext"; 
 import CampoContraseña from "../CampoTexto/CampoContraseña";
+import { urlapi } from '../../App';
 
 const Login = (props) => {
     const [usuario, actualizarNombre] = useState("");
@@ -29,7 +30,7 @@ const Login = (props) => {
     const manejarEnvio = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/logon', {
+            const response = await axios.post(urlapi+'/logon', {
                 usuario: usuario,
                 contrasena: contrasena
             });

@@ -5,7 +5,7 @@ import Boton from "../components/Boton/Boton";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import emailjs from 'emailjs-com';
-
+import { urlapi } from '../App';
 
 const Bancos = () => {
   const [selectedBanco, setSelectedBanco] = useState("");
@@ -47,20 +47,29 @@ const Bancos = () => {
         }
       });
 
-      const response = await axios.post('http://127.0.0.1:5000/generar-conciliacion', {
+      const response = await axios.post(urlapi+'/generar-conciliacion', {
         banco: selectedBanco,
         datos: fileData
       });
-      console.log(fileData);
+      console.log(response, response.data.message);
       Swal.close();
-      Swal.fire('Éxito', 'La conciliación se ha generado correctamente.', 'success');
-      sendEmail('Conciliación Generada', `La conciliación para el banco ${selectedBanco} se ha generado correctamente.`);
-      console.log('Conciliación generada:', selectedBanco);
+      if(!response.data.message.includes("Error")){
+        Swal.fire('Éxito', 'La conciliación se ha generado correctamente.'+response.data.message , 'success');
+      }
+      else{
+        Swal.fire('Error', 'Hubo un problema al procesar el archivo:'+response.data.message, 'error');
+      }
+      
+
+      //sendEmail('Conciliación Generada', `La conciliación para el banco ${selectedBanco} se ha generado correctamente.`);
+      //console.log('Conciliación generada:', selectedBanco);
     } catch (error) {
       Swal.close();
-      Swal.fire('Error', 'Hubo un problema al generar la conciliación.', 'error');
-      sendEmail('Error al Generar Conciliación', `Hubo un problema al generar la conciliación para el banco ${selectedBanco}.`);
-      console.error('Error al generar la conciliación:', error);
+      console.log(error)
+      Swal.fire('Error', 'Hubo un problema al generar la conciliación.'+error, 'error');
+
+      //sendEmail('Error al Generar Conciliación', `Hubo un problema al generar la conciliación para el banco ${selectedBanco}.`);
+      //console.error('Error al generar la conciliación:', error);
     }
   };
 

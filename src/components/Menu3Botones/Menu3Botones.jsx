@@ -3,9 +3,10 @@ import { CloudUploadOutlined, MoreOutlined, FileTextOutlined } from '@ant-design
 import { FloatButton } from 'antd';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { urlapi } from '../../App';
 
-const handleUpload = async (marca) => {
-  console.log(marca, 'madafaka');
+const handleUpload = async (marca,nombre) => {
+  console.log(marca, 'madafaka',nombre);
   // Mostrar el cuadro de diálogo de confirmación antes de subir productos
   const confirmacion = await Swal.fire({
     title: "Esta seguro de subir el archivo?",
@@ -27,7 +28,7 @@ const handleUpload = async (marca) => {
         Swal.showLoading();
         try {
           for (let i = 0; i <= 6; i++) {
-            await subirPaso(i, marca);
+            await subirPaso(i, marca, nombre);
             Swal.update({
               text: `Subiendo productos ${i + 1} de 7`
             });
@@ -53,9 +54,9 @@ const handleUpload = async (marca) => {
   }
 };
 
-const subirPaso = async (step, marca) => {
+const subirPaso = async (step, marca, nombre) => {
   try {
-    const response = await axios.post(`http://127.0.0.1:5000/subir/${step}`, { marca });
+    const response = await axios.post(urlapi+`/subir/${step}`, { marca,nombre });
     return response.data.step;
   } catch (error) {
     console.error('Error en la subida:', error);
@@ -65,7 +66,7 @@ const subirPaso = async (step, marca) => {
 
 const handleDownload = async (marca) => {
   try {
-    const response = await axios.post('http://127.0.0.1:5000/descargar-excel', { marca }, { responseType: 'blob' });
+    const response = await axios.post(urlapi+'/descargar-excel', { marca }, { responseType: 'blob' });
     const url = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
     link.href = url;
@@ -84,7 +85,7 @@ const handleDownload = async (marca) => {
   }
 };
 
-const Menu3Botones = ({ marca }) => (
+const Menu3Botones = ({ marca ,nombre}) => (
   <>
     <div>
       <FloatButton.Group
@@ -104,7 +105,7 @@ const Menu3Botones = ({ marca }) => (
             backgroundColor: '#1890ff', // Color for the upload button
             color: 'white',
           }}
-          onClick={() => handleUpload(marca)} // Pasar marca a handleUpload
+          onClick={() => handleUpload(marca,nombre)} // Pasar marca a handleUpload
         />
         <FloatButton
           icon={<FileTextOutlined />}
