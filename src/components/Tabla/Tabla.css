@@ -91,6 +91,10 @@ section {
   background-color: #ddd;
 }
 
+.paginacion {
+  margin-top: 20px;
+}
+
 /* Media Queries para responsividad */
 @media (max-width: 1200px) {
   section {
@@ -163,3 +167,5 @@ section {
   font-size: 1.2em; /* Ajusta el tamaño del ícono */
   color: #373738;  /* Color del ícono */
 }
+
+

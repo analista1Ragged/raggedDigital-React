@@ -175,6 +175,7 @@ const Tabla = () => {
               </tr>
           </tbody>
         </table>
+        <div className='paginacion'>
         <Pagination
           current={currentPage}
           pageSize={pageSize}
@@ -183,7 +184,7 @@ const Tabla = () => {
           showSizeChanger
           showQuickJumper
         />
-        
+        </div>
         <ModalCartera modal1Visible={modal1Visible} setModal1Visible={setModal1Visible} />
       </div>
     </section>

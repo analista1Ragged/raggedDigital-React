@@ -58,3 +58,7 @@ section {
   /* background-color: #f2f4f8 !important; Fondo login */
   margin-bottom: 300px; /* Aumenta el espacio entre el contenedor y el footer */
 }
+
+.paginacion {
+  margin-top: 20px;
+}

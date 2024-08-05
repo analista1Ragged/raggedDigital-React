@@ -124,6 +124,7 @@ const TicketTable = () => {
             ))}
           </tbody>
         </table>
+        <div className='paginacion'>
         <Pagination
           current={currentPage}
           pageSize={pageSize}
@@ -131,8 +132,8 @@ const TicketTable = () => {
           onChange={handleChangePage}
           showSizeChanger
           showQuickJumper
-          
         />
+        </div>
       </div>
     </section>
   );
