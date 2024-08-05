@@ -27,7 +27,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: -10px;
   flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
   gap:16px; 
 }
@@ -37,7 +37,7 @@ section {
   display: flex;
   align-items: center;
   /*justify-content: space-between;*/
-  margin-bottom: 20px;
+  margin-bottom: -10px;
   flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
   gap: 16px; 
 }

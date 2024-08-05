@@ -12,7 +12,7 @@ import Layout from './pages/Layout';
 import MyMenu from './components/MyMenu/MyMenu';
 import Tabla from './components/Tabla/Tabla';
 import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
-import ModalCartera from './components/ModalCartera';
+import Error404 from './components/Error404/Error404';
 
 import MultiSelector from './components/MultiSelector/MultiSelector';
 //export const urlapi = 'http://serverrgd.eastus.cloudapp.azure.com:5000'
@@ -154,6 +154,13 @@ function App() {
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <MultiSelector />
           </div>
+        } />
+        <Route path='/*' element={
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <Error404 />
+            </div>
+          } />
         } />
       </Routes>
       {shouldShowNavbar() && <Footer />}

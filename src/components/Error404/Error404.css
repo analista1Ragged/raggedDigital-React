@@ -1,0 +1,35 @@
+#home {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    height: 100%;
+}
+
+.container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.company-title {
+    font-size: 3em;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.tagline {
+    font-size: 1.2em;
+    color: #666;
+    margin-top: 20px;
+}
+.img {
+    max-width: 100%;
+    height: 100%; /* Para mantener la proporción de aspecto */
+    display: block; /* Para eliminar el espacio adicional debajo de la imagen */
+    margin: 0 auto; /* Para centrar la imagen horizontalmente */
+}
+#home {
+    overflow-y: hidden;
+}
