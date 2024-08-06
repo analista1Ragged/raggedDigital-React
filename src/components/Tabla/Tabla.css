@@ -42,6 +42,10 @@ section {
   gap: 16px; 
 }
 
+.inline-components2 .boton {
+  margin-top: -10px; /* Ajusta este valor según sea necesario */
+}
+
 .component-item {
   flex: 1;
   margin-right: '10px';
