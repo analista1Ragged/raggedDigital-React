@@ -1,9 +1,20 @@
+
+
 .custom-menu {
   width: 300px;
   position: fixed;
   padding: 5px;
-  z-index: 1000; /* Ajusta el z-index según sea necesario */
-  cursor: move; /* Cambia el cursor por defecto para mostrar que se puede mover */
+  z-index: 1000;
+}
+
+.custom-menu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150px; /* Área donde se aplicará el cursor move */
+  height: 100%;
+  cursor: move;
 }
 
 .custom-menu .ant-menu-item,

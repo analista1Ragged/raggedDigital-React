@@ -263,15 +263,44 @@ const MyMenu = () => {
       </Button>
       {!hidden && (
         <div 
+          className="custom-menu" 
           ref={menuRef} 
-          className={`custom-menu ${collapsed ? 'collapsed' : ''}`} 
           style={{ 
             position: 'absolute', 
             top: menuPosition.top, 
-            left: menuPosition.left 
+            left: menuPosition.left, 
+            width: '300px', 
+            padding: '5px', 
+            zIndex: 1000 
           }}
           onMouseDown={handleMouseDown}
         >
+          {/* Zona de 150px de ancho donde se muestra el cursor move */}
+          <div 
+            className="move-cursor-area" 
+            style={{ 
+              position: 'absolute', 
+              width: '150px', 
+              height: '100%', 
+              top: 0, 
+              left: 0, 
+              cursor: 'move' 
+            }}
+          ></div>
+          
+          {/* Zona restante donde no se bloquea la interacción */}
+          <div 
+            className="rest-menu-area" 
+            style={{ 
+              position: 'absolute', 
+              width: '150px', 
+              height: '100%', 
+              top: 0, 
+              left: '150px', 
+              pointerEvents: 'none' 
+            }}
+          ></div>
+  
           <Menu
             mode="inline"
             theme="dark"
@@ -279,7 +308,6 @@ const MyMenu = () => {
             openKeys={openKeys}
             onOpenChange={handleOpenChange}
             style={{ backgroundColor: "#373738", fontSize: "16px" }}
-            //  className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
           >
             <NavLink to="/Home">
               <img src={require("../../assets/Images/logo.png")} alt="logo" />
@@ -290,22 +318,15 @@ const MyMenu = () => {
                   key={item.key} 
                   icon={item.icon}
                   onClick={() => handleMenuItemClick(item.action)}
-                  className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
                 >
                   {item.title === "Logout" ? (
                     <div onClick={handleLogout}>
-                      <NavLink 
-                        to={item.path} 
-                        className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
-                      >
+                      <NavLink to={item.path}>
                         {item.title}
                       </NavLink>
                     </div>
                   ) : (
-                    <NavLink 
-                      to={item.path} 
-                      className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
-                    >
+                    <NavLink to={item.path}>
                       {item.title}
                     </NavLink>
                   )}
@@ -315,10 +336,7 @@ const MyMenu = () => {
                   {item.items.map((subItem) =>
                     !subItem.items ? (
                       <Menu.Item key={subItem.key} icon={subItem.icon}>
-                        <NavLink 
-                          to={subItem.path} 
-                          className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
-                        >
+                        <NavLink to={subItem.path}>
                           {subItem.title}
                         </NavLink>
                       </Menu.Item>
@@ -326,10 +344,7 @@ const MyMenu = () => {
                       <SubMenu key={subItem.key} icon={subItem.icon} title={subItem.title}>
                         {subItem.items.map((subSubItem) => (
                           <Menu.Item key={subSubItem.key} icon={subSubItem.icon}>
-                            <NavLink 
-                              to={subSubItem.path} 
-                              className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
-                            >
+                            <NavLink to={subSubItem.path}>
                               {subSubItem.title}
                             </NavLink>
                           </Menu.Item>
