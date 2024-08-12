@@ -4,19 +4,17 @@ import './MultiSelector.css';
 
 const { Option } = Select;
 
-const MultiSelector = ({ placeholder }) => {
+const MultiSelector = ({ options = [],opc, placeholder,onSelectChange }) => {
   const [value, setValue] = useState([]);
 
-  const options = [
-    { value: 'opcion1', label: 'opcion1', icon: '🟠'},
-    { value: 'opcion2', label: 'opcion2', icon: '🔵'},
-    { value: 'opcion3', label: 'opcion3', icon: '🟢'},
-    { value: 'opcion4', label: 'opcion4', icon: '🔴'},
-  ];
-
   const handleChange = (selectedValues) => {
-    console.log('selected:', selectedValues);
+    //console.log('selected:', selectedValues);
     setValue(selectedValues);
+
+    // Llamar a la función de callback pasando los valores seleccionados
+    if (onSelectChange) {
+      onSelectChange(selectedValues);
+    }
   };
 
   return (
@@ -29,10 +27,9 @@ const MultiSelector = ({ placeholder }) => {
         placeholder={placeholder}
         optionLabelProp="label"
       >
-        {options.map((option) => (
-          <Option key={option.value} value={option.value} label={option.label}>
-            <span role="img" aria-label={option.label}>{option.icon}</span>
-            &nbsp;&nbsp;{option.label}
+        {options.map((option, index) => (
+          <Option key={index} value={option[parseInt(opc)]} label={option[parseInt(opc)]}>
+            {option[parseInt(opc)]}
           </Option>
         ))}
       </Select>
@@ -41,7 +38,3 @@ const MultiSelector = ({ placeholder }) => {
 };
 
 export default MultiSelector;
-
-
-
-

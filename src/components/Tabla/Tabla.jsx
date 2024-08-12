@@ -9,27 +9,32 @@ import BuscarButton from '../BotonBuscar/BotonBuscar';
 import SeleccionarFecha from '../SeleccionarFecha/SeleccionarFecha';
 import ModalCartera from "../ModalMenu/ModalMenu";
 import MultiSelector from '../MultiSelector/MultiSelector.jsx';
-//import { CiFilter } from "react-icons/ci";
+import { urlapi } from '../../App';
+import Swal from 'sweetalert2';
+import axios from 'axios';
 
-const transformData = (list) => {
-  // Verificar si la entrada es un array
+const transformData = (list, handleIconClick) => {
   if (!Array.isArray(list)) {
     console.error("Expected an array but received:", list);
     return [];
   }
 
-  // Transformar cada elemento del array en un nuevo objeto
-  return list.map(item => ({
-    cedula: item[2] || '',
-    nombre: item[3] || '',
-    fecha: item[4] || '',
-    nroFactura: item[5] || '',
-    valorFactura: item[6] || '',
-    fechaVenc: item[7] || '', 
-    diasCartera: item[8] || '', 
-    valorAbono: item[9] || '', 
-    nroNotaCredito: item[10] || '', 
-    valorNotaCredito: item[11] || '' 
+  return list.map((item, index) => ({
+    item: index + 1,
+    cedula: item[0] || 'N/A',
+    nombre: item[1] || 'N/A',
+    fecha: item[2] || 'N/A',
+    nroFactura: item[4] || 'N/A',
+    valorFactura: item[5] || 'N/A',
+    fechaVenc: item[3] || 'N/A', 
+    diasCartera: item[7] || 'N/A', 
+    valorAbono: item[6] || 'N/A', 
+    saldoFactura: item[8] || 'N/A', 
+    ver_detalle_NC: (
+      <button onClick={() => handleIconClick(index,item[4])} className="icon-button">
+        <i className="bi bi-eye"></i>
+      </button>
+    )
   }));
 };
 
@@ -48,21 +53,35 @@ const Tabla = () => {
     nroNotaCredito: '',
     valorNotaCredito: ''
   });
-  const [valorNit, setValorNit] = useState(''); // Estado para almacenar el valor de Nit
-  const [currentPage, setCurrentPage] = useState(1); // Estado para controlar la página actual
-  const [pageSize, setPageSize] = useState(10); // Tamaño de página, ajusta según sea necesario
-  const [modal1Visible, setModal1Visible] = useState(false); // Estado para mostrar el modal
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [modal1Visible, setModal1Visible] = useState(false);
+  const [listaClientes, setListaClientes] = useState([]);
+  const [listaFacturas, setListaFacturas] = useState([]);
+  const [selectedClientes, setSelectedClientes] = useState([]);
+  const [selectedNombres, setSelectedNombres] = useState([]);
+  const [selectedFacturas, setSelectedFacturas] = useState([]);
+  const [date1, setDate1] = useState(null);
+  const [date2, setDate2] = useState(null);
+  const [modalData, setModalData] = useState([]);
+  
   useEffect(() => {
-    console.log(selectedMarca);
-    fetchData(selectedMarca);
-  }, [selectedMarca]);
+    fetchData();
+  }, []);
 
-  const fetchData = async (marca) => {
+  const fetchData = async () => {
     try {
-      const response = await fetch(`/api/data?marca=${marca}`);
-      const rawData = await response.json();
-      setData(transformData(rawData));
+      const correo = sessionStorage.getItem('log');
+      const response = await fetch(urlapi+'/get-clientes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ usuario: correo })
+      });
+      const listas = await response.json();
+      setListaClientes(listas[0]);
+      setListaFacturas(listas[1]);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -80,28 +99,100 @@ const Tabla = () => {
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
   const currentItems = data
-    .filter(item =>
-      item.cedula.toLowerCase().includes(filtersCartera.cedula.toLowerCase()) &&
-      item.nombre.toLowerCase().includes(filtersCartera.nombre.toLowerCase()) &&
-      item.fecha.toLowerCase().includes(filtersCartera.fecha.toLowerCase()) &&
-      item.fechaVenc.toLowerCase().includes(filtersCartera.fechaVenc.toLowerCase()) &&
-      item.nroFactura.toLowerCase().includes(filtersCartera.nroFactura.toLowerCase()) &&
-      item.valorFactura.toLowerCase().includes(filtersCartera.valorFactura.toLowerCase()) &&
-      item.valorAbono.toLowerCase().includes(filtersCartera.valorAbono.toLowerCase()) &&
-      item.diasCartera.toLowerCase().includes(filtersCartera.diasCartera.toLowerCase()) &&
-      item.nroNotaCredito.toLowerCase().includes(filtersCartera.nroNotaCredito.toLowerCase()) &&
-      item.valorNotaCredito.toLowerCase().includes(filtersCartera.valorNotaCredito.toLowerCase()) &&
-      item.saldoFactura.toLowerCase().includes(filtersCartera.saldoFactura.toLowerCase())
-    )
-    .slice(indexOfFirstItem, indexOfLastItem);
+
 
   const handleChangePage = (page, size) => {
     setCurrentPage(page);
     setPageSize(size);
   };
 
-  const handleIconClick = () => {
-    setModal1Visible(true); // Muestra el modal al hacer clic en el ícono
+  const handleIconClick = async (index,data) => {
+    const nroFactura = data;
+    console.log('Detalles de la fila:', data);
+
+    try {
+      Swal.fire({
+        title: `Consultando Abonos de \n${nroFactura}`,
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await axios.post(`${urlapi}/get-facturas-detalle`, {
+        nroFactura: nroFactura
+      });
+
+      const facturaDetalles = response.data;
+      console.log(facturaDetalles)
+      setModalData(facturaDetalles); // Guardar los datos en el estado
+      Swal.close();
+      setModal1Visible(true); // Mostrar el modal
+    } catch (error) {
+      console.error('Error fetching factura details:', error);
+      Swal.fire('Error', 'Hubo un problema al consultar los detalles de la factura.', 'error');
+    }
+  };
+
+  const handleClientesChange = (selected) => {
+    console.log('Clientes seleccionados:', selected);
+    setSelectedClientes(selected);
+  };
+
+  const handleNombresChange = (selected) => {
+    console.log('Nombres seleccionadas:', selected);
+    setSelectedNombres(selected);
+  };
+  
+  const handleFacturasChange = (selected) => {
+    console.log('Facturas seleccionadas:', selected);
+    setSelectedFacturas(selected);
+  };
+
+  const handleDate1Change = (newDate) => {
+    console.log('Fecha Inicial seleccionada:', newDate);
+    setDate1(newDate);
+  };
+  
+  const handleDate2Change = (newDate) => {
+    console.log('Fecha Final seleccionada:', newDate);
+    setDate2(newDate);
+  };
+
+  const handleConsulta = async (event) => {
+    event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+
+    try {
+      Swal.fire({
+        title: 'Consultando Facturas...',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const correo = sessionStorage.getItem('log')
+      const response = await axios.post(urlapi+'/get-facturas', {
+        correo: correo,
+        nit: selectedClientes,
+        nombre:selectedNombres,
+        factura:selectedFacturas,
+        date1: date1, 
+        date2: date2
+      });
+      console.log('Respuesta de la API:', response.data);
+      if(response.data.length > 0){
+        setData(transformData(response.data, handleIconClick));
+        Swal.close();
+      } else {
+        Swal.close();
+        Swal.fire('Ups!', 'No se encontraron facturas asociadas a los filtros.', 'info');
+      }
+    } catch (error) {
+      Swal.close();
+      console.error('Error durante la consulta:', error);
+      Swal.fire('Error', 'Hubo un problema al consultar las facturas.', 'error');
+    }
   };
 
   return (
@@ -119,32 +210,48 @@ const Tabla = () => {
           Filtrar por: 
           </h3>
         </p>
-        <div className="inline-components">
-          <MultiSelector 
-          placeholder="Filtrar por Nit:"
-          />
-          <MultiSelector 
-          placeholder="Filtrar por Nombre/Razon S."
-          />
-          <MultiSelector 
-          placeholder="Filtrar por Numero Factura"
-          />
-        </div>
-        <div className="inline-components2">
-          <SeleccionarFecha className="component-item" 
-          />
-          <BuscarButton className="component-item" 
-          />
-        </div>
+        <form onSubmit={handleConsulta}>
+          <div className="inline-components">
+            <MultiSelector 
+              options={listaClientes}
+              opc='0'
+              placeholder="Filtrar por Nit:"
+              onSelectChange={handleClientesChange} 
+            />
+            <MultiSelector
+              options={listaClientes}
+              opc='1'
+              placeholder="Filtrar por Nombre/Razon S."
+              onSelectChange={handleNombresChange} 
+            />
+            <MultiSelector 
+              options={listaFacturas}
+              opc='0'
+              placeholder="Filtrar por Numero Factura"
+              onSelectChange={handleFacturasChange} 
+            />
+          </div>
+          <div className="inline-components2">
+            <SeleccionarFecha 
+              onDate1Change={handleDate1Change}
+              onDate2Change={handleDate2Change}
+              className="component-item" 
+            />
+            <BuscarButton 
+              onClick={handleConsulta}
+              className="component-item" 
+            />
+          </div>
+        </form>
 
-        <Menu2Botones marca={selectedMarca} />
+        <Menu2Botones marca={data} />
         <table className="table-flex">
           <thead>
             <tr className="color">
               <th>Item</th>
               <th>Nit/Cedula</th>
               <th>Nombre/ Razon_Social</th>
-              <th>Fecha de_Factura    </th>
+              <th>Fecha de_Factura</th>
               <th>Fecha de Vencimiento</th>
               <th>Numero de_Factura</th>
               <th>Valor de_Factura</th>
@@ -153,26 +260,23 @@ const Tabla = () => {
               <th>Saldo de_Factura</th>
               <th>Ver Detalle_NC</th>
             </tr>
-            {/* <FilterRowCartera filtersCartera={filtersCartera} handleFilter={handleFilter} /> */}
           </thead>
           <tbody>
-              <tr>
-                <td>2</td>
-                <td>900395854</td>
-                <td>COMERCIALIZADORA S.A.S</td>
-                <td>2024-07-23</td>
-                <td>2024-07-23</td>
-                <td>FVFE-4525</td>
-                <td>10.000.000</td>
-                <td>5.000.000</td>
-                <td>15</td>
-                <td>2.000.000</td>
-                <td>
-                    <button onClick={handleIconClick} className="icon-button">
-                      <i className="bi bi-eye"></i>
-                    </button>
-                </td>
+            {currentItems.map((item, index) => (
+              <tr key={index}>
+                <td>{item.item}</td>
+                <td>{item.cedula}</td>
+                <td>{item.nombre}</td>
+                <td>{item.fecha}</td>
+                <td>{item.fechaVenc}</td>
+                <td>{item.nroFactura}</td>
+                <td>{item.valorFactura}</td>
+                <td>{item.valorAbono}</td>
+                <td>{item.diasCartera}</td>
+                <td>{item.saldoFactura}</td>
+                <td>{item.ver_detalle_NC}</td>
               </tr>
+            ))}
           </tbody>
         </table>
         <Pagination
@@ -184,11 +288,14 @@ const Tabla = () => {
           showQuickJumper
         />
         
-        <ModalCartera modal1Visible={modal1Visible} setModal1Visible={setModal1Visible} />
+        <ModalCartera
+          modal1Visible={modal1Visible}
+          setModal1Visible={setModal1Visible}
+          modalData={modalData} // Pasa los datos del modal aquí
+        />
       </div>
     </section>
   );
 };
 
 export default Tabla;
-

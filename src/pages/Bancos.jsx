@@ -54,7 +54,7 @@ const Bancos = () => {
       console.log(response, response.data.message);
       Swal.close();
       if(!response.data.message.includes("Error")){
-        Swal.fire('Éxito', 'La conciliación se ha generado correctamente.'+response.data.message , 'success');
+        Swal.fire('Éxito', 'La conciliación se ha generado correctamente.' , 'success');
       }
       else{
         Swal.fire('Error', 'Hubo un problema al procesar el archivo:'+response.data.message, 'error');

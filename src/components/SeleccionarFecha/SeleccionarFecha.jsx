@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, DatePicker } from 'antd';
 
-const MyForm = () => {
+const MyForm = ({ onDate1Change, onDate2Change }) => {
   const [formState, setFormState] = useState({
     name: '',
     region: undefined,
@@ -15,6 +15,14 @@ const MyForm = () => {
 
   const handleChange = (key, value) => {
     setFormState((prevState) => ({ ...prevState, [key]: value }));
+
+    // Llamar a las funciones de callback con los valores actualizados
+    if (key === 'date1' && onDate1Change) {
+      onDate1Change(value);
+    }
+    if (key === 'date2' && onDate2Change) {
+      onDate2Change(value);
+    }
   };
 
   return (
