@@ -237,13 +237,13 @@ const MyMenu = () => {
     }
   };
 
-  const handleMouseDown = (event) => {
+  /*const handleMouseDown = (event) => {
     isDragging.current = true;
     offset.current = {
       x: event.clientX - menuPosition.left,
       y: event.clientY - menuPosition.top,
     };
-  };
+  }; Esto es lo que hace que la barra se mueva*/
 
   return (
     <>
@@ -270,7 +270,7 @@ const MyMenu = () => {
             top: menuPosition.top, 
             left: menuPosition.left 
           }}
-          onMouseDown={handleMouseDown}
+          /*onMouseDown={handleMouseDown} Esto es lo que hace que la barra se mueva*/
         >
           <Menu
             mode="inline"

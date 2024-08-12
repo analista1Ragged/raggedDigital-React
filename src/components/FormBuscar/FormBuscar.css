@@ -10,7 +10,7 @@
 }
 
 #formBuscar .col-12, #formBuscar .col-md-4, #formBuscar .col-md-2 {
-  padding-right: 100px;
+  /*padding-right: 100px;*/
   padding-left: 20px;
   padding-top: 20px;
 }
@@ -23,7 +23,7 @@
 #formBuscar input.form-control {
   display: block;
   width: 100%;
-  height: calc(1.5em + .75rem + 2px);
+  height: calc(1.2em + .75rem + 2px);
   padding: .375rem .75rem;
   font-size: 1rem;
   line-height: 1.5;

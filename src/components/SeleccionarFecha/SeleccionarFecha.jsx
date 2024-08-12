@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, DatePicker } from 'antd';
+import './SeleccionarFecha.css';
 
 const MyForm = ({ onDate1Change, onDate2Change }) => {
   const [formState, setFormState] = useState({
@@ -31,29 +32,30 @@ const MyForm = ({ onDate1Change, onDate2Change }) => {
       wrapperCol={{ span: 20 }}
       initialValues={formState}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '30px'  }}>
+      <div className="form-dates-container">
         <Form.Item
           //label="Fecha Inicial"
-          labelCol={{ span: 6 }} // Ajusta el tamaño del label
-          wrapperCol={{ span: 18 }} // Ajusta el tamaño del contenedor del DatePicker
-          style={{ marginRight: '50px' }} // Agrega margen derecho entre campos de fecha
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 18 }}
+          className="form-item"
         >
           <DatePicker
             placeholder="Fecha Inicial"
             onChange={(date) => handleChange('date1', date)}
-            style={{ width: '300px' }} // Establece un ancho específico
+            className="date-picker"
           />
         </Form.Item>
 
         <Form.Item
           //label="Fecha Final"
-          labelCol={{ span: 6 }} // Ajusta el tamaño del label
-          wrapperCol={{ span: 18 }} // Ajusta el tamaño del contenedor del DatePicker
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 18 }}
+          className="form-item"
         >
           <DatePicker
             placeholder="Fecha Final"
             onChange={(date) => handleChange('date2', date)}
-            style={{ width: '300px' }} // Establece un ancho específico
+            className="date-picker"
           />
         </Form.Item>
       </div>
@@ -62,6 +64,7 @@ const MyForm = ({ onDate1Change, onDate2Change }) => {
 };
 
 export default MyForm;
+
 
 
 

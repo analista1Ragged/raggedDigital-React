@@ -279,6 +279,7 @@ const Tabla = () => {
             ))}
           </tbody>
         </table>
+        <div className='paginacion'>
         <Pagination
           current={currentPage}
           pageSize={pageSize}

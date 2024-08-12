@@ -4,6 +4,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  font-size: 14px !important; /* Tamaño base de la fuente para el cuerpo */
 }
 
 /* Sección principal */
@@ -27,9 +28,9 @@ section {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: -10px;
+  margin-bottom: -15px;
   flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
-  gap:16px; 
+  /*gap:16px;*/ 
 }
 
 /* Componentes en línea */
@@ -37,9 +38,13 @@ section {
   display: flex;
   align-items: center;
   /*justify-content: space-between;*/
-  margin-bottom: -10px;
+  margin-bottom: 5px;
   flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
-  gap: 16px; 
+  gap: 30px; 
+}
+
+.inline-components2 .boton {
+  margin-top: -10px; /* Ajusta este valor según sea necesario */
 }
 
 .component-item {
@@ -89,6 +94,10 @@ section {
 
 .ticket-table tr:hover {
   background-color: #ddd;
+}
+
+.paginacion {
+  margin-top: 20px;
 }
 
 /* Media Queries para responsividad */
@@ -163,3 +172,5 @@ section {
   font-size: 1.2em; /* Ajusta el tamaño del ícono */
   color: #373738;  /* Color del ícono */
 }
+
+

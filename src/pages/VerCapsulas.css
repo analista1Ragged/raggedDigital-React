@@ -2,6 +2,7 @@
 
 .App {
   font-family: 'Open Sans', sans-serif;
+  font-size: 14px !important; /* Tamaño base de la fuente para el cuerpo */
 }
 
 .App-header {
@@ -57,4 +58,8 @@ section {
   max-width: 1200px; /* Ajusta el ancho máximo del contenedor */
   /* background-color: #f2f4f8 !important; Fondo login */
   margin-bottom: 300px; /* Aumenta el espacio entre el contenedor y el footer */
+}
+
+.paginacion {
+  margin-top: 20px;
 }

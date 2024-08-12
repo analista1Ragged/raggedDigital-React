@@ -1,9 +1,21 @@
+.menu-container {
+  position: relative; /* Asegura que el menú se alinee con respecto a este contenedor */
+}
+
 .custom-menu {
   width: 300px;
-  position: fixed;
-  padding: 5px;
-  z-index: 1000; /* Ajusta el z-index según sea necesario */
-  cursor: move; /* Cambia el cursor por defecto para mostrar que se puede mover */
+  padding: 0;
+  margin-top: 0;
+  position: absolute;  /* Posiciona la barra respecto al contenedor padre */
+  left: 0;  /* Alinea el menú a la izquierda del contenedor */
+  transition: all 0.3s ease;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+
+.custom-menu .ant-menu {
+  overflow: visible;
 }
 
 .custom-menu .ant-menu-item,
@@ -29,12 +41,12 @@
   color: #41D9A1;
 }
 
+.ant-menu-submenu-popup {
+  z-index: 1001;
+}
+
 .custom-menu.hidden {
   display: none;
 }
-
-
-
-
 
 
