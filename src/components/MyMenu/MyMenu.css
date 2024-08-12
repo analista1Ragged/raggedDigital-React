@@ -1,20 +1,14 @@
-
+.menu-container {
+    position: absolute; /* Asegura que el z-index funcione correctamente */
+    padding-top: 60px; /* Ajusta este valor según sea necesario */
+    z-index: 1000; /* Asegúrate de que sea mayor que el z-index de los multiselectores */
+    transform: translateX(0); /* Posición normal */
+}
 
 .custom-menu {
   width: 300px;
-  position: fixed;
-  padding: 5px;
-  z-index: 1000;
-}
-
-.custom-menu::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 150px; /* Área donde se aplicará el cursor move */
-  height: 100%;
-  cursor: move;
+  padding: 0px; /*Margen izquierdo de la barra*/
+  margin-top: 0;
 }
 
 .custom-menu .ant-menu-item,
@@ -43,9 +37,4 @@
 .custom-menu.hidden {
   display: none;
 }
-
-
-
-
-
 

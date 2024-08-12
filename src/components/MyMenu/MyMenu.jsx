@@ -1,10 +1,9 @@
 import "./MyMenu.css";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { Menu, Button } from "antd";
-import "antd/dist/reset.css";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill } from "react-icons/fa";
-import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
+import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill  } from "react-icons/fa";
+import { AiOutlineDollar,AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineSearch, AiOutlineShrink } from "react-icons/ai";
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
 import { PiEyeSlashFill } from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -55,7 +54,7 @@ const menuItems = [
         icon: <AiOutlineHome />,
         items: [
           {
-            key: '3.2.1',
+            key: '2.1',
             title: 'Consulta Cartera',
             icon: <FaMoneyBill />,
             path: "/Mercadeo/Raqstyle/Cartera",
@@ -171,42 +170,7 @@ const MyMenu = () => {
   const [hidden, setHidden] = useState(false);
   const [openKeys, setOpenKeys] = useState([]);
   const [modal1Visible, setModal1Visible] = useState(false);
-  const [menuPosition, setMenuPosition] = useState({ top: 60, left: 0 });
-  const menuRef = useRef(null);
   const navigate = useNavigate();
-  const isDragging = useRef(false);
-  const offset = useRef({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setCollapsed(true);
-      }
-    };
-
-    const handleMouseUp = () => {
-      isDragging.current = false;
-    };
-
-    const handleMouseMove = (event) => {
-      if (isDragging.current) {
-        setMenuPosition((prevPosition) => ({
-          left: event.clientX - offset.current.x,
-          top: event.clientY - offset.current.y,
-        }));
-      }
-    };
-
-    document.addEventListener("mousedown", handleOutsideClick);
-    document.addEventListener("mouseup", handleMouseUp);
-    document.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-      document.removeEventListener("mouseup", handleMouseUp);
-      document.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -237,16 +201,8 @@ const MyMenu = () => {
     }
   };
 
-  const handleMouseDown = (event) => {
-    isDragging.current = true;
-    offset.current = {
-      x: event.clientX - menuPosition.left,
-      y: event.clientY - menuPosition.top,
-    };
-  };
-
   return (
-    <>
+    <div className="menu-container">
       <Button
         type="primary"
         onClick={toggleCollapsed}
@@ -264,43 +220,12 @@ const MyMenu = () => {
       {!hidden && (
         <div 
           className="custom-menu" 
-          ref={menuRef} 
           style={{ 
-            position: 'absolute', 
-            top: menuPosition.top, 
-            left: menuPosition.left, 
-            width: '300px', 
-            padding: '5px', 
+            marginTop: 16, /* Espacio debajo del botón */
+            left: 16, /* Alineación con el botón */
             zIndex: 1000 
           }}
-          onMouseDown={handleMouseDown}
         >
-          {/* Zona de 150px de ancho donde se muestra el cursor move */}
-          <div 
-            className="move-cursor-area" 
-            style={{ 
-              position: 'absolute', 
-              width: '150px', 
-              height: '100%', 
-              top: 0, 
-              left: 0, 
-              cursor: 'move' 
-            }}
-          ></div>
-          
-          {/* Zona restante donde no se bloquea la interacción */}
-          <div 
-            className="rest-menu-area" 
-            style={{ 
-              position: 'absolute', 
-              width: '150px', 
-              height: '100%', 
-              top: 0, 
-              left: '150px', 
-              pointerEvents: 'none' 
-            }}
-          ></div>
-  
           <Menu
             mode="inline"
             theme="dark"
@@ -359,9 +284,8 @@ const MyMenu = () => {
           <ModalCartera modal1Visible={modal1Visible} setModal1Visible={setModal1Visible} />
         </div>
       )}
-    </>
+    </div>
   );
 };
 
 export default MyMenu;
-
