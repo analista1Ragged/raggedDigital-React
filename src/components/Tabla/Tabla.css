@@ -4,6 +4,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  font-size: 14px !important; /* Tamaño base de la fuente para el cuerpo */
 }
 
 /* Sección principal */

@@ -2,6 +2,7 @@
 
 .App {
   font-family: 'Open Sans', sans-serif;
+  font-size: 14px !important; /* Tamaño base de la fuente para el cuerpo */
 }
 
 .App-header {
