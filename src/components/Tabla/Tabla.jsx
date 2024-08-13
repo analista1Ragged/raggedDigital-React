@@ -316,8 +316,9 @@ const Tabla = () => {
             pageSize={pageSize}
             total={data.length}
             onChange={handleChangePage}
+            pageSizeOptions={['10', '20', '30','50','100']}
             showSizeChanger
-            pageSizeOptions={['10', '20', '30']}
+            showQuickJumper
           />
         </div>
          <ModalCartera
