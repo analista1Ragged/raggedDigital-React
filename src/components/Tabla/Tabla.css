@@ -9,11 +9,11 @@ body {
 
 /* Sección principal */
 section {
-  padding: 50px 10px;
+  padding: 5px 10px;
   border-radius: 20px;
   margin: 0 auto;
-  width: 90%;
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1400px;
   margin-bottom: 300px;
 }
 

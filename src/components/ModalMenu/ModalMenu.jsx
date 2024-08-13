@@ -4,7 +4,7 @@ import { Modal } from 'antd';
 const ModalCartera = ({ modal1Visible, setModal1Visible, modalData = [] }) => {
   return (
     <Modal
-      title="Detalle Nota Credito."
+      title="Detalle de documentos:"
       style={{ top: 20 }}
       open={modal1Visible}
       onOk={() => setModal1Visible(false)}
@@ -15,9 +15,9 @@ const ModalCartera = ({ modal1Visible, setModal1Visible, modalData = [] }) => {
           <div key={index}>
             <hr />
             <h3><b>{detalle[0]}</b></h3>
-            <p>Fecha Nota Credito: {new Date(detalle[2]).toLocaleDateString()}</p>
-            <p>Numero Nota Credito: {detalle[1]}</p>
-            <p>Valor Nota Credito: {detalle[3]}</p>
+            <p>Fecha documento: {new Date(detalle[2]).toLocaleDateString()}</p>
+            <p>Numero documento: {detalle[1]}</p>
+            <p>Valor documento: {detalle[3]}</p>
           </div>
         ))
       ) : (
