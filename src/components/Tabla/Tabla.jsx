@@ -83,6 +83,14 @@ const Tabla = () => {
 
   const fetchData = async () => {
     try {
+      Swal.fire({
+        title: 'Cargando nits, clientes y facturas...',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
       const correo = sessionStorage.getItem('log');
       const response = await fetch(urlapi+'/get-clientes', {
         method: 'POST',
@@ -94,6 +102,7 @@ const Tabla = () => {
       const listas = await response.json();
       setListaClientes(listas[0]);
       setListaFacturas(listas[1]);
+      Swal.close();
     } catch (error) {
       console.error('Error fetching data:', error);
     }

@@ -64,9 +64,10 @@ const subirPaso = async (step, marca, nombre) => {
   }
 };
 
-const handleDownload = async (marca) => {
+const handleDownload = async (marca,nombre) => {
   try {
-    const response = await axios.post(urlapi+'/descargar-excel', { marca }, { responseType: 'blob' });
+    const data=[marca,nombre]
+    const response = await axios.post(urlapi+'/descargar-excel', { data }, { responseType: 'blob' });
     const url = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
     link.href = url;
@@ -114,7 +115,7 @@ const Menu3Botones = ({ marca ,nombre}) => (
             backgroundColor: '#28a745', // Color for the download button
             color: 'white',
           }}
-          onClick={() => handleDownload(marca)} // Asignar la función de descarga al botón de descargar Excel
+          onClick={() => handleDownload(marca,nombre)} // Asignar la función de descarga al botón de descargar Excel
         />
       </FloatButton.Group>
     </div>
