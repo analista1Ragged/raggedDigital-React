@@ -12,7 +12,7 @@ const ModalCartera = () => {
       <Modal
         title="20px to Top"
         style={{ top: 20 }}
-        visible={modal1Visible}
+        open={modal1Visible}
         onOk={() => setModal1Visible(false)}
         onCancel={() => setModal1Visible(false)}
       >
