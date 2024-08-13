@@ -317,11 +317,10 @@ const Tabla = () => {
             pageSizeOptions={['10', '20', '30']}
           />
         </div>
-        <ModalCartera
-          title="Detalle Factura"
-          visible={modal1Visible}
-          data={modalData} 
-          onCancel={() => setModal1Visible(false)}
+         <ModalCartera
+          modal1Visible={modal1Visible}
+          setModal1Visible={setModal1Visible}
+          modalData={modalData} // Pasa los datos del modal aquí
         />
       </div>
     </section>
