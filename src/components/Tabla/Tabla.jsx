@@ -216,6 +216,8 @@ const Tabla = () => {
     }
   };
 
+  
+
   return (
     <section>
       <div className="ticket-table">
@@ -286,6 +288,7 @@ const Tabla = () => {
                 <th scope="col">Estado</th>
                 <th scope="col">Ver Detalle NC</th>
               </tr>
+              <FilterRowCartera filtersCartera={filtersCartera} handleFilter={handleFilter} />
             </thead>
             <tbody>
               {currentItems.map((item, index) => (
@@ -307,7 +310,7 @@ const Tabla = () => {
             </tbody>
           </table>
         </div>
-        <div className="pagination-container">
+        <div className="paginacion">
           <Pagination
             current={currentPage}
             pageSize={pageSize}
