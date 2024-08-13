@@ -98,8 +98,7 @@ const Tabla = () => {
 
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
-  const currentItems = data
-
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem); // Solo los elementos correspondientes a la página actual
 
   const handleChangePage = (page, size) => {
     setCurrentPage(page);
@@ -253,12 +252,12 @@ const Tabla = () => {
               <th>Nombre/ Razon_Social</th>
               <th>Fecha de_Factura</th>
               <th>Fecha de Vencimiento</th>
-              <th>Numero de_Factura</th>
-              <th>Valor de_Factura</th>
-              <th>Valor del_Abono</th>
-              <th>Dias de Cartera</th>
-              <th>Saldo de_Factura</th>
-              <th>Ver Detalle_NC</th>
+              <th>Dias Cartera</th>
+              <th>Nro Factura</th>
+              <th>Valor Factura</th>
+              <th>Valor Abono</th>
+              <th>Saldo Factura</th>
+              <th>Ver Detalle</th>
             </tr>
           </thead>
           <tbody>
@@ -269,31 +268,32 @@ const Tabla = () => {
                 <td>{item.nombre}</td>
                 <td>{item.fecha}</td>
                 <td>{item.fechaVenc}</td>
+                <td>{item.diasCartera}</td>
                 <td>{item.nroFactura}</td>
                 <td>{item.valorFactura}</td>
                 <td>{item.valorAbono}</td>
-                <td>{item.diasCartera}</td>
                 <td>{item.saldoFactura}</td>
                 <td>{item.ver_detalle_NC}</td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="pagination-container">
         <Pagination
           current={currentPage}
           pageSize={pageSize}
           total={data.length}
           onChange={handleChangePage}
           showSizeChanger
-          showQuickJumper
-        />
-        
-        <ModalCartera
-          modal1Visible={modal1Visible}
-          setModal1Visible={setModal1Visible}
-          modalData={modalData} // Pasa los datos del modal aquí
         />
       </div>
+      <ModalCartera
+        visible={modal1Visible}
+        data={modalData} 
+        onClose={() => setModal1Visible(false)}
+      />
     </section>
   );
 };
