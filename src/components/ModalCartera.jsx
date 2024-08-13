@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
 
-const ModalCartera = () => {
+const ModalC = () => {
   const [modal1Visible, setModal1Visible] = useState(false);
 
   return (
@@ -26,4 +26,4 @@ const ModalCartera = () => {
   );
 };
 
-export default ModalCartera;
+export default ModalC;

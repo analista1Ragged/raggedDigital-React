@@ -8,11 +8,12 @@ import CampoTexto from '../CampoTexto';
 import BuscarButton from '../BotonBuscar/BotonBuscar';
 import BuscarLimpiar from '../BotonLimpiar/BotonLimpiar.jsx';
 import SeleccionarFecha from '../SeleccionarFecha/SeleccionarFecha';
-import ModalCartera from "../ModalMenu/ModalMenu";
+import ModalCartera from '../ModalMenu/ModalMenu.jsx';
 import MultiSelector from '../MultiSelector/MultiSelector.jsx';
 import { urlapi } from '../../App';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import FilterRowCartera from '../FilterRow/FilterRowCartera.jsx'
 
 // Componente EstadoFactura
 const EstadoFactura = ({ estado }) => {
@@ -268,6 +269,7 @@ const Tabla = () => {
           </div>
         </form>
         <div className="tabla-container">
+        <Menu2Botones marca={data} />
           <table className="table table-striped table-hover">
             <thead>
               <tr>
