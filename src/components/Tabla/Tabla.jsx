@@ -2,16 +2,26 @@ import React, { useState, useEffect } from 'react';
 import "./Tabla.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Menu2Botones from '../Menu3Botones/Menu2Botones.jsx';
-import { Pagination } from 'antd'; // Importa el componente de paginación de Ant Design
+import { Pagination, Tag } from 'antd'; // Importa Tag de Ant Design para el componente EstadoFactura
 import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
 import CampoTexto from '../CampoTexto';
 import BuscarButton from '../BotonBuscar/BotonBuscar';
+import BuscarLimpiar from '../BotonLimpiar/BotonLimpiar.jsx';
 import SeleccionarFecha from '../SeleccionarFecha/SeleccionarFecha';
 import ModalCartera from "../ModalMenu/ModalMenu";
 import MultiSelector from '../MultiSelector/MultiSelector.jsx';
 import { urlapi } from '../../App';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+
+// Componente EstadoFactura
+const EstadoFactura = ({ estado }) => {
+  return (
+    <Tag color={estado === 1 ? "#FF5050" : "#87d068"}>
+      {estado === 1 ? "Vencido" : "Sin Vencer"}
+    </Tag>
+  );
+};
 
 const transformData = (list, handleIconClick) => {
   if (!Array.isArray(list)) {
@@ -30,6 +40,7 @@ const transformData = (list, handleIconClick) => {
     diasCartera: item[7] || 'N/A', 
     valorAbono: item[6] || 'N/A', 
     saldoFactura: item[8] || 'N/A', 
+    estado: item[9] || 'N/A',
     ver_detalle_NC: (
       <button onClick={() => handleIconClick(index,item[4])} className="icon-button">
         <i className="bi bi-eye"></i>
@@ -50,6 +61,7 @@ const Tabla = () => {
     fechaVenc: '',
     diasCartera: '',
     valorAbono: '',
+    estado: '',
     nroNotaCredito: '',
     valorNotaCredito: ''
   });
@@ -105,7 +117,7 @@ const Tabla = () => {
     setPageSize(size);
   };
 
-  const handleIconClick = async (index,data) => {
+  const handleIconClick = async (index, data) => {
     const nroFactura = data;
     console.log('Detalles de la fila:', data);
 
@@ -240,60 +252,67 @@ const Tabla = () => {
               onClick={handleConsulta}
               className="component-item" 
             />
+            <BuscarLimpiar 
+              onClick={handleConsulta}
+              className="component-item" 
+            />
           </div>
         </form>
-
-        <Menu2Botones marca={data} />
-        <table className="table-flex">
-          <thead>
-            <tr className="color">
-              <th>Item</th>
-              <th>Nit/Cedula</th>
-              <th>Nombre/ Razon_Social</th>
-              <th>Fecha de_Factura</th>
-              <th>Fecha de Vencimiento</th>
-              <th>Dias Cartera</th>
-              <th>Nro Factura</th>
-              <th>Valor Factura</th>
-              <th>Valor Abono</th>
-              <th>Saldo Factura</th>
-              <th>Ver Detalle</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentItems.map((item, index) => (
-              <tr key={index}>
-                <td>{item.item}</td>
-                <td>{item.cedula}</td>
-                <td>{item.nombre}</td>
-                <td>{item.fecha}</td>
-                <td>{item.fechaVenc}</td>
-                <td>{item.diasCartera}</td>
-                <td>{item.nroFactura}</td>
-                <td>{item.valorFactura}</td>
-                <td>{item.valorAbono}</td>
-                <td>{item.saldoFactura}</td>
-                <td>{item.ver_detalle_NC}</td>
+        <div className="tabla-container">
+          <table className="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nit</th>
+                <th scope="col">Nombre Cliente</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Numero Factura</th>
+                <th scope="col">Valor Factura</th>
+                <th scope="col">Fecha Vencimiento</th>
+                <th scope="col">Dias Cartera</th>
+                <th scope="col">Valor Abono</th>
+                <th scope="col">Saldo Factura</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Ver Detalle NC</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="pagination-container">
-        <Pagination
-          current={currentPage}
-          pageSize={pageSize}
-          total={data.length}
-          onChange={handleChangePage}
-          showSizeChanger
+            </thead>
+            <tbody>
+              {currentItems.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.item}</td>
+                  <td>{item.cedula}</td>
+                  <td>{item.nombre}</td>
+                  <td>{item.fecha}</td>
+                  <td>{item.nroFactura}</td>
+                  <td>{item.valorFactura}</td>
+                  <td>{item.fechaVenc}</td>
+                  <td>{item.diasCartera}</td>
+                  <td>{item.valorAbono}</td>
+                  <td>{item.saldoFactura}</td>
+                  <td><EstadoFactura estado={item.estado} /></td> {/* Aquí se muestra el estado de la factura */}
+                  <td>{item.ver_detalle_NC}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="pagination-container">
+          <Pagination
+            current={currentPage}
+            pageSize={pageSize}
+            total={data.length}
+            onChange={handleChangePage}
+            showSizeChanger
+            pageSizeOptions={['10', '20', '30']}
+          />
+        </div>
+        <ModalCartera
+          title="Detalle Factura"
+          visible={modal1Visible}
+          data={modalData} 
+          onCancel={() => setModal1Visible(false)}
         />
       </div>
-      <ModalCartera
-        visible={modal1Visible}
-        data={modalData} 
-        onClose={() => setModal1Visible(false)}
-      />
     </section>
   );
 };
