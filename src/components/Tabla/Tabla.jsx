@@ -18,8 +18,8 @@ import FilterRowCartera from '../FilterRow/FilterRowCartera.jsx'
 // Componente EstadoFactura
 const EstadoFactura = ({ estado }) => {
   return (
-    <Tag color={estado === 1 ? "#FF5050" : "#87d068"}>
-      {estado === 1 ? "Vencido" : "Sin Vencer"}
+    <Tag color={estado == 1 ? "#FF5050" : "#87d068"}>
+      {estado == 1 ? "Vencido" : "Sin Vencer"}
     </Tag>
   );
 };
@@ -41,7 +41,7 @@ const transformData = (list, handleIconClick) => {
     diasCart: item[7] || 'N/A', 
     valorAbono: item[6] || 'N/A', 
     saldoFactura: item[8] || 'N/A', 
-    estado: item[9] || 'N/A',
+    estado: String(item[9]) || 'N/A',
     ver_detalle_NC: (
       <button onClick={() => handleIconClick(index,item[4])} className="icon-button">
         <i className="bi bi-eye"></i>
