@@ -9,11 +9,14 @@ const handleDownload = (data) => {
     // Obtener los encabezados a partir de las claves del primer objeto
     const headers = Object.keys(data[0]);
 
-    // Crear un array de arrays a partir de los datos
-    const rows = data.map(obj => headers.map(header => obj[header]));
+    // Filtrar las columnas que no se desean (excluyendo las 5, 8, 9, 10, 11)
+    const filteredHeaders = headers.filter((header, index) => ![5, 8, 9, 10, 11].includes(index));
+
+    // Crear un array de arrays a partir de los datos, excluyendo las columnas no deseadas
+    const rows = data.map(obj => filteredHeaders.map(header => obj[header]));
 
     // Añadir los encabezados como la primera fila
-    const worksheetData = [headers, ...rows];
+    const worksheetData = [filteredHeaders, ...rows];
 
     // Crear la hoja de cálculo
     const ws = XLSX.utils.aoa_to_sheet(worksheetData);
@@ -52,7 +55,7 @@ const Menu2Botones = ({ marca }) => (
           icon={<FileTextOutlined />}
           title="Descargar Excel"
           style={{
-            backgroundColor: '#28a745', // Color for the download button
+            backgroundColor: '#28a745', // Color para el botón de descarga
             color: 'white',
           }}
           onClick={() => handleDownload(marca)} // Asignar la función de descarga al botón de descargar Excel
