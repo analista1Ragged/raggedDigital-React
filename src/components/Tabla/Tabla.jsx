@@ -46,12 +46,18 @@ const transformData = (list, handleIconClick) => {
       <button onClick={() => handleIconClick(index,item[4])} className="icon-button">
         <i className="bi bi-eye"></i>
       </button>
-    )
+    ),
+
+    valor:item[10]|| 'N/A',
+    abono:item[11]|| 'N/A',
+    saldo:item[12]|| 'N/A',
+    state:item[13]|| 'N/A'
   }));
 };
 
 const Tabla = () => {
   const [data, setData] = useState([]);
+  const [excel,setExcel] = useState([]);
   const [selectedMarca, setSelectedMarca] = useState('');
   const [filtersCartera, setFiltersCartera] = useState({
     cedula: '',
@@ -77,6 +83,7 @@ const Tabla = () => {
   const [date1, setDate1] = useState(null);
   const [date2, setDate2] = useState(null);
   const [modalData, setModalData] = useState([]);
+  const [total,setTotal] = useState([]);
   
   useEffect(() => {
     fetchData();
@@ -192,7 +199,7 @@ const Tabla = () => {
           Swal.showLoading();
         }
       });
-      const correo = sessionStorage.getItem('log')
+      const correo = sessionStorage.getItem('log');
       const response = await axios.post(urlapi+'/get-facturas', {
         correo: correo,
         nit: selectedClientes,
@@ -201,9 +208,25 @@ const Tabla = () => {
         date1: date1, 
         date2: date2
       });
+
       console.log('Respuesta de la API:', response.data);
       if(response.data.length > 0){
-        setData(transformData(response.data, handleIconClick));
+        // Guardar la última línea en 'total'
+        const lastLine = response.data[response.data.length - 1];
+        setTotal([
+          lastLine[5] || '0',  // valorFactura
+          lastLine[6] || '0',  // valorAbono
+          lastLine[8] || '0'   // saldoFactura
+        ]);
+
+        // Eliminar la última línea del array
+        const dataWithoutLastLine = response.data.slice(0, -1);
+
+        // Transformar y actualizar los datos
+        const transformedData = transformData(dataWithoutLastLine, handleIconClick);
+        setData(transformedData);
+        setExcel(transformedData);
+        
         Swal.close();
       } else {
         Swal.close();
@@ -214,7 +237,8 @@ const Tabla = () => {
       console.error('Error durante la consulta:', error);
       Swal.fire('Error', 'Hubo un problema al consultar las facturas.', 'error');
     }
-  };
+};
+
 
   return (
     <section>
@@ -269,7 +293,7 @@ const Tabla = () => {
           </div>
         </form>
         <div className="tabla-container">
-        <Menu2Botones marca={data} />
+        <Menu2Botones marca={excel} />
           <table className="table table-striped table-hover">
             <thead>
               <tr>
@@ -305,6 +329,16 @@ const Tabla = () => {
                 </tr>
               ))}
             </tbody>
+            <tfoot>
+              <tr className="total-row">
+                <td colSpan="5" className="total-label">Total:</td>
+                <td className="total-value">{total[0]}</td>
+                <td colSpan="2"></td>
+                <td className="total-value">{total[1]}</td>
+                <td className="total-value">{total[2]}</td>
+                <td colSpan="2"></td>
+              </tr>
+            </tfoot>
           </table>
         </div>
         <div className="pagination-container">
