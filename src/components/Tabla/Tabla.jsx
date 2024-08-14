@@ -32,13 +32,13 @@ const transformData = (list, handleIconClick) => {
 
   return list.map((item, index) => ({
     item: index + 1,
-    cedula: item[0] || 'N/A',
+    documento: item[0] || 'N/A',
     nombre: item[1] || 'N/A',
     fecha: item[2] || 'N/A',
     nroFactura: item[4] || 'N/A',
     valorFactura: item[5] || 'N/A',
     fechaVenc: item[3] || 'N/A', 
-    diasCartera: item[7] || 'N/A', 
+    diasCart: item[7] || 'N/A', 
     valorAbono: item[6] || 'N/A', 
     saldoFactura: item[8] || 'N/A', 
     estado: item[9] || 'N/A',
@@ -60,17 +60,16 @@ const Tabla = () => {
   const [excel,setExcel] = useState([]);
   const [selectedMarca, setSelectedMarca] = useState('');
   const [filtersCartera, setFiltersCartera] = useState({
-    cedula: '',
-    nombre: '',
-    fecha: '',
-    nroFactura: '',
-    valorFactura: '',
-    fechaVenc: '',
-    diasCartera: '',
-    valorAbono: '',
-    estado: '',
-    nroNotaCredito: '',
-    valorNotaCredito: ''
+  documento: '',
+  nombre: '',
+  fecha: '',
+  nroFactura:'',
+  valorFactura: '',
+  fechaVenc: '',
+  diasCart: '',
+  valorAbono: '',
+  saldoFactura: '',
+  estado: ''
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -127,7 +126,26 @@ const Tabla = () => {
 
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem); // Solo los elementos correspondientes a la página actual
+  const currentItems = data
+  
+  .filter(item =>{
+    // Convertir item.documento a cadena si no lo es
+    const documento = String(item.documento || ''); // Convertir a cadena
+    const filtroDocumento = String(filtersCartera.documento || ''); // Convertir a cadena
+    // Filtrar usando toLowerCase() y includes()
+    return documento.toLowerCase().includes(filtroDocumento.toLowerCase()) &&
+    item.nombre.toLowerCase().includes(filtersCartera.nombre.toLowerCase()) &&
+    item.fecha.toLowerCase().includes(filtersCartera.fecha.toLowerCase()) &&
+    item.nroFactura.toLowerCase().includes(filtersCartera.nroFactura.toLowerCase()) &&
+    item.valorFactura.toLowerCase().includes(filtersCartera.valorFactura.toLowerCase()) &&
+    item.fechaVenc.toLowerCase().includes(filtersCartera.fechaVenc.toLowerCase()) &&
+    item.diasCart.toLowerCase().includes(filtersCartera.diasCart.toLowerCase()) &&
+    item.valorAbono.toLowerCase().includes(filtersCartera.valorAbono.toLowerCase()) &&
+    item.saldoFactura.toLowerCase().includes(filtersCartera.saldoFactura.toLowerCase()) &&
+    (typeof item.estado === 'string' ? item.estado.toLowerCase() : item.estado.toString()).includes(filtersCartera.estado.toLowerCase())
+  })
+  
+  .slice(indexOfFirstItem, indexOfLastItem);
 
   const handleChangePage = (page, size) => {
     setCurrentPage(page);
@@ -240,6 +258,8 @@ const Tabla = () => {
 };
 
 
+  
+
   return (
     <section>
       <div className="ticket-table">
@@ -310,18 +330,19 @@ const Tabla = () => {
                 <th scope="col">Estado</th>
                 <th scope="col">Ver Detalle NC</th>
               </tr>
+              <FilterRowCartera filtersCartera={filtersCartera} handleFilter={handleFilter} />
             </thead>
             <tbody>
               {currentItems.map((item, index) => (
                 <tr key={index}>
                   <td>{item.item}</td>
-                  <td>{item.cedula}</td>
+                  <td>{item.documento}</td>
                   <td>{item.nombre}</td>
                   <td>{item.fecha}</td>
                   <td>{item.nroFactura}</td>
                   <td>{item.valorFactura}</td>
                   <td>{item.fechaVenc}</td>
-                  <td>{item.diasCartera}</td>
+                  <td>{item.diasCart}</td>
                   <td>{item.valorAbono}</td>
                   <td>{item.saldoFactura}</td>
                   <td><EstadoFactura estado={item.estado} /></td> {/* Aquí se muestra el estado de la factura */}
@@ -341,14 +362,15 @@ const Tabla = () => {
             </tfoot>
           </table>
         </div>
-        <div className="pagination-container">
+        <div className="paginacion">
           <Pagination
             current={currentPage}
             pageSize={pageSize}
             total={data.length}
             onChange={handleChangePage}
+            pageSizeOptions={['10', '20', '30','50','100']}
             showSizeChanger
-            pageSizeOptions={['10', '20', '30']}
+            showQuickJumper
           />
         </div>
          <ModalCartera
