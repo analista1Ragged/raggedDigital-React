@@ -1,7 +1,8 @@
 import React from 'react';
 
 const FilterRowCartera = ({ filtersCartera, handleFilter}) => {
-  const columns = ['Nit', 'Nombre', 'Fecha','#Factura','$Factura', 'FechaVenc', 'DiasCart', '$Abono', 'SaldoFactura', 'Estado'];
+  const columns = ['documento', 'nombre', 'fecha','nroFactura','valorFactura', 'fechaVenc', 'diasCart', 'valorAbono',
+'saldoFactura', 'Estado'];
 
   return (
     <tr id="filterRowCartera">
