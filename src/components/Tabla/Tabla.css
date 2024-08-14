@@ -30,14 +30,12 @@ section {
   justify-content: space-between;
   margin-bottom: -15px;
   flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
-  /*gap:16px;*/ 
 }
 
-/* Componentes en línea */
+/* Componentes en línea 2 */
 .inline-components2 {
   display: flex;
   align-items: center;
-  /*justify-content: space-between;*/
   margin-bottom: 5px;
   flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
   gap: 30px; 
@@ -49,14 +47,11 @@ section {
 
 .component-item {
   flex: 1;
-  margin-right: '10px';
+  margin-right: 10px;
   margin-bottom: 10px; /* Margen inferior para separación en pantallas pequeñas */
   position: relative;
   z-index: 1; /* Asegura que los campos de texto estén sobre otros elementos */
-  
-  
 }
-  
 
 .inline-components .component-item:last-child {
   margin-right: 0;
@@ -67,8 +62,6 @@ section {
   margin: 20px auto;
   width: 100%;
   border-collapse: collapse;
-  /* overflow-x: auto; Barra que permite desplazamiento horizontal en pantallas pequeñas, solo cuando la página desborda */
-  /* overflow-y: hidden; Oculta el desplazamiento vertical */
 }
 
 .ticket-table table {
@@ -172,5 +165,3 @@ section {
   font-size: 1.2em; /* Ajusta el tamaño del ícono */
   color: #373738;  /* Color del ícono */
 }
-
-
