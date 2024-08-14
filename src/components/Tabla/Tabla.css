@@ -38,7 +38,7 @@ section {
   align-items: center;
   margin-bottom: 5px;
   flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
-  gap: 30px; 
+  gap: 10px; 
 }
 
 .inline-components2 .boton {

@@ -2,7 +2,7 @@
 
 /* Contenedor principal del Space */
 .space-container {
-  width: 32%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+  width: 26%; /* Asegura que el contenedor ocupe todo el ancho disponible */
   padding: 10px; /* Espaciado alrededor del componente */
   box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho total */
   position: relative; /* Asegura que el z-index funcione correctamente */
