@@ -2,7 +2,7 @@ import React from 'react';
 
 const FilterRowCartera = ({ filtersCartera, handleFilter}) => {
   const columns = ['documento', 'nombre', 'fecha','nroFactura','valorFactura', 'fechaVenc', 'diasCart', 'valorAbono',
-'saldoFactura', 'Estado'];
+'saldoFactura', 'estado'];
 
   return (
     <tr id="filterRowCartera">
