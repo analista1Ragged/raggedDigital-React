@@ -1,8 +1,9 @@
 /* Ajusta el z-index del DatePicker */
 .date-picker {
-  width: 320px;
+  width: 280px;
   position: relative; /* Necesario para que el z-index tenga efecto */
   z-index: 500; /* Ajusta según sea necesario */
+  margin-top: -80px;
 }
 
 /* Asegúrate de que la barra del menú tenga un z-index mayor */
@@ -25,7 +26,8 @@
 }
 
 .form-item {
-  margin-right: 40px;
+  margin-right: 20px;
+  margin-left: 0;
 }
 
 .form-item:last-child {

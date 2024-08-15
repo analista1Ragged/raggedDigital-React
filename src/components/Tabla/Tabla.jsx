@@ -276,7 +276,8 @@ const Tabla = () => {
           </h3>
         </p>
         <form onSubmit={handleConsulta}>
-          <div className="inline-components">
+        <div className = "container">
+          <div className="row">
             <MultiSelector 
               options={listaClientes}
               opc='0'
@@ -296,6 +297,7 @@ const Tabla = () => {
               onSelectChange={handleFacturasChange} 
             />
           </div>
+          <div className = "container">
           <div className="inline-components2">
             <SeleccionarFecha 
               onDate1Change={handleDate1Change}
@@ -310,6 +312,8 @@ const Tabla = () => {
               onClick={handleConsulta}
               className="component-item" 
             />
+          </div>
+          </div>
           </div>
         </form>
         <div className="tabla-container">

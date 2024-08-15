@@ -30,6 +30,8 @@ section {
   justify-content: space-between;
   margin-bottom: -15px;
   flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
+  flex-basis: 30%;
+  margin: 10px;
 }
 
 /* Componentes en línea 2 */
@@ -38,8 +40,11 @@ section {
   align-items: center;
   margin-bottom: 5px;
   flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
-  gap: 10px; 
+  gap: 105px;
+  justify-content: space-between; 
+  
 }
+
 
 .inline-components2 .boton {
   margin-top: -10px; /* Ajusta este valor según sea necesario */
@@ -178,3 +183,6 @@ section {
   font-weight: bold; /* Negrita para los valores */
 }
 
+.container {
+  background-color: transparent;
+}
