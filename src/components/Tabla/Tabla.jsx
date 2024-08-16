@@ -107,6 +107,7 @@ const Tabla = () => {
         body: JSON.stringify({ usuario: correo })
       });
       const listas = await response.json();
+
       setListaClientes(listas[0]);
       setListaFacturas(listas[1]);
       Swal.close();
@@ -257,7 +258,11 @@ const Tabla = () => {
     }
 };
 
-
+const handleClearFields = () => {
+  setSelectedClientes([]);
+  setSelectedNombres([]);
+  setSelectedFacturas([]);
+};
   
 
   return (
@@ -309,7 +314,7 @@ const Tabla = () => {
               className="component-item" 
             />
             <BuscarLimpiar 
-              onClick={handleConsulta}
+              //onClick={handleClearFields}
               className="component-item" 
             />
           </div>

@@ -156,7 +156,7 @@ const menuItems = [
     title: "Administración Maestra",
     icon: <IoIdCard />,
     path: "/ecommerce/Ragged",
-  },
+  },  
   {
     key: "12",
     title: "Logout",
