@@ -37,10 +37,13 @@ const Login = (props) => {
 
             if (response.data.message === "success") {
                 sessionStorage.setItem('log', usuario);
+                console.log('auth:',response.data.text);
+                sessionStorage.setItem('auth', JSON.stringify(response.data.text));
                 setMostrarExito(true);
                 setTimeout(() => {
                     setMostrarExito(false);
                     navigate("/Home");
+                    window.location.reload();
                 }, 1500);
 
                 // Limpiar los campos de usuario y contraseña

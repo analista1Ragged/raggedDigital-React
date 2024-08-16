@@ -12,6 +12,8 @@ import ModalCartera from "../ModalMenu/ModalMenu";
 
 const { SubMenu } = Menu;
 
+const authArray = JSON.parse(sessionStorage.getItem('auth')) || [];
+
 const menuItems = [
   {
     key: "0",
@@ -146,25 +148,41 @@ const menuItems = [
     path: "/ecommerce/Ragged",
   },
   {
-    key: "10",
-    title: "Settings",
-    icon: <IoSettingsOutline />,
-    path: "/ecommerce/Ragged",
-  },
-  {
-    key: "11",
+    key: "97",
     title: "Administración Maestra",
     icon: <IoIdCard />,
     path: "/ecommerce/Ragged",
   },  
   {
-    key: "12",
+    key: "98",
+    title: "Settings",
+    icon: <IoSettingsOutline />,
+    path: "/ecommerce/Ragged",
+  },
+  {
+    key: "99",
     title: "Logout",
     icon: <FaSignOutAlt />,
     path: "/",
     onClick: 'handleLogout',
   },
 ];
+
+const filterMenuItems = (items, authArray) => {
+  return items
+    .filter(item => authArray.includes(item.key))
+    .map(item => {
+      if (item.items) {
+        // Filtra los subelementos recursivamente
+        return {
+          ...item,
+          items: filterMenuItems(item.items, authArray),
+        };
+      }
+      return item;
+    });
+};
+const filteredMenuItems = filterMenuItems(menuItems, authArray);
 
 const MyMenu = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -222,6 +240,7 @@ const MyMenu = () => {
 
   const handleLogout = () => {
     sessionStorage.removeItem('log');
+    sessionStorage.removeItem('auth');
     navigate('/Login');
   };
 
@@ -231,6 +250,7 @@ const MyMenu = () => {
 
   const handleMenuItemClick = (action) => {
     if (action === 'hideMenu') {
+      console.log(JSON.parse(sessionStorage.getItem('auth')),typeof(JSON.parse(sessionStorage.getItem('auth'))));
       handleHideMenu();
     } else if (action === 'showModal') {
       setModal1Visible(true);
@@ -284,7 +304,7 @@ const MyMenu = () => {
             <NavLink to="/Home">
               <img src={require("../../assets/Images/logo.png")} alt="logo" />
             </NavLink>
-            {menuItems.map((item) =>
+            {filteredMenuItems.map((item) =>
               !item.items ? (
                 <Menu.Item 
                   key={item.key} 
