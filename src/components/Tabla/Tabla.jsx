@@ -44,7 +44,7 @@ const transformData = (list, handleIconClick) => {
     estado: String(item[9]) || 'N/A',
     ver_detalle_NC: (
       <button onClick={() => handleIconClick(index,item[4])} className="icon-button">
-        <i className="bi bi-eye"></i>
+        <i className="bi bi-eye" title='Ver Detalle'></i>
       </button>
     ),
 
@@ -354,6 +354,7 @@ const handleClearFields = useCallback(() => {
                 <th scope="col">Saldo Factura</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Ver Detalle NC</th>
+                <th scope="col">Ver Detalle Cliente</th>
               </tr>
               <FilterRowCartera filtersCartera={filtersCartera} handleFilter={handleFilter} />
             </thead>
@@ -372,6 +373,7 @@ const handleClearFields = useCallback(() => {
                   <td>{item.saldoFactura}</td>
                   <td><EstadoFactura estado={item.estado} /></td> {/* Aquí se muestra el estado de la factura */}
                   <td>{item.ver_detalle_NC}</td>
+                  <td>{item.ver_detalle_NC}</td>
                 </tr>
               ))}
             </tbody>
@@ -382,7 +384,7 @@ const handleClearFields = useCallback(() => {
                 <td colSpan="2"></td>
                 <td className="total-value">{total[1]}</td>
                 <td className="total-value">{total[2]}</td>
-                <td colSpan="2"></td>
+                <td colSpan="3"></td>
               </tr>
             </tfoot>
           </table>

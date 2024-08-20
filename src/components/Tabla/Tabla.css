@@ -67,6 +67,7 @@ section {
   margin: 20px auto;
   width: 100%;
   border-collapse: collapse;
+
 }
 
 .ticket-table table {
@@ -186,3 +187,4 @@ section {
 .container {
   background-color: transparent;
 }
+
