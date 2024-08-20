@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useMemo, useCallback } from 'react';
 import "./Tabla.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Menu2Botones from '../Menu3Botones/Menu2Botones.jsx';
@@ -258,11 +258,27 @@ const Tabla = () => {
     }
 };
 
-const handleClearFields = () => {
+const initialFiltersCartera = useMemo(() => ({
+  documento: '',
+  nombre: '',
+  fecha: '',
+  nroFactura: '',
+  valorFactura: '',
+  fechaVenc: '',
+  diasCart: '',
+  valorAbono: '',
+  saldoFactura: '',
+  estado: ''
+}), []);
+
+const handleClearFields = useCallback(() => {
   setSelectedClientes([]);
   setSelectedNombres([]);
   setSelectedFacturas([]);
-};
+  setDate1(null);
+  setDate2(null);
+  setFiltersCartera(initialFiltersCartera);
+}, [initialFiltersCartera]);
   
 
   return (
@@ -314,7 +330,7 @@ const handleClearFields = () => {
               className="component-item" 
             />
             <BuscarLimpiar 
-              //onClick={handleClearFields}
+              onClick={handleClearFields}
               className="component-item" 
             />
           </div>

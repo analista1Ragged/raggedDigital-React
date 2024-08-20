@@ -15,7 +15,7 @@ const BuscarLimpiar = ({ setSelectedClientes, setSelectedNombres, setSelectedFac
       id="btnLimpiar"
       className="mt-3 btn btn-secondary btn bold rounded-circle"
       type="button"
-      onClick={handleLimpiar}
+      //onClick={handleLimpiar}
       title='Limpiar Campos'
     >
       <i className="bi bi-eraser-fill" style={{ fontSize: 'larger' }}></i>
