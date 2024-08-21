@@ -29,6 +29,7 @@ const transformData = (list, handleIconClick) => {
     console.error("Expected an array but received:", list);
     return [];
   }
+  
 
   return list.map((item, index) => ({
     item: index + 1,
@@ -59,6 +60,7 @@ const Tabla = () => {
   const [data, setData] = useState([]);
   const [excel,setExcel] = useState([]);
   const [selectedMarca, setSelectedMarca] = useState('');
+  const [selectorValue, setSelectorValue] = useState([]);
   const [filtersCartera, setFiltersCartera] = useState({
   documento: '',
   nombre: '',
@@ -271,15 +273,29 @@ const initialFiltersCartera = useMemo(() => ({
   estado: ''
 }), []);
 
-const handleClearFields = useCallback(() => {
-  setSelectedClientes([]);
-  setSelectedNombres([]);
-  setSelectedFacturas([]);
+const handleClearFields = async (event) => {
+  console.log('Limpiando camposmipjohb...');
+  setSelectedClientes("");
+  setSelectedNombres("");
+  setSelectedFacturas("");
   setDate1(null);
   setDate2(null);
   setFiltersCartera(initialFiltersCartera);
-}, [initialFiltersCartera]);
+};
+
+  // Función para limpiar los campos del MultiSelector
+  const clearSelector = () => {
+    setSelectedClientes([]);
+    setSelectedNombres([]); // Establece el estado en un array vacío para limpiar las selecciones setSelectorValue
+    setSelectedFacturas([]);
+  };
   
+    // Función para limpiar los campos del MultiSelector
+  /*const clearSelector = () => {
+    setSelectedClientes([]); // Establece el estado en un array vacío para limpiar las selecciones
+    setSelectedNombres([]);
+    setSelectedFacturas([]);
+  };*/
 
   return (
     <section>
@@ -303,19 +319,23 @@ const handleClearFields = useCallback(() => {
               options={listaClientes}
               opc='0'
               placeholder="Filtrar por Nit:"
-              onSelectChange={handleClientesChange} 
+              onSelectChange={setSelectedClientes} 
+              value={selectedClientes} //este es el campo que trae el valor
             />
             <MultiSelector
               options={listaClientes}
               opc='1'
               placeholder="Filtrar por Nombre/Razon S."
-              onSelectChange={handleNombresChange} 
+              onSelectChange={setSelectedNombres} 
+              value={selectedNombres}
+              
             />
             <MultiSelector 
               options={listaFacturas}
               opc='0'
               placeholder="Filtrar por Numero Factura"
-              onSelectChange={handleFacturasChange} 
+              onSelectChange={setSelectedFacturas} 
+              value={selectedFacturas}
             />
           </div>
           <div className = "container">
@@ -330,7 +350,7 @@ const handleClearFields = useCallback(() => {
               className="component-item" 
             />
             <BuscarLimpiar 
-              onClick={handleClearFields}
+              onClick={clearSelector}
               className="component-item" 
             />
           </div>
@@ -354,7 +374,7 @@ const handleClearFields = useCallback(() => {
                 <th scope="col">Saldo Factura</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Ver Detalle NC</th>
-                <th scope="col">Ver Detalle Cliente</th>
+                {/*<th scope="col">Ver Detalle Cliente</th>*/}
               </tr>
               <FilterRowCartera filtersCartera={filtersCartera} handleFilter={handleFilter} />
             </thead>
@@ -373,7 +393,7 @@ const handleClearFields = useCallback(() => {
                   <td>{item.saldoFactura}</td>
                   <td><EstadoFactura estado={item.estado} /></td> {/* Aquí se muestra el estado de la factura */}
                   <td>{item.ver_detalle_NC}</td>
-                  <td>{item.ver_detalle_NC}</td>
+                  {/*<td>{item.ver_detalle_NC}</td>*/}
                 </tr>
               ))}
             </tbody>
@@ -384,7 +404,7 @@ const handleClearFields = useCallback(() => {
                 <td colSpan="2"></td>
                 <td className="total-value">{total[1]}</td>
                 <td className="total-value">{total[2]}</td>
-                <td colSpan="3"></td>
+                <td colSpan="2"></td>
               </tr>
             </tfoot>
           </table>

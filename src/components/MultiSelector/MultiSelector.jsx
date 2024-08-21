@@ -1,29 +1,23 @@
-import React, { useState } from 'react';
-import { Select, Space } from 'antd';
+import React from 'react';
+import { Select, Space } from 'antd'; // Usa Select y Space de Ant Design
 import './MultiSelector.css';
 
 const { Option } = Select;
 
-const MultiSelector = ({ options = [],opc, placeholder,onSelectChange }) => {
-  const [value, setValue] = useState([]);
-
+const MultiSelector = ({ options = [], opc, placeholder, value, onSelectChange }) => {
+  // Esta función maneja los cambios en el MultiSelector
   const handleChange = (selectedValues) => {
-    //console.log('selected:', selectedValues);
-    setValue(selectedValues);
-
-    // Llamar a la función de callback pasando los valores seleccionados
-    if (onSelectChange) {
-      onSelectChange(selectedValues);
-    }
+    onSelectChange(selectedValues); // Actualiza el estado en el componente Tabla
   };
+
 
   return (
     <Space className="space-container" direction="vertical">
       <Select
         mode="multiple"
         className="ant-select"
-        value={value}
-        onChange={handleChange}
+        value={value} // Recibe el valor desde el componente Tabla
+        onChange={handleChange} // Llama a handleChange cuando cambian las selecciones
         placeholder={placeholder}
         optionLabelProp="label"
       >
@@ -38,3 +32,5 @@ const MultiSelector = ({ options = [],opc, placeholder,onSelectChange }) => {
 };
 
 export default MultiSelector;
+
+

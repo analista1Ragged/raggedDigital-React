@@ -20,7 +20,7 @@ const FilterRowCartera = ({ filtersCartera, handleFilter}) => {
         </th>
       ))}
       <th scope="col"></th>
-      <th scope="col"></th>
+      {/*<th scope="col"></th>*/}
     </tr>
   );
 };

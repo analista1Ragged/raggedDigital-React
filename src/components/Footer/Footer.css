@@ -8,8 +8,13 @@
   background-repeat: no-repeat; /* Evita que la imagen se repita */
   color: #fff; /* Color del texto */
   padding: 50px 0; /* Espaciado interno superior e inferior */
+
   
 }
+   
+
+
+
 
 /* Estilo para la sección superior del footer */
 .footer-top {
