@@ -4,6 +4,7 @@ import './MultiSelector.css';
 
 const { Option } = Select;
 
+
 const MultiSelector = ({ options = [], opc, placeholder, value, onSelectChange }) => {
   // Esta función maneja los cambios en el MultiSelector
   const handleChange = (selectedValues) => {

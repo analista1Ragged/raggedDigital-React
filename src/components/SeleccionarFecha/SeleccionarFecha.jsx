@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { Form, DatePicker } from 'antd';
 import './SeleccionarFecha.css';
 
-const MyForm = ({ onDate1Change, onDate2Change }) => {
+const MyForm = forwardRef(({ onDate1Change, onDate2Change }, ref) => {
   const [formState, setFormState] = useState({
     name: '',
     region: undefined,
@@ -14,6 +14,7 @@ const MyForm = ({ onDate1Change, onDate2Change }) => {
     desc: '',
   });
 
+  // Función para manejar cambios
   const handleChange = (key, value) => {
     setFormState((prevState) => ({ ...prevState, [key]: value }));
 
@@ -26,6 +27,22 @@ const MyForm = ({ onDate1Change, onDate2Change }) => {
     }
   };
 
+  // Exponer la función para limpiar campos
+  useImperativeHandle(ref, () => ({
+    resetFields: () => {
+      setFormState({
+        name: '',
+        region: undefined,
+        date1: undefined,
+        date2: undefined,
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: '',
+      });
+    },
+  }));
+
   return (
     <Form
       labelCol={{ span: 4 }}
@@ -34,26 +51,26 @@ const MyForm = ({ onDate1Change, onDate2Change }) => {
     >
       <div className="form-dates-container">
         <Form.Item
-          //label="Fecha Inicial"
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 18 }}
           className="form-item"
         >
           <DatePicker
             placeholder="Fecha Inicial"
+            value={formState.date1}
             onChange={(date) => handleChange('date1', date)}
             className="date-picker"
           />
         </Form.Item>
 
         <Form.Item
-          //label="Fecha Final"
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 18 }}
           className="form-item"
         >
           <DatePicker
             placeholder="Fecha Final"
+            value={formState.date2}
             onChange={(date) => handleChange('date2', date)}
             className="date-picker"
           />
@@ -61,10 +78,6 @@ const MyForm = ({ onDate1Change, onDate2Change }) => {
       </div>
     </Form>
   );
-};
+});
 
 export default MyForm;
-
-
-
-
