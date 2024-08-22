@@ -10,9 +10,10 @@ import TicketTable from './pages/VerCapsulas';
 import Footer from './components/Footer/Footer';
 import Layout from './pages/Layout';
 import MyMenu from './components/MyMenu/MyMenu';
-import Tabla from './components/Tabla/Tabla';
+import Tabla from './pages/Tabla/Tabla';
 import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
 import Error404 from './components/Error404/Error404';
+import InventariosDisponibles from './pages/InventariosDisponibles/InventariosDisponibles';
 
 import MultiSelector from './components/MultiSelector/MultiSelector';
 //export const urlapi = 'http://serverrgd.eastus.cloudapp.azure.com:5000'
@@ -152,7 +153,7 @@ function App() {
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <MultiSelector />
+            <InventariosDisponibles />
           </div>
         } />
         <Route path='/*' element={

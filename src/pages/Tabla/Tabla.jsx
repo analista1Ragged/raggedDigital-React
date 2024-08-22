@@ -1,19 +1,19 @@
-import React, { useState, useEffect,useMemo, useCallback } from 'react';
+import React, { useState, useEffect,useMemo, useCallback, useRef } from 'react';
 import "./Tabla.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import Menu2Botones from '../Menu3Botones/Menu2Botones.jsx';
+import Menu2Botones from '../../components/Menu3Botones/Menu2Botones.jsx';
 import { Pagination, Tag } from 'antd'; // Importa Tag de Ant Design para el componente EstadoFactura
 import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
-import CampoTexto from '../CampoTexto';
-import BuscarButton from '../BotonBuscar/BotonBuscar';
-import BuscarLimpiar from '../BotonLimpiar/BotonLimpiar.jsx';
-import SeleccionarFecha from '../SeleccionarFecha/SeleccionarFecha';
-import ModalCartera from '../ModalMenu/ModalMenu.jsx';
-import MultiSelector from '../MultiSelector/MultiSelector.jsx';
-import { urlapi } from '../../App';
+//import CampoTexto from '../CampoTexto';
+import BuscarButton from '../../components/BotonBuscar/BotonBuscar.jsx';
+import BuscarLimpiar from '../../components/BotonLimpiar/BotonLimpiar.jsx';
+import SeleccionarFecha from '../../components/SeleccionarFecha/SeleccionarFecha.jsx';
+import ModalCartera from '../../components/ModalMenu/ModalMenu.jsx';
+import MultiSelector from '../../components/MultiSelector/MultiSelector.jsx';
+import { urlapi } from '../../App.js';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import FilterRowCartera from '../FilterRow/FilterRowCartera.jsx'
+import FilterRowCartera from '../../components/FilterRow/FilterRowCartera.jsx'
 
 // Componente EstadoFactura
 const EstadoFactura = ({ estado }) => {
@@ -23,6 +23,8 @@ const EstadoFactura = ({ estado }) => {
     </Tag>
   );
 };
+
+
 
 const transformData = (list, handleIconClick) => {
   if (!Array.isArray(list)) {
@@ -56,11 +58,10 @@ const transformData = (list, handleIconClick) => {
   }));
 };
 
+
 const Tabla = () => {
   const [data, setData] = useState([]);
   const [excel,setExcel] = useState([]);
-  const [selectedMarca, setSelectedMarca] = useState('');
-  const [selectorValue, setSelectorValue] = useState([]);
   const [filtersCartera, setFiltersCartera] = useState({
   documento: '',
   nombre: '',
@@ -85,6 +86,7 @@ const Tabla = () => {
   const [date2, setDate2] = useState(null);
   const [modalData, setModalData] = useState([]);
   const [total,setTotal] = useState([]);
+  
   
   useEffect(() => {
     fetchData();
@@ -183,6 +185,7 @@ const Tabla = () => {
     }
   };
 
+
   const handleClientesChange = (selected) => {
     console.log('Clientes seleccionados:', selected);
     setSelectedClientes(selected);
@@ -273,29 +276,31 @@ const initialFiltersCartera = useMemo(() => ({
   estado: ''
 }), []);
 
-const handleClearFields = async (event) => {
-  console.log('Limpiando camposmipjohb...');
-  setSelectedClientes("");
-  setSelectedNombres("");
-  setSelectedFacturas("");
-  setDate1(null);
-  setDate2(null);
-  setFiltersCartera(initialFiltersCartera);
-};
+
+  const formRef = useRef();
 
   // Función para limpiar los campos del MultiSelector
   const clearSelector = () => {
     setSelectedClientes([]);
     setSelectedNombres([]); // Establece el estado en un array vacío para limpiar las selecciones setSelectorValue
     setSelectedFacturas([]);
+    
+
   };
   
-    // Función para limpiar los campos del MultiSelector
-  /*const clearSelector = () => {
-    setSelectedClientes([]); // Establece el estado en un array vacío para limpiar las selecciones
-    setSelectedNombres([]);
-    setSelectedFacturas([]);
-  };*/
+  // Función para limpiar los campos de fecha
+  const handleClearDates = () => {
+    formRef.current.setFieldsValue({
+      date1: undefined,
+      date2: undefined,
+    });
+  };
+
+    // Manejador que combina ambas funciones
+    const handleButtonClick = () => {
+      clearSelector(); // Ejecuta la acción existente
+      handleClearDates(); // Limpia las fechas
+    };
 
   return (
     <section>
@@ -343,6 +348,7 @@ const handleClearFields = async (event) => {
             <SeleccionarFecha 
               onDate1Change={handleDate1Change}
               onDate2Change={handleDate2Change}
+
               className="component-item" 
             />
             <BuscarButton 
@@ -350,7 +356,7 @@ const handleClearFields = async (event) => {
               className="component-item" 
             />
             <BuscarLimpiar 
-              onClick={clearSelector}
+              onClick={handleButtonClick}
               className="component-item" 
             />
           </div>

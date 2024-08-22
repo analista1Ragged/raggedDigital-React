@@ -2,19 +2,17 @@
 
 /* Ajustes generales */
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
-  font-size: 14px !important; /* Tamaño base de la fuente para el cuerpo */
+  font-size: 12px; /* Tamaño base de la fuente */
+  margin: 0;
+  padding: 0;
 }
 
 /* Sección principal */
 section {
-  padding: 5px 10px;
-  border-radius: 20px;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 1400px;
-  margin-bottom: 300px;
+  max-width: 1200px; /* Ancho máximo de la sección */
+  margin: 0 auto; /* Centrar la sección */
+  padding: 20px; /* Padding para la sección */
 }
 
 /* Select personalizado */

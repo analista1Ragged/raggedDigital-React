@@ -5,13 +5,13 @@ const FilterRow = ({ filters, handleFilterChange }) => {
 
   return (
     <tr id="filterRow">
-      <th scope="col">#</th>
+      <th scope="col">Buscar por:</th>
       {columns.map((column, i) => (
         <th scope="col" key={i}>
           <input
             type="text"
             className="form-control"
-            placeholder={`Buscar por ${column}`}
+            placeholder={`${column}`}
             name={column}
             value={filters[column]}
             onChange={handleFilterChange}

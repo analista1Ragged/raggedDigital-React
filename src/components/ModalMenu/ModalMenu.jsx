@@ -9,7 +9,7 @@ const ModalCartera = ({ modal1Visible, setModal1Visible, modalData = [] }) => {
       open={modal1Visible}
       onOk={() => setModal1Visible(false)}
       onCancel={() => setModal1Visible(false)}
-      footer={null} // Agrega esta línea para quitar los botones
+      footer={null} // Agrega esta línea para quitar los botones cancel y ok
     >
       {modalData.length > 0 ? (
         modalData.map((detalle, index) => (

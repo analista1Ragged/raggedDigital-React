@@ -63,6 +63,13 @@ const menuItems = [
             path: "/Mercadeo/Raqstyle/Cartera",
             items: [{ key: '2.1.1', title: 'Option 2.1.1' }],
           },
+          {
+            key: '3.2.2',
+            title: 'Inventario Disponible',
+            icon: <FaMoneyBill />,
+            path: "/Mercadeo/Raqstyle/Inventario",
+            items: [{ key: '2.1.2', title: 'Option 2.1.2' }],
+          },
         ],
       },
       {
