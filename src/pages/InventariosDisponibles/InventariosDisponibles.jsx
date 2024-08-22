@@ -340,7 +340,7 @@ const initialFiltersCartera = useMemo(() => ({
         </form>
         <div className="tabla-container">
         <Menu2Botones marca={excel} />
-          <table className="table table-striped table-hover">
+          <table className="table table-striped table-hover ticket-table">
             <thead>
               <tr>
                 <th scope="col">#</th>

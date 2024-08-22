@@ -62,10 +62,10 @@ body {
   
   /* Tabla de tickets */
   .ticket-table {
-    margin: 20px auto;
+    margin: 20px;
     width: 100%;
     border-collapse: collapse;
-  
+    table-layout: fixed;
   }
   
   .ticket-table table {
@@ -76,8 +76,10 @@ body {
   .ticket-table th,
   .ticket-table td {
     border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
+    padding: 10px;
+    text-align: l;
+
+
   }
   
   .ticket-table th {
@@ -128,6 +130,7 @@ body {
     .ticket-table th,
     .ticket-table td {
       padding: 6px;
+
     }
   }
   
@@ -185,3 +188,7 @@ body {
   .container {
     background-color: transparent;
   }
+
+  
+
+

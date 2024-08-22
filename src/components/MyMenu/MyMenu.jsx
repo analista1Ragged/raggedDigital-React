@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Menu, Button } from "antd";
 import "antd/dist/reset.css";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill } from "react-icons/fa";
+import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill, FaCheck } from "react-icons/fa";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
 import { PiEyeSlashFill } from "react-icons/pi";
@@ -66,7 +66,7 @@ const menuItems = [
           {
             key: '3.2.2',
             title: 'Inventario Disponible',
-            icon: <FaMoneyBill />,
+            icon: <FaCheck />,
             path: "/Mercadeo/Raqstyle/Inventario",
             items: [{ key: '2.1.2', title: 'Option 2.1.2' }],
           },

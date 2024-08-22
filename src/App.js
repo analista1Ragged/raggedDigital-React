@@ -86,6 +86,11 @@ function App() {
             <Tabla />
           </div>
         } />
+        <Route path='Mercadeo/Raqstyle/Inventario' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <InventariosDisponibles />
+          </div>
+        } />
         <Route path='/ecommerce' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
           </div>
@@ -156,6 +161,7 @@ function App() {
             <InventariosDisponibles />
           </div>
         } />
+        
         <Route path='/*' element={
           <PrivateRoute element={
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
