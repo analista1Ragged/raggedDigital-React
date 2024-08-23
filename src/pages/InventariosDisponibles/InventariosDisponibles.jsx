@@ -55,15 +55,6 @@ const InventariosDisponibles = () => {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [modal1Visible, setModal1Visible] = useState(false);
-  const [listaClientes, setListaClientes] = useState([]);
-  const [listaFacturas, setListaFacturas] = useState([]);
-  const [selectedClientes, setSelectedClientes] = useState([]);
-  const [selectedNombres, setSelectedNombres] = useState([]);
-  const [selectedFacturas, setSelectedFacturas] = useState([]);
-  const [date1, setDate1] = useState(null);
-  const [date2, setDate2] = useState(null);
-  const [modalData, setModalData] = useState([]);
   const [total,setTotal] = useState([]);
   
   
@@ -81,18 +72,7 @@ const InventariosDisponibles = () => {
           Swal.showLoading();
         }
       });
-      const correo = sessionStorage.getItem('log');
-      const response = await fetch(urlapi+'/get-clientes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ usuario: correo })
-      });
-      const listas = await response.json();
-
-      setListaClientes(listas[0]);
-      setListaFacturas(listas[1]);
+      
       Swal.close();
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -137,59 +117,11 @@ const InventariosDisponibles = () => {
     setPageSize(size);
   };
 
-  const handleIconClick = async (index, data) => {
-    const nroFactura = data;
-    console.log('Detalles de la fila:', data);
-
-    try {
-      Swal.fire({
-        title: `Consultando Abonos de \n${nroFactura}`,
-        allowOutsideClick: false,
-        showConfirmButton: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
-      const response = await axios.post(`${urlapi}/get-facturas-detalle`, {
-        nroFactura: nroFactura
-      });
-
-      const facturaDetalles = response.data;
-      console.log(facturaDetalles)
-      setModalData(facturaDetalles); // Guardar los datos en el estado
-      Swal.close();
-      setModal1Visible(true); // Mostrar el modal
-    } catch (error) {
-      console.error('Error fetching factura details:', error);
-      Swal.fire('Error', 'Hubo un problema al consultar los detalles de la factura.', 'error');
-    }
-  };
-
-
-  const handleClientesChange = (selected) => {
-    console.log('Clientes seleccionados:', selected);
-    setSelectedClientes(selected);
-  };
-
-  const handleNombresChange = (selected) => {
-    console.log('Nombres seleccionadas:', selected);
-    setSelectedNombres(selected);
-  };
-  
   const handleFacturasChange = (selected) => {
     console.log('Facturas seleccionadas:', selected);
-    setSelectedFacturas(selected);
+    //setSelectedFacturas(selected);
   };
 
-  const handleDate1Change = (newDate) => {
-    console.log('Fecha Inicial seleccionada:', newDate);
-    setDate1(newDate);
-  };
-  
-  const handleDate2Change = (newDate) => {
-    console.log('Fecha Final seleccionada:', newDate);
-    setDate2(newDate);
-  };
 
   const handleConsulta = async (event) => {
     event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
@@ -203,14 +135,8 @@ const InventariosDisponibles = () => {
           Swal.showLoading();
         }
       });
-      const correo = sessionStorage.getItem('log');
       const response = await axios.post(urlapi+'/get-facturas', {
-        correo: correo,
-        nit: selectedClientes,
-        nombre:selectedNombres,
-        factura:selectedFacturas,
-        date1: date1, 
-        date2: date2
+
       });
 
       console.log('Respuesta de la API:', response.data);
@@ -227,7 +153,7 @@ const InventariosDisponibles = () => {
         const dataWithoutLastLine = response.data.slice(0, -1);
 
         // Transformar y actualizar los datos
-        const transformedData = transformData(dataWithoutLastLine, handleIconClick);
+        const transformedData = transformData(dataWithoutLastLine);
         setData(transformedData);
         setExcel(transformedData);
         
@@ -262,10 +188,6 @@ const initialFiltersCartera = useMemo(() => ({
 
   // Función para limpiar los campos del MultiSelector
   const clearSelector = () => {
-    setSelectedClientes([]);
-    setSelectedNombres([]); // Establece el estado en un array vacío para limpiar las selecciones setSelectorValue
-    setSelectedFacturas([]);
-    
 
   };
   
