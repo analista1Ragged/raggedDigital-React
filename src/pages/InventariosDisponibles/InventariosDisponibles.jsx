@@ -11,6 +11,7 @@ import { urlapi } from '../../App.js';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import FilterRowInventarios from '../../components/FilterRow/FilterRowInventarios.jsx';
+import CampoTexto from '../../components/CampoTexto/index.js';
 
 
 const transformData = (list, handleIconClick) => {
@@ -223,28 +224,12 @@ const initialFiltersCartera = useMemo(() => ({
         <form onSubmit={handleConsulta}>
         <div className = "container">
           <div className="row">
-            <MultiSelector 
-              options={listaClientes}
-              opc='0'
-              placeholder="Filtrar por Nit:"
-              onSelectChange={setSelectedClientes} 
-              value={selectedClientes} //este es el campo que trae el valor
-            />
-            <MultiSelector
-              options={listaClientes}
-              opc='1'
-              placeholder="Filtrar por Nombre/Razon S."
-              onSelectChange={setSelectedNombres} 
-              value={selectedNombres}
-              
-            />
-            <MultiSelector 
-              options={listaFacturas}
-              opc='0'
-              placeholder="Filtrar por Numero Factura"
-              onSelectChange={setSelectedFacturas} 
-              value={selectedFacturas}
-            />
+            
+          <CampoTexto
+              titulo="Buscar por referencias: "
+              placeholder="Ingresar Ref1 , Ref2, Ref3"
+          />
+            
           </div>
           <div className = "container">
           <div className="inline-components2">
