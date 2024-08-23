@@ -208,10 +208,9 @@ const initialFiltersCartera = useMemo(() => ({
           <CampoTexto
               titulo="Buscar por referencias: "
               placeholder="Ingresar Ref1 , Ref2, Ref3"
-          />
-            
+          />  
           </div>
-          <div className = "container">
+
           <div className="inline-components2">
             <BuscarButton 
               onClick={handleConsulta}
@@ -222,7 +221,7 @@ const initialFiltersCartera = useMemo(() => ({
               className="component-item" 
             />
           </div>
-          </div>
+
           </div>
         </form>
         <div className="tabla-container">
@@ -231,17 +230,14 @@ const initialFiltersCartera = useMemo(() => ({
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">NombreMarca</th>
+                <th scope="col">Marca</th>
                 <th scope="col">Colección</th>
                 <th scope="col">Referencia</th>
-                <th scope="col">CodigoColor</th>
-                <th scope="col">NombreColor</th>
+                <th scope="col">CodColor</th>
+                <th scope="col">Color</th>
                 <th scope="col">Talla</th>
-                <th scope="col">Descripción</th>
-                <th scope="col">CodigoBarras</th>
-                <th scope="col">Cantidad Existencias</th>
-                <th scope="col">Cantidad Disponible</th>
-                <th scope="col">Cantidad Comprometida</th>
+                <th scope="col">CodBarras</th>
+                <th scope="col">Cant Disponible</th>
               </tr>
               <FilterRowInventarios filtersInventarios={filtersInventarios} handleFilter={handleFilter} />
             </thead>
@@ -262,16 +258,6 @@ const initialFiltersCartera = useMemo(() => ({
                 </tr>
               ))}
             </tbody>
-            <tfoot>
-              <tr className="total-row">
-                <td colSpan="5" className="total-label">Total:</td>
-                <td className="total-value">{}</td>
-                <td colSpan="2"></td>
-                <td className="total-value">{}</td>
-                <td className="total-value">{}</td>
-                <td colSpan="2"></td>
-              </tr>
-            </tfoot>
           </table>
         </div>
         <div className="paginacion">
