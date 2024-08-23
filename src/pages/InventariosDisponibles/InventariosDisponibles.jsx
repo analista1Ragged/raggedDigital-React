@@ -23,17 +23,15 @@ const transformData = (list, handleIconClick) => {
 
   return list.map((item, index) => ({
     item: index + 1,
-    Marca: item[0] || 'N/A',
-    Coleccion: item[1] || 'N/A',
-    Referencia: item[2] || 'N/A',
-    Codigo_Color: item[4] || 'N/A',
-    Nombre_Color: item[5] || 'N/A',
-    Talla: item[3] || 'N/A', 
-    Descripcion: item[7] || 'N/A', 
-    Codigo_Barras: item[6] || 'N/A', 
-    Cantidad_Existencia: item[8] || 'N/A', 
-    Cantidad_Disponible: item[9] || 'N/A', 
-    Cantidad_Comprometida: item[10] || 'N/A'
+    documento: item[0] || 'N/A',
+    nombre: item[1] || 'N/A',
+    fecha: item[2] || 'N/A',
+    nroFactura: item[4] || 'N/A',
+    valorFactura: item[5] || 'N/A',
+    fechaVenc: item[3] || 'N/A', 
+    diasCart: item[7] || 'N/A', 
+    valorAbono: item[6] || 'N/A', 
+    saldoFactura: String(item[8]) || 'N/A'
   }));
 };
 
@@ -93,25 +91,7 @@ const InventariosDisponibles = () => {
   const indexOfFirstItem = indexOfLastItem - pageSize;
   const currentItems = data
   
-  .filter(item =>{
-    // Convertir item.documento a cadena si no lo es
-    const documento = String(item.documento || ''); // Convertir a cadena
-    const filtroDocumento = String(filtersInventarios.documento || ''); // Convertir a cadena
-    // Filtrar usando toLowerCase() y includes()
-    return item.Marca.toLowerCase().includes(filtersInventarios.Marca.toLowerCase()) &&
-    item.Coleccion.toLowerCase().includes(filtersInventarios.Coleccion.toLowerCase()) &&
-    item.Referencia.toLowerCase().includes(filtersInventarios.Referencia.toLowerCase()) &&
-    item.Codigo_Color.toLowerCase().includes(filtersInventarios.Codigo_Color.toLowerCase()) &&
-    item.Nombre_Color.toLowerCase().includes(filtersInventarios.Nombre_Color.toLowerCase()) &&
-    item.Talla.toLowerCase().includes(filtersInventarios.Talla.toLowerCase()) &&
-    item.Descripcion.toLowerCase().includes(filtersInventarios.Descripcion.toLowerCase()) &&
-    item.Codigo_Barras.toLowerCase().includes(filtersInventarios.Codigo_Barras.toLowerCase()) &&
-    item.Cantidad_Existencia.toLowerCase().includes(filtersInventarios.Cantidad_Existencia.toLowerCase()) &&
-    item.Cantidad_Disponible.toLowerCase().includes(filtersInventarios.Cantidad_Disponible.toLowerCase()) &&
-    item.Cantidad_Comprometida.toLowerCase().includes(filtersInventarios.Cantidad_Comprometida.toLowerCase()) 
-  })
-  
-  .slice(indexOfFirstItem, indexOfLastItem);
+;
 
   const handleChangePage = (page, size) => {
     setCurrentPage(page);
@@ -136,7 +116,7 @@ const InventariosDisponibles = () => {
           Swal.showLoading();
         }
       });
-      const response = await axios.post(urlapi+'/get-facturas', {
+      const response = await axios.post(urlapi+'/get-InventarioDisp', {
 
       });
 
@@ -285,10 +265,10 @@ const initialFiltersCartera = useMemo(() => ({
             <tfoot>
               <tr className="total-row">
                 <td colSpan="5" className="total-label">Total:</td>
-                <td className="total-value">{total[0]}</td>
+                <td className="total-value">{}</td>
                 <td colSpan="2"></td>
-                <td className="total-value">{total[1]}</td>
-                <td className="total-value">{total[2]}</td>
+                <td className="total-value">{}</td>
+                <td className="total-value">{}</td>
                 <td colSpan="2"></td>
               </tr>
             </tfoot>
