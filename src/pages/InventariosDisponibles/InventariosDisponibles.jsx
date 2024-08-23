@@ -25,13 +25,13 @@ const transformData = (list, handleIconClick) => {
     item: index + 1,
     documento: item[0] || 'N/A',
     nombre: item[1] || 'N/A',
-    fecha: item[2] || 'N/A',
-    nroFactura: item[4] || 'N/A',
-    valorFactura: item[5] || 'N/A',
-    fechaVenc: item[3] || 'N/A', 
-    diasCart: item[7] || 'N/A', 
+    fecha: item[4] || 'N/A',
+    nroFactura: item[2] || 'N/A',
+    valorFactura: item[3] || 'N/A',
+    fechaVenc: item[4] || 'N/A', 
+    diasCart: item[5] || 'N/A', 
     valorAbono: item[6] || 'N/A', 
-    saldoFactura: String(item[8]) || 'N/A'
+
   }));
 };
 
@@ -233,10 +233,9 @@ const initialFiltersCartera = useMemo(() => ({
                 <th scope="col">Marca</th>
                 <th scope="col">Colección</th>
                 <th scope="col">Referencia</th>
-                <th scope="col">CodColor</th>
                 <th scope="col">Color</th>
                 <th scope="col">Talla</th>
-                <th scope="col">CodBarras</th>
+                <th scope="col">Cod Barras</th>
                 <th scope="col">Cant Disponible</th>
               </tr>
               <FilterRowInventarios filtersInventarios={filtersInventarios} handleFilter={handleFilter} />
@@ -247,14 +246,12 @@ const initialFiltersCartera = useMemo(() => ({
                   <td>{item.item}</td>
                   <td>{item.documento}</td>
                   <td>{item.nombre}</td>
-                  <td>{item.fecha}</td>
                   <td>{item.nroFactura}</td>
                   <td>{item.valorFactura}</td>
                   <td>{item.fechaVenc}</td>
                   <td>{item.diasCart}</td>
                   <td>{item.valorAbono}</td>
-                  <td>{item.saldoFactura}</td>
-                  <td>{item.ver_detalle_NC}</td>
+
                 </tr>
               ))}
             </tbody>
