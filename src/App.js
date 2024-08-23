@@ -178,7 +178,7 @@ function App() {
 function AppWrapper() {
   return (
     //<BrowserRouter basename="/RaggedDigital">
-    <BrowserRouter basename="/RaggedDigital">
+    <BrowserRouter>
       <AuthProvider>
         <App />
       </AuthProvider>
