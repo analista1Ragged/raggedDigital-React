@@ -55,7 +55,11 @@ const InventariosDisponibles = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [total,setTotal] = useState([]);
+  const [valorCampo, setValorCampo] = useState('');
   
+  const manejarActualizacionValor = (nuevoValor) => {
+    setValorCampo(nuevoValor);
+  };
   
   useEffect(() => {
     fetchData();
@@ -71,7 +75,18 @@ const InventariosDisponibles = () => {
           Swal.showLoading();
         }
       });
+      const response = await fetch(urlapi+'/get-InventarioFiltros', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify()
+      });
+      const listas = await response.json();
+      console.log(listas)
       
+      // setListaClientes(listas[0]);
+      // setListaFacturas(listas[1]);
       Swal.close();
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -106,7 +121,7 @@ const InventariosDisponibles = () => {
 
   const handleConsulta = async (event) => {
     event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
-
+    console.log(valorCampo)
     try {
       Swal.fire({
         title: 'Consultando Facturas...',
@@ -116,8 +131,8 @@ const InventariosDisponibles = () => {
           Swal.showLoading();
         }
       });
-      const response = await axios.post(urlapi+'/get-InventarioDisp', {
-
+      const response = await axios.get(urlapi+'/get-InventarioDisp', {
+        
       });
 
       console.log('Respuesta de la API:', response.data);
@@ -208,6 +223,8 @@ const initialFiltersCartera = useMemo(() => ({
           <CampoTexto
               titulo="Buscar por referencias: "
               placeholder="Ingresar Ref1 , Ref2, Ref3"
+              actualizarValor={manejarActualizacionValor}
+              valor={valorCampo}
           />  
           </div>
 

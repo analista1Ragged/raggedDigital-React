@@ -15,7 +15,6 @@ import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el
 import Error404 from './components/Error404/Error404';
 import InventariosDisponibles from './pages/InventariosDisponibles/InventariosDisponibles';
 
-import MultiSelector from './components/MultiSelector/MultiSelector';
 //export const urlapi = 'http://serverrgd.eastus.cloudapp.azure.com:5000'
 export const urlapi = 'http://localhost:5000'
 
@@ -178,7 +177,7 @@ function App() {
 function AppWrapper() {
   return (
     //<BrowserRouter basename="/RaggedDigital">
-    <BrowserRouter >
+    <BrowserRouter>
       <AuthProvider>
         <App />
       </AuthProvider>
