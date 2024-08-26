@@ -5,7 +5,7 @@ import { Pagination, Tag } from 'antd'; // Importa Tag de Ant Design para el com
 import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
 import BuscarButton from '../../components/BotonBuscar/BotonBuscar.jsx';
 import BuscarLimpiar from '../../components/BotonLimpiar/BotonLimpiar.jsx';
-import MultiSelector from '../../components/MultiSelector/MultiSelector.jsx';
+import MultiSelector2 from '../../components/MultiSelector/MultiSelector2.jsx';
 import { urlapi } from '../../App.js';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -52,6 +52,12 @@ const InventariosDisponibles = () => {
   const [pageSize, setPageSize] = useState(10);
   const [total,setTotal] = useState([]);
   const [valorCampo, setValorCampo] = useState('');
+  const [listaColeccion, setListaColeccion] = useState([]);
+  const [listaColor, setListaColor] = useState([]);
+  const [listaLinea, setListaLinea] = useState([]);
+  const [selectedColecciones, setSelectedColecciones] = useState([]);
+  const [selectedColores, setSelectedColores] = useState([]);
+  const [selectedLineas, setSelectedLineas] = useState([]);
   
   const manejarActualizacionValor = (nuevoValor) => {
     setValorCampo(nuevoValor);
@@ -64,7 +70,7 @@ const InventariosDisponibles = () => {
   const fetchData = async () => {
     try {
       Swal.fire({
-        title: 'Cargando nits, clientes y facturas...',
+        title: 'Cargando formulario...',
         allowOutsideClick: false,
         showConfirmButton: false,
         didOpen: () => {
@@ -81,8 +87,26 @@ const InventariosDisponibles = () => {
       const listas = await response.json();
       console.log(listas)
       
-      // setListaClientes(listas[0]);
-      // setListaFacturas(listas[1]);
+      const coleccion = [];
+      const color = [];
+      const linea = [];
+
+      listas.forEach(item => {
+        const [tipo, valor] = item;
+        if (tipo === "Coleccion") {
+          coleccion.push(valor);
+        } else if (tipo === "Color") {
+          color.push(valor);
+        } else if (tipo === "Linea") {
+          linea.push(valor);
+        }
+      });
+
+      // Actualizar los estados
+      console.log(coleccion,color,linea)
+      setListaColeccion(coleccion);
+      setListaColor(color);
+      setListaLinea(linea);
       Swal.close();
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -212,26 +236,26 @@ const initialFiltersCartera = useMemo(() => ({
     <form onSubmit={handleConsulta}>
       <div className="container">
         <div className="row">
-              <MultiSelector 
-                //options={" "}
+              <MultiSelector2 
+                options={listaColeccion}
                 opc='0'
                 placeholder="Filtrar por Colección:"
-                onSelectChange={""} 
-                value={""}
+                onSelectChange={setSelectedColecciones} 
+                value={selectedColecciones}
               />
-              <MultiSelector
-                //options={""}
-                opc='1'
+              <MultiSelector2
+                options={listaColor}
+                opc='0'
                 placeholder="Filtrar por Linea:"
-                onSelectChange={" "} 
-                value={" "}
+                onSelectChange={setSelectedLineas} 
+                value={selectedLineas}
               />
-              <MultiSelector 
-                //options={" "}
+              <MultiSelector2 
+                options={listaLinea}
                 opc='0'
                 placeholder="Filtrar por Color:"
-                onSelectChange={""} 
-                value={" "}
+                onSelectChange={setSelectedColores} 
+                value={selectedColores}
               />
             </div>
           <div className="container">
