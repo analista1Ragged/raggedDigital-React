@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useMemo, useCallback, useRef } from 'react';
 import './InvenariosDisponibles.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Pagination, Tag } from 'antd'; // Importa Tag de Ant Design para el componente EstadoFactura
+import { Pagination } from 'antd'; // Importa Tag de Ant Design para el componente EstadoFactura
 import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
 import BuscarButton from '../../components/BotonBuscar/BotonBuscar.jsx';
 import BuscarLimpiar from '../../components/BotonLimpiar/BotonLimpiar.jsx';
@@ -100,7 +100,11 @@ const InventariosDisponibles = () => {
 
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
-  const currentItems = data
+  const currentItems = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+    return data.slice(start, end);
+  }, [currentPage, pageSize, data]);
   
 ;
 
@@ -211,6 +215,7 @@ const initialFiltersCartera = useMemo(() => ({
     </h3>
     <form onSubmit={handleConsulta}>
       <div className="container">
+        <div className="multi-selector">
         <div className="row">
               <MultiSelector 
                 //options={" "}
@@ -233,13 +238,12 @@ const initialFiltersCartera = useMemo(() => ({
                 onSelectChange={""} 
                 value={" "}
               />
-            </div>
+          </div>
+        </div>
           <div className="container">
             <div className="row">
               <CampoTexto
                 placeholder="Buscar por: Ref1 , Ref2, Ref3"
-                actualizarValor={manejarActualizacionValor}
-                valor={valorCampo}
               />  
             </div>
             <div className="inline-components2">

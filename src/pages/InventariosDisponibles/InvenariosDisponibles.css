@@ -220,7 +220,16 @@ body {
   }
 }
 
+.row {
+  display: flex;
+  align-items: center; /* Alinea verticalmente */
+  justify-content: space-between; /* Opcional: distribuye espacio entre los selectores */
+}
 
+.multi-selector {
+  width: 100%; /* Asegura que tengan el mismo ancho */
+  margin-bottom: 0; /* Remueve cualquier margen inferior que pueda causar desalineación */
+}
   
 
 
