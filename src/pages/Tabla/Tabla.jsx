@@ -303,52 +303,50 @@ const initialFiltersCartera = useMemo(() => ({
     };
 
   return (
-    <section>
-      <div className="ticket-table">
-        <h2>
-          <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos"><i className="bi bi-arrow-left-circle"></i></a>
-          {'  '}
-          Consulta Cartera RagStyle
-        </h2>
-        <p>
-        <h3>
-        <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos"><i className="bi bi-filter"></i></a>
-          {'  '}
-          Filtrar por: 
-          </h3>
-        </p>
-        <form onSubmit={handleConsulta}>
-        <div className = "container">
-          <div className="row">
-            <MultiSelector 
-              options={listaClientes}
-              opc='0'
-              placeholder="Filtrar por Nit:"
-              onSelectChange={setSelectedClientes} 
-              value={selectedClientes} //este es el campo que trae el valor
-            />
-            <MultiSelector
-              options={listaClientes}
-              opc='1'
-              placeholder="Filtrar por Nombre/Razon S."
-              onSelectChange={setSelectedNombres} 
-              value={selectedNombres}
-              
-            />
-            <MultiSelector 
-              options={listaFacturas}
-              opc='0'
-              placeholder="Filtrar por Numero Factura"
-              onSelectChange={setSelectedFacturas} 
-              value={selectedFacturas}
-            />
-          </div>
-          <div className = "container">
+<section>
+  <div className="ticket-table">
+    <h2>
+      <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
+        <i className="bi bi-arrow-left-circle"></i>
+      </a>
+      {'  '} Consulta Cartera RagStyle
+    </h2>
+    <h3>
+      <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
+        <i className="bi bi-filter"></i>
+      </a>
+      {'  '} Filtrar por: 
+    </h3>
+    <form onSubmit={handleConsulta}>
+      <div className="container">
+        <div className="row">
+          <MultiSelector 
+            options={listaClientes}
+            opc='0'
+            placeholder="Filtrar por Nit:"
+            onSelectChange={setSelectedClientes} 
+            value={selectedClientes}
+          />
+          <MultiSelector
+            options={listaClientes}
+            opc='1'
+            placeholder="Filtrar por Nombre/Razon S."
+            onSelectChange={setSelectedNombres} 
+            value={selectedNombres}
+          />
+          <MultiSelector 
+            options={listaFacturas}
+            opc='0'
+            placeholder="Filtrar por Numero Factura"
+            onSelectChange={setSelectedFacturas} 
+            value={selectedFacturas}
+          />
+        </div>
+        <div className="container">
           <div className="inline-components2">
             <SeleccionarFecha 
               onDate1Change={handleDate1Change}
               onDate2Change={handleDate2Change}
-
               className="component-item" 
             />
             <BuscarButton 
@@ -360,79 +358,83 @@ const initialFiltersCartera = useMemo(() => ({
               className="component-item" 
             />
           </div>
-          </div>
-          </div>
-        </form>
-        <div className="tabla-container">
-        <Menu2Botones marca={excel} />
-          <table className="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nit</th>
-                <th scope="col">Nombre Cliente</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Numero Factura</th>
-                <th scope="col">Valor Factura</th>
-                <th scope="col">Fecha Vencimiento</th>
-                <th scope="col">Dias Cartera</th>
-                <th scope="col">Valor Abono</th>
-                <th scope="col">Saldo Factura</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Ver Detalle NC</th>
-                {/*<th scope="col">Ver Detalle Cliente</th>*/}
-              </tr>
-              <FilterRowCartera filtersCartera={filtersCartera} handleFilter={handleFilter} />
-            </thead>
-            <tbody>
-              {currentItems.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.item}</td>
-                  <td>{item.documento}</td>
-                  <td>{item.nombre}</td>
-                  <td>{item.fecha}</td>
-                  <td>{item.nroFactura}</td>
-                  <td>{item.valorFactura}</td>
-                  <td>{item.fechaVenc}</td>
-                  <td>{item.diasCart}</td>
-                  <td>{item.valorAbono}</td>
-                  <td>{item.saldoFactura}</td>
-                  <td><EstadoFactura estado={item.estado} /></td> {/* Aquí se muestra el estado de la factura */}
-                  <td>{item.ver_detalle_NC}</td>
-                  {/*<td>{item.ver_detalle_NC}</td>*/}
-                </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr className="total-row">
-                <td colSpan="5" className="total-label">Total:</td>
-                <td className="total-value">{total[0]}</td>
-                <td colSpan="2"></td>
-                <td className="total-value">{total[1]}</td>
-                <td className="total-value">{total[2]}</td>
-                <td colSpan="2"></td>
-              </tr>
-            </tfoot>
-          </table>
         </div>
-        <div className="paginacion">
-          <Pagination
-            current={currentPage}
-            pageSize={pageSize}
-            total={data.length}
-            onChange={handleChangePage}
-            pageSizeOptions={['10', '20', '30','50','100']}
-            showSizeChanger
-            showQuickJumper
-          />
-        </div>
-         <ModalCartera
-          modal1Visible={modal1Visible}
-          setModal1Visible={setModal1Visible}
-          modalData={modalData} // Pasa los datos del modal aquí
-        />
       </div>
-    </section>
+    </form>
+
+    {/* Contenedor con scroll horizontal */}
+    <div className="tabla-container">
+      <div className="tabla-scroll">
+        <table className="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nit</th>
+              <th scope="col">Nombre Cliente</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Numero Factura</th>
+              <th scope="col">Valor Factura</th>
+              <th scope="col">Fecha Vencimiento</th>
+              <th scope="col">Dias Cartera</th>
+              <th scope="col">Valor Abono</th>
+              <th scope="col">Saldo Factura</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Ver Detalle NC</th>
+            </tr>
+            <FilterRowCartera filtersCartera={filtersCartera} handleFilter={handleFilter} />
+          </thead>
+          <tbody>
+            {currentItems.map((item, index) => (
+              <tr key={index}>
+                <td>{item.item}</td>
+                <td>{item.documento}</td>
+                <td>{item.nombre}</td>
+                <td>{item.fecha}</td>
+                <td>{item.nroFactura}</td>
+                <td>{item.valorFactura}</td>
+                <td>{item.fechaVenc}</td>
+                <td>{item.diasCart}</td>
+                <td>{item.valorAbono}</td>
+                <td>{item.saldoFactura}</td>
+                <td><EstadoFactura estado={item.estado} /></td>
+                <td>{item.ver_detalle_NC}</td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr className="total-row">
+              <td colSpan="5" className="total-label">Total:</td>
+              <td className="total-value">{total[0]}</td>
+              <td colSpan="2"></td>
+              <td className="total-value">{total[1]}</td>
+              <td className="total-value">{total[2]}</td>
+              <td colSpan="2"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div className="paginacion">
+      <Pagination
+        current={currentPage}
+        pageSize={pageSize}
+        total={data.length}
+        onChange={handleChangePage}
+        pageSizeOptions={['10', '20', '30','50','100']}
+        showSizeChanger
+        showQuickJumper
+      />
+    </div>
+    
+    <ModalCartera
+      modal1Visible={modal1Visible}
+      setModal1Visible={setModal1Visible}
+      modalData={modalData}
+    />
+  </div>
+</section>
+
   );
 };
 

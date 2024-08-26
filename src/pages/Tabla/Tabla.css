@@ -186,3 +186,34 @@ section {
   background-color: transparent;
 }
 
+/* Estilos para el contenedor con scroll horizontal */
+.tabla-container {
+  width: 100%;
+  overflow-x: auto; /* Habilita el scroll horizontal */
+  margin-bottom: 20px; /* Espacio debajo de la tabla */
+}
+
+.tabla-scroll {
+  width: 100%;
+  min-width: 1000px; /* Ancho mínimo de la tabla */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 576px) {
+  .table th,
+  .table td {
+    padding: 6px; /* Ajusta el padding para pantallas pequeñas */
+  }
+}
+

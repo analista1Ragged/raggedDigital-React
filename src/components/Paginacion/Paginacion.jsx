@@ -1,17 +1,17 @@
 import React from 'react';
 import { Pagination } from 'antd';
 
-const Paginacion = () => {
+const Paginacion = ({ currentPage, pageSize, data, handleChangePage }) => {
   return (
-    <div id="components-pagination-demo-mini">
-      <Pagination size="small" total={20} />
-      <Pagination size="small" total={20} showSizeChanger showQuickJumper />
-      <Pagination
-        size="small"
-        total={20}
-        showTotal={(total, range) => `Total ${total} items`}
-      />
-    </div>
+    <Pagination
+      current={currentPage}
+      pageSize={pageSize}
+      total={data.length}
+      onChange={handleChangePage}
+      pageSizeOptions={['10', '20', '30','50','100']}
+      showSizeChanger
+      showQuickJumper
+    />
   );
 };
 

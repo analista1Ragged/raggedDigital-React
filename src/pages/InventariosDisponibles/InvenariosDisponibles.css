@@ -189,6 +189,38 @@ body {
     background-color: transparent;
   }
 
+  /* Agrega el estilo para permitir el desplazamiento horizontal */
+.tabla-container {
+  width: 100%;
+  overflow-x: auto; /* Habilita el scroll horizontal */
+  margin-bottom: 20px; /* Espacio debajo de la tabla */
+}
+
+.tabla-scroll {
+  width: 100%;
+  min-width: 600px; /* Ancho mínimo de la tabla para evitar que se colapse en pantallas pequeñas */
+}
+
+.ticket-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ticket-table th,
+.ticket-table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 576px) {
+  .ticket-table th,
+  .ticket-table td {
+    padding: 6px; /* Ajusta el padding para pantallas pequeñas */
+  }
+}
+
+
   
 
 
