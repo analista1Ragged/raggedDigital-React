@@ -1,7 +1,6 @@
 import React, { useState, useEffect,useMemo, useCallback, useRef } from 'react';
 import './InvenariosDisponibles.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import Menu2Botones from '../../components/Menu3Botones/Menu2Botones.jsx';
 import { Pagination, Tag } from 'antd'; // Importa Tag de Ant Design para el componente EstadoFactura
 import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
 import BuscarButton from '../../components/BotonBuscar/BotonBuscar.jsx';
@@ -40,17 +39,14 @@ const InventariosDisponibles = () => {
   const [data, setData] = useState([]);
   const [excel,setExcel] = useState([]);
   const [filtersInventarios, setFiltersInventarios] = useState({
-  Marca: '',
   Coleccion: '',
   Referencia:'',
+  Categoría:'',
   Codigo_Color: '',
   Nombre_Color: '',
   Talla: '',
-  Descripcion: '',
   Codigo_Barras: '',
-  Cantidad_Existencia: '',
   Cantidad_Disponible: '',
-  Cantidad_Comprometida: ''
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -151,17 +147,14 @@ const InventariosDisponibles = () => {
 };
 
 const initialFiltersCartera = useMemo(() => ({
-  Marca: '',
   Coleccion: '',
   Referencia:'',
+  Categoría:'',
   Codigo_Color: '',
   Nombre_Color: '',
   Talla: '',
-  Descripcion: '',
   Codigo_Barras: '',
-  Cantidad_Existencia: '',
   Cantidad_Disponible: '',
-  Cantidad_Comprometida: ''
 }), []);
 
 
@@ -188,88 +181,113 @@ const initialFiltersCartera = useMemo(() => ({
 
   return (
     <section>
-      <div className="ticket-table">
-        <h2>
-          <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos"><i className="bi bi-arrow-left-circle"></i></a>
-          {'  '}
-          Inventarios Disponibles RagStyle
-        </h2>
-        <p>
-        <h3>
-        <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos"><i className="bi bi-filter"></i></a>
-          {'  '}
-          Filtrar por: 
-          </h3>
-        </p>
-        <form onSubmit={handleConsulta}>
-        <div className = "container">
-          <div className="row">
-            
-          <CampoTexto
-              titulo="Buscar por referencias: "
-              placeholder="Ingresar Ref1 , Ref2, Ref3"
-          />  
+  <div className="ticket-table">
+    <h2>
+      <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
+        <i className="bi bi-arrow-left-circle"></i>
+      </a>
+      {'  '} Inventarios Disponibles RagStyle
+    </h2>
+    <h3>
+      <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
+        <i className="bi bi-filter"></i>
+      </a>
+      {'  '} Filtrar por: 
+    </h3>
+    <form onSubmit={handleConsulta}>
+      <div className="container">
+        <div className="row">
+              <MultiSelector 
+                //options={" "}
+                opc='0'
+                placeholder="Filtrar por Colección:"
+                onSelectChange={""} 
+                value={""}
+              />
+              <MultiSelector
+                //options={""}
+                opc='1'
+                placeholder="Filtrar por Linea:"
+                onSelectChange={" "} 
+                value={" "}
+              />
+              <MultiSelector 
+                //options={" "}
+                opc='0'
+                placeholder="Filtrar por Color:"
+                onSelectChange={""} 
+                value={" "}
+              />
+            </div>
+          <div className="container">
+            <div className="row">
+              <CampoTexto
+                placeholder="Buscar por: Ref1 , Ref2, Ref3"
+              />  
+            </div>
+            <div className="inline-components2">
+              <BuscarButton 
+                onClick={handleConsulta}
+                className="component-item" 
+              />
+              <BuscarLimpiar 
+                onClick={handleButtonClick}
+                className="component-item" 
+              />
+            </div>
           </div>
-
-          <div className="inline-components2">
-            <BuscarButton 
-              onClick={handleConsulta}
-              className="component-item" 
-            />
-            <BuscarLimpiar 
-              onClick={handleButtonClick}
-              className="component-item" 
-            />
-          </div>
-
-          </div>
-        </form>
-        <div className="tabla-container">
-        <Menu2Botones marca={excel} />
-          <table className="table table-striped table-hover ticket-table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Marca</th>
-                <th scope="col">Colección</th>
-                <th scope="col">Referencia</th>
-                <th scope="col">Color</th>
-                <th scope="col">Talla</th>
-                <th scope="col">Cod Barras</th>
-                <th scope="col">Cant Disponible</th>
-              </tr>
-              <FilterRowInventarios filtersInventarios={filtersInventarios} handleFilter={handleFilter} />
-            </thead>
-            <tbody>
-              {currentItems.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.item}</td>
-                  <td>{item.documento}</td>
-                  <td>{item.nombre}</td>
-                  <td>{item.nroFactura}</td>
-                  <td>{item.valorFactura}</td>
-                  <td>{item.fechaVenc}</td>
-                  <td>{item.diasCart}</td>
-                  <td>{item.valorAbono}</td>
-
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="paginacion">
-          <Pagination
-            current={currentPage}
-            pageSize={pageSize}
-            total={data.length}
-            onChange={handleChangePage}
-            pageSizeOptions={['10', '20', '30','50','100']}
-            showSizeChanger
-            showQuickJumper
-          />
-        </div>
       </div>
-    </section>
+    </form>
+
+    {/* Contenedor con scroll horizontal */}
+    <div className="tabla-container">
+      <div className="tabla-scroll">
+        <table className="table table-striped table-hover ticket-table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Colección</th>
+              <th scope="col">Referencia</th>
+              <th scope="col">Linea</th>
+              <th scope="col">Color</th>
+              <th scope="col">Talla</th>
+              <th scope="col">Cod Barras</th>
+              <th scope="col">Cant Disponible</th>
+            </tr>
+            <FilterRowInventarios filtersInventarios={filtersInventarios} handleFilter={handleFilter} />
+          </thead>
+          <tbody>
+            {currentItems.map((item, index) => (
+              <tr key={index}>
+                <td>{item.item}</td>
+                <td>{item.documento}</td>
+                <td>{item.nombre}</td>
+                <td>{item.nroFactura}</td>
+                <td>{item.valorFactura}</td>
+                <td>{item.fechaVenc}</td>
+                <td>{item.diasCart}</td>
+                <td>{item.valorAbono}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div className="paginacion">
+      <Pagination
+        current={currentPage}
+        pageSize={pageSize}
+        total={data.length}
+        onChange={handleChangePage}
+        pageSizeOptions={['10', '20', '30','50','100']}
+        showSizeChanger
+        showQuickJumper
+      />
+    </div>
+  </div>
+</section>
+
   );
 };
 

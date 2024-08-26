@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FilterRowInventarios = ({ filtersInventarios, handleFilter}) => {
-  const columns = ['Marca', 'Coleccion', 'Referencia','Color', 'Talla','CodBarras','Disponible'];
+  const columns = ['Coleccion', 'Referencia','Linea','Color', 'Talla','CodBarras','Disponible'];
 
   return (
     <tr id="filterRowCartera">
