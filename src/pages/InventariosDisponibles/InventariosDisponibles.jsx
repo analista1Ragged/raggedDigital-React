@@ -22,15 +22,14 @@ const transformData = (list, handleIconClick) => {
 
   return list.map((item, index) => ({
     item: index + 1,
-    documento: item[0] || 'N/A',
-    nombre: item[1] || 'N/A',
-    fecha: item[4] || 'N/A',
-    nroFactura: item[2] || 'N/A',
-    valorFactura: item[3] || 'N/A',
-    fechaVenc: item[4] || 'N/A', 
-    diasCart: item[5] || 'N/A', 
-    valorAbono: item[6] || 'N/A', 
-
+    coleccion: item[0] || 'N/A',
+    referencia: item[1] || 'N/A',
+    linea: item[2] || 'N/A',
+    nombreColor: item[3] || 'N/A',
+    talla: item[4] || 'N/A',
+    codBarras: item[5] || 'N/A', 
+    cantDisponible: item[6] || 'N/A', 
+    
   }));
 };
 
@@ -312,13 +311,14 @@ const initialFiltersCartera = useMemo(() => ({
             {currentItems.map((item, index) => (
               <tr key={index}>
                 <td>{item.item}</td>
-                <td>{item.documento}</td>
-                <td>{item.nombre}</td>
-                <td>{item.nroFactura}</td>
-                <td>{item.valorFactura}</td>
-                <td>{item.fechaVenc}</td>
-                <td>{item.diasCart}</td>
-                <td>{item.valorAbono}</td>
+                <td>{item.coleccion}</td>
+                <td>{item.referencia}</td>
+                <td>{item.linea}</td>
+                <td>{item.nombreColor}</td>
+                <td>{item.talla}</td>
+                <td>{item.codBarras}</td>
+                <td>{item.cantDisponible}</td>
+                
               </tr>
             ))}
           </tbody>
