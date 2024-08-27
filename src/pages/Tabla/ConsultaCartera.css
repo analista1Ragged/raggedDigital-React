@@ -217,3 +217,8 @@ section {
   }
 }
 
+.inline-components2 {
+  display: flex;
+  justify-content: flex-start; /* Alinea los componentes al lado izquierdo */
+  gap: 10px; /* Espaciado opcional entre los componentes */
+}

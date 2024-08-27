@@ -231,6 +231,11 @@ body {
   margin-bottom: 0; /* Remueve cualquier margen inferior que pueda causar desalineación */
 }
   
+.inline-components2 {
+  display: flex;
+  justify-content: flex-start; /* Alinea los componentes al lado izquierdo */
+  gap: 10px; /* Espaciado opcional entre los componentes */
+}
 
 
 
