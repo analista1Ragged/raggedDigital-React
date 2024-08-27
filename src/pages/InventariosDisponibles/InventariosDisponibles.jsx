@@ -10,7 +10,7 @@ import { urlapi } from '../../App.js';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import FilterRowInventarios from '../../components/FilterRow/FilterRowInventarios.jsx';
-import CampoTextoReferencia from '../../components/CampoTexto/CampoTextoReferencia.jsx';
+import CampoTexto from '../../components/CampoTexto/CampoTextoReferencia.jsx';
 
 
 const transformData = (list, handleIconClick) => {
@@ -68,7 +68,7 @@ const InventariosDisponibles = () => {
   const fetchData = async () => {
     try {
       Swal.fire({
-        title: 'Cargando formulario...',
+        title: 'Cargando filtros inventario...',
         allowOutsideClick: false,
         showConfirmButton: false,
         didOpen: () => {
@@ -161,7 +161,7 @@ const InventariosDisponibles = () => {
     console.log(valorCampo,typeof(valorCampo))
     try {
       Swal.fire({
-        title: 'Consultando Facturas...',
+        title: 'Consultando Inventario...',
         allowOutsideClick: false,
         showConfirmButton: false,
         didOpen: () => {
@@ -177,31 +177,19 @@ const InventariosDisponibles = () => {
 
       console.log('Respuesta de la API:', response.data);
       if(response.data.length > 0){
-        // Guardar la última línea en 'total'
-        const lastLine = response.data[response.data.length - 1];
-        setTotal([
-          lastLine[5] || '0',  // valorFactura
-          lastLine[6] || '0',  // valorAbono
-          lastLine[8] || '0'   // saldoFactura
-        ]);
-
-        // Eliminar la última línea del array
-        const dataWithoutLastLine = response.data.slice(0, -1);
-
-        // Transformar y actualizar los datos
-        const transformedData = transformData(dataWithoutLastLine);
+        const transformedData = transformData(response.data);
         setData(transformedData);
         setExcel(transformedData);
         
         Swal.close();
       } else {
         Swal.close();
-        Swal.fire('Ups!', 'No se encontraron facturas asociadas a los filtros.', 'info');
+        Swal.fire('Ups!', 'No se encontraron existencias asociadas a los filtros.', 'info');
       }
     } catch (error) {
       Swal.close();
       console.error('Error durante la consulta:', error);
-      Swal.fire('Error', 'Hubo un problema al consultar las facturas.', 'error');
+      Swal.fire('Error', 'Hubo un problema al consultar el Inventario.', 'error');
     }
 };
 
@@ -270,14 +258,14 @@ const initialFiltersCartera = useMemo(() => ({
               <MultiSelector2
                 options={listaColor}
                 opc='0'
-                placeholder="Filtrar por Linea:"
+                placeholder="Filtrar por Color:"
                 onSelectChange={setSelectedLineas} 
                 value={selectedLineas}
               />
               <MultiSelector2 
                 options={listaLinea}
                 opc='0'
-                placeholder="Filtrar por Color:"
+                placeholder="Filtrar por Linea:"
                 onSelectChange={setSelectedColores} 
                 value={selectedColores}
               />
@@ -285,8 +273,10 @@ const initialFiltersCartera = useMemo(() => ({
         </div>
           <div className="container">
             <div className="row">
-              <CampoTextoReferencia
-                placeholder="Buscar por: Ref1 , Ref2, Ref3"
+              <CampoTexto
+                titulo="Ingrese referencias separadas por coma"
+                placeholder="PF32111310,PF31310669..."
+                onValorCambio={manejarActualizacionValor}
               />  
             </div>
             <div className="inline-components2">
