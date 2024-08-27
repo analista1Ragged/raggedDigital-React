@@ -10,7 +10,7 @@ import { urlapi } from '../../App.js';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import FilterRowInventarios from '../../components/FilterRow/FilterRowInventarios.jsx';
-import CampoTexto from '../../components/CampoTexto/index.js';
+import CampoTextoReferencia from '../../components/CampoTexto/CampoTextoReferencia.jsx';
 
 
 const transformData = (list, handleIconClick) => {
@@ -271,7 +271,7 @@ const initialFiltersCartera = useMemo(() => ({
         </div>
           <div className="container">
             <div className="row">
-              <CampoTexto
+              <CampoTextoReferencia
                 placeholder="Buscar por: Ref1 , Ref2, Ref3"
               />  
             </div>

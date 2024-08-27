@@ -1,7 +1,7 @@
 import React from 'react';
 import './CampoTexto.css';
 
-const CampoTexto = (props) => {
+const CampoTextoReferencia = (props) => {
   const placeholderModificado = props.placeholder || 'Escribe aquí...'; // Valor predeterminado para placeholder
 
   const manejarCambio = (e) => {
@@ -13,8 +13,7 @@ const CampoTexto = (props) => {
       <label>{props.titulo}</label>
       <input
         placeholder={placeholderModificado}
-        required={"props.required"}
-        value={props.valor || ''} // Asigna un valor vacío si props.valor es undefined
+        //value={props.valor || ''} // Asigna un valor vacío si props.valor es undefined
         onChange={manejarCambio}
         type={props.tipo || 'text'} // Asegura que el tipo sea 'number' 
       />
@@ -22,4 +21,4 @@ const CampoTexto = (props) => {
   );
 };
 
-export default CampoTexto;
+export default CampoTextoReferencia;
