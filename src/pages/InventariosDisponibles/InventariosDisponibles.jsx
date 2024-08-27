@@ -145,7 +145,7 @@ const InventariosDisponibles = () => {
 
   const handleConsulta = async (event) => {
     event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
-    console.log(valorCampo)
+    console.log(valorCampo,typeof(valorCampo))
     try {
       Swal.fire({
         title: 'Consultando Facturas...',
@@ -155,8 +155,11 @@ const InventariosDisponibles = () => {
           Swal.showLoading();
         }
       });
-      const response = await axios.get(urlapi+'/get-InventarioDisp', {
-        
+      const response = await axios.post(urlapi+'/get-InventarioDisp', {
+        ref:valorCampo,
+        coleccion:selectedColecciones,
+        color:selectedColores,
+        linea:selectedLineas
       });
 
       console.log('Respuesta de la API:', response.data);
@@ -188,6 +191,8 @@ const InventariosDisponibles = () => {
       Swal.fire('Error', 'Hubo un problema al consultar las facturas.', 'error');
     }
 };
+
+
 
 const initialFiltersCartera = useMemo(() => ({
   Coleccion: '',
