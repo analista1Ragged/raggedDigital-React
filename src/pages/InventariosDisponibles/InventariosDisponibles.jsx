@@ -261,8 +261,8 @@ const initialFiltersCartera = useMemo(() => ({
           <div className="container">
             <div className="row">
               <CampoTexto
-                titulo="Ingrese referencias separadas por coma"
-                placeholder="PF32111310,PF31310669..."
+              
+                placeholder="Ingrese referencias PF32111310,PF31310669..."
                 onValorCambio={manejarActualizacionValor}
               />  
             </div>
