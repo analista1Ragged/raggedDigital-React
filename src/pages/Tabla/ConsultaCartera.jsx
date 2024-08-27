@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useMemo, useCallback, useRef } from 'react';
-import "./Tabla.css";
+import "./ConsultaCartera.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Menu2Botones from '../../components/Menu3Botones/Menu2Botones.jsx';
 import { Pagination, Tag } from 'antd'; // Importa Tag de Ant Design para el componente EstadoFactura

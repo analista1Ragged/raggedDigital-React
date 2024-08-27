@@ -10,7 +10,7 @@ import TicketTable from './pages/VerCapsulas';
 import Footer from './components/Footer/Footer';
 import Layout from './pages/Layout';
 import MyMenu from './components/MyMenu/MyMenu';
-import Tabla from './pages/Tabla/Tabla';
+import Tabla from './pages/Tabla/ConsultaCartera';
 import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
 import Error404 from './components/Error404/Error404';
 import InventariosDisponibles from './pages/InventariosDisponibles/InventariosDisponibles';

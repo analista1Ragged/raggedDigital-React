@@ -205,7 +205,9 @@ const initialFiltersCartera = useMemo(() => ({
 
   // Función para limpiar los campos del MultiSelector
   const clearSelector = () => {
-
+    setSelectedColecciones([]);
+    setSelectedLineas([]);
+    setSelectedColores([]);
   };
   
   // Función para limpiar los campos de fecha
