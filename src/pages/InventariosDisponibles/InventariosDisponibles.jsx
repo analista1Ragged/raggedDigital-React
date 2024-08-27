@@ -25,7 +25,7 @@ const transformData = (list, handleIconClick) => {
     coleccion: item[0] || 'N/A',
     referencia: item[1] || 'N/A',
     linea: item[2] || 'N/A',
-    nombreColor: item[3] || 'N/A',
+    color: item[3] || 'N/A',
     talla: item[4] || 'N/A',
     codBarras: item[5] || 'N/A', 
     cantDisponible: item[6] || 'N/A', 
@@ -37,15 +37,14 @@ const transformData = (list, handleIconClick) => {
 const InventariosDisponibles = () => {
   const [data, setData] = useState([]);
   const [excel,setExcel] = useState([]);
-  const [filtersInventarios, setFiltersInventarios] = useState({
-  Coleccion: '',
-  Referencia:'',
-  Categoría:'',
-  Codigo_Color: '',
-  Nombre_Color: '',
-  Talla: '',
-  Codigo_Barras: '',
-  Cantidad_Disponible: '',
+  const [filtersInventario, setFiltersInventarios] = useState({
+    coleccion: '',
+    referencia: '',
+    linea: '',
+    color: '',
+    talla: '',
+    codBarras: '',
+    cantDisponible: '',
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -115,7 +114,7 @@ const InventariosDisponibles = () => {
   const handleFilter = (e) => {
     const { name, value } = e.target;
     setFiltersInventarios({
-      ...filtersInventarios,
+      ...filtersInventario,
       [name]: value
     });
     setCurrentPage(1);
@@ -124,12 +123,25 @@ const InventariosDisponibles = () => {
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
   const currentItems = useMemo(() => {
+    // Calcular el índice de inicio y fin basado en la paginación
     const start = (currentPage - 1) * pageSize;
     const end = start + pageSize;
-    return data.slice(start, end);
-  }, [currentPage, pageSize, data]);
   
-;
+    // Filtrar los datos y luego aplicar paginación
+    return data
+    .filter((item) =>
+      item.coleccion.toLowerCase().includes(filtersInventario.coleccion.toLowerCase()) &&
+      item.referencia.toLowerCase().includes(filtersInventario.referencia.toLowerCase()) &&
+      item.linea.toLowerCase().includes(filtersInventario.linea.toLowerCase()) &&
+      item.color.toLowerCase().includes(filtersInventario.color.toLowerCase()) &&
+      item.talla.toLowerCase().includes(filtersInventario.talla.toLowerCase()) &&
+      item.codBarras.toLowerCase().includes(filtersInventario.codBarras.toLowerCase()) &&
+      item.cantDisponible.toString().includes(filtersInventario.cantDisponible)
+    )
+    .slice(start, end);
+}, [currentPage, pageSize, data, filtersInventario]);
+  
+
 
   const handleChangePage = (page, size) => {
     setCurrentPage(page);
@@ -141,6 +153,8 @@ const InventariosDisponibles = () => {
     //setSelectedFacturas(selected);
   };
 
+
+  
 
   const handleConsulta = async (event) => {
     event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
@@ -182,14 +196,13 @@ const InventariosDisponibles = () => {
 
 
 const initialFiltersCartera = useMemo(() => ({
-  Coleccion: '',
-  Referencia:'',
-  Categoría:'',
-  Codigo_Color: '',
-  Nombre_Color: '',
-  Talla: '',
-  Codigo_Barras: '',
-  Cantidad_Disponible: '',
+  coleccion: '',
+  referencia:'',
+  linea:'',
+  color: '',
+  talla: '',
+  codBarras: '',
+  cantDisponible: '',
 }), []);
 
 
@@ -295,7 +308,7 @@ const initialFiltersCartera = useMemo(() => ({
               <th scope="col">Cod Barras</th>
               <th scope="col">Cant Disponible</th>
             </tr>
-            <FilterRowInventarios filtersInventarios={filtersInventarios} handleFilter={handleFilter} />
+            <FilterRowInventarios filtersInventario={filtersInventario} handleFilter={handleFilter} />
           </thead>
           <tbody>
             {currentItems.map((item, index) => (
@@ -304,7 +317,7 @@ const initialFiltersCartera = useMemo(() => ({
                 <td>{item.coleccion}</td>
                 <td>{item.referencia}</td>
                 <td>{item.linea}</td>
-                <td>{item.nombreColor}</td>
+                <td>{item.color}</td>
                 <td>{item.talla}</td>
                 <td>{item.codBarras}</td>
                 <td>{item.cantDisponible}</td>
