@@ -1,7 +1,7 @@
 import React from 'react';
 
-const FilterRowInventarios = ({ filtersInventarios, handleFilter}) => {
-  const columns = ['Coleccion', 'Referencia','Linea','Color', 'Talla','CodBarras','Disponible'];
+const FilterRowInventarios = ({ filtersInventario, handleFilter}) => {
+  const columns = ['coleccion', 'referencia','linea','color', 'talla','codBarras','cantDisponible'];
 
   return (
     <tr id="filterRowCartera">
@@ -13,7 +13,7 @@ const FilterRowInventarios = ({ filtersInventarios, handleFilter}) => {
             className="form-control"
             placeholder={` ${column}`}
             name={column}
-            value={filtersInventarios[column]}
+            value={filtersInventario[column]}
             onChange={handleFilter}
           />
         </th>
