@@ -249,14 +249,14 @@ const initialFiltersCartera = useMemo(() => ({
     <form onSubmit={handleConsulta}>
       <div className="container">
         <div className="multi-selector">
-        <div className="row">
-              <MultiSelector2 
+        <div className="row-3">
+              {/*<MultiSelector2 
                 options={listaColeccion}
                 opc='0'
                 placeholder="Filtrar por Colección:"
                 onSelectChange={setSelectedColecciones} 
                 value={selectedColecciones}
-              />
+              />*/}
               <MultiSelector2
                 options={listaColor}
                 opc='0'
@@ -278,7 +278,6 @@ const initialFiltersCartera = useMemo(() => ({
             <div className="row">
               <div className='col'>
               <CampoTexto
-              
                 placeholder="Ingrese referencias PF32111310,PF31310669..."
                 onValorCambio={manejarActualizacionValor}
               />
