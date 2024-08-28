@@ -25,9 +25,9 @@ const transformData = (list, handleIconClick) => {
     coleccion: item[0] || 'N/A',
     referencia: item[1] || 'N/A',
     linea: item[2] || 'N/A',
-    color: item[3] || 'N/A',
-    talla: item[4] || 'N/A',
-    codBarras: item[5] || 'N/A', 
+    descripcion: item[3] || 'N/A',
+    color: item[4] || 'N/A',
+    talla: item[5] || 'N/A',
     cantDisponible: item[6] || 'N/A', 
     
   }));
@@ -41,9 +41,9 @@ const InventariosDisponibles = () => {
     coleccion: '',
     referencia: '',
     linea: '',
+    descripcion: '',
     color: '',
     talla: '',
-    codBarras: '',
     cantDisponible: '',
   });
   const [currentPage, setCurrentPage] = useState(1);
@@ -133,9 +133,9 @@ const InventariosDisponibles = () => {
       item.coleccion.toLowerCase().includes(filtersInventario.coleccion.toLowerCase()) &&
       item.referencia.toLowerCase().includes(filtersInventario.referencia.toLowerCase()) &&
       item.linea.toLowerCase().includes(filtersInventario.linea.toLowerCase()) &&
+      item.descripcion.toLowerCase().includes(filtersInventario.descripcion.toLowerCase()) &&
       item.color.toLowerCase().includes(filtersInventario.color.toLowerCase()) &&
       item.talla.toLowerCase().includes(filtersInventario.talla.toLowerCase()) &&
-      item.codBarras.toLowerCase().includes(filtersInventario.codBarras.toLowerCase()) &&
       item.cantDisponible.toString().includes(filtersInventario.cantDisponible)
     )
     .slice(start, end);
@@ -199,9 +199,9 @@ const initialFiltersCartera = useMemo(() => ({
   coleccion: '',
   referencia:'',
   linea:'',
+  descripcion: '',
   color: '',
   talla: '',
-  codBarras: '',
   cantDisponible: '',
 }), []);
 
@@ -310,9 +310,9 @@ const initialFiltersCartera = useMemo(() => ({
               <th scope="col">Colección</th>
               <th scope="col">Referencia</th>
               <th scope="col">Linea</th>
+              <th scope="col">Descripción</th>
               <th scope="col">Color</th>
               <th scope="col">Talla</th>
-              <th scope="col">Cod Barras</th>
               <th scope="col">Cant Disponible</th>
             </tr>
             <FilterRowInventarios filtersInventario={filtersInventario} handleFilter={handleFilter} />
@@ -324,9 +324,9 @@ const initialFiltersCartera = useMemo(() => ({
                 <td>{item.coleccion}</td>
                 <td>{item.referencia}</td>
                 <td>{item.linea}</td>
+                <td>{item.descripcion}</td>
                 <td>{item.color}</td>
                 <td>{item.talla}</td>
-                <td>{item.codBarras}</td>
                 <td>{item.cantDisponible}</td>
                 
               </tr>
