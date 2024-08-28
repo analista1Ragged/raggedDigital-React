@@ -8,7 +8,6 @@ import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, A
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
 import { PiEyeSlashFill } from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";
-import ModalCartera from "../ModalMenu/ModalMenu";
 
 const { SubMenu } = Menu;
 
@@ -177,10 +176,9 @@ const menuItems = [
 
 const filterMenuItems = (items, authArray) => {
   return items
-    .filter(item => authArray.includes(item.key))
-    .map(item => {
+    .filter((item) => authArray.includes(item.key))
+    .map((item) => {
       if (item.items) {
-        // Filtra los subelementos recursivamente
         return {
           ...item,
           items: filterMenuItems(item.items, authArray),
@@ -189,47 +187,27 @@ const filterMenuItems = (items, authArray) => {
       return item;
     });
 };
+
 const filteredMenuItems = filterMenuItems(menuItems, authArray);
 
 const MyMenu = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [openKeys, setOpenKeys] = useState([]);
-  const [modal1Visible, setModal1Visible] = useState(false);
-  const [menuPosition, setMenuPosition] = useState({ top: 60, left: 0 });
   const menuRef = useRef(null);
   const navigate = useNavigate();
-  const isDragging = useRef(false);
-  const offset = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setCollapsed(true);
-      }
-    };
-
-    const handleMouseUp = () => {
-      isDragging.current = false;
-    };
-
-    const handleMouseMove = (event) => {
-      if (isDragging.current) {
-        setMenuPosition((prevPosition) => ({
-          left: event.clientX - offset.current.x,
-          top: event.clientY - offset.current.y,
-        }));
+        setHidden(true);
       }
     };
 
     document.addEventListener("mousedown", handleOutsideClick);
-    document.addEventListener("mouseup", handleMouseUp);
-    document.addEventListener("mousemove", handleMouseMove);
 
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
-      document.removeEventListener("mouseup", handleMouseUp);
-      document.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
@@ -246,58 +224,40 @@ const MyMenu = () => {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('log');
-    sessionStorage.removeItem('auth');
-    navigate('/Login');
+    sessionStorage.removeItem("log");
+    sessionStorage.removeItem("auth");
+    navigate("/Login");
   };
 
   const handleHideMenu = () => {
     setHidden(true);
   };
 
-  const handleMenuItemClick = (action) => {
-    if (action === 'hideMenu') {
-      console.log(JSON.parse(sessionStorage.getItem('auth')),typeof(JSON.parse(sessionStorage.getItem('auth'))));
-      handleHideMenu();
-    } else if (action === 'showModal') {
-      setModal1Visible(true);
-    }
-  };
-
-  /*const handleMouseDown = (event) => {
-    isDragging.current = true;
-    offset.current = {
-      x: event.clientX - menuPosition.left,
-      y: event.clientY - menuPosition.top,
-    };
-  }; Esto es lo que hace que la barra se mueva*/
-
   return (
     <>
       <Button
         type="primary"
         onClick={toggleCollapsed}
-        style={{ 
-          marginBottom: 16, 
-          backgroundColor: "#373738", 
-          position: 'absolute', 
-          top: 16, 
-          left: 16, 
-          zIndex: 1002 
+        style={{
+          marginBottom: 16,
+          backgroundColor: "#373738",
+          position: "absolute",
+          top: 16,
+          left: 16,
+          zIndex: 1002,
         }}
       >
         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </Button>
       {!hidden && (
-        <div 
-          ref={menuRef} 
-          className={`custom-menu ${collapsed ? 'collapsed' : ''}`} 
-          style={{ 
-            position: 'absolute', 
-            top: menuPosition.top, 
-            left: menuPosition.left 
+        <div
+          ref={menuRef}
+          className={`custom-menu ${collapsed ? "collapsed" : ""}`}
+          style={{
+            position: "absolute",
+            top: 60,
+            left: 0,
           }}
-          /*onMouseDown={handleMouseDown} Esto es lo que hace que la barra se mueva*/
         >
           <Menu
             mode="inline"
@@ -306,69 +266,46 @@ const MyMenu = () => {
             openKeys={openKeys}
             onOpenChange={handleOpenChange}
             style={{ backgroundColor: "#373738", fontSize: "16px" }}
-            //  className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
           >
             <NavLink to="/Home">
               <img src={require("../../assets/Images/logo.png")} alt="logo" />
             </NavLink>
             {filteredMenuItems.map((item) =>
-              !item.items ? (
-                <Menu.Item 
-                  key={item.key} 
-                  icon={item.icon}
-                  onClick={() => handleMenuItemClick(item.action)}
-                  className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
-                >
-                  {item.title === "Logout" ? (
-                    <div onClick={handleLogout}>
-                      <NavLink 
-                        to={item.path} 
-                        className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
-                      >
-                        {item.title}
-                      </NavLink>
-                    </div>
-                  ) : (
-                    <NavLink 
-                      to={item.path} 
-                      className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
-                    >
-                      {item.title}
-                    </NavLink>
-                  )}
-                </Menu.Item>
-              ) : (
+              item.items ? (
                 <SubMenu key={item.key} icon={item.icon} title={item.title}>
                   {item.items.map((subItem) =>
-                    !subItem.items ? (
-                      <Menu.Item key={subItem.key} icon={subItem.icon}>
-                        <NavLink 
-                          to={subItem.path} 
-                          className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
-                        >
-                          {subItem.title}
-                        </NavLink>
-                      </Menu.Item>
-                    ) : (
+                    subItem.items ? (
                       <SubMenu key={subItem.key} icon={subItem.icon} title={subItem.title}>
                         {subItem.items.map((subSubItem) => (
                           <Menu.Item key={subSubItem.key} icon={subSubItem.icon}>
-                            <NavLink 
-                              to={subSubItem.path} 
-                              className={({ isActive }) => (isActive ? 'ant-menu-item-selected' : '')}
-                            >
-                              {subSubItem.title}
-                            </NavLink>
+                            <NavLink to={subSubItem.path}>{subSubItem.title}</NavLink>
                           </Menu.Item>
                         ))}
                       </SubMenu>
+                    ) : (
+                      <Menu.Item key={subItem.key} icon={subItem.icon}>
+                        <NavLink to={subItem.path}>{subItem.title}</NavLink>
+                      </Menu.Item>
                     )
                   )}
                 </SubMenu>
+              ) : (
+                <Menu.Item
+                  key={item.key}
+                  icon={item.icon}
+                  onClick={() => handleHideMenu()}
+                >
+                  {item.title === "Logout" ? (
+                    <div onClick={handleLogout}>
+                      <NavLink to={item.path}>{item.title}</NavLink>
+                    </div>
+                  ) : (
+                    <NavLink to={item.path}>{item.title}</NavLink>
+                  )}
+                </Menu.Item>
               )
             )}
           </Menu>
-          <ModalCartera modal1Visible={modal1Visible} setModal1Visible={setModal1Visible} />
         </div>
       )}
     </>

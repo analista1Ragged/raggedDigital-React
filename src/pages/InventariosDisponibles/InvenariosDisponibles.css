@@ -229,6 +229,7 @@ body {
 .multi-selector {
   width: 100%; /* Asegura que tengan el mismo ancho */
   margin-bottom: 0; /* Remueve cualquier margen inferior que pueda causar desalineación */
+  
 }
   
 .inline-components2 {
@@ -237,5 +238,13 @@ body {
   gap: 10px; /* Espaciado opcional entre los componentes */
 }
 
+/* CampoTexto.css */
+.campo-texto {
+  padding: 8px;
+  font-size: 16px;
+}
 
+.input-largo {
+  height: 50px; /* Puedes ajustar este valor para aumentar el largo del input */
+}
 

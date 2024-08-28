@@ -319,7 +319,7 @@ const initialFiltersCartera = useMemo(() => ({
     </h3>
     <form onSubmit={handleConsulta}>
       <div className="container">
-        <div className="row">
+        <div className="row-3">
           <MultiSelector 
             options={listaClientes}
             opc='0'
@@ -343,21 +343,23 @@ const initialFiltersCartera = useMemo(() => ({
           />
         </div>
         <div className="container">
-          <div className="inline-components2">
-            <SeleccionarFecha 
-              onDate1Change={handleDate1Change}
-              onDate2Change={handleDate2Change}
-              className="component-item" 
-            />
-            <BuscarButton 
-              onClick={handleConsulta}
-              className="component-item" 
-            />
-            <BuscarLimpiar 
-              onClick={handleButtonClick}
-              className="component-item" 
-            />
-          </div>
+        <div className="row">
+            <div className="inline-components2">
+              <SeleccionarFecha 
+                onDate1Change={handleDate1Change}
+                onDate2Change={handleDate2Change}
+                className="component-item" 
+              />
+              <BuscarButton 
+                onClick={handleConsulta}
+                className="component-item" 
+              />
+              <BuscarLimpiar 
+                onClick={handleButtonClick}
+                className="component-item" 
+              />
+            </div>
+          </div>  
         </div>
       </div>
     </form>
