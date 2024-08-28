@@ -48,7 +48,6 @@ const InventariosDisponibles = () => {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [total,setTotal] = useState([]);
   const [valorCampo, setValorCampo] = useState('');
   const [listaColeccion, setListaColeccion] = useState([]);
   const [listaColor, setListaColor] = useState([]);
@@ -56,6 +55,7 @@ const InventariosDisponibles = () => {
   const [selectedColecciones, setSelectedColecciones] = useState([]);
   const [selectedColores, setSelectedColores] = useState([]);
   const [selectedLineas, setSelectedLineas] = useState([]);
+
   
   const manejarActualizacionValor = (nuevoValor) => {
     setValorCampo(nuevoValor);
@@ -213,6 +213,8 @@ const initialFiltersCartera = useMemo(() => ({
     setSelectedColecciones([]);
     setSelectedLineas([]);
     setSelectedColores([]);
+
+
   };
   
   // Función para limpiar los campos de fecha
@@ -273,17 +275,18 @@ const initialFiltersCartera = useMemo(() => ({
         </div>
           <div className="container">
             <div className="row">
-              <CampoTexto
-                titulo="Ingrese referencias separadas por coma"
-                placeholder="PF32111310,PF31310669..."
-                onValorCambio={manejarActualizacionValor}
-              />  
+            <CampoTexto
+              placeholder="Ingrese referencias: PF32111310,PF31310669..."
+              onValorCambio={manejarActualizacionValor}
+              className="input-largo" // Clase para aumentar el largo del input
+            />
+            
             </div>
             <div className="inline-components2">
               <BuscarButton 
                 onClick={handleConsulta}
                 className="component-item" 
-              />
+              /> 
               <BuscarLimpiar 
                 onClick={handleButtonClick}
                 className="component-item" 

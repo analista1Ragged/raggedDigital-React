@@ -237,5 +237,13 @@ body {
   gap: 10px; /* Espaciado opcional entre los componentes */
 }
 
+/* CampoTexto.css */
+.campo-texto {
+  padding: 8px;
+  font-size: 16px;
+}
 
+.input-largo {
+  height: 50px; /* Puedes ajustar este valor para aumentar el largo del input */
+}
 
