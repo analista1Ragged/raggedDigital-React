@@ -13,7 +13,7 @@ const CampoTexto = ({ placeholder = 'Escribe aquí...', titulo, tipo = 'text', o
   };
 
   return (
-    <div className="campo-texto">
+    <div className="campo-texto2">
       <label>{titulo}</label>
       <input
         placeholder={placeholder}

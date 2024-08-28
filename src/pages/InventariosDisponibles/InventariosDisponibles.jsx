@@ -271,15 +271,18 @@ const initialFiltersCartera = useMemo(() => ({
               />
           </div>
         </div>
-          <div className="container">
+        </div>
+          <div className="container2">
             <div className="row">
+              <div className='col'>
               <CampoTexto
               
                 placeholder="Ingrese referencias PF32111310,PF31310669..."
                 onValorCambio={manejarActualizacionValor}
-              />  
-            </div>
-            <div className="inline-components2">
+              />
+              </div>
+              <div className='col'> 
+              <div className="inline-components2">
               <BuscarButton 
                 onClick={handleConsulta}
                 className="component-item" 
@@ -288,9 +291,12 @@ const initialFiltersCartera = useMemo(() => ({
                 onClick={handleButtonClick}
                 className="component-item" 
               />
+              </div> 
+              </div>
             </div>
+            
           </div>
-      </div>
+      
     </form>
 
     {/* Contenedor con scroll horizontal */}
