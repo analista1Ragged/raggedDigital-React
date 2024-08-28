@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import FilterRowInventarios from '../../components/FilterRow/FilterRowInventarios.jsx';
 import CampoTexto from '../../components/CampoTexto/CampoTextoReferencia.jsx';
-
+import Menu2Botones from '../../components/Menu3Botones/Menu2Botones.jsx';
 
 const transformData = (list, handleIconClick) => {
   if (!Array.isArray(list)) {
@@ -298,7 +298,7 @@ const initialFiltersCartera = useMemo(() => ({
           </div>
       
     </form>
-
+    <Menu2Botones marca={excel} />
     {/* Contenedor con scroll horizontal */}
     <div className="tabla-container">
       <div className="tabla-scroll">

@@ -39,7 +39,7 @@
 
 .ticket-table th {
   background-color: #343a40;
-  text-align: center;
+  text-align: right;
 }
 
 .ticket-table tr:nth-child(even) {
@@ -62,4 +62,9 @@ section {
 
 .paginacion {
   margin-top: 20px;
+}
+
+.descripcion-column {
+  text-align: left !important;
+  /* Puedes agregar más estilos si es necesario */
 }

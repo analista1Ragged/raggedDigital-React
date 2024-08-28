@@ -361,7 +361,7 @@ const initialFiltersCartera = useMemo(() => ({
         </div>
       </div>
     </form>
-
+    <Menu2Botones marca={excel} />
     {/* Contenedor con scroll horizontal */}
     <div className="tabla-container">
       <div className="tabla-scroll">
