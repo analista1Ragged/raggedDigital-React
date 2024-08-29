@@ -221,7 +221,7 @@ body {
 .row {
   display: flex;
   align-items: center; /* Alinea verticalmente */
-  justify-content: space-between; /* Opcional: distribuye espacio entre los selectores */
+ 
 
 }
 

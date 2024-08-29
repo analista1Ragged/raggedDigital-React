@@ -1,4 +1,5 @@
 .campo-texto{
+
     margin: 24px;
     font-family: 'Montserrat', sans-serif;
 }
@@ -25,7 +26,8 @@
 }
 
 .campo-texto2{
-    margin: 24px;
+    width: 325px;
+    margin: 10px;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -39,7 +41,7 @@
 }
 
 .campo-texto2 input{
-    width: 150%;
+    width: 100%;
     background-color: #FFFFFF;
     box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.06);
     border:none;

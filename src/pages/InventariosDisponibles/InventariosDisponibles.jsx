@@ -281,30 +281,33 @@ const initialFiltersCartera = useMemo(() => ({
           </div>
         </div>
         </div>
-          <div className="container2">
+          <div className="container">
             <div className="multi-selector">
               <div className="row">
                 <div className='col'>
-                  <CampoTexto
-                    placeholder="Ingrese ref: PF32111310,PF31310669..."
-                    onValorCambio={manejarActualizacionValor}
-                  />
+                    <div className="inline-components2">
+
+                            <CampoTexto
+                              placeholder="Ingrese ref: PF32111310,PF31310669..."
+                              onValorCambio={manejarActualizacionValor}
+                            />
+          
+                      <BuscarButton 
+                        onClick={handleConsulta}
+                        className="component-item" 
+                      /> 
+                      <BuscarLimpiar 
+                        onClick={handleButtonClick}
+                        className="component-item" 
+                      />
+                   </div>
                 </div>
-                <div className='col'> 
-                  <div className="inline-components2">
-                  <BuscarButton 
-                    onClick={handleConsulta}
-                    className="component-item" 
-                  /> 
-                  <BuscarLimpiar 
-                    onClick={handleButtonClick}
-                    className="component-item" 
-                  />
-                  </div> 
-                </div>
-            </div>
+              </div>
+               
+             
             </div>
           </div>
+         
     </form>
     <Menu2Botones marca={excel} />
     {/* Contenedor con scroll horizontal */}
