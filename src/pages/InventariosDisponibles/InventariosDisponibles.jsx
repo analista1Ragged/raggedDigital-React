@@ -213,8 +213,15 @@ const initialFiltersCartera = useMemo(() => ({
     setSelectedColecciones([]);
     setSelectedLineas([]);
     setSelectedColores([]);
-
-
+    setFiltersInventarios({
+      coleccion: '',
+      referencia: '',
+      linea: '',
+      descripcion: '',
+      color: '',
+      talla: '',
+      cantDisponible: ''
+    });
   };
   
   // Función para limpiar los campos de fecha
@@ -275,29 +282,29 @@ const initialFiltersCartera = useMemo(() => ({
         </div>
         </div>
           <div className="container2">
-            <div className="row">
-              <div className='col'>
-              <CampoTexto
-                placeholder="Ingrese referencias PF32111310,PF31310669..."
-                onValorCambio={manejarActualizacionValor}
-              />
-              </div>
-              <div className='col'> 
-              <div className="inline-components2">
-              <BuscarButton 
-                onClick={handleConsulta}
-                className="component-item" 
-              /> 
-              <BuscarLimpiar 
-                onClick={handleButtonClick}
-                className="component-item" 
-              />
-              </div> 
-              </div>
+            <div className="multi-selector">
+              <div className="row">
+                <div className='col'>
+                  <CampoTexto
+                    placeholder="Ingrese ref: PF32111310,PF31310669..."
+                    onValorCambio={manejarActualizacionValor}
+                  />
+                </div>
+                <div className='col'> 
+                  <div className="inline-components2">
+                  <BuscarButton 
+                    onClick={handleConsulta}
+                    className="component-item" 
+                  /> 
+                  <BuscarLimpiar 
+                    onClick={handleButtonClick}
+                    className="component-item" 
+                  />
+                  </div> 
+                </div>
             </div>
-            
+            </div>
           </div>
-      
     </form>
     <Menu2Botones marca={excel} />
     {/* Contenedor con scroll horizontal */}
@@ -315,7 +322,7 @@ const initialFiltersCartera = useMemo(() => ({
               <th scope="col">Talla</th>
               <th scope="col">Cant Disponible</th>
             </tr>
-            <FilterRowInventarios filtersInventario={filtersInventario} handleFilter={handleFilter} />
+            <FilterRowInventarios filtersInventario={filtersInventario} handleFilter={handleFilter} handleButtonClick={handleButtonClick}/>
           </thead>
           <tbody>
             {currentItems.map((item, index) => (
@@ -327,15 +334,13 @@ const initialFiltersCartera = useMemo(() => ({
                 <td>{item.descripcion}</td>
                 <td>{item.color}</td>
                 <td>{item.talla}</td>
-                <td>{item.cantDisponible}</td>
-                
+                <td>{item.cantDisponible}</td>                
               </tr>
             ))}
           </tbody>
         </table>
       </div>
     </div>
-
     <div className="paginacion">
       <Pagination
         current={currentPage}

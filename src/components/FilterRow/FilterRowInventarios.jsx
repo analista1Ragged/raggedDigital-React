@@ -1,5 +1,5 @@
 import React from 'react';
-
+// Este componente recibe dos props: filtersInventario y handleFilter
 const FilterRowInventarios = ({ filtersInventario, handleFilter}) => {
   const columns = ['coleccion', 'referencia','linea','descripcion','color', 'talla','cantDisponible'];
 
@@ -13,7 +13,7 @@ const FilterRowInventarios = ({ filtersInventario, handleFilter}) => {
             className="form-control"
             placeholder={` ${column}`}
             name={column}
-            value={filtersInventario[column]}
+            value={filtersInventario[column]} //el valor correspondiente es el texto que el usuario ha ingresado en el campo de filtro para esa columna
             onChange={handleFilter}
           />
         </th>

@@ -36,11 +36,9 @@ body {
   .inline-components2 {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
-    flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
-    gap: 105px;
-    justify-content: space-between; 
-    
+    justify-content: flex-start;
+    gap: 10px;
+    flex-wrap: wrap; /* Permite que los botones y el campo se ajusten correctamente */
   }
   
   
@@ -224,6 +222,7 @@ body {
   display: flex;
   align-items: center; /* Alinea verticalmente */
   justify-content: space-between; /* Opcional: distribuye espacio entre los selectores */
+
 }
 
 .multi-selector {

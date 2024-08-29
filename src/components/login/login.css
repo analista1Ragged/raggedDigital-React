@@ -23,7 +23,7 @@
 }
 
 .container {
-    display: flex;
+    /*display: flex;*/
     flex-wrap: wrap;
     width: 100%;
     background-color: #373738;
