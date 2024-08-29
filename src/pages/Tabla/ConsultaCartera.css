@@ -183,6 +183,7 @@ section {
 }
 
 .container {
+  text-align: left !important;
   background-color: transparent;
 }
 
