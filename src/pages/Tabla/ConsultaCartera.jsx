@@ -284,6 +284,18 @@ const initialFiltersCartera = useMemo(() => ({
     setSelectedClientes([]);
     setSelectedNombres([]); // Establece el estado en un array vacío para limpiar las selecciones setSelectorValue
     setSelectedFacturas([]);
+    setFiltersCartera({
+      documento: '',
+      nombre: '',
+      fecha: '',
+      nroFactura:'',
+      valorFactura: '',
+      fechaVenc: '',
+      diasCart: '',
+      valorAbono: '',
+      saldoFactura: '',
+      estado: ''
+    });
     
 
   };
@@ -383,7 +395,7 @@ const initialFiltersCartera = useMemo(() => ({
               <th scope="col">Estado</th>
               <th scope="col">Ver Detalle NC</th>
             </tr>
-            <FilterRowCartera filtersCartera={filtersCartera} handleFilter={handleFilter} />
+            <FilterRowCartera filtersCartera={filtersCartera} handleFilter={handleFilter} handleButtonClick={handleButtonClick}/>
           </thead>
           <tbody>
             {currentItems.map((item, index) => (
