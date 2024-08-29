@@ -25,7 +25,7 @@
   width: 100%;
   height: calc(1.2em + .75rem + 2px);
   padding: .375rem .75rem;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.5;
   color: #495057;
   background-color: #fff;
@@ -95,4 +95,13 @@
     align-items: center;
     justify-content: center;
   }
+}
+
+#formBuscar .me-3 {
+  margin-right: 1rem;
+}
+
+#formBuscar .flex-grow-1 {
+  flex-grow: 1;
+  width: 50%;
 }

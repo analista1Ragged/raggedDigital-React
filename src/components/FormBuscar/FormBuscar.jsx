@@ -92,44 +92,44 @@ const FormBuscar = ({ setData, nuevoNombre, nuevoMarca }) => {
   };
 
   return (
-    <form id="formBuscar" className="mb-3 mt-3" autoComplete="off">
-      <div className="row justify-content-between">
-        <div className="col-12 col-md-4">
-          <label htmlFor="marca" className="label-spacing">Capsula</label>
-          <Select
-            showSearch
-            value={selectedValue}
-            placeholder="Selecciona una Capsula"
-            onChange={handleSelectChange}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().includes(input.toLowerCase())
-            }
-            className="form-control ant-select-fixed-width" // Añade esta clase
-          >
-            {miData.map((fila, index) => (
-              <Option key={index} value={fila[1]}>
-                {fila[0]}
-              </Option>
-            ))}
-          </Select>
-        </div>
-        <div className="col-12 col-md-4">
-          <label htmlFor="nombre" className="label-spacing">Referencia (opcional)</label>
-          <input
-            type="text"
-            name="nombre"
-            className="form-control"
-            placeholder="Nombre del producto..."
-            onChange={handleNombreChange}
-          />
-        </div>
-        <div className="col-12 col-md-2 d-flex align-items-end justify-content-center">
-          <div>
-            <BuscarButton onClick={BuscarClick} />
-          </div>
-        </div>
-      </div>
-    </form>
+<form id="formBuscar" className="mb-3 mt-3" autoComplete="off">
+  <div className="row align-items-end"> {/* Alineación al final de la fila */}
+    <div className="col-12 col-md-5">
+      <label htmlFor="marca" className="label-spacing">Capsula</label>
+      <Select
+        showSearch
+        value={selectedValue}
+        placeholder="Selecciona una Capsula"
+        onChange={handleSelectChange}
+        filterOption={(input, option) =>
+          option.children.toLowerCase().includes(input.toLowerCase())
+        }
+        className="w-100" // Asegura que el select ocupe el 100% del ancho disponible
+      >
+        {miData.map((fila, index) => (
+          <Option key={index} value={fila[1]}>
+            {fila[0]}
+          </Option>
+        ))}
+      </Select>
+    </div>
+    <div className="col-12 col-md-5">
+      <label htmlFor="nombre" className="label-spacing">Referencia (opcional)</label>
+      <input
+        type="text"
+        name="nombre"
+        className="form-control"
+        placeholder="Nombre del producto..."
+        onChange={handleNombreChange}
+      />
+    </div>
+    <div className="col-12 col-md-2 d-flex justify-content-center justify-content-md-end mt-3 mt-md-0">
+      <BuscarButton onClick={BuscarClick} />
+    </div>
+  </div>
+</form>
+
+
   );
 };
 
