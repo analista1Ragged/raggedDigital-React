@@ -96,22 +96,25 @@ const FormBuscar = ({ setData, nuevoNombre, nuevoMarca }) => {
   <div className="row align-items-end"> {/* Alineación al final de la fila */}
     <div className="col-12 col-md-5">
       <label htmlFor="marca" className="label-spacing">Capsula</label>
-      <Select
-        showSearch
-        value={selectedValue}
-        placeholder="Selecciona una Capsula"
-        onChange={handleSelectChange}
-        filterOption={(input, option) =>
-          option.children.toLowerCase().includes(input.toLowerCase())
-        }
-        className="w-100" // Asegura que el select ocupe el 100% del ancho disponible
-      >
-        {miData.map((fila, index) => (
-          <Option key={index} value={fila[1]}>
-            {fila[0]}
-          </Option>
-        ))}
-      </Select>
+      <div>
+        <Select
+          style={{ width: 350 }}
+          showSearch
+          value={selectedValue}
+          placeholder="Selecciona una Capsula"
+          onChange={handleSelectChange}
+          filterOption={(input, option) =>
+            option.children.toLowerCase().includes(input.toLowerCase())
+          }
+          className="w-100" // Asegura que el select ocupe el 100% del ancho disponible
+        >
+          {miData.map((fila, index) => (
+            <Option key={index} value={fila[1]}>
+              {fila[0]}
+            </Option>
+          ))}
+        </Select>
+        </div>
     </div>
     <div className="col-12 col-md-5">
       <label htmlFor="nombre" className="label-spacing">Referencia (opcional)</label>
@@ -134,3 +137,5 @@ const FormBuscar = ({ setData, nuevoNombre, nuevoMarca }) => {
 };
 
 export default FormBuscar;
+
+

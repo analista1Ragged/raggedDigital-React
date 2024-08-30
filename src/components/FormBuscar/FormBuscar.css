@@ -105,3 +105,7 @@
   flex-grow: 1;
   width: 50%;
 }
+
+.select-capsula {
+  width: 350px;
+}
