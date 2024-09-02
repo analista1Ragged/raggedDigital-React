@@ -47,4 +47,14 @@
     text-align: center; /* Centra el texto del placeholder */
     color: #888; /* Opcional: Cambia el color del texto del placeholder */
 }
-
+.left {
+    font-size: 24px; /* Aumenta el tamaño del texto */
+    padding: 12px 24px; /* Aumenta el espacio entre el texto y el borde del botón */
+    
+  }
+  .button-large {
+    font-size: 24px;
+    padding: 12px 24px;
+    
+  }
+  

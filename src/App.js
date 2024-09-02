@@ -17,6 +17,7 @@ import InventariosDisponibles from './pages/InventariosDisponibles/InventariosDi
 import OlvidasteContrasena from './pages/OlvidasteContrasena'
 import CambiarContraseña from './pages/CambiarContraseña';
 
+
 export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:5000'
 //export const urlapi = 'http://localhost:5000'
 
@@ -46,8 +47,11 @@ function App() {
 
   // Función para verificar si se debe mostrar el navbar
   const shouldShowNavbar = () => {
-    return location.pathname !== '/Login';
+    return location.pathname !== '/Login' && location.pathname !== '/OlvidasteContrasena';
+
   };
+
+  
 
   return (
     <div className="App">
@@ -170,11 +174,11 @@ function App() {
           } />
         } />
         <Route path='/OlvidasteContrasena' element={
-          <PrivateRoute element={
+
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
               <OlvidasteContrasena />
             </div>
-          } />
+          
           
         } />
         <Route path='/CambiarContraseña' element={

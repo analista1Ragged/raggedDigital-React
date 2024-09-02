@@ -157,7 +157,7 @@ const menuItems = [
     key: "96",
     title: "Cambiar Contraseña",
     icon: <PiPasswordFill />,
-    path: "/ecommerce/Ragged",
+    path: "/CambiarContraseña",
   },
   {
     key: "97",

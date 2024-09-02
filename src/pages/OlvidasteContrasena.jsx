@@ -42,7 +42,7 @@ const OlvidasteContrasena = () => {
 
     return (
         <section className="forgot-password-form">
-            <h2>¿Olvidaste tu contraseña?</h2>
+            <a href="/RaggedDigital/Login" className="left button-large" title="Volver"><i className="bi bi-arrow-left-circle"></i></a><h2>¿Olvidaste tu contraseña?</h2>
             <p>Introduce tu correo electrónico para recibir un enlace de recuperación.</p>
             <form onSubmit={handleSubmit}>
                 <div>
