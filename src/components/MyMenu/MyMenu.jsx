@@ -6,7 +6,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill, FaCheck } from "react-icons/fa";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
-import { PiEyeSlashFill } from "react-icons/pi";
+import { PiEyeSlashFill, PiPasswordFill } from "react-icons/pi";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const { SubMenu } = Menu;
@@ -151,6 +151,12 @@ const menuItems = [
     key: "9",
     title: "Manufactura",
     icon: <IoCubeOutline />,
+    path: "/ecommerce/Ragged",
+  },
+  {
+    key: "96",
+    title: "Cambiar Contraseña",
+    icon: <PiPasswordFill />,
     path: "/ecommerce/Ragged",
   },
   {

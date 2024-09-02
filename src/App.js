@@ -14,9 +14,11 @@ import Tabla from './pages/Tabla/ConsultaCartera';
 import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
 import Error404 from './components/Error404/Error404';
 import InventariosDisponibles from './pages/InventariosDisponibles/InventariosDisponibles';
+import OlvidasteContrasena from './pages/OlvidasteContrasena'
+import CambiarContraseña from './pages/CambiarContraseña';
 
-//export const urlapi = 'http://serverrgd.eastus.cloudapp.azure.com:5000'
-export const urlapi = 'http://localhost:5000'
+export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:5000'
+//export const urlapi = 'http://localhost:5000'
 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = sessionStorage.getItem('log');
@@ -59,7 +61,6 @@ function App() {
         } />
         <Route path='/Home' element={
            <PrivateRoute element={
-          
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <Home />
           </div>
@@ -168,7 +169,25 @@ function App() {
             </div>
           } />
         } />
+        <Route path='/OlvidasteContrasena' element={
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <OlvidasteContrasena />
+            </div>
+          } />
+          
+        } />
+        <Route path='/CambiarContraseña' element={
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <CambiarContraseña />
+            </div>
+          } />
+          
+        } />
+        
       </Routes>
+      
       {shouldShowNavbar() && <Footer />}
     </div>
   );
@@ -176,8 +195,8 @@ function App() {
 
 function AppWrapper() {
   return (
-    //<BrowserRouter basename="/RaggedDigital">
-    <BrowserRouter >
+
+    <BrowserRouter basename="/RaggedDigital">
       <AuthProvider>
         <App />
       </AuthProvider>
