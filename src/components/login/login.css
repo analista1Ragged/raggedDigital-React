@@ -118,3 +118,30 @@ image-container TDiggital{
         order: -1; /* Mueve la imagen arriba del formulario */
     }
 }
+
+.forgot-password {
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+    margin-top: 10px;
+    display: block;
+  }
+  
+  .forgot-password:hover {
+    color: #333;
+    text-decoration: underline;
+  }
+
+  .forgot-password {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    color: #333; /* Puedes cambiar el color si deseas */
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}

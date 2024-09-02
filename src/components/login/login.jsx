@@ -37,7 +37,6 @@ const Login = (props) => {
 
             if (response.data.message === "success") {
                 sessionStorage.setItem('log', usuario);
-                console.log('auth:',response.data.text);
                 sessionStorage.setItem('auth', JSON.stringify(response.data.text));
                 setMostrarExito(true);
                 setTimeout(() => {
@@ -46,14 +45,12 @@ const Login = (props) => {
                     window.location.reload();
                 }, 1500);
 
-                // Limpiar los campos de usuario y contraseña
                 actualizarNombre("");
                 actualizarContrasena("");
             } else {
                 setMostrarError(true);
                 setTimeout(() => {
                     setMostrarError(false);
-                    // También limpia los campos en caso de error
                     actualizarNombre("");
                     actualizarContrasena("");
                 }, 1500);
@@ -63,7 +60,6 @@ const Login = (props) => {
             console.error("Error en el login:", error);
             setTimeout(() => {
                 setMostrarError(false);
-                // Limpiar los campos en caso de excepción
                 actualizarNombre("");
                 actualizarContrasena("");
             }, 1500);
@@ -94,8 +90,11 @@ const Login = (props) => {
                         required
                         valor={contrasena}
                         actualizarValor={actualizarContrasena}
-                        tipo="password" // Asegura que el tipo sea 'password' para ocultar la entrada
+                        tipo="password"
                     />
+                    <div className="forgot-password">
+                        <a href="RaggedDigital/OlvidasteContrasena">¿Olvidaste tu contraseña?</a>
+                    </div>
                     {mostrarExito && (
                         <Alert
                             message="¡Inicio de sesión exitoso!"
