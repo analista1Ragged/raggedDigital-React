@@ -57,3 +57,17 @@
     padding: 12px 24px;
     
   }
+
+  .campo-contraseña {
+    position: relative;
+  }
+  
+  .campo-contraseña .boton-ojo {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }

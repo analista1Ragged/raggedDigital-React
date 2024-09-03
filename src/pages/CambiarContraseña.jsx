@@ -1,77 +1,118 @@
-import React, { useState , useEffect } from "react";
-import { Alert } from 'antd';
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "./CambiarContraseña.css";
-import CampoTexto from "../components/CampoTexto/CampoTextoReferencia";
+import CampoTexto from "../components/CampoTexto";
 import Boton from "../components/Boton/Boton";
+import { useNavigate } from "react-router-dom";
+import { Alert } from 'antd'; 
+import 'antd/dist/reset.css'; 
+import { AuthContext } from "../context/AuthContext"; 
 import CampoContraseña from "../components/CampoTexto/CampoContraseña";
-const CambiarContrasena = () => {
-    const [email, setEmail] = useState("");
-    const [currentPassword, setCurrentPassword] = useState("");
-    const [message, setMessage] = useState(null);
-    const [error, setError] = useState(null);
+import { urlapi } from '../App';
+import { Link } from 'react-router-dom';
 
-    const handleSubmit = async (e) => {
+const CambiarContraseña = (props) => {
+    const [usuario, actualizarNombre] = useState("");
+    const [contrasena, actualizarContrasena] = useState("");
+    const [mostrarExito, setMostrarExito] = useState(false);
+    const [mostrarError, setMostrarError] = useState(false);
+    const [randomNumber, setRandomNumber] = useState(null);
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
+
+    useEffect(() => {
+        const randomNum = Math.floor(Math.random() * 4) + 1;
+        setRandomNumber(randomNum);
+    }, []);
+
+
+    const manejarEnvio = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/RaggedDigital/OlvidasteContrasena', { email });
-            if (response.data.success) {
-                setMessage("Se ha enviado un enlace de recuperación a tu correo electrónico.");
-                setError(null);
+            const response = await axios.post(urlapi+'/logon', {
+                usuario: usuario,
+                contrasena: contrasena
+            });
+
+            if (response.data.message === "success") {
+                sessionStorage.setItem('log', usuario);
+                sessionStorage.setItem('auth', JSON.stringify(response.data.text));
+                setMostrarExito(true);
+                setTimeout(() => {
+                    setMostrarExito(false);
+                    navigate("/Home");
+                    window.location.reload();
+                }, 1500);
+
+                actualizarNombre("");
+                actualizarContrasena("");
             } else {
-                setError("El correo electrónico no está registrado.");
-                setMessage(null);
+                setMostrarError(true);
+                setTimeout(() => {
+                    setMostrarError(false);
+                    actualizarNombre("");
+                    actualizarContrasena("");
+                }, 1500);
             }
         } catch (error) {
-            setError("Hubo un error al enviar el enlace de recuperación.");
-            setMessage(null);
+            setMostrarError(true);
+            console.error("Error en el login:", error);
+            setTimeout(() => {
+                setMostrarError(false);
+                actualizarNombre("");
+                actualizarContrasena("");
+            }, 1500);
         }
     };
 
-    // useEffect para ocultar el mensaje después de 3 segundos
-    useEffect(() => {
-        if (message || error) {
-            const timer = setTimeout(() => {
-                setMessage(null);
-                setError(null);
-            }, 3000); // 3000 milisegundos = 3 segundos
-
-            // Limpia el timeout si el componente se desmonta o el estado cambia
-            return () => clearTimeout(timer);
-        }
-    }, [message, error]);
-
     return (
-        <section className="forgot-password-form">
-            <a href="/RaggedDigital/Home" className="left button-large" title="Volver"><i className="bi bi-arrow-left-circle"></i></a><h2>Cambiar contraseña de acceso.</h2>
-
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <CampoTexto
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Introduce tu correo electrónico:"
-                    />
-                    {/* Campo para ingresar la contraseña actual */}
-                    <CampoTexto
-                        type="password"
-                        name="current_password"
-                        placeholder="Ingrese su contraseña actual:"
-                        value={currentPassword}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
+        <section className="formulario">
+            <form onSubmit={manejarEnvio}>
+                <div className="form-container">
+                    <h2>Cambiar Contraseña de acceso</h2>
+                    {/* <CampoTexto 
+                        placeholder="Ingresar Usuario:"
                         required
+                        valor={usuario}
+                        actualizarValor={actualizarNombre}
+                    />*/}
+                    <CampoContraseña
+                        placeholder="Ingrese su contraseña nueva:"
+                        required
+                        valor={contrasena}
+                        actualizarValor={actualizarContrasena}
+                        tipo="password"
                     />
+                    <CampoContraseña
+                        placeholder="Confirme su contraseña nueva:"
+                        required
+                        valor={contrasena}
+                        actualizarValor={actualizarContrasena}
+                        tipo="password"
+                    />
+                    <div className="forgot-password">
+                    </div>
+                    {mostrarExito && (
+                        <Alert
+                            message="¡Su cambio de contraseña ha sido exitosa!"
+                            type="success"
+                            showIcon
+                        />
+                    )}
+                    {mostrarError && (
+                        <Alert
+                            message="Error, las contraseñas no coinciden"
+                            type="error"
+                            showIcon
+                        />
+                    )}
+                    <Boton>
+                        Cambiar Contraseña
+                    </Boton>
                 </div>
-                <Boton type="submit" texto="Enviar">
-                Cambiar Contraseña
-                </Boton>
             </form>
-            {message && <Alert message={message} type="success" showIcon />}
-            {error && <Alert message={error} type="error" showIcon />}
         </section>
     );
 };
 
-export default CambiarContrasena;
-
+export default CambiarContraseña;
