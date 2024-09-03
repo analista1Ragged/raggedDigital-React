@@ -274,7 +274,7 @@ const MyMenu = () => {
             style={{ backgroundColor: "#373738", fontSize: "16px" }}
           >
             <NavLink to="/Home">
-              <img src={require("../../assets/Images/logo.png")} alt="logo" />
+              <img src={require("../../assets/Images/logo.png")} alt="logo" className="logo"/>
             </NavLink>
             {filteredMenuItems.map((item) =>
               item.items ? (
