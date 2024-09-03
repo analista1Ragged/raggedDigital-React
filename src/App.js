@@ -14,12 +14,12 @@ import Tabla from './pages/Tabla/ConsultaCartera';
 import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
 import Error404 from './components/Error404/Error404';
 import InventariosDisponibles from './pages/InventariosDisponibles/InventariosDisponibles';
-import OlvidasteContrasena from './pages/OlvidasteContrasena'
+import OlvidasteContrasena from './pages/OlvidasteContrasena';
 import CambiarContraseña from './pages/CambiarContraseña';
 
 
-export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:5000'
-//export const urlapi = 'http://localhost:5000'
+//export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:5000'
+export const urlapi = 'http://localhost:5000'
 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = sessionStorage.getItem('log');

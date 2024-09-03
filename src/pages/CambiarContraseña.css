@@ -1,0 +1,59 @@
+.forgot-password-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    min-height: 100vh; /* Ocupa toda la altura de la vista */
+    text-align: center; /* Centra el texto */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.forgot-password-form h2 {
+    margin-bottom: 16px;
+}
+
+.forgot-password-form p {
+    margin-bottom: 24px;
+}
+
+.forgot-password-form form {
+    width: 100%;
+    max-width: 400px; /* Ajusta el ancho máximo del formulario */
+}
+
+.forgot-password-form div {
+    margin-bottom: 16px;
+}
+
+.forgot-password-form label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.forgot-password-form .ant-alert {
+    margin-top: 20px;
+}
+
+/* Estilo para el input */
+.campo-texto {
+    width: 100%; /* Ajusta el ancho según sea necesario */
+    padding: 10px; /* Añade un poco de relleno para el campo de entrada */
+    box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho */
+}
+
+/* Estilo para centrar el placeholder */
+.campo-texto::placeholder {
+    text-align: center; /* Centra el texto del placeholder */
+    color: #888; /* Opcional: Cambia el color del texto del placeholder */
+}
+.left {
+    font-size: 24px; /* Aumenta el tamaño del texto */
+    padding: 12px 24px; /* Aumenta el espacio entre el texto y el borde del botón */
+    
+  }
+  .button-large {
+    font-size: 24px;
+    padding: 12px 24px;
+    
+  }
