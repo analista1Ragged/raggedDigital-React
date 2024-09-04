@@ -10,6 +10,7 @@ import TDiggital from '../../assets/Images/TDiggital.png';
 import { AuthContext } from "../../context/AuthContext"; 
 import CampoContraseña from "../CampoTexto/CampoContraseña";
 import { urlapi } from '../../App';
+import { Link } from 'react-router-dom';
 
 const Login = (props) => {
     const [usuario, actualizarNombre] = useState("");
@@ -93,7 +94,7 @@ const Login = (props) => {
                         tipo="password"
                     />
                     <div className="forgot-password">
-                        <a href="RaggedDigital/OlvidasteContrasena">¿Olvidaste tu contraseña?</a>
+                    <Link to="/OlvidasteContrasena" target="_blank" rel="noopener noreferrer">¿Olvidaste tu contraseña?</Link>
                     </div>
                     {mostrarExito && (
                         <Alert

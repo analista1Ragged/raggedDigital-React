@@ -14,7 +14,7 @@ function Test() {
         event.preventDefault();
         try {
             // Llama a tu función aquí. Por ejemplo, una solicitud a tu API Flask
-            const response = await axios.get(`http://serverrgd.eastus.cloudapp.azure.com:5000/getApi/${inputValue}`);
+            const response = await axios.get(`http://serverrgd.eastus.cloudapp.azure.com:1000/RaggedDigitalAPI/getApi/${inputValue}`);
             setTableData([response.data]);  // Assuming the response data is an array or an object to be displayed in a table
         } catch (error) {
             console.error('Error al llamar a la función:', error);

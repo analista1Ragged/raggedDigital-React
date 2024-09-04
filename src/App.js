@@ -14,8 +14,9 @@ import Tabla from './pages/Tabla/ConsultaCartera';
 import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
 import Error404 from './components/Error404/Error404';
 import InventariosDisponibles from './pages/InventariosDisponibles/InventariosDisponibles';
-import OlvidasteContrasena from './pages/OlvidasteContrasena'
+import OlvidasteContrasena from './pages/OlvidasteContrasena';
 import CambiarContraseña from './pages/CambiarContraseña';
+import CampoSwitch from './components/CampoSwitch/CampoSwitch';
 
 export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
 //export const urlapi = 'https://localhost:5000'
@@ -46,8 +47,11 @@ function App() {
 
   // Función para verificar si se debe mostrar el navbar
   const shouldShowNavbar = () => {
-    return location.pathname !== '/Login';
+    return location.pathname !== '/Login' && location.pathname !== '/OlvidasteContrasena';
+
   };
+
+  
 
   return (
     <div className="App">
@@ -158,7 +162,7 @@ function App() {
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <InventariosDisponibles />
+            <CampoSwitch />
           </div>
         } />
         
@@ -170,11 +174,11 @@ function App() {
           } />
         } />
         <Route path='/OlvidasteContrasena' element={
-          <PrivateRoute element={
+
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
               <OlvidasteContrasena />
             </div>
-          } />
+          
           
         } />
         <Route path='/CambiarContraseña' element={
