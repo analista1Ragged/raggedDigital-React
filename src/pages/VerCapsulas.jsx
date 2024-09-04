@@ -14,10 +14,10 @@ const transformData = (list) => {
   }
   return list.map(item => ({
     referencia: item[2] || '',
-    descripcion: item[3] || '',
+    nombre: item[3] || '',
     categoria: item[4] || '',
     estado: item[5] || '',
-    desc: item[6] || ''//fue reemplazado por el campo descripción
+    descripcion: item[6] || ''//fue reemplazado por el campo descripción
   }));
 };
 
@@ -27,10 +27,10 @@ const TicketTable = () => {
   const [selectedNombre, setSelectedNombre] = useState('');
   const [filters, setFilters] = useState({
     referencia: '',
-    descripcion: '',
+    nombre: '',
     categoria: '',
     estado: '',
-    desc: '' //fue reemplazado por el campo descripción
+    descripcion: '' //fue reemplazado por el campo descripción
   });
   const [currentPage, setCurrentPage] = useState(1); // Estado para controlar la página actual
   const [pageSize, setPageSize] = useState(10); // Tamaño de página, ajusta según sea necesario
@@ -76,10 +76,10 @@ const TicketTable = () => {
   const currentItems = data
     .filter(item =>
       item.referencia.toLowerCase().includes(filters.referencia.toLowerCase()) &&
-      item.descripcion.toLowerCase().includes(filters.descripcion.toLowerCase()) &&
+      item.nombre.toLowerCase().includes(filters.nombre.toLowerCase()) &&
       item.categoria.toLowerCase().includes(filters.categoria.toLowerCase()) &&
       item.estado.toLowerCase().includes(filters.estado.toLowerCase()) &&
-      item.desc.toLowerCase().includes(filters.desc.toLowerCase()) //fue reemplazado por el campo descripción
+      item.descripcion.toLowerCase().includes(filters.descripcion.toLowerCase()) //fue reemplazado por el campo descripción
     )
     .slice(indexOfFirstItem, indexOfLastItem);
 
@@ -116,10 +116,10 @@ const TicketTable = () => {
               <tr key={index}>
                 <td>{indexOfFirstItem + index + 1}</td>
                 <td>{item.referencia}</td>
-                <td>{item.descripcion}</td>
+                <td>{item.nombre}</td>
                 <td>{item.categoria}</td>
                 <td>{item.estado}</td>
-                <td className="descripcion-column">{item.desc}</td> {/*fue reemplazado por el campo descripción*/}
+                <td className="descripcion-column">{item.descripcion}</td> {/*fue reemplazado por el campo descripción*/}
               </tr>
             ))}
           </tbody>
