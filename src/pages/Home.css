@@ -10,7 +10,7 @@
   .container {
     text-align: center;
     margin-top: 20px;
-    display: flex; /* Usa flexbox para crear un layout flexible */
+    /*display: flex; /* Usa flexbox para crear un layout flexible */
     flex-direction: column;
     align-items: center;
   }
