@@ -18,8 +18,8 @@ import OlvidasteContrasena from './pages/OlvidasteContrasena';
 import CambiarContraseña from './pages/CambiarContraseña';
 import CampoSwitch from './components/CampoSwitch/CampoSwitch';
 
-//export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:5000'
-export const urlapi = 'http://localhost:5000'
+export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
+//export const urlapi = 'https://localhost:5000'
 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = sessionStorage.getItem('log');
