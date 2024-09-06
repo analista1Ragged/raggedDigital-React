@@ -29,7 +29,6 @@ const EstadoFactura = ({ estado }) => {
     color = "#87d068"; // Verde
     text = "Sin Vencer";
   }
-
   return (
     <Tag color={color}>
       {text}
