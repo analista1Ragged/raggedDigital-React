@@ -33,6 +33,18 @@ const transformData = (list, handleIconClick) => {
   }));
 };
 
+const calculateColor = (quantity) => {
+  if (quantity > 10 && quantity <= 20) {
+    return '#FF5050'; // Rojo
+  } else if (quantity > 20 && quantity <= 30) {
+    return '#FFA500'; // Naranja
+  } else if (quantity > 30 && quantity <= 40) {
+    return '#FFFF00'; // Amarillo
+  } else {
+    return '#00FF00'; // Verde oscuro
+  }
+};
+
 
 const InventariosDisponibles = () => {
   const [data, setData] = useState([]);
@@ -309,7 +321,7 @@ const initialFiltersCartera = useMemo(() => ({
           </div>
          
     </form>
-    <Menu2Botones marca={excel} />
+    <Menu2Botones marca={excel} archivo='inventario.xlsx'/>
     {/* Contenedor con scroll horizontal */}
     <div className="tabla-container">
       <div className="tabla-scroll">
@@ -337,7 +349,9 @@ const initialFiltersCartera = useMemo(() => ({
                 <td>{item.descripcion}</td>
                 <td>{item.color}</td>
                 <td>{item.talla}</td>
-                <td>{item.cantDisponible}</td>                
+                <td style={{ backgroundColor: calculateColor(item.cantDisponible) }}>
+                  {item.cantDisponible}
+                </td>               
               </tr>
             ))}
           </tbody>

@@ -17,9 +17,22 @@ import FilterRowCartera from '../../components/FilterRow/FilterRowCartera.jsx'
 
 // Componente EstadoFactura
 const EstadoFactura = ({ estado }) => {
+  let color, text;
+
+  if (estado === "Vencido") {
+    color = "#FF5050"; // Rojo
+    text = "Vencido";
+  } else if (estado === "Por Vencer") {
+    color = "#D4B106"; // Amarillo mostaza
+    text = "Por Vencer";
+  } else {
+    color = "#87d068"; // Verde
+    text = "Sin Vencer";
+  }
+
   return (
-    <Tag color={estado == 1 ? "#FF5050" : "#87d068"}>
-      {estado == 1 ? "Vencido" : "Sin Vencer"}
+    <Tag color={color}>
+      {text}
     </Tag>
   );
 };
@@ -375,7 +388,7 @@ const initialFiltersCartera = useMemo(() => ({
         </div>
       </div>
     </form>
-    <Menu2Botones marca={excel} />
+    <Menu2Botones marca={excel} archivo='cartera.xlsx'/>
     {/* Contenedor con scroll horizontal */}
     <div className="tabla-container">
       <div className="tabla-scroll">

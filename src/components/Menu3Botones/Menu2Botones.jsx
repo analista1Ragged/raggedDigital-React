@@ -4,7 +4,7 @@ import { FloatButton } from 'antd';
 import * as XLSX from 'xlsx';
 import Swal from 'sweetalert2';
 
-const handleDownload = (data) => {
+const handleDownload = (data, archivo) => {
   try {
     // Obtener los encabezados a partir de las claves del primer objeto
     const headers = Object.keys(data[0]);
@@ -26,7 +26,7 @@ const handleDownload = (data) => {
     XLSX.utils.book_append_sheet(wb, ws, 'Datos');
 
     // Generar el archivo Excel
-    XLSX.writeFile(wb, 'datos.xlsx');
+    XLSX.writeFile(wb, archivo);
   } catch (error) {
     Swal.fire({
       title: 'Error',
@@ -38,7 +38,7 @@ const handleDownload = (data) => {
   }
 };
 
-const Menu2Botones = ({ marca }) => (
+const Menu2Botones = ({ marca, archivo}) => (
   <>
     <div>
       <FloatButton.Group
@@ -58,7 +58,7 @@ const Menu2Botones = ({ marca }) => (
             backgroundColor: '#28a745', // Color para el botón de descarga
             color: 'white',
           }}
-          onClick={() => handleDownload(marca)} // Asignar la función de descarga al botón de descargar Excel
+          onClick={() => handleDownload(marca, archivo)} // Asignar la función de descarga al botón de descargar Excel
         />
       </FloatButton.Group>
     </div>

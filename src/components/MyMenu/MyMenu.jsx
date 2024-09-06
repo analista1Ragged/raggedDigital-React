@@ -167,13 +167,13 @@ const menuItems = [
   },  
   {
     key: "98",
-    title: "Settings",
+    title: "Configuración",
     icon: <IoSettingsOutline />,
     path: "/ecommerce/Ragged",
   },
   {
     key: "99",
-    title: "Logout",
+    title: "Cerrar Sesión",
     icon: <FaSignOutAlt />,
     path: "/",
     onClick: 'handleLogout',

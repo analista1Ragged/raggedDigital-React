@@ -98,7 +98,7 @@ const TicketTable = () => {
         </h2>
         
         <FormBuscar setData={(rawData) => setData(transformData(rawData))} nuevoMarca={nuevoMarca} nuevoNombre={nuevoNombre} />
-        <Menu3Botones marca={selectedMarca}  nombre={selectedNombre} />
+        <Menu3Botones marca={selectedMarca}  nombre={selectedNombre} archivo='referencias.xlsx'/>
         <table>
           <thead>
             <tr className="color">

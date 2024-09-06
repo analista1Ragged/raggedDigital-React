@@ -64,14 +64,14 @@ const subirPaso = async (step, marca, nombre) => {
   }
 };
 
-const handleDownload = async (marca,nombre) => {
+const handleDownload = async (marca,nombre, archivo) => {
   try {
     const data=[marca,nombre]
     const response = await axios.post(urlapi+'/descargar-excel', { data }, { responseType: 'blob' });
     const url = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', 'datos.xlsx');
+    link.setAttribute('download', archivo);
     document.body.appendChild(link);
     link.click();
     link.parentNode.removeChild(link);
@@ -86,7 +86,7 @@ const handleDownload = async (marca,nombre) => {
   }
 };
 
-const Menu3Botones = ({ marca ,nombre}) => (
+const Menu3Botones = ({ marca ,nombre, archivo}) => (
   <>
     <div>
       <FloatButton.Group
@@ -115,7 +115,7 @@ const Menu3Botones = ({ marca ,nombre}) => (
             backgroundColor: '#28a745', // Color for the download button
             color: 'white',
           }}
-          onClick={() => handleDownload(marca,nombre)} // Asignar la función de descarga al botón de descargar Excel
+          onClick={() => handleDownload(marca,nombre,archivo)} // Asignar la función de descarga al botón de descargar Excel
         />
       </FloatButton.Group>
     </div>
