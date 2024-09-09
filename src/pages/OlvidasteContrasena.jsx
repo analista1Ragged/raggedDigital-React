@@ -1,9 +1,10 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert } from 'antd';
 import axios from "axios";
 import './OlvidasteContrasena.css';
 import CampoTexto from "../components/CampoTexto/CampoTextoReferencia";
 import Boton from "../components/Boton/Boton";
+import { urlapi } from '../App';
 
 const OlvidasteContrasena = () => {
     const [email, setEmail] = useState("");
@@ -13,16 +14,16 @@ const OlvidasteContrasena = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/RaggedDigital/OlvidasteContrasena', { email });
-            if (response.data.success) {
-                setMessage("Se ha enviado un enlace de recuperación a tu correo electrónico.");
+            const response = await axios.post(urlapi+'/recuperarC', { correo: "b" }); // Cambiar a 'correo'
+            if (response.status === 200 && response.data.message === "success") {
+                setMessage("Se ha enviado tu contraseña a tu correo electrónico.");
                 setError(null);
             } else {
-                setError("El correo electrónico no está registrado.");
+                setError("El correo electrónico no está registrado o es incorrecto.");
                 setMessage(null);
             }
         } catch (error) {
-            setError("Hubo un error al enviar el enlace de recuperación.");
+            setError("Hubo un error al procesar tu solicitud.");
             setMessage(null);
         }
     };
@@ -42,8 +43,9 @@ const OlvidasteContrasena = () => {
 
     return (
         <section className="forgot-password-form">
-            <a href="/RaggedDigital/Login" className="left button-large" title="Volver"><i className="bi bi-arrow-left-circle"></i></a><h2>¿Olvidaste tu contraseña?</h2>
-            <p>Introduce tu correo electrónico para recibir un enlace de recuperación.</p>
+            <a href="/RaggedDigital/Login" className="left button-large" title="Volver"><i className="bi bi-arrow-left-circle"></i></a>
+            <h2>¿Olvidaste tu contraseña?</h2>
+            <p>Introduce tu correo electrónico para recibir tu contraseña.</p>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="email">Correo Electrónico</label>
@@ -55,7 +57,7 @@ const OlvidasteContrasena = () => {
                     />
                 </div>
                 <Boton type="submit" texto="Enviar">
-                Enviar
+                    Enviar
                 </Boton>
             </form>
             {message && <Alert message={message} type="success" showIcon />}
@@ -65,5 +67,3 @@ const OlvidasteContrasena = () => {
 };
 
 export default OlvidasteContrasena;
-
-
