@@ -1,11 +1,12 @@
 import React from 'react';
 
+
 const FilterRow = ({ filters, handleFilterChange }) => {
   const columns = ['referencia', 'nombre', 'categoria', 'estado', 'descripcion'];
 
   return (
     <tr id="filterRow">
-      <th scope="col">Buscar por:</th>
+      <th scope="col">Buscar por: </th>
       {columns.map((column, i) => (
         <th scope="col" key={i}>
           <input

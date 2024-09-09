@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useMemo, useCallback, useRef } from 'react';
 import './InvenariosDisponibles.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Pagination } from 'antd'; // Importa Tag de Ant Design para el componente EstadoFactura
+import { Pagination, Tag } from 'antd'; // Importa Tag de Ant Design para el componente EstadoFactura
 import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
 import BuscarButton from '../../components/BotonBuscar/BotonBuscar.jsx';
 import BuscarLimpiar from '../../components/BotonLimpiar/BotonLimpiar.jsx';
@@ -33,17 +33,27 @@ const transformData = (list, handleIconClick) => {
   }));
 };
 
-const calculateColor = (quantity) => {
-  if (quantity > 10 && quantity <= 20) {
-    return '#FF5050'; // Rojo
+const EstadoFactura = ({ quantity }) => {
+  let color, text;
+
+  if (quantity <= 20) {
+    color = '#FF5050'; // Rojo
+    text = `${quantity}`;
   } else if (quantity > 20 && quantity <= 30) {
-    return '#FFA500'; // Naranja
-  } else if (quantity > 30 && quantity <= 40) {
-    return '#FFFF00'; // Amarillo
+    color = '#FFA500'; // Naranja
+    text = `${quantity}`;
   } else {
-    return '#00FF00'; // Verde oscuro
+    color = '#87d068'; // Verde
+    text = `${quantity}`;
   }
+
+  return (
+    <Tag color={color}>
+      {text}
+    </Tag>
+  );
 };
+
 
 
 const InventariosDisponibles = () => {
@@ -250,6 +260,21 @@ const initialFiltersCartera = useMemo(() => ({
       handleClearDates(); // Limpia las fechas
     };
 
+    const calculateColor = (quantity) => {
+      // implementación de la función
+    };
+    
+    const InventariosDisponibles = () => {
+      // implementación del componente
+      return (
+        <div>
+          <Tag color={calculateColor(15)}>Vencido</Tag>
+          <Tag color={calculateColor(25)}>Por Vencer</Tag>
+          <Tag color={calculateColor(35)}>Sin Vencer</Tag>
+        </div>
+      );
+    };
+
   return (
     <section>
   <div className="ticket-table">
@@ -349,8 +374,7 @@ const initialFiltersCartera = useMemo(() => ({
                 <td>{item.descripcion}</td>
                 <td>{item.color}</td>
                 <td>{item.talla}</td>
-                <td style={{ backgroundColor: calculateColor(item.cantDisponible) }}>
-                  {item.cantDisponible}
+                <td> <EstadoFactura quantity={item.cantDisponible} />
                 </td>               
               </tr>
             ))}

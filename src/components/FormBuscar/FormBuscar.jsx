@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Select } from 'antd'; // Importa el componente Select de Ant Design
 import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
 import { urlapi } from '../../App';
+import BotonLimpiar from '../BotonLimpiar/BotonLimpiar';
 
 const { Option } = Select;
 
@@ -128,6 +129,7 @@ const FormBuscar = ({ setData, nuevoNombre, nuevoMarca }) => {
     </div>
     <div className="col-12 col-md-2 d-flex justify-content-center justify-content-md-end mt-3 mt-md-0">
       <BuscarButton onClick={BuscarClick} />
+      <BotonLimpiar />
     </div>
   </div>
 </form>
