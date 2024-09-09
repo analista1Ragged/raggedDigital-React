@@ -1,4 +1,25 @@
-import React, { useState } from 'react';
+// CampoTexto.js
+import React from 'react';
+import './CampoTexto.css';
+
+const CampoTexto = ({ id, value, onChange, placeholder }) => {
+    return (
+      <div className="campo-texto2">
+        <input
+            type="email"
+            id={id}
+            value={value}
+            onChange={onChange}  // Asegúrate de que el onChange se está ejecutando
+            placeholder={placeholder}
+            required
+        />
+      </div>
+    );
+};
+export default CampoTexto;
+
+{/*
+  import React, { useState } from 'react';
 import './CampoTexto.css';
 
 const CampoTexto = ({ placeholder = 'Escribe aquí...', titulo, tipo = 'text', onValorCambio }) => {
@@ -26,3 +47,4 @@ const CampoTexto = ({ placeholder = 'Escribe aquí...', titulo, tipo = 'text', o
 };
 
 export default CampoTexto;
+*/}

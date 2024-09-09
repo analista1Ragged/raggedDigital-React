@@ -14,7 +14,7 @@ const OlvidasteContrasena = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(urlapi+'/recuperarC', { correo: "b" }); // Cambiar a 'correo'
+            const response = await axios.post(urlapi+'/recuperarC', { correo: email }); // Cambiar a 'correo'
             if (response.status === 200 && response.data.message === "success") {
                 setMessage("Se ha enviado tu contraseña a tu correo electrónico.");
                 setError(null);
@@ -52,7 +52,7 @@ const OlvidasteContrasena = () => {
                     <CampoTexto
                         id="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}  // Actualización del estado del email
                         placeholder="Introduce tu correo electrónico"
                     />
                 </div>
