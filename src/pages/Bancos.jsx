@@ -77,7 +77,9 @@ const Bancos = () => {
     <section className="formulario">
       <form onSubmit={handleGenerarConciliacion}>
         <h2>
-          <a href="/contabilidad/Bancos" className="left" title="Volver"><i className="bi bi-arrow-left-circle"></i></a>
+        <a href="/RaggedDigital/Home" className="left" title="volver">
+          <i className="bi bi-arrow-left-circle"></i>
+        </a>
           {'  '}
           Generar planos por banco.
         </h2>

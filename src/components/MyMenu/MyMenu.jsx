@@ -230,6 +230,7 @@ const MyMenu = () => {
   };
 
   const handleLogout = () => {
+    console.log('melo')
     sessionStorage.removeItem("log");
     sessionStorage.removeItem("auth");
     navigate("/Login");
@@ -301,7 +302,7 @@ const MyMenu = () => {
                   icon={item.icon}
                   onClick={() => handleHideMenu()}
                 >
-                  {item.title === "Logout" ? (
+                  {item.title === "Cerrar Sesión" ? (
                     <div onClick={handleLogout}>
                       <NavLink to={item.path}>{item.title}</NavLink>
                     </div>

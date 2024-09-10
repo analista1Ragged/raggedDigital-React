@@ -283,7 +283,7 @@ const initialFiltersCartera = useMemo(() => ({
     <section>
   <div className="ticket-table">
     <h2>
-      <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
+      <a href="/RaggedDigital/Home" className="left" title="volver">
         <i className="bi bi-arrow-left-circle"></i>
       </a>
       {'  '} Inventarios Disponibles RagStyle

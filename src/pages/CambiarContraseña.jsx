@@ -80,9 +80,15 @@ const CambiarContraseña = (props) => {
 
     return (
         <section className="formulario">
+            
             <form onSubmit={manejarEnvio}>
                 <div className="form-container">
-                    <h2>Cambiar Contraseña de acceso</h2>
+                    
+                    <h2>
+                    <a href="/RaggedDigital/Home" className="left" title="volver">
+        <i className="bi bi-arrow-left-circle"></i>
+      </a>
+                        Cambiar Contraseña</h2>
 
                     <CampoContraseña
                         placeholder="Ingrese su contraseña nueva:"
