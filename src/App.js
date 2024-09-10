@@ -174,12 +174,9 @@ function App() {
           } />
         } />
         <Route path='/OlvidasteContrasena' element={
-
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
               <OlvidasteContrasena />
             </div>
-          
-          
         } />
         <Route path='/CambiarContraseña' element={
           <PrivateRoute element={

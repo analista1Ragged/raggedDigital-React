@@ -94,7 +94,7 @@ const Login = (props) => {
                         tipo="password"
                     />
                     <div className="forgot-password">
-                    <Link to="/OlvidasteContrasena" target="_blank" rel="noopener noreferrer">¿Olvidaste tu contraseña?</Link>
+                    <Link to="/OlvidasteContrasena">¿Olvidaste tu contraseña?</Link>
                     </div>
                     {mostrarExito && (
                         <Alert

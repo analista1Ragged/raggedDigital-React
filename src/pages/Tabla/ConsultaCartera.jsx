@@ -219,7 +219,6 @@ const Tabla = () => {
   };
   
   const handleDate2Change = (newDate) => {
-    console.log('Fecha Final seleccionada:', newDate);
     setDate2(newDate);
   };
 
@@ -314,17 +313,18 @@ const initialFiltersCartera = useMemo(() => ({
   
   // Función para limpiar los campos de fecha
   const handleClearDates = () => {
-    formRef.current.setFieldsValue({
-      date1: undefined,
-      date2: undefined,
-    });
+    setDate1(undefined);
+    setDate2(undefined);
   };
 
     // Manejador que combina ambas funciones
     const handleButtonClick = () => {
       clearSelector(); // Ejecuta la acción existente
       handleClearDates(); // Limpia las fechas
+      formRef.current.resetDateFields(); // Limpia los campos de fecha en SeleccionarFecha
+
     };
+    
 
   return (
 <section>
