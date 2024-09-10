@@ -10,10 +10,12 @@ import BotonLimpiar from '../BotonLimpiar/BotonLimpiar';
 
 const { Option } = Select;
 
-const FormBuscar = ({ setData, nuevoNombre, nuevoMarca }) => {
+const FormBuscar = ({ setData, nuevoNombre, nuevoMarca, onClear }) => {
   const [miData, setMiData] = useState([]);
   const [selectedValue, setSelectedValue] = useState('');
   const [nombre, setSelectedNombre] = useState('');
+  const [nuevoMarcaState, setNuevoMarcaState] = useState('');
+  const [nuevoNombreState, setNuevoNombreState] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,19 +63,23 @@ const FormBuscar = ({ setData, nuevoNombre, nuevoMarca }) => {
   const handleSelectChange = (value) => {
     setSelectedValue(value);
     nuevoMarca(value);
+    setNuevoMarcaState(value);
   };
 
   const handleNombreChange = (e) => {
     setSelectedNombre(e.target.value);
     nuevoNombre(e.target.value);
+    setNuevoNombreState(e.target.value);
   };
 
   const limpiarCampos = () => {
     setSelectedValue('');
     setSelectedNombre('');
+    setNuevoMarcaState('');
+    setNuevoNombreState('');
     nuevoMarca('');
     nuevoNombre('');
-    
+    if (onClear) onClear(); // Llamar a la función pasada como prop si está definida
   };
 
   const BuscarClick = async () => {
@@ -132,15 +138,16 @@ const FormBuscar = ({ setData, nuevoNombre, nuevoMarca }) => {
           />
         </div>
         <div className="col-12 col-md-2 d-flex justify-content-center justify-content-md-end mt-3 mt-md-0">
-        <BuscarButton className="btn-buscar" onClick={BuscarClick} />
-        <BotonLimpiar className="btn-limpiar" onClick={limpiarCampos} />
-      </div>
+          <BuscarButton className="btn-buscar" onClick={BuscarClick} />
+          <BotonLimpiar className="btn-limpiar" onClick={limpiarCampos} />
+        </div>
       </div>
     </form>
   );
 };
 
 export default FormBuscar;
+
 
 
 

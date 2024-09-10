@@ -111,6 +111,12 @@ const TicketTable = () => {
     selectedNombre(e.target.value); // Actualiza el valor del campo de texto
   };
 
+  const handleClear = (props) => {
+    clearAllFields();
+    // Llamar a la función limpiarCampos del componente FormBuscar
+    props.limpiarCampos();
+  };
+
   return (
     <section>
       <div className="ticket-table">
@@ -120,7 +126,7 @@ const TicketTable = () => {
           Buscar Productos
         </h2>
         
-        <FormBuscar setData={(rawData) => setData(transformData(rawData))} nuevoMarca={nuevoMarca} nuevoNombre={nuevoNombre} />
+        <FormBuscar setData={(rawData) => setData(transformData(rawData))} nuevoMarca={nuevoMarca} nuevoNombre={nuevoNombre} onClear={handleClear}/>
         <Menu3Botones marca={selectedMarca}  nombre={selectedNombre} archivo='referencias.xlsx'/>
         <table>
           <thead>
