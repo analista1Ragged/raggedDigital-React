@@ -12,14 +12,13 @@ const { Option } = Select;
 
 const FormBuscar = ({ setData, nuevoNombre, nuevoMarca }) => {
   const [miData, setMiData] = useState([]);
-  const [ref, setRef] = useState('');
   const [selectedValue, setSelectedValue] = useState('');
   const [nombre, setSelectedNombre] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(urlapi+'/buscar');
+        const response = await axios.get(urlapi + '/buscar');
         if (Array.isArray(response.data)) {
           setMiData(response.data);
         } else {
@@ -39,7 +38,7 @@ const FormBuscar = ({ setData, nuevoNombre, nuevoMarca }) => {
 
   const fetchDataForSelectedValue = async () => {
     try {
-      const response = await axios.post(urlapi+'/TraerLista', {
+      const response = await axios.post(urlapi + '/TraerLista', {
         marca: selectedValue,
         ref: nombre,
       });
@@ -60,26 +59,30 @@ const FormBuscar = ({ setData, nuevoNombre, nuevoMarca }) => {
   };
 
   const handleSelectChange = (value) => {
-    console.log(value);
     setSelectedValue(value);
     nuevoMarca(value);
   };
+
   const handleNombreChange = (e) => {
     setSelectedNombre(e.target.value);
-    nuevoNombre(e.target.value); // Aquí se pasa el nombre seleccionado a TicketTable
+    nuevoNombre(e.target.value);
+  };
+
+  const limpiarCampos = () => {
+    setSelectedValue('');
+    setSelectedNombre('');
+    nuevoMarca('');
+    nuevoNombre('');
+    
   };
 
   const BuscarClick = async () => {
-    let timerInterval;
     Swal.fire({
       title: 'Cargando Datos...',
       text: 'Por favor, espere mientras se cargan los datos.',
       timerProgressBar: true,
       didOpen: () => {
         Swal.showLoading();
-        const timer = Swal.getPopup().querySelector("b");
-        timerInterval = setInterval(() => {
-        }, 100);
       },
       allowOutsideClick: false,
       showConfirmButton: false
@@ -88,56 +91,57 @@ const FormBuscar = ({ setData, nuevoNombre, nuevoMarca }) => {
     try {
       await fetchDataForSelectedValue();
     } finally {
-      Swal.close(); //esto cierra el alert
+      Swal.close();
     }
   };
 
   return (
-<form id="formBuscar" className="mb-3 mt-3" autoComplete="off">
-  <div className="row align-items-end"> {/* Alineación al final de la fila */}
-    <div className="col-12 col-md-5">
-      <label htmlFor="marca" className="label-spacing">Capsula</label>
-      <div>
-        <Select
-          style={{ width: 350 }}
-          showSearch
-          value={selectedValue}
-          placeholder="Selecciona una Capsula"
-          onChange={handleSelectChange}
-          filterOption={(input, option) =>
-            option.children.toLowerCase().includes(input.toLowerCase())
-          }
-          className="w-100" // Asegura que el select ocupe el 100% del ancho disponible
-        >
-          {miData.map((fila, index) => (
-            <Option key={index} value={fila[1]}>
-              {fila[0]}
-            </Option>
-          ))}
-        </Select>
+    <form id="formBuscar" className="mb-3 mt-3" autoComplete="off">
+      <div className="row align-items-end">
+        <div className="col-12 col-md-5">
+          <label htmlFor="marca" className="label-spacing">Capsula</label>
+          <div>
+            <Select
+              style={{ width: 350 }}
+              showSearch
+              value={selectedValue}
+              placeholder="Selecciona una Capsula"
+              onChange={handleSelectChange}
+              filterOption={(input, option) =>
+                option.children.toLowerCase().includes(input.toLowerCase())
+              }
+              className="w-100"
+            >
+              {miData.map((fila, index) => (
+                <Option key={index} value={fila[1]}>
+                  {fila[0]}
+                </Option>
+              ))}
+            </Select>
+          </div>
         </div>
-    </div>
-    <div className="col-12 col-md-5">
-      <label htmlFor="nombre" className="label-spacing">Referencia (opcional)</label>
-      <input
-        type="text"
-        name="nombre"
-        className="form-control"
-        placeholder="Nombre del producto..."
-        onChange={handleNombreChange}
-      />
-    </div>
-    <div className="col-12 col-md-2 d-flex justify-content-center justify-content-md-end mt-3 mt-md-0">
-      <BuscarButton onClick={BuscarClick} />
-      <BotonLimpiar />
-    </div>
-  </div>
-</form>
-
-
+        <div className="col-12 col-md-5">
+          <label htmlFor="nombre" className="label-spacing">Referencia (opcional)</label>
+          <input
+            type="text"
+            name="nombre"
+            className="form-control"
+            placeholder="Nombre del producto..."
+            value={nombre}
+            onChange={handleNombreChange}
+          />
+        </div>
+        <div className="col-12 col-md-2 d-flex justify-content-center justify-content-md-end mt-3 mt-md-0">
+        <BuscarButton className="btn-buscar" onClick={BuscarClick} />
+        <BotonLimpiar className="btn-limpiar" onClick={limpiarCampos} />
+      </div>
+      </div>
+    </form>
   );
 };
 
 export default FormBuscar;
+
+
 
 

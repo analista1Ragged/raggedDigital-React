@@ -79,9 +79,9 @@ const InventariosDisponibles = () => {
   const [selectedLineas, setSelectedLineas] = useState([]);
 
   
-  const manejarActualizacionValor = (nuevoValor) => {
+  /*const manejarActualizacionValor = (nuevoValor) => {
     setValorCampo(nuevoValor);
-  };
+  };*/
   
   useEffect(() => {
     fetchData();
@@ -244,6 +244,7 @@ const initialFiltersCartera = useMemo(() => ({
       talla: '',
       cantDisponible: ''
     });
+    setValorCampo(''); // Limpia también el campo de texto
   };
   
   // Función para limpiar los campos de fecha
@@ -273,6 +274,9 @@ const initialFiltersCartera = useMemo(() => ({
           <Tag color={calculateColor(35)}>Sin Vencer</Tag>
         </div>
       );
+    };
+    const manejarActualizacionValor = (e) => {
+      setValorCampo(e.target.value); // Actualiza el valor del campo de texto
     };
 
   return (
@@ -326,7 +330,8 @@ const initialFiltersCartera = useMemo(() => ({
 
                             <CampoTexto
                               placeholder="Ingrese ref: PF32111310,PF31310669..."
-                              onValorCambio={manejarActualizacionValor}
+                              value={valorCampo} // Vinculado al estado
+                              onChange={manejarActualizacionValor}
                             />
           
                       <BuscarButton 
@@ -336,6 +341,7 @@ const initialFiltersCartera = useMemo(() => ({
                       <BuscarLimpiar 
                         onClick={handleButtonClick}
                         className="component-item" 
+                      
                       />
                    </div>
                 </div>

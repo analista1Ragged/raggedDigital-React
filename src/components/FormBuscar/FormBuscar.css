@@ -10,9 +10,10 @@
 }
 
 #formBuscar .col-12, #formBuscar .col-md-4, #formBuscar .col-md-2 {
-  /*padding-right: 100px;*/
   padding-left: 20px;
   padding-top: 20px;
+  display: flex;
+  gap: 15px; /* Esta propiedad aplica un espacio entre los hijos flexibles */
 }
 
 #formBuscar label {
@@ -29,22 +30,13 @@
   line-height: 1.5;
   color: #495057;
   background-color: #fff;
-  background-clip: padding-box;
   border: 1px solid #ced4da;
   transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 #formBuscar .ant-select-selector {
-  font-size: 1.2rem; /* Ajusta el tamaño de la fuente según sea necesario */
+  font-size: 1.2rem;
 }
-
-#formBuscar .ant-select-fixed-width .ant-select-selector {
-  width: 350px; /* Ajusta el tamaño según tus necesidades */
-  border: none;
-  align-items: center; /* Centra verticalmente */
-  justify-content: center; /* Centra horizontalmente */
-}
-
 
 .form-control {
   display: block;
@@ -54,23 +46,12 @@
   line-height: 1.5;
   color: #495057;
   background-color: #fff;
-  background-clip: padding-box;
   border: 1px solid #ced4da;
-  border-radius: 5px; /*Este es el border radios de los campos buscar por letras*/
-  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  border-radius: 5px;
 }
 
 .form-control:focus {
-  color: #495057;
-  background-color: #fff;
   border-color: #343a40;
-  outline: 0;
-  box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
-}
-
-.form-control::placeholder {
-  color: #6c757d;
-  opacity: 1;
 }
 
 .d-flex.align-items-end {
@@ -83,29 +64,8 @@
     flex-direction: column;
   }
 
-  #formBuscar .col-12 {
-    margin-bottom: 1rem;
-  }
-
-  #formBuscar .col-12:last-child {
-    margin-bottom: 0;
-  }
-
-  .d-flex.align-items-end {
-    align-items: center;
+  .d-flex {
     justify-content: center;
   }
 }
 
-#formBuscar .me-3 {
-  margin-right: 1rem;
-}
-
-#formBuscar .flex-grow-1 {
-  flex-grow: 1;
-  width: 50%;
-}
-
-.select-capsula {
-  width: 350px;
-}

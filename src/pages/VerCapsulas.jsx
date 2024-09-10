@@ -6,6 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Menu3Botones from "../components/Menu3Botones/Menu3Botones";
 import { Pagination } from 'antd'; // Importa el componente de paginación de Ant Design
 import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
+import BotonLimpiar from "../components/BotonLimpiar/BotonLimpiar";
 
 const transformData = (list) => {
   if (!Array.isArray(list)) {
@@ -88,11 +89,33 @@ const TicketTable = () => {
     setPageSize(size);
   };
 
+  const clearAllFields = () => {
+    
+    // Limpia todos los estados
+    setSelectedMarca('');
+    setSelectedNombre('');
+    setFilters({
+      referencia: '',
+      nombre: '',
+      categoria: '',
+      estado: '',
+      descripcion: '' // Limpia el campo de descripción
+    });
+    
+    //setCurrentPage(1); // Reinicia la paginación
+    //setPageSize(10); // Reinicia el tamaño de página a un valor predeterminado
+ 
+  };
+
+  const manejarActualizacionValor = (e) => {
+    selectedNombre(e.target.value); // Actualiza el valor del campo de texto
+  };
+
   return (
     <section>
       <div className="ticket-table">
         <h2>
-          <a href="/RaggedDigital/ecommerce/VerCapsulas" className="left" title="Limpiar Campos"><i className="bi bi-arrow-left-circle"></i></a>
+          <a href="/RaggedDigital/ecommerce/VerCapsulas" className="left" title="Volver"><i className="bi bi-arrow-left-circle"></i></a>
           {'  '}
           Buscar Productos
         </h2>
@@ -109,7 +132,7 @@ const TicketTable = () => {
               <th>Estado</th>
               <th>Descripción</th>
             </tr>
-            <FilterRow filters={filters} handleFilterChange={handleFilterChange} />
+            <FilterRow filters={filters} handleFilterChange={handleFilterChange}/>
           </thead>
           <tbody>
             {currentItems.map((item, index) => (

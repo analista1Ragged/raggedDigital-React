@@ -218,7 +218,7 @@ const MyMenu = () => {
   }, []);
 
   const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
+    //setCollapsed(!collapsed); esta linea muestra el menu contraido
     setHidden(false);
     if (!collapsed) {
       setOpenKeys([]);
