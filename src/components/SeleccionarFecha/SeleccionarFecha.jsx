@@ -27,19 +27,14 @@ const MyForm = forwardRef(({ onDate1Change, onDate2Change }, ref) => {
     }
   };
 
-  // Exponer la función para limpiar campos
+  // Exponer la función para limpiar solo las fechas
   useImperativeHandle(ref, () => ({
-    resetFields: () => {
-      setFormState({
-        name: '',
-        region: undefined,
+    resetDateFields: () => {
+      setFormState((prevState) => ({
+        ...prevState,
         date1: undefined,
         date2: undefined,
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: '',
-      });
+      }));
     },
   }));
 
@@ -81,3 +76,4 @@ const MyForm = forwardRef(({ onDate1Change, onDate2Change }, ref) => {
 });
 
 export default MyForm;
+
