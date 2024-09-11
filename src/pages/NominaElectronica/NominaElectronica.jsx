@@ -21,8 +21,8 @@ const NominaElectronica = () => {
 
       <form>
         <ListaOpcionesP 
-        label="Seleccionar Hacienda" 
-        selectText="Haciendas..."
+        label="Seleccionar unidad de negocio" 
+        selectText="Seleccionar"
         />
         <Boton>
           Descargar Nómina
