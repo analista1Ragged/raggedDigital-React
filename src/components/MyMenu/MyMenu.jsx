@@ -120,9 +120,23 @@ const menuItems = [
     key: "6",
     title: "Talento Humano",
     icon: <IoAccessibilityOutline />,
-    path: "/ecommerce/Ragged",
-  },
-  {
+    path: "/TalentoHumano",
+  },//este no va aca
+    {
+      key: "6.1",
+      title: "Nómina",
+      icon: <IoIdCard />,
+      items: [
+        {
+          key: '6.1.1',
+          title: 'Nómina Electrónica',
+          icon: <FaMoneyBill />,
+          path: "/TalentoHumano/Nómina/NominaElectronica",
+          //items: [{ key: '2.1.1', title: 'Option 2.1.1' }],
+        },
+      ]
+    },
+    {
     key: "7",
     title: "Financiero",
     icon: <FaCalculator />,
