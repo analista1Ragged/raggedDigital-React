@@ -32,7 +32,7 @@ const CerrarSesion = () => {
   useEffect(() => {
     // Borrar la variable 'log' del sessionStorage
     sessionStorage.removeItem('log');
-    
+    sessionStorage.removeItem('auth');
     // Redirigir a la página de login
     navigate('/Login');
   }, [navigate]);
