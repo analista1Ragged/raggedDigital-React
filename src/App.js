@@ -17,7 +17,7 @@ import InventariosDisponibles from './pages/InventariosDisponibles/InventariosDi
 import OlvidasteContrasena from './pages/OlvidasteContrasena';
 import CambiarContraseña from './pages/CambiarContraseña';
 //import CampoSwitch from './components/CampoSwitch/CampoSwitch';
-import NominaElectronica from './pages/NominaElectronica/NominaElectronica';
+//import NominaElectronica from './pages/NominaElectronica/NominaElectronica';
 
 //export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
 export const urlapi = 'http://localhost:5000/RaggedDigitalAPI'
@@ -161,11 +161,11 @@ function App() {
             </div>
           } />
         } />
-        <Route path='/Prueba' element={
+        {/*<Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <NominaElectronica />
           </div>
-        } />
+        } />*/}
         
         <Route path='/*' element={
           <PrivateRoute element={
