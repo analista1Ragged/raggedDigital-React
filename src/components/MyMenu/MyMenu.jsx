@@ -3,10 +3,11 @@ import React, { useState, useRef, useEffect } from "react";
 import { Menu, Button } from "antd";
 import "antd/dist/reset.css";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill, FaCheck } from "react-icons/fa";
+import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill, FaCheck,  FaUsers} from "react-icons/fa";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
 import { PiEyeSlashFill, PiPasswordFill } from "react-icons/pi";
+import { FaUsersRays } from "react-icons/fa6";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const { SubMenu } = Menu;
@@ -120,21 +121,22 @@ const menuItems = [
     key: "6",
     title: "Talento Humano",
     icon: <IoAccessibilityOutline />,
-    path: "/TalentoHumano",
-  },//este no va aca
-    {
-      key: "6.1",
-      title: "Nómina",
-      icon: <IoIdCard />,
-      items: [
+    items: [
         {
-          key: '6.1.1',
-          title: 'Nómina Electrónica',
-          icon: <FaMoneyBill />,
-          path: "/TalentoHumano/Nómina/NominaElectronica",
-          //items: [{ key: '2.1.1', title: 'Option 2.1.1' }],
+          key: "6.1",
+          title: "Nómina",
+          icon: <FaUsers />,
+          items: [
+            {
+              key: '6.1.1',
+              title: 'Nómina Electrónica',
+              icon: <FaUsersRays />,
+              path: "/TalentoHumano/Nomina/NominaElectronica",
+              //items: [{ key: '2.1.1', title: 'Option 2.1.1' }],
+            },
+          ],
         },
-      ]
+     ],
     },
     {
     key: "7",

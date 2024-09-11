@@ -13,13 +13,19 @@
     box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.25); /* Corrige el valor del canal alfa */
     border-radius: 20px;
     padding: 8px 5%;
+    align-items: center; /* Centra horizontalmente los elementos dentro del formulario */
 }
+
+
 
 .formulario h2 {
     font-size: 32px;
     font-weight: 400;
     color: #212121;
-    text-align: center; /* Centra el texto */
+    text-align: left; /* Alinea el texto a la izquierda */
+    display: flex; /* Utiliza flexbox para alinear icono y texto en una línea */
+    align-items: center; /* Alinea verticalmente el icono y el texto */
+    white-space: nowrap; /* Evita que el texto se envuelva en una nueva línea */
 }
 
 .container {
@@ -145,4 +151,12 @@ image-container TDiggital{
 .forgot-password a:hover {
     text-decoration: underline;
 }
+
+.formulario h2 a {
+    margin-right: -20px; /* Espacio entre el icono y el texto */
+    display: flex; /* Asegura que el icono dentro del enlace se alinee correctamente */
+
+}
+
+
  

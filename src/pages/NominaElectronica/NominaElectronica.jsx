@@ -1,22 +1,29 @@
 import React from 'react';
 import "./NominaElectronica.css";
-import ListaOpciones from "../../components/ListaOpciones/ListaOpciones";
+import ListaOpcionesP from '../../components/ListaOpciones/ListaOpcionesP';
 import Boton from '../../components/Boton/Boton';
-import SeleccionarFecha from '../../components/SeleccionarFecha/SeleccionarFecha';
+import SeleccionarFechaP from '../../components/SeleccionarFecha/SeleccionarFechaP';
 
 const NominaElectronica = () => {
   return (
     <section className="formulario">
+      {/* Título fuera del formulario */}
+      <h2>
+        <a href="/RaggedDigital/Home" className="left" title="volver">
+          <i className="bi bi-arrow-left-circle"></i>
+        </a>
+        {'  '}
+        Informe de nómina electrónica.
+      </h2>
+
+      {/* Componente de fecha fuera del formulario */}
+      <SeleccionarFechaP/>
+
       <form>
-        <h2>
-          <a href="/RaggedDigital/Home" className="left" title="volver">
-            <i className="bi bi-arrow-left-circle"></i>
-          </a>
-          {'  '}
-          Informe de nómina electrónica.
-        </h2>
-        <SeleccionarFecha />
-        <ListaOpciones />
+        <ListaOpcionesP 
+        label="Seleccionar Hacienda" 
+        selectText="Haciendas..."
+        />
         <Boton>
           Descargar Nómina
         </Boton>
@@ -26,3 +33,4 @@ const NominaElectronica = () => {
 };
 
 export default NominaElectronica;
+
