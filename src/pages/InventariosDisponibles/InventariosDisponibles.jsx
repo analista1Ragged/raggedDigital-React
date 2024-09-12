@@ -96,6 +96,7 @@ const InventariosDisponibles = () => {
         didOpen: () => {
           Swal.showLoading();
         }
+        
       });
       const response = await fetch(urlapi+'/get-InventarioFiltros', {
         method: 'POST',

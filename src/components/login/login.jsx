@@ -72,7 +72,7 @@ const Login = (props) => {
             <div className="image-container">
                 {imagePath && <img src={imagePath} alt="Ragged" />}
             </div>
-            <form onSubmit={manejarEnvio}>
+            <form action="/login" autocomplete="on" onSubmit={manejarEnvio}>
                 <div className="form-container">
                     <div>
                         <img src={TDiggital} alt="TDiggital" className="TDiggital"/>
@@ -84,6 +84,10 @@ const Login = (props) => {
                         required
                         valor={usuario}
                         actualizarValor={actualizarNombre}
+                        type="text"
+                        id="username"
+                        name="username"
+                        autocomplete="username"
                     />
                     <CampoContraseña
                         titulo="Contraseña"
@@ -91,7 +95,10 @@ const Login = (props) => {
                         required
                         valor={contrasena}
                         actualizarValor={actualizarContrasena}
-                        tipo="password"
+                        type="password"
+                        id="password"
+                        name="password"
+                        autocomplete="current-password"
                     />
                     <div className="forgot-password">
                     <Link to="/OlvidasteContrasena">¿Olvidaste tu contraseña?</Link>
