@@ -77,6 +77,8 @@ const InventariosDisponibles = () => {
   const [selectedColecciones, setSelectedColecciones] = useState([]);
   const [selectedColores, setSelectedColores] = useState([]);
   const [selectedLineas, setSelectedLineas] = useState([]);
+  const [showMyMenu, setShowMyMenu] = useState(true); // Estado para controlar la visibilidad de MyMenu
+
 
   
   /*const manejarActualizacionValor = (nuevoValor) => {
@@ -87,6 +89,8 @@ const InventariosDisponibles = () => {
     fetchData();
   }, []);
 
+
+
   const fetchData = async () => {
     try {
       Swal.fire({
@@ -96,7 +100,7 @@ const InventariosDisponibles = () => {
         didOpen: () => {
           Swal.showLoading();
         }
-        
+
       });
       const response = await fetch(urlapi+'/get-InventarioFiltros', {
         method: 'POST',
@@ -129,8 +133,10 @@ const InventariosDisponibles = () => {
       setListaColor(color);
       setListaLinea(linea);
       Swal.close();
+      setShowMyMenu(false); // Ocultar MyMenu cuando se terminen de cargar los filtros
     } catch (error) {
       console.error('Error fetching data:', error);
+      Swal.close();
     }
   };
 
@@ -175,9 +181,6 @@ const InventariosDisponibles = () => {
     console.log('Facturas seleccionadas:', selected);
     //setSelectedFacturas(selected);
   };
-
-
-  
 
   const handleConsulta = async (event) => {
     event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
@@ -353,7 +356,8 @@ const initialFiltersCartera = useMemo(() => ({
           </div>
          
     </form>
-    <Menu2Botones marca={excel} archivo='inventario.xlsx'/>
+
+    {showMyMenu && <Menu2Botones archivo="inventario.xlsx" />}
     {/* Contenedor con scroll horizontal */}
     <div className="tabla-container">
       <div className="tabla-scroll">

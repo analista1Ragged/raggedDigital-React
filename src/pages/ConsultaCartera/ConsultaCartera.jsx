@@ -71,7 +71,7 @@ const transformData = (list, handleIconClick) => {
 };
 
 
-const Tabla = () => {
+const ConsultaCartera = () => {
   const [data, setData] = useState([]);
   const [excel,setExcel] = useState([]);
   const [filtersCartera, setFiltersCartera] = useState({
@@ -464,4 +464,4 @@ const initialFiltersCartera = useMemo(() => ({
   );
 };
 
-export default Tabla;
+export default ConsultaCartera;

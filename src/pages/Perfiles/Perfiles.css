@@ -1,0 +1,199 @@
+/* Ajustes generales */
+.perfiles-body {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Sección principal */
+  .perfiles-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Select personalizado */
+  .perfiles-custom-select {
+    width: 100%;
+    max-width: 150px;
+  }
+  
+  /* Componentes en línea */
+  .perfiles-inline-components {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: -15px;
+    flex-wrap: wrap;
+    margin: 10px;
+  }
+  
+  /* Componentes en línea 2 */
+  .perfiles-inline-components2 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+    gap: 105px;
+    justify-content: space-between;
+  }
+  
+  .perfiles-inline-components2 .boton {
+    margin-top: -10px;
+  }
+  
+  .perfiles-component-item {
+    flex: 1;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .perfiles-inline-components .perfiles-component-item:last-child {
+    margin-right: 0;
+  }
+  
+  /* Tabla de datos */
+  .perfiles-ticket-table {
+    margin: 20px auto;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .perfiles-ticket-table th,
+  .perfiles-ticket-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .perfiles-ticket-table th {
+    background-color: #343a40;
+    color: #ffffff;
+  }
+  
+  .perfiles-ticket-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .perfiles-ticket-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .perfiles-paginacion {
+    margin-top: 20px;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 1200px) {
+    .perfiles-section {
+      max-width: 1000px;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .perfiles-section {
+      max-width: 750px;
+    }
+  
+    .perfiles-custom-select {
+      max-width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .perfiles-inline-components {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .perfiles-component-item {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  
+    .perfiles-ticket-table th,
+    .perfiles-ticket-table td {
+      padding: 6px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .perfiles-section {
+      width: 95%;
+    }
+  
+    .perfiles-ticket-table th,
+    .perfiles-ticket-table td {
+      padding: 4px;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .perfiles-section {
+      padding: 20px 5px;
+    }
+  
+    .perfiles-inline-components {
+      margin-bottom: 10px;
+    }
+  
+    .perfiles-component-item {
+      flex: 1;
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+  
+  .perfiles-icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .perfiles-icon-button .bi-eye {
+    font-size: 1.2em;
+    color: #373738;
+  }
+  
+  .perfiles-container {
+    text-align: left !important;
+    background-color: transparent;
+    width: 30%;
+  }
+  
+  /* Estilos para el contenedor con scroll horizontal */
+  .perfiles-tabla-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 20px;
+  }
+  
+  .perfiles-tabla-scroll {
+    width: 100%;
+    min-width: 1000px;
+  }
+  
+  .perfiles-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .perfiles-table th,
+  .perfiles-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  @media (max-width: 576px) {
+    .perfiles-table th,
+    .perfiles-table td {
+      padding: 6px;
+    }
+  }
+  
+  
