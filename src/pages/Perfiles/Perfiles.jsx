@@ -4,6 +4,7 @@ import ListaOpcionesP from '../../components/ListaOpciones/ListaOpcionesP';
 import CampoTexto from '../../components/CampoTexto/CampoTextoReferencia';
 import Boton from '../../components/Boton/Boton';
 import CheckboxPerfiles from '../../components/CheckboxPefiles/CheckboxPerfiles';
+import CampoSwitch from '../../components/CampoSwitch/CampoSwitch';
 
 const AdministracionMaestras = (props) => {
   return (
@@ -36,6 +37,7 @@ const AdministracionMaestras = (props) => {
       </div>
 
       <div className="perfiles-tabla-container">
+
         <table className="perfiles-tabla-scroll perfiles-ticket-table">
           <thead>
             <tr>
@@ -50,6 +52,34 @@ const AdministracionMaestras = (props) => {
               <td>97</td>
               <td>
                 <CheckboxPerfiles/>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="perfiles-tabla-container">
+        
+        <Boton>
+          Asignación de Permisos
+        </Boton>
+        <div className="perfiles-container">
+        <ListaOpcionesP
+          label="Seleccionar Perfil." 
+          selectText="Seleccionar..."
+        />
+      </div>
+        <table className="perfiles-tabla-scroll perfiles-ticket-table">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Asignar permiso</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Administrar Maestra</td>
+              <td>
+                <CampoSwitch/>
               </td>
             </tr>
           </tbody>
