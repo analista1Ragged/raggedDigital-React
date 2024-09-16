@@ -38,7 +38,7 @@ const Login = (props) => {
 
             if (response.data.message === "success") {
                 sessionStorage.setItem('log', usuario);
-                sessionStorage.setItem('auth', JSON.stringify(response.data.text+",99"));
+                sessionStorage.setItem('auth', JSON.stringify(response.data.text));
                 setMostrarExito(true);
                 setTimeout(() => {
                     setMostrarExito(false);
