@@ -6,7 +6,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill, FaCheck,  FaUsers} from "react-icons/fa";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
-import { PiEyeSlashFill, PiPasswordFill } from "react-icons/pi";
+import { PiEyeSlashFill, PiPasswordFill, PiUsersFill } from "react-icons/pi";
 import { FaUsersRays } from "react-icons/fa6";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -179,8 +179,17 @@ const menuItems = [
     key: "97",
     title: "Administración Maestra",
     icon: <IoIdCard />,
-    path: "/ecommerce/Ragged",
-  },  
+
+    items: [
+      {
+        key: "97",
+        title: "Perfiles",
+        icon: <PiUsersFill />,
+        path: "/AdministracionMaestras/Perfiles",
+      },
+    ],
+  },
+ 
   {
     key: "98",
     title: "Configuración",
