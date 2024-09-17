@@ -229,6 +229,8 @@ const MyMenu = () => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
 
+  
+
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
