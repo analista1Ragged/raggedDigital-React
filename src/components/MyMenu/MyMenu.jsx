@@ -182,7 +182,7 @@ const menuItems = [
 
     items: [
       {
-        key: "97",
+        key: "97.1",
         title: "Perfiles",
         icon: <PiUsersFill />,
         path: "/AdministracionMaestras/Perfiles",
