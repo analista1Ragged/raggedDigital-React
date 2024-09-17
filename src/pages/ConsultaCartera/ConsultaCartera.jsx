@@ -66,7 +66,7 @@ const transformData = (list, handleIconClick) => {
     valor:item[10]|| 'N/A',
     abono:item[11]|| 'N/A',
     saldo:item[12]|| 'N/A',
-    state:item[13]|| 'N/A'
+    state:item[9]|| 'N/A'
   }));
 };
 

@@ -1,20 +1,5 @@
-.formulario {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 80px 5%;
-    flex-wrap: wrap; /* Permite que los elementos se envuelvan en líneas nuevas */
-}
 
-.formulario form {
-    width: 100%;
-    max-width: 600px; /* Puedes ajustar este valor según sea necesario */
-    background-color: #f7f7f7;
-    box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.25); /* Corrige el valor del canal alfa */
-    border-radius: 20px;
-    padding: 8px 5%;
-    align-items: center; /* Centra horizontalmente los elementos dentro del formulario */
-}
+
 
 
 
