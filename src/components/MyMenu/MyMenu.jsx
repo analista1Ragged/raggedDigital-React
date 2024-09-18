@@ -160,9 +160,24 @@ const menuItems = [
   },
   {
     key: "8",
-    title: "Inventarios",
+    title: "Logistica & Distribución",
     icon: <IoClipboardSharp />,
-    path: "/ecommerce/Ragged",
+    items: [
+      {
+        key: "8.1",
+        title: "Bodega Canal Digital",
+        icon: <FaUsers />,
+        items: [
+          {
+            key: '8.1.1',
+            title: 'Vtex',
+            icon: <FaUsersRays />,
+            path: "/Logistica/CanalDigital/Vtex",
+            //items: [{ key: '2.1.1', title: 'Option 2.1.1' }],
+          },
+        ],
+      },
+   ],
   },
   {
     key: "9",

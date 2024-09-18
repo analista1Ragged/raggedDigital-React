@@ -1,0 +1,248 @@
+/* Tabla.css */
+
+/* Ajustes generales */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 12px; /* Tamaño base de la fuente */
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Sección principal */
+  section {
+    max-width: 1200px; /* Ancho máximo de la sección */
+    margin: 0 auto; /* Centrar la sección */
+    padding: 20px; /* Padding para la sección */
+  }
+  
+  /* Select personalizado */
+  .custom-select {
+    width: 100%;
+    max-width: 150px;
+  }
+  
+  /* Componentes en línea */
+  .inline-components {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: -15px;
+    flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
+    flex-basis: 30%;
+    margin: 10px;
+  }
+  
+  /* Componentes en línea 2 */
+  .inline-components2 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    flex-wrap: wrap; /* Permite que los botones y el campo se ajusten correctamente */
+  }
+  
+  
+  .inline-components2 .boton {
+    margin-top: -10px; /* Ajusta este valor según sea necesario */
+  }
+  
+  .component-item {
+    flex: 1;
+    margin-right: 10px;
+    margin-bottom: 10px; /* Margen inferior para separación en pantallas pequeñas */
+    position: relative;
+    z-index: 1; /* Asegura que los campos de texto estén sobre otros elementos */
+  }
+  
+  .inline-components .component-item:last-child {
+    margin-right: 0;
+  }
+  
+  /* Tabla de tickets */
+  .ticket-table {
+    margin: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  
+  .ticket-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .ticket-table th,
+  .ticket-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: l;
+
+
+  }
+  
+  .ticket-table th {
+    background-color: #343a40;
+    color: #ffffff;
+  }
+  
+  .ticket-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .ticket-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .paginacion {
+    margin-top: 20px;
+  }
+  
+  /* Media Queries para responsividad */
+  @media (max-width: 1200px) {
+    section {
+      max-width: 1000px;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    section {
+      max-width: 750px;
+    }
+  
+    .custom-select {
+      max-width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .inline-components {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .component-item {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  
+    .ticket-table th,
+    .ticket-table td {
+      padding: 6px;
+
+    }
+  }
+  
+  @media (max-width: 576px) {
+    section {
+      width: 95%;
+    }
+  
+    .ticket-table th,
+    .ticket-table td {
+      padding: 4px;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    section {
+      padding: 20px 5px;
+    }
+  
+    .inline-components {
+      margin-bottom: 10px;
+    }
+  
+    .component-item {
+      flex: 1;
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+  
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .icon-button .bi-eye {
+    font-size: 1.2em; /* Ajusta el tamaño del ícono */
+    color: #373738;  /* Color del ícono */
+  }
+  
+  .total-row {
+    font-weight: bold; /* Todos los datos en negrita */
+  }
+  
+  .total-label {
+    font-size: 1.2em; /* Tamaño de letra más grande para "Total:" */
+  }
+  
+  .total-value {
+    font-weight: bold; /* Negrita para los valores */
+  }
+  
+  .container {
+    background-color: transparent;
+  }
+
+  /* Agrega el estilo para permitir el desplazamiento horizontal */
+.tabla-container {
+  width: 100%;
+  overflow-x: auto; /* Habilita el scroll horizontal */
+  margin-bottom: 20px; /* Espacio debajo de la tabla */
+}
+
+.tabla-scroll {
+  width: 100%;
+  min-width: 600px; /* Ancho mínimo de la tabla para evitar que se colapse en pantallas pequeñas */
+}
+
+.ticket-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ticket-table th,
+.ticket-table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 576px) {
+  .ticket-table th,
+  .ticket-table td {
+    padding: 6px; /* Ajusta el padding para pantallas pequeñas */
+  }
+}
+
+.row {
+  display: flex;
+  align-items: center; /* Alinea verticalmente */
+ 
+
+}
+
+.multi-selector {
+  width: 100%; /* Asegura que tengan el mismo ancho */
+  margin-bottom: 0; /* Remueve cualquier margen inferior que pueda causar desalineación */
+  
+}
+  
+.inline-components2 {
+  display: flex;
+  justify-content: flex-start; /* Alinea los componentes al lado izquierdo */
+  gap: 10px; /* Espaciado opcional entre los componentes */
+}
+
+/* CampoTexto.css */
+.campo-texto {
+  padding: 8px;
+  font-size: 16px;
+}
+
+.input-largo {
+  height: 50px; /* Puedes ajustar este valor para aumentar el largo del input */
+}
