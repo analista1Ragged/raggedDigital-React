@@ -4,11 +4,12 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Pagination, Tag } from 'antd'; // Importa Tag de Ant Design para el componente EstadoFactura
 import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
 import BuscarButton from '../../components/BotonBuscar/BotonBuscar.jsx';
-import BuscarLimpiar from '../../components/BotonLimpiar/BotonLimpiar.jsx';
-import MultiSelector2 from '../../components/MultiSelector/MultiSelector2.jsx';
-import FilterRowInventarios from '../../components/FilterRow/FilterRowInventarios.jsx';
+//import MultiSelector2 from '../../components/MultiSelector/MultiSelector2.jsx';
+import FilterPedidosVtex  from '../../components/FilterRow/FilterPedidosVtex.jsx';
 import CampoTexto from '../../components/CampoTexto/CampoTextoReferencia.jsx';
 import Menu2Botones from '../../components/Menu3Botones/Menu2Botones.jsx';
+import BotonGenerar from '../../components/BotonGenerar/BotonGenerar.jsx';
+import SeleccionarFecha from '../../components/SeleccionarFecha/SeleccionarFecha.jsx';
 
 const EstadoFactura = ({ quantity }) => {
   let color, text;
@@ -32,14 +33,17 @@ const EstadoFactura = ({ quantity }) => {
 };
 
 const PedidosVtex = () => {
-  const [filtersInventario, setFiltersInventarios] = useState({
-    coleccion: '',
-    referencia: '',
-    linea: '',
-    descripcion: '',
-    color: '',
-    talla: '',
-    cantDisponible: '',
+  const [filtersPedidoVtex, setFiltersPedidosVtex] = useState({
+    almacen: '',
+    pedidoVtex: '',
+    pedidoERP: '',
+    cliente: '',
+    formaDePago: '',
+    vrPedido: '',
+    impuestos: '',
+    fechaPedido: '',
+    estado: '',
+    generarPedidoERP: '',
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -52,19 +56,46 @@ const PedidosVtex = () => {
   const [selectedLineas, setSelectedLineas] = useState([]);
   const [showMyMenu, setShowMyMenu] = useState(true);
   const formRef = useRef();
+  const [data, setData] = useState([]);
 
   const handleFilter = (e) => {
     const { name, value } = e.target;
-    setFiltersInventarios({
-      ...filtersInventario,
+    setFiltersPedidosVtex({
+      ...filtersPedidoVtex,
       [name]: value,
     });
     setCurrentPage(1);
   };
 
-  const currentItems = useMemo(() => {
+  /*const currentItems = useMemo(() => {
     return []; // Datos simulados para visualización
-  }, [currentPage, pageSize, filtersInventario]);
+  }, [currentPage, pageSize, filtersPedidoVtex]);*/
+
+
+  const indexOfLastItem = currentPage * pageSize;
+  const indexOfFirstItem = indexOfLastItem - pageSize;
+  const currentItems = data
+  
+  .filter(item =>{
+    /* Convertir item.documento a cadena si no lo es
+    const documento = String(item.documento || ''); // Convertir a cadena
+    const filtroDocumento = String(filtersCartera.documento || ''); // Convertir a cadena*/
+    // Filtrar usando toLowerCase() y includes()
+    item.almacen.toLowerCase().includes(filtersPedidoVtex.almacen.toLowerCase()) &&
+    item.pedidoVtex.toLowerCase().includes(filtersPedidoVtex.pedidoVtex.toLowerCase()) &&
+    item.pedidoERP.toLowerCase().includes(filtersPedidoVtex.pedidoERP.toLowerCase()) &&
+    item.cliente.toLowerCase().includes(filtersPedidoVtex.cliente.toLowerCase()) &&
+    item.formaDePago.toLowerCase().includes(filtersPedidoVtex.formaDePago.toLowerCase()) &&
+    item.vrPedido.toLowerCase().includes(filtersPedidoVtex.vrPedido.toLowerCase()) &&
+    item.impuestos.toLowerCase().includes(filtersPedidoVtex.impuestos.toLowerCase()) &&
+    item.fechaPedido.toLowerCase().includes(filtersPedidoVtex.fechaPedido.toLowerCase()) &&
+    item.generarPedidoERP.toLowerCase().includes(filtersPedidoVtex.generarPedidoERP.toLowerCase()) &&
+    (typeof item.estado === 'string' ? item.estado.toLowerCase() : item.estado.toString()).includes(filtersPedidoVtex.estado.toLowerCase())
+
+  })
+  
+  .slice(indexOfFirstItem, indexOfLastItem);
+
 
   const handleChangePage = (page, size) => {
     setCurrentPage(page);
@@ -79,14 +110,17 @@ const PedidosVtex = () => {
     setSelectedColecciones([]);
     setSelectedLineas([]);
     setSelectedColores([]);
-    setFiltersInventarios({
-      coleccion: '',
-      referencia: '',
-      linea: '',
-      descripcion: '',
-      color: '',
-      talla: '',
-      cantDisponible: '',
+    setFiltersPedidosVtex({
+    almacen: '',
+    pedidoVtex: '',
+    pedidoERP: '',
+    cliente: '',
+    formaDePago: '',
+    vrPedido: '',
+    impuestos: '',
+    fechaPedido: '',
+    estado: '',
+    generarPedidoERP: '',
     });
     setValorCampo(''); // Limpia también el campo de texto
   };
@@ -121,50 +155,33 @@ const PedidosVtex = () => {
         <form>
           <div className="container">
             <div className="multi-selector">
-              <div className="row-3">
-                <MultiSelector2
-                  options={listaColeccion}
-                  opc="0"
-                  placeholder="Filtrar por Colección:"
-                  onSelectChange={setSelectedColecciones}
-                  value={selectedColecciones}
-                />
-                <MultiSelector2
-                  options={listaColor}
-                  opc="0"
-                  placeholder="Filtrar por Color:"
-                  onSelectChange={setSelectedColores}
-                  value={selectedColores}
-                />
-                <MultiSelector2
-                  options={listaLinea}
-                  opc="0"
-                  placeholder="Filtrar por Linea:"
-                  onSelectChange={setSelectedLineas}
-                  value={selectedLineas}
-                />
-              </div>
+
+
             </div>
           </div>
           <div className="container">
             <div className="multi-selector">
               <div className="row">
                 <div className="col">
-                  <div className="inline-components2">
+                  <div className="inline-components3">
                     <CampoTexto
-                      placeholder="Ingrese ref: PF32111310,PF31310669..."
-                      value={valorCampo}
-                      onChange={manejarActualizacionValor}
+                        placeholder="Buscar por # pedido:"
+                        value={valorCampo}
+                        onChange={manejarActualizacionValor}
                     />
-                    <BuscarButton className="component-item" />
-                    <BuscarLimpiar onClick={handleButtonClick} className="component-item" />
-                  </div>
+                    </div>
+                    <div className="separador">
+                        <SeleccionarFecha className="component-item" />
+                        <BuscarButton className="component-item" />
+                        <BotonGenerar onClick={handleButtonClick} className="component-item" /> {/*aca va la funcion de generar pedidos*/}
+                    </div>
                 </div>
               </div>
             </div>
           </div>
         </form>
 
+        
         {showMyMenu && <Menu2Botones archivo="inventario.xlsx" />}
 
         <div className="tabla-container">
@@ -173,18 +190,21 @@ const PedidosVtex = () => {
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Colección</th>
-                  <th scope="col">Referencia</th>
-                  <th scope="col">Linea</th>
-                  <th scope="col">Descripción</th>
-                  <th scope="col">Color</th>
-                  <th scope="col">Talla</th>
-                  <th scope="col">Cant Disponible</th>
+                  <th scope="col">Almacén</th>
+                  <th scope="col">Pedido Vtex</th>
+                  <th scope="col">Pedido ERP</th>
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Forma de Pago</th>
+                  <th scope="col">V/R Pedido</th>
+                  <th scope="col">Impuestos</th>
+                  <th scope="col">Fecha Pedido</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Generar pedido ERP</th>
                 </tr>
-                <FilterRowInventarios filtersInventario={filtersInventario} handleFilter={handleFilter} handleButtonClick={handleButtonClick} />
+                <FilterPedidosVtex filtersPedidoVtex={filtersPedidoVtex} handleFilter={handleFilter} handleButtonClick={handleButtonClick} />
               </thead>
               <tbody>
-                {currentItems.map((item, index) => (
+                {/*currentItems.map((item, index) => (
                   <tr key={index}>
                     <td>{item.item}</td>
                     <td>{item.coleccion}</td>
@@ -195,7 +215,33 @@ const PedidosVtex = () => {
                     <td>{item.talla}</td>
                     <td>{item.cantDisponible}</td>
                   </tr>
-                ))}
+                ))*/}
+                <tr>
+                    <td>1</td>
+                    <td>107</td>
+                    <td>25659</td>
+                    <td>001</td>
+                    <td>Rosa Palacios</td>
+                    <td>Credito</td>
+                    <td>108.300</td>
+                    <td>17.292</td>
+                    <td>19/09/2024</td>
+                    <td>En preparación</td>
+                    <td scope="col">Checkbox</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>107</td>
+                    <td>25660</td>
+                    <td>002</td>
+                    <td>Juan Perez</td>
+                    <td>Contraentrega</td>
+                    <td>95.000</td>
+                    <td>10.000</td>
+                    <td>18/09/2024</td>
+                    <td>En preparación</td>
+                    <td scope="col">Checkbox</td>
+                  </tr>
               </tbody>
             </table>
           </div>

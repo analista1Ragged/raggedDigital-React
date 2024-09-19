@@ -202,7 +202,7 @@ function App() {
         } />
         <Route path='/Logistica/CanalDigital/Vtex' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <AdministracionMaestras />
+            <PedidosVtex />
           </div>
         } />
       </Routes>

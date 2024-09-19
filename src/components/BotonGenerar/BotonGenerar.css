@@ -1,8 +1,8 @@
-/*.mt-3 {
+/*.botonGenerar-mt-3 {
     margin-top: 1rem !important;
   }*/
-
-  .btn {
+  
+  .botonGenerar-btn {
     display: inline-block;
     font-weight: 400;
     color: #212529;
@@ -17,41 +17,43 @@
     border-radius: 0.25rem;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
-
-  .btn-secondary {
+  
+  .botonGenerar-btn-secondary {
     color: #fff;
-    background-color: #6c757d;
+    background-color: #0E79FD; /* #6c757d */
     border-color: #6c757d;
   }
   
-  .btn-secondary:hover {
+  .botonGenerar-btn-secondary:hover {
     color: #fff;
     background-color: #5a6268;
     border-color: #545b62;
   }
   
-  .btn-secondary:focus, .btn-secondary.focus {
+  .botonGenerar-btn-secondary:focus,
+  .botonGenerar-btn-secondary.focus {
     color: #fff;
     background-color: #5a6268;
     border-color: #545b62;
     box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5);
   }
   
-  .btn-secondary:disabled, .btn-secondary.disabled {
+  .botonGenerar-btn-secondary:disabled,
+  .botonGenerar-btn-secondary.disabled {
     color: #fff;
     background-color: #6c757d;
     border-color: #6c757d;
   }
-
-  .bold {
+  
+  .botonGenerar-bold {
     font-weight: bold;
   }
-
-  .rounded-circle {
+  
+  .botonGenerar-rounded-circle {
     border-radius: 50% !important;
   }
-
-.bi-search {
+  
+  .botonGenerar-bi-search {
     font-size: larger;
   }
   

@@ -3,11 +3,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { Menu, Button } from "antd";
 import "antd/dist/reset.css";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill, FaCheck,  FaUsers} from "react-icons/fa";
+import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill, FaCheck,  FaUsers, FaStore} from "react-icons/fa";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
 import { PiEyeSlashFill, PiPasswordFill, PiUsersFill } from "react-icons/pi";
 import { FaUsersRays } from "react-icons/fa6";
+import { BsVimeo } from "react-icons/bs";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const { SubMenu } = Menu;
@@ -166,14 +167,13 @@ const menuItems = [
       {
         key: "8.1",
         title: "Bodega Canal Digital",
-        icon: <FaUsers />,
+        icon: <FaStore />,
         items: [
           {
             key: '8.1.1',
             title: 'Vtex',
-            icon: <FaUsersRays />,
+            icon: <BsVimeo />,
             path: "/Logistica/CanalDigital/Vtex",
-            //items: [{ key: '2.1.1', title: 'Option 2.1.1' }],
           },
         ],
       },

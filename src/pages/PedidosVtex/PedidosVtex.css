@@ -1,28 +1,28 @@
-/* Tabla.css */
+/* Estilos renombrados de PedidosVtex */
 
 /* Ajustes generales */
-body {
+.pedidosvtex-body {
     font-family: Arial, sans-serif;
     font-size: 12px; /* Tamaño base de la fuente */
     margin: 0;
     padding: 0;
-  }
-  
-  /* Sección principal */
-  section {
+}
+
+/* Sección principal */
+.pedidosvtex-section {
     max-width: 1200px; /* Ancho máximo de la sección */
     margin: 0 auto; /* Centrar la sección */
     padding: 20px; /* Padding para la sección */
-  }
-  
-  /* Select personalizado */
-  .custom-select {
+}
+
+/* Select personalizado */
+.pedidosvtex-custom-select {
     width: 100%;
     max-width: 150px;
-  }
-  
-  /* Componentes en línea */
-  .inline-components {
+}
+
+/* Componentes en línea */
+.pedidosvtex-inline-components {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -30,219 +30,195 @@ body {
     flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
     flex-basis: 30%;
     margin: 10px;
-  }
-  
-  /* Componentes en línea 2 */
-  .inline-components2 {
+}
+
+/* Componentes en línea 3 */
+.pedidosvtex-inline-components3 {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 10px;
     flex-wrap: wrap; /* Permite que los botones y el campo se ajusten correctamente */
-  }
-  
-  
-  .inline-components2 .boton {
+}
+
+.pedidosvtex-inline-components2 .pedidosvtex-boton {
     margin-top: -10px; /* Ajusta este valor según sea necesario */
-  }
-  
-  .component-item {
+}
+
+.pedidosvtex-component-item {
     flex: 1;
     margin-right: 10px;
     margin-bottom: 10px; /* Margen inferior para separación en pantallas pequeñas */
     position: relative;
     z-index: 1; /* Asegura que los campos de texto estén sobre otros elementos */
-  }
-  
-  .inline-components .component-item:last-child {
+}
+
+.pedidosvtex-inline-components .pedidosvtex-component-item:last-child {
     margin-right: 0;
-  }
-  
-  /* Tabla de tickets */
-  .ticket-table {
+}
+
+/* Tabla de tickets */
+.pedidosvtex-ticket-table {
     margin: 20px;
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
-  }
-  
-  .ticket-table table {
+}
+
+.pedidosvtex-ticket-table table {
     width: 100%;
     border-collapse: collapse;
-  }
-  
-  .ticket-table th,
-  .ticket-table td {
+}
+
+.pedidosvtex-ticket-table th,
+.pedidosvtex-ticket-table td {
     border: 1px solid #ddd;
     padding: 10px;
-    text-align: l;
+    text-align: left;
+}
 
-
-  }
-  
-  .ticket-table th {
+.pedidosvtex-ticket-table th {
     background-color: #343a40;
     color: #ffffff;
-  }
-  
-  .ticket-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .ticket-table tr:hover {
-    background-color: #ddd;
-  }
-  
-  .paginacion {
-    margin-top: 20px;
-  }
-  
-  /* Media Queries para responsividad */
-  @media (max-width: 1200px) {
-    section {
-      max-width: 1000px;
-    }
-  }
-  
-  @media (max-width: 992px) {
-    section {
-      max-width: 750px;
-    }
-  
-    .custom-select {
-      max-width: 100%;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .inline-components {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  
-    .component-item {
-      margin-right: 0;
-      margin-bottom: 10px;
-    }
-  
-    .ticket-table th,
-    .ticket-table td {
-      padding: 6px;
+}
 
+.pedidosvtex-ticket-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.pedidosvtex-ticket-table tr:hover {
+    background-color: #ddd;
+}
+
+/* Paginación */
+.pedidosvtex-paginacion {
+    margin-top: 20px;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 1200px) {
+    .pedidosvtex-section {
+        max-width: 1000px;
     }
-  }
-  
-  @media (max-width: 576px) {
-    section {
-      width: 95%;
+}
+
+@media (max-width: 992px) {
+    .pedidosvtex-section {
+        max-width: 750px;
     }
-  
-    .ticket-table th,
-    .ticket-table td {
-      padding: 4px;
+
+    .pedidosvtex-custom-select {
+        max-width: 100%;
     }
-  }
-  
-  @media (max-width: 400px) {
-    section {
-      padding: 20px 5px;
+}
+
+@media (max-width: 768px) {
+    .pedidosvtex-inline-components {
+        flex-direction: column;
+        align-items: stretch;
     }
-  
-    .inline-components {
-      margin-bottom: 10px;
+
+    .pedidosvtex-component-item {
+        margin-right: 0;
+        margin-bottom: 10px;
     }
-  
-    .component-item {
-      flex: 1;
-      width: 100%;
-      margin-right: 0;
+
+    .pedidosvtex-ticket-table th,
+    .pedidosvtex-ticket-table td {
+        padding: 6px;
     }
-  }
-  
-  .icon-button {
+}
+
+@media (max-width: 576px) {
+    .pedidosvtex-section {
+        width: 95%;
+    }
+
+    .pedidosvtex-ticket-table th,
+    .pedidosvtex-ticket-table td {
+        padding: 4px;
+    }
+}
+
+@media (max-width: 400px) {
+    .pedidosvtex-section {
+        padding: 20px 5px;
+    }
+
+    .pedidosvtex-inline-components {
+        margin-bottom: 10px;
+    }
+
+    .pedidosvtex-component-item {
+        flex: 1;
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+/* Botón de ícono */
+.pedidosvtex-icon-button {
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
-  }
-  
-  .icon-button .bi-eye {
+}
+
+.pedidosvtex-icon-button .bi-eye {
     font-size: 1.2em; /* Ajusta el tamaño del ícono */
     color: #373738;  /* Color del ícono */
-  }
-  
-  .total-row {
+}
+
+/* Fila de totales */
+.pedidosvtex-total-row {
     font-weight: bold; /* Todos los datos en negrita */
-  }
-  
-  .total-label {
+}
+
+.pedidosvtex-total-label {
     font-size: 1.2em; /* Tamaño de letra más grande para "Total:" */
-  }
-  
-  .total-value {
+}
+
+.pedidosvtex-total-value {
     font-weight: bold; /* Negrita para los valores */
-  }
-  
-  .container {
+}
+
+.pedidosvtex-container {
     background-color: transparent;
-  }
-
-  /* Agrega el estilo para permitir el desplazamiento horizontal */
-.tabla-container {
-  width: 100%;
-  overflow-x: auto; /* Habilita el scroll horizontal */
-  margin-bottom: 20px; /* Espacio debajo de la tabla */
 }
 
-.tabla-scroll {
-  width: 100%;
-  min-width: 600px; /* Ancho mínimo de la tabla para evitar que se colapse en pantallas pequeñas */
+/* Desplazamiento horizontal */
+.pedidosvtex-tabla-container {
+    width: 100%;
+    overflow-x: auto; /* Habilita el scroll horizontal */
+    margin-bottom: 20px; /* Espacio debajo de la tabla */
 }
 
-.ticket-table {
-  width: 100%;
-  border-collapse: collapse;
+.pedidosvtex-tabla-scroll {
+    width: 100%;
+    min-width: 600px; /* Ancho mínimo de la tabla para evitar que se colapse en pantallas pequeñas */
 }
 
-.ticket-table th,
-.ticket-table td {
-  padding: 10px;
-  text-align: center;
-  border: 1px solid #ddd;
+.pedidosvtex-row {
+    display: flex;
+    align-items: center; /* Alinea verticalmente */
 }
 
-@media (max-width: 576px) {
-  .ticket-table th,
-  .ticket-table td {
-    padding: 6px; /* Ajusta el padding para pantallas pequeñas */
-  }
+.pedidosvtex-multi-selector {
+    width: 100%; /* Asegura que tengan el mismo ancho */
+    margin-bottom: 0; /* Remueve cualquier margen inferior que pueda causar desalineación */
 }
 
-.row {
-  display: flex;
-  align-items: center; /* Alinea verticalmente */
- 
-
+.pedidosvtex-inline-components2 {
+    display: flex;
+    justify-content: flex-start; /* Alinea los componentes al lado izquierdo */
 }
 
-.multi-selector {
-  width: 100%; /* Asegura que tengan el mismo ancho */
-  margin-bottom: 0; /* Remueve cualquier margen inferior que pueda causar desalineación */
-  
-}
-  
-.inline-components2 {
-  display: flex;
-  justify-content: flex-start; /* Alinea los componentes al lado izquierdo */
-  gap: 10px; /* Espaciado opcional entre los componentes */
-}
+.separador {
 
-/* CampoTexto.css */
-.campo-texto {
-  padding: 8px;
-  font-size: 16px;
-}
-
-.input-largo {
-  height: 50px; /* Puedes ajustar este valor para aumentar el largo del input */
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
+    gap: 10px;
+    justify-content: space-between; 
 }
