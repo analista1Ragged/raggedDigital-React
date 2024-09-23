@@ -1,7 +1,9 @@
 import React from 'react';
-// Este componente recibe dos props: filtersInventario y handleFilter
-const FilterPedidosVtex = ({ filtersPedidosVtex, handleFilter}) => {
-  const columns = ['almacen', 'pedidoVtex','pedidoERP','cliente','formaDePago', 'vrPedido','impuestos','fechaPedido','estado','generarPedidoERP'];
+import CheckboxSelectodo from '../Checkbox/CheckboxDoble/CheckboxSelectodo';
+
+// Este componente recibe dos props: filtersPedidosVtex y handleFilter
+const FilterPedidosVtex = ({ filtersPedidosVtex, handleFilter }) => {
+  const columns = ['almacen', 'pedidoVtex', 'pedidoERP', 'cliente', 'formaDePago', 'vrPedido', 'impuestos', 'fechaPedido', 'estado'];
 
   return (
     <tr id="filterRowCartera">
@@ -13,11 +15,14 @@ const FilterPedidosVtex = ({ filtersPedidosVtex, handleFilter}) => {
             className="form-control"
             placeholder={` ${column}`}
             name={column}
-            //value={filtersPedidosVtex[column]} //el valor correspondiente es el texto que el usuario ha ingresado en el campo de filtro para esa columna
             onChange={handleFilter}
           />
         </th>
       ))}
+      <th scope="col">
+        {/* Checkbox para seleccionar todo */}
+        <CheckboxSelectodo />
+      </th>
     </tr>
   );
 };

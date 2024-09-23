@@ -17,6 +17,7 @@ const FilterRowInventarios = ({ filtersInventario, handleFilter}) => {
             onChange={handleFilter}
           />
         </th>
+        
       ))}
     </tr>
   );

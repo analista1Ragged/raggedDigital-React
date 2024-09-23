@@ -1,18 +1,20 @@
 import React from 'react';
 import "./BotonGenerar.css";
 
-const BotonGenerar = ({ onClick }) => {
+const BotonGenerar = ({ onClick, iconClassName, title }) => {
   return (
     <button
       id="btnBuscar"
       className="botonGenerar-mt-3 botonGenerar-btn botonGenerar-btn-secondary botonGenerar-bold botonGenerar-rounded-circle"
       type="button"
       onClick={onClick}
-      title='Generar en Siesa'
+      title={title} // Aquí se utiliza la variable title
     >
-      <i className="bi-stripe botonGenerar-bi-search" style={{ fontSize: 'larger' }}></i>
+      <i className={iconClassName} style={{ fontSize: 'larger' }}></i>
     </button>
   );
 };
 
 export default BotonGenerar;
+
+

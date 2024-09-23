@@ -16,12 +16,14 @@ import Error404 from './components/Error404/Error404';
 import InventariosDisponibles from './pages/InventariosDisponibles/InventariosDisponibles';
 import OlvidasteContrasena from './pages/OlvidasteContrasena';
 import CambiarContraseña from './pages/CambiarContraseña';
-//import CampoSwitch from './components/CampoSwitch/CampoSwitch';
 import NominaElectronica from './pages/NominaElectronica/NominaElectronica';
 import AdministracionMaestras from './pages/Perfiles/Perfiles';
-//import CheckboxForm from './components/Checkbox/Checkbox';
-//import CheckboxPerfiles from './components/CheckboxPefiles/CheckboxPerfiles';
 import PedidosVtex from './pages/PedidosVtex/PedidosVtex';
+//import Menu2BotonesP from './components/Menu3Botones/Menu2BotonesP';
+//import CheckboxGroup from './components/Checkbox/CheckboxDoble/CheckboxGroup';
+import CheckboxSelectodo from './components/Checkbox/CheckboxDoble/CheckboxSelectodo';
+import CheckboxGroup from './components/Checkbox/CheckboxDoble/CheckboxGroup';
+
 
 //export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
 export const urlapi = 'http://localhost:5000/RaggedDigitalAPI'
@@ -167,7 +169,7 @@ function App() {
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <PedidosVtex />
+            <CheckboxSelectodo />
           </div>
         } />
         

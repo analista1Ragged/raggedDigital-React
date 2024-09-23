@@ -7,22 +7,51 @@ import BuscarButton from '../../components/BotonBuscar/BotonBuscar.jsx';
 //import MultiSelector2 from '../../components/MultiSelector/MultiSelector2.jsx';
 import FilterPedidosVtex  from '../../components/FilterRow/FilterPedidosVtex.jsx';
 import CampoTexto from '../../components/CampoTexto/CampoTextoReferencia.jsx';
-import Menu2Botones from '../../components/Menu3Botones/Menu2Botones.jsx';
+import Menu2BotonesG from '../../components/Menu3Botones/Menu2BotonesG.jsx';
 import BotonGenerar from '../../components/BotonGenerar/BotonGenerar.jsx';
 import SeleccionarFecha from '../../components/SeleccionarFecha/SeleccionarFecha.jsx';
+import CheckboxPerfiles from '../../components/CheckboxPefiles/CheckboxPerfiles.jsx';
+import CheckboxGroup from '../../components/Checkbox/CheckboxDoble/CheckboxGroup.jsx';
+import CheckboxSelectodo from '../../components/Checkbox/CheckboxDoble/CheckboxSelectodo.jsx';
 
-const EstadoFactura = ({ quantity }) => {
+
+
+const EstadoFactura = ({ estado }) => {
   let color, text;
 
-  if (quantity <= 20) {
-    color = '#FF5050'; // Rojo
-    text = `${quantity}`;
-  } else if (quantity > 20 && quantity <= 30) {
-    color = '#FFA500'; // Naranja
-    text = `${quantity}`;
-  } else {
-    color = '#87d068'; // Verde
-    text = `${quantity}`;
+  switch (estado) {
+    case "Importado":
+      color = "#A0A0A0"; // Gris
+      text = "Importado";
+      break;
+    case "Preparando":
+      color = "#FF5050"; // Rojo
+      text = "Preparando";
+      break;
+    case "Comprometido":
+      color = "#FFA500"; // Naranja
+      text = "Comprometido";
+      break;
+    case "Facturado":
+      color = "#D4B106"; // Amarillo
+      text = "Facturado";
+      break;
+    case "Guía preparada":
+      color = "#87d068"; // Verde
+      text = "Guía preparada";
+      break;
+    case "Vencido":
+      color = "#FF5050"; // Rojo
+      text = "Vencido";
+      break;
+    case "Por Vencer":
+      color = "#D4B106"; // Amarillo mostaza
+      text = "Por Vencer";
+      break;
+    default:
+      color = "#87d068"; // Verde
+      text = "Sin Vencer";
+      break;
   }
 
   return (
@@ -30,6 +59,28 @@ const EstadoFactura = ({ quantity }) => {
       {text}
     </Tag>
   );
+};
+
+const transformData = (list, handleIconClick) => {
+  if (!Array.isArray(list)) {
+    console.error("Expected an array but received:", list);
+    return [];
+  }
+  
+
+  return list.map((item, index) => ({
+    item: index + 1,
+    almacen: item[0] || 'N/A',
+    pedidoVtex: item[1] || 'N/A',
+    pedidoERP: item[2] || 'N/A',
+    cliente: item[4] || 'N/A',
+    formaDePago: item[5] || 'N/A',
+    vrPedido: item[3] || 'N/A', 
+    impuestos: item[7] || 'N/A', 
+    fechaPedido: item[6] || 'N/A', 
+    generarPedidoERP: item[8] || 'N/A', 
+    estado: String(item[9]) || 'N/A',
+  }));
 };
 
 const PedidosVtex = () => {
@@ -173,7 +224,7 @@ const PedidosVtex = () => {
                     <div className="separador">
                         <SeleccionarFecha className="component-item" />
                         <BuscarButton className="component-item" />
-                        <BotonGenerar onClick={handleButtonClick} className="component-item" /> {/*aca va la funcion de generar pedidos*/}
+                        <BotonGenerar onClick={handleButtonClick} className="component-item" iconClassName="bi-stripe" title="Generar en Siesa" /> {/*aca va la funcion de generar pedidos*/}
                     </div>
                 </div>
               </div>
@@ -182,7 +233,7 @@ const PedidosVtex = () => {
         </form>
 
         
-        {showMyMenu && <Menu2Botones archivo="inventario.xlsx" />}
+        {showMyMenu && <Menu2BotonesG/>}
 
         <div className="tabla-container">
           <div className="tabla-scroll">
@@ -199,24 +250,26 @@ const PedidosVtex = () => {
                   <th scope="col">Impuestos</th>
                   <th scope="col">Fecha Pedido</th>
                   <th scope="col">Estado</th>
-                  <th scope="col">Generar pedido ERP</th>
+                  <th scope="col">Seleccionar</th>
                 </tr>
                 <FilterPedidosVtex filtersPedidoVtex={filtersPedidoVtex} handleFilter={handleFilter} handleButtonClick={handleButtonClick} />
               </thead>
               <tbody>
-                {/*currentItems.map((item, index) => (
+                {currentItems.map((item, index) => (
                   <tr key={index}>
                     <td>{item.item}</td>
-                    <td>{item.coleccion}</td>
-                    <td>{item.referencia}</td>
-                    <td>{item.linea}</td>
-                    <td>{item.descripcion}</td>
-                    <td>{item.color}</td>
-                    <td>{item.talla}</td>
-                    <td>{item.cantDisponible}</td>
+                    <td>{item.almacen}</td>
+                    <td>{item.pedidoVtex}</td>
+                    <td>{item.pedidoERP}</td>
+                    <td>{item.cliente}</td>
+                    <td>{item.formaDePago}</td>
+                    <td>{item.vrPedido}</td>
+                    <td>{item.impuestos}</td>
+                    <td>{item.fechaPedido}</td>
+                    <td>{item.generarPedidoERP}</td>
                   </tr>
-                ))*/}
-                <tr>
+                ))}
+                {/*<tr>
                     <td>1</td>
                     <td>107</td>
                     <td>25659</td>
@@ -226,8 +279,8 @@ const PedidosVtex = () => {
                     <td>108.300</td>
                     <td>17.292</td>
                     <td>19/09/2024</td>
-                    <td>En preparación</td>
-                    <td scope="col">Checkbox</td>
+                    <td><EstadoFactura estado={item.estado} /></td>
+                    <td><CheckboxGroup/></td>
                   </tr>
                   <tr>
                     <td>2</td>
@@ -239,9 +292,9 @@ const PedidosVtex = () => {
                     <td>95.000</td>
                     <td>10.000</td>
                     <td>18/09/2024</td>
-                    <td>En preparación</td>
-                    <td scope="col">Checkbox</td>
-                  </tr>
+                    <td><EstadoFactura estado={item.estado} /></td>
+                    <td><CheckboxGroup/></td>
+                  </tr>*/}
               </tbody>
             </table>
           </div>
