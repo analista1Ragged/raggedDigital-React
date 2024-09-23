@@ -47,6 +47,7 @@ const transformData2 = (list) => {
     CantidadDias: item.CantidadDias || '',
     FechaInicio: item.FechaInicio || '',
     FechaFin: item.FechaFin || '',
+    tipo:item.TipoA || '',
     CantidadHoras: item.CantidadHoras || ''
   }));
 };
