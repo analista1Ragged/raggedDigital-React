@@ -141,6 +141,7 @@ const PedidosVtex = () => {
       fechaPedido: '',
       estado: '',
     });
+    setValorCampo(''); // Limpia también el campo de textoas
     setCurrentPage(1);
   };
 
