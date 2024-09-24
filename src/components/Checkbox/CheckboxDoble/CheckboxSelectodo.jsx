@@ -1,39 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Checkbox } from 'antd';
+// CheckboxSelectodo.js
+import React from 'react';
 
-const plainOptions = ['Apple'];
-
-const CheckboxGroup = () => {
-  const [checkedList, setCheckedList] = useState(['Apple']);
-  const [indeterminate, setIndeterminate] = useState(true);
-  const [checkAll, setCheckAll] = useState(false);
-
-  const onCheckAllChange = (e) => {
-    const checked = e.target.checked;
-    setCheckedList(checked ? plainOptions : []);
-    setIndeterminate(false);
-    setCheckAll(checked);
-  };
-
-  const onChange = (list) => {
-    setCheckedList(list);
-  };
-
-  useEffect(() => {
-    setIndeterminate(!!checkedList.length && checkedList.length < plainOptions.length);
-    setCheckAll(checkedList.length === plainOptions.length);
-  }, [checkedList]);
-
+const CheckboxSelectodo = ({ isChecked, onChange }) => {
   return (
-    <div >
-      <Checkbox
-        indeterminate={indeterminate}
-        onChange={onCheckAllChange}
-        checked={checkAll}
-      >
-      </Checkbox>
+    <div>
+      <label>
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={onChange}
+        />
+      </label>
     </div>
   );
 };
 
-export default CheckboxGroup;
+export default CheckboxSelectodo;
