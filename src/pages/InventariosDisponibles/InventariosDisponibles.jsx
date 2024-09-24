@@ -337,7 +337,6 @@ const initialFiltersCartera = useMemo(() => ({
                               value={valorCampo} // Vinculado al estado
                               onChange={manejarActualizacionValor}
                             />
-          
                       <BuscarButton 
                         onClick={handleConsulta}
                         className="component-item" 
@@ -345,16 +344,12 @@ const initialFiltersCartera = useMemo(() => ({
                       <BuscarLimpiar 
                         onClick={handleButtonClick}
                         className="component-item" 
-                      
                       />
                    </div>
                 </div>
               </div>
-               
-             
             </div>
           </div>
-         
     </form>
 
     {showMyMenu && <Menu2Botones archivo="inventario.xlsx" />}

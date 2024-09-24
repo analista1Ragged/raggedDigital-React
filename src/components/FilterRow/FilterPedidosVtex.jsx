@@ -2,8 +2,8 @@ import React from 'react';
 import CheckboxSelectodo from '../Checkbox/CheckboxDoble/CheckboxSelectodo';
 
 // Este componente recibe dos props: filtersPedidosVtex y handleFilter
-const FilterPedidosVtex = ({ filtersPedidosVtex, handleFilter }) => {
-  const columns = ['almacen', 'pedidoVtex', 'pedidoERP', 'cliente', 'formaDePago', 'vrPedido', 'impuestos', 'fechaPedido', 'estado'];
+const FilterPedidosVtex = ({ filtersPedidosVtex = {}, handleFilter }) => {
+  const columns = ['almacen', 'pedidoVtex', 'pedidoERP', 'cliente', 'formaDePago', 'vrPedido', 'fechaPedido', 'estado'];
 
   return (
     <tr id="filterRowCartera">
@@ -15,6 +15,7 @@ const FilterPedidosVtex = ({ filtersPedidosVtex, handleFilter }) => {
             className="form-control"
             placeholder={` ${column}`}
             name={column}
+            value={filtersPedidosVtex[column] || ''} // Si es undefined, se asigna una cadena vacía
             onChange={handleFilter}
           />
         </th>
@@ -28,3 +29,4 @@ const FilterPedidosVtex = ({ filtersPedidosVtex, handleFilter }) => {
 };
 
 export default FilterPedidosVtex;
+

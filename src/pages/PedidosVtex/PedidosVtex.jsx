@@ -57,14 +57,14 @@ const transformData = (list, handleIconClick) => {
     cliente: item[4] || 'N/A',
     formaDePago: item[5] || 'N/A',
     vrPedido: item[3] || 'N/A', 
-    impuestos: item[7] || 'N/A', 
     fechaPedido: item[6] || 'N/A', 
-    generarPedidoERP: item[8] || 'N/A', 
+    //generarPedidoERP: item[8] || 'N/A', 
     estado: String(item[9]) || 'N/A',
   }));
 };
 
 const PedidosVtex = () => {
+  const [data, setData] = useState([]);
   const [filtersPedidoVtex, setFiltersPedidosVtex] = useState({
     almacen: '',
     pedidoVtex: '',
@@ -72,15 +72,13 @@ const PedidosVtex = () => {
     cliente: '',
     formaDePago: '',
     vrPedido: '',
-    impuestos: '',
     fechaPedido: '',
     estado: '',
-    generarPedidoERP: '',
+    //generarPedidoERP: '',
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [valorCampo, setValorCampo] = useState('');
-  const [data, setData] = useState([]);
   const formRef = useRef();
   const [showMyMenu, setShowMyMenu] = useState(true);
 
@@ -95,25 +93,42 @@ const PedidosVtex = () => {
 
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
-  const currentItems = data
-    .filter(item =>
+  const currentItems = useMemo(() => {
+    // Calcular el índice de inicio y fin basado en la paginación
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+  
+    // Filtrar los datos y luego aplicar paginación
+    return data
+    .filter((item) =>
       item.almacen.toLowerCase().includes(filtersPedidoVtex.almacen.toLowerCase()) &&
       item.pedidoVtex.toLowerCase().includes(filtersPedidoVtex.pedidoVtex.toLowerCase()) &&
       item.pedidoERP.toLowerCase().includes(filtersPedidoVtex.pedidoERP.toLowerCase()) &&
       item.cliente.toLowerCase().includes(filtersPedidoVtex.cliente.toLowerCase()) &&
       item.formaDePago.toLowerCase().includes(filtersPedidoVtex.formaDePago.toLowerCase()) &&
       item.vrPedido.toLowerCase().includes(filtersPedidoVtex.vrPedido.toLowerCase()) &&
-      item.impuestos.toLowerCase().includes(filtersPedidoVtex.impuestos.toLowerCase()) &&
+      //item.impuestos.toLowerCase().includes(filtersPedidoVtex.impuestos.toLowerCase()) &&
       item.fechaPedido.toLowerCase().includes(filtersPedidoVtex.fechaPedido.toLowerCase()) &&
-      item.generarPedidoERP.toLowerCase().includes(filtersPedidoVtex.generarPedidoERP.toLowerCase()) &&
+      //item.generarPedidoERP.toLowerCase().includes(filtersPedidoVtex.generarPedidoERP.toLowerCase()) &&
       (typeof item.estado === 'string' ? item.estado.toLowerCase() : item.estado.toString()).includes(filtersPedidoVtex.estado.toLowerCase())
     )
-    .slice(indexOfFirstItem, indexOfLastItem);
+    .slice(start, end);
+}, [currentPage, pageSize, data, filtersPedidoVtex]);
 
   const handleChangePage = (page, size) => {
     setCurrentPage(page);
     setPageSize(size);
   };
+
+  const initialFiltersCartera = useMemo(() => ({
+    almacen: '',
+    pedidoVtex:'',
+    pedidoERP:'',
+    cliente: '',
+    formaDePago: '',
+    vrPedido: '',
+    estado: '',
+  }), []);
 
   const clearSelector = () => {
     setFiltersPedidosVtex({
@@ -123,21 +138,24 @@ const PedidosVtex = () => {
       cliente: '',
       formaDePago: '',
       vrPedido: '',
-      impuestos: '',
       fechaPedido: '',
       estado: '',
-      generarPedidoERP: '',
     });
-    setValorCampo('');
+    setCurrentPage(1);
   };
 
-  const handleButtonClick = () => {
-    clearSelector();
+  /*const handleClearDates = () => {
     formRef.current.setFieldsValue({
       date1: undefined,
       date2: undefined,
     });
+  };*/
+
+  const handleButtonClick = () => {
+    clearSelector(); // Ejecuta la acción existente
+    // handleClearDates(); Limpia las fechas
   };
+  
 
   return (
     <section>
@@ -176,7 +194,7 @@ const PedidosVtex = () => {
                     <BuscarButton className="component-item" />
                     {/*<BotonGenerar onClick={handleButtonClick} className="component-item" iconClassName="bi-stripe" title="Generar en Siesa" />*/}
                     <BuscarLimpiar
-                    onClick={clearSelector}/>
+                    onClick={handleButtonClick}/>
                   </div>
                 </div>
               </div>
@@ -198,12 +216,11 @@ const PedidosVtex = () => {
                   <th scope="col">Cliente</th>
                   <th scope="col">Forma de Pago</th>
                   <th scope="col">V/R Pedido</th>
-                  <th scope="col">Impuestos</th>
                   <th scope="col">Fecha Pedido</th>
                   <th scope="col">Estado</th>
                   <th scope="col">Seleccionar Todos</th>
                 </tr>
-                <FilterPedidosVtex filtersPedidoVtex={filtersPedidoVtex} handleFilter={handleFilter} handleButtonClick={handleButtonClick} />
+                <FilterPedidosVtex filtersPedidosVtex={filtersPedidoVtex} handleFilter={handleFilter}  handleButtonClick={handleButtonClick} />
               </thead>
               <tbody>
                 {currentItems.map((item, index) => (
@@ -215,9 +232,8 @@ const PedidosVtex = () => {
                     <td>{item.cliente}</td>
                     <td>{item.formaDePago}</td>
                     <td>{item.vrPedido}</td>
-                    <td>{item.impuestos}</td>
                     <td>{item.fechaPedido}</td>
-                    <td>{item.generarPedidoERP}</td>
+                    <td><EstadoFactura /></td>
                     <td>
                       <CheckboxSelectodo />
                       <CheckboxGroup />
