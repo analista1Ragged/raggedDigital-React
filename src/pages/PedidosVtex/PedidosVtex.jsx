@@ -50,20 +50,20 @@ const transformData = (list) => {
 
   return list.map((item, index) => ({
     item: index + 1,
-    almacen: item.hostname || 'N/A',
-    pedidoVtex: item.orderId || 'N/A',
-    pedidoERP: '',  // No lo tienes en la respuesta JSON
-    cliente: item.clientName || 'N/A',
-    formaDePago: item.paymentNames || 'N/A',
-    vrPedido: item.totalValue || 'N/A',
-    impuestos: 'N/A',  // No lo tienes en la respuesta JSON
-    fechaPedido: item.creationDate || 'N/A',
-    estado: item.status || 'N/A',
-    generarPedidoERP: 'N/A',  // No lo tienes en la respuesta JSON
+    almacen: item[0] || 'N/A',
+    pedidoVtex: item[1] || 'N/A',
+    pedidoERP: item[2] || 'N/A',
+    cliente: item[4] || 'N/A',
+    formaDePago: item[5] || 'N/A',
+    vrPedido: item[3] || 'N/A', 
+    fechaPedido: item[6] || 'N/A', 
+    //generarPedidoERP: item[8] || 'N/A', 
+    estado: String(item[9]) || 'N/A',
   }));
 };
 
 const PedidosVtex = () => {
+  const [data, setData] = useState([]);
   const [filtersPedidoVtex, setFiltersPedidosVtex] = useState({
     almacen: '',
     pedidoVtex: '',
@@ -71,15 +71,13 @@ const PedidosVtex = () => {
     cliente: '',
     formaDePago: '',
     vrPedido: '',
-    impuestos: '',
     fechaPedido: '',
     estado: '',
-    generarPedidoERP: '',
+    //generarPedidoERP: '',
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [data, setData] = useState([]);  // Datos que vienen de la API
-  const [loading, setLoading] = useState(true);  // Estado para el indicador de carga
+  const [valorCampo, setValorCampo] = useState('');
   const formRef = useRef();
   const [showMyMenu, setShowMyMenu] = useState(true);
 
@@ -114,7 +112,13 @@ const PedidosVtex = () => {
 
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
-  const currentItems = data
+  const currentItems = useMemo(() => {
+    // Calcular el índice de inicio y fin basado en la paginación
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+  
+    // Filtrar los datos y luego aplicar paginación
+    return data
     .filter((item) =>
       item.almacen.toLowerCase().includes(filtersPedidoVtex.almacen.toLowerCase()) &&
       item.pedidoVtex.toLowerCase().includes(filtersPedidoVtex.pedidoVtex.toLowerCase()) &&
@@ -122,19 +126,28 @@ const PedidosVtex = () => {
       item.cliente.toLowerCase().includes(filtersPedidoVtex.cliente.toLowerCase()) &&
       item.formaDePago.toLowerCase().includes(filtersPedidoVtex.formaDePago.toLowerCase()) &&
       item.vrPedido.toLowerCase().includes(filtersPedidoVtex.vrPedido.toLowerCase()) &&
-      item.impuestos.toLowerCase().includes(filtersPedidoVtex.impuestos.toLowerCase()) &&
+      //item.impuestos.toLowerCase().includes(filtersPedidoVtex.impuestos.toLowerCase()) &&
       item.fechaPedido.toLowerCase().includes(filtersPedidoVtex.fechaPedido.toLowerCase()) &&
-      (typeof item.estado === 'string'
-        ? item.estado.toLowerCase()
-        : item.estado.toString()
-      ).includes(filtersPedidoVtex.estado.toLowerCase())
+      //item.generarPedidoERP.toLowerCase().includes(filtersPedidoVtex.generarPedidoERP.toLowerCase()) &&
+      (typeof item.estado === 'string' ? item.estado.toLowerCase() : item.estado.toString()).includes(filtersPedidoVtex.estado.toLowerCase())
     )
-    .slice(indexOfFirstItem, indexOfLastItem);
+    .slice(start, end);
+}, [currentPage, pageSize, data, filtersPedidoVtex]);
 
   const handleChangePage = (page, size) => {
     setCurrentPage(page);
     setPageSize(size);
   };
+
+  const initialFiltersCartera = useMemo(() => ({
+    almacen: '',
+    pedidoVtex:'',
+    pedidoERP:'',
+    cliente: '',
+    formaDePago: '',
+    vrPedido: '',
+    estado: '',
+  }), []);
 
   const clearSelector = () => {
     setFiltersPedidosVtex({
@@ -144,12 +157,25 @@ const PedidosVtex = () => {
       cliente: '',
       formaDePago: '',
       vrPedido: '',
-      impuestos: '',
       fechaPedido: '',
       estado: '',
-      generarPedidoERP: '',
     });
+    setValorCampo(''); // Limpia también el campo de textoas
+    setCurrentPage(1);
   };
+
+  /*const handleClearDates = () => {
+    formRef.current.setFieldsValue({
+      date1: undefined,
+      date2: undefined,
+    });
+  };*/
+
+  const handleButtonClick = () => {
+    clearSelector(); // Ejecuta la acción existente
+    // handleClearDates(); Limpia las fechas
+  };
+  
 
   return (
     <section>
@@ -173,7 +199,9 @@ const PedidosVtex = () => {
                   <div className="separador">
                     <SeleccionarFecha className="component-item" />
                     <BuscarButton className="component-item" />
-                    <BuscarLimpiar onClick={clearSelector} />
+                    {/*<BotonGenerar onClick={handleButtonClick} className="component-item" iconClassName="bi-stripe" title="Generar en Siesa" />*/}
+                    <BuscarLimpiar
+                    onClick={handleButtonClick}/>
                   </div>
                 </div>
               </div>
@@ -185,55 +213,43 @@ const PedidosVtex = () => {
 
         <div className="tabla-container">
           <div className="tabla-scroll">
-            {loading ? (
-              <p>Cargando datos...</p>
-            ) : (
-              <table className="table table-striped table-hover ticket-table">
-                <thead>
+            <table className="table table-striped table-hover ticket-table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Almacén</th>
+                  <th scope="col">Pedido Vtex</th>
+                  <th scope="col">Pedido ERP</th>
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Forma de Pago</th>
+                  <th scope="col">V/R Pedido</th>
+                  <th scope="col">Fecha Pedido</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Seleccionar Todos</th>
+                </tr>
+                <FilterPedidosVtex filtersPedidosVtex={filtersPedidoVtex} handleFilter={handleFilter}  handleButtonClick={handleButtonClick} />
+              </thead>
+              <tbody>
+                {currentItems.map((item, index) => (
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Almacén</th>
-                    <th scope="col">Pedido Vtex</th>
-                    <th scope="col">Pedido ERP</th>
-                    <th scope="col">Cliente</th>
-                    <th scope="col">Forma de Pago</th>
-                    <th scope="col">V/R Pedido</th>
-                    <th scope="col">Impuestos</th>
-                    <th scope="col">Fecha Pedido</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Seleccionar Todos</th>
+                    <td>1</td>
+                    <td>{item.almacen}</td>
+                    <td>{item.pedidoVtex}</td>
+                    <td>{item.pedidoERP}</td>
+                    <td>{item.cliente}</td>
+                    <td>{item.formaDePago}</td>
+                    <td>{item.vrPedido}</td>
+                    <td>{item.fechaPedido}</td>
+                    <td><EstadoFactura /></td>
+                    <td>
+                      <CheckboxSelectodo />
+                      <CheckboxGroup />
+                    </td>
                   </tr>
-                  <FilterPedidosVtex
-                    filtersPedidoVtex={filtersPedidoVtex}
-                    handleFilter={handleFilter}
-                  />
-                </thead>
-                <tbody>
-                  {currentItems.length > 0 ? currentItems.map((item, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{item.almacen}</td>
-                      <td>{item.pedidoVtex}</td>
-                      <td>{item.pedidoERP}</td>
-                      <td>{item.cliente}</td>
-                      <td>{item.formaDePago}</td>
-                      <td>{item.vrPedido}</td>
-                      <td>{item.impuestos}</td>
-                      <td>{item.fechaPedido}</td>
-                      <td>{item.estado}</td>
-                      <td>
-                        <CheckboxSelectodo />
-                        <CheckboxGroup />
-                      </td>
-                    </tr>
-                  )) : (
-                    <tr>
-                      <td colSpan="11">No se encontraron pedidos</td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            )}
+                  
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
         <div className="pagination">
