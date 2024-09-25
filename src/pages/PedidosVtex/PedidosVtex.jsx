@@ -12,6 +12,8 @@ import FilterPedidosVtex from '../../components/FilterRow/FilterPedidosVtex.jsx'
 import CheckboxGroup from '../../components/Checkbox/CheckboxDoble/CheckboxGroup.jsx';
 import { urlapi } from '../../App';
 
+
+
 // Componente para mostrar el estado
 const EstadoFactura = ({ estado }) => {
   let color, text;
@@ -131,6 +133,7 @@ const PedidosVtex = () => {
       fechaPedido: '',
       estado: '',
     });
+    
   };
 
   return (
