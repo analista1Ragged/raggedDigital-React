@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './PedidosVtex.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Pagination, Tag } from 'antd';
+import { Tag } from 'antd';
 import 'antd/dist/reset.css';
 import CampoTexto from '../../components/CampoTexto/CampoTextoReferencia.jsx';
 import SeleccionarFecha from '../../components/SeleccionarFecha/SeleccionarFecha.jsx';
@@ -10,7 +10,6 @@ import Menu2BotonesG from '../../components/Menu3Botones/Menu2BotonesG.jsx';
 import BuscarLimpiar from '../../components/BotonLimpiar/BotonLimpiar.jsx';
 import FilterPedidosVtex from '../../components/FilterRow/FilterPedidosVtex.jsx';
 import CheckboxGroup from '../../components/Checkbox/CheckboxDoble/CheckboxGroup.jsx';
-import CheckboxSelectodo from '../../components/Checkbox/CheckboxDoble/CheckboxSelectodo.jsx';
 import { urlapi } from '../../App';
 
 // Componente para mostrar el estado
@@ -30,7 +29,7 @@ const EstadoFactura = ({ estado }) => {
       color = '#FFA500';
       text = 'Comprometido';
       break;
-    case 'Facturado':
+    case 'invoiced':
       color = '#D4B106';
       text = 'Facturado';
       break;
@@ -45,7 +44,6 @@ const EstadoFactura = ({ estado }) => {
 
 // Función para transformar los datos
 const transformData = (list) => {
-  // Verifica si list es un array antes de mapearlo
   if (!Array.isArray(list)) {
     console.error('Expected an array but received:', list);
     return [];
@@ -77,8 +75,6 @@ const PedidosVtex = () => {
     fechaPedido: '',
     estado: '',
   });
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
 
   // Carga de datos desde el backend
   useEffect(() => {
@@ -88,12 +84,11 @@ const PedidosVtex = () => {
         const response = await fetch(`${urlapi}/get-orders`);
         const result = await response.json();
         
-        // Verificar si la respuesta tiene un array llamado "list" o si los datos están directamente en result
-        const dataToTransform = result.list || result;  // Cambia esta línea si la estructura de la respuesta es diferente
+        const dataToTransform = result.list || result; 
         console.log("Datos recibidos:", dataToTransform);
         
-        const transformedData = transformData(dataToTransform);  // Transformar los datos
-        setData(transformedData);  // Guardar en el estado
+        const transformedData = transformData(dataToTransform); 
+        setData(transformedData);  
       } catch (error) {
         console.error('Error fetching orders:', error);
       } finally {
@@ -110,31 +105,20 @@ const PedidosVtex = () => {
       ...filtersPedidoVtex,
       [name]: value,
     });
-    setCurrentPage(1);
   };
 
   const currentItems = useMemo(() => {
-    const start = (currentPage - 1) * pageSize;
-    const end = start + pageSize;
-
-    return data
-      .filter((item) =>
-        item.almacen.toLowerCase().includes(filtersPedidoVtex.almacen.toLowerCase()) &&
-        item.pedidoVtex.toLowerCase().includes(filtersPedidoVtex.pedidoVtex.toLowerCase()) &&
-        item.pedidoERP.toLowerCase().includes(filtersPedidoVtex.pedidoERP.toLowerCase()) &&
-        item.cliente.toLowerCase().includes(filtersPedidoVtex.cliente.toLowerCase()) &&
-        item.formaDePago.toLowerCase().includes(filtersPedidoVtex.formaDePago.toLowerCase()) &&
-        item.vrPedido.toLowerCase().includes(filtersPedidoVtex.vrPedido.toLowerCase()) &&
-        item.fechaPedido.toLowerCase().includes(filtersPedidoVtex.fechaPedido.toLowerCase()) &&
-        item.estado.toLowerCase().includes(filtersPedidoVtex.estado.toLowerCase())
-      )
-      .slice(start, end);
-  }, [currentPage, pageSize, data, filtersPedidoVtex]);
-
-  const handleChangePage = (page, size) => {
-    setCurrentPage(page);
-    setPageSize(size);
-  };
+    return data.filter((item) =>
+      item.almacen.toLowerCase().includes(filtersPedidoVtex.almacen.toLowerCase()) &&
+      item.pedidoVtex.toLowerCase().includes(filtersPedidoVtex.pedidoVtex.toLowerCase()) &&
+      item.pedidoERP.toLowerCase().includes(filtersPedidoVtex.pedidoERP.toLowerCase()) &&
+      item.cliente.toLowerCase().includes(filtersPedidoVtex.cliente.toLowerCase()) &&
+      item.formaDePago.toLowerCase().includes(filtersPedidoVtex.formaDePago.toLowerCase()) &&
+      item.vrPedido.toLowerCase().includes(filtersPedidoVtex.vrPedido.toLowerCase()) &&
+      item.fechaPedido.toLowerCase().includes(filtersPedidoVtex.fechaPedido.toLowerCase()) &&
+      item.estado.toLowerCase().includes(filtersPedidoVtex.estado.toLowerCase())
+    );
+  }, [data, filtersPedidoVtex]);
 
   const clearSelector = () => {
     setFiltersPedidosVtex({
@@ -147,7 +131,6 @@ const PedidosVtex = () => {
       fechaPedido: '',
       estado: '',
     });
-    setCurrentPage(1);
   };
 
   return (
@@ -194,7 +177,7 @@ const PedidosVtex = () => {
                   <th scope="col">V/R Pedido</th>
                   <th scope="col">Fecha Pedido</th>
                   <th scope="col">Estado</th>
-                  <th scope="col">Seleccionar Todos</th>
+                  <th scope="col">Seleccionar</th>
                 </tr>
                 <FilterPedidosVtex filtersPedidosVtex={filtersPedidoVtex} handleFilter={handleFilter} />
               </thead>
@@ -211,8 +194,7 @@ const PedidosVtex = () => {
                     <td>{item.fechaPedido}</td>
                     <td><EstadoFactura estado={item.estado} /></td>
                     <td>
-                      <CheckboxSelectodo />
-                      <CheckboxGroup items={currentItems.map(i => i.id)} /> {/* Asegúrate de pasar un array */}
+                      <CheckboxGroup items={[item.id]} /> {/* Asegúrate de pasar un array con el id actual */}
                     </td>
                   </tr>
                 ))}
@@ -220,13 +202,9 @@ const PedidosVtex = () => {
             </table>
           </div>
         </div>
-        <div className="pagination">
-          <Pagination current={currentPage} pageSize={pageSize} onChange={handleChangePage} />
-        </div>
       </div>
     </section>
   );
 };
 
 export default PedidosVtex;
-
