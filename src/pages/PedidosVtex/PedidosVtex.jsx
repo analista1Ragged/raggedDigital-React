@@ -75,6 +75,12 @@ const PedidosVtex = () => {
     fechaPedido: '',
     estado: '',
   });
+  const [selectedOrders, setSelectedOrders] = useState({}); // Estado para almacenar los pedidos seleccionados
+
+  const handleGenerate = () => {
+    const selectedPedidos = currentItems.filter(item => selectedOrders[item.id]); // Filtra los pedidos seleccionados
+    console.log(selectedPedidos); // Imprime los pedidos seleccionados en consola
+  };
 
   // Carga de datos desde el backend
   useEffect(() => {
@@ -131,6 +137,14 @@ const PedidosVtex = () => {
       fechaPedido: '',
       estado: '',
     });
+    setSelectedOrders({}); // Limpiar los pedidos seleccionados
+  };
+
+  const handleCheckboxChange = (id) => {
+    setSelectedOrders(prev => ({
+      ...prev,
+      [id]: !prev[id] // Alterna el estado del checkbox
+    }));
   };
 
   return (
@@ -161,7 +175,7 @@ const PedidosVtex = () => {
           </div>
         </form>
 
-        <Menu2BotonesG />
+        <Menu2BotonesG onGenerate={handleGenerate} />
 
         <div className="tabla-container">
           <div className="tabla-scroll">
@@ -182,8 +196,8 @@ const PedidosVtex = () => {
                 <FilterPedidosVtex filtersPedidosVtex={filtersPedidoVtex} handleFilter={handleFilter} />
               </thead>
               <tbody>
-                {currentItems.map((item, index) => (
-                  <tr key={index}>
+                {currentItems.map((item) => (
+                  <tr key={item.id}>
                     <td>{item.id}</td>
                     <td>{item.almacen}</td>
                     <td>{item.pedidoVtex}</td>
@@ -194,7 +208,11 @@ const PedidosVtex = () => {
                     <td>{item.fechaPedido}</td>
                     <td><EstadoFactura estado={item.estado} /></td>
                     <td>
-                      <CheckboxGroup items={[item.id]} /> {/* Asegúrate de pasar un array con el id actual */}
+                      <input
+                        type="checkbox"
+                        checked={!!selectedOrders[item.id]}
+                        onChange={() => handleCheckboxChange(item.id)}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -202,6 +220,7 @@ const PedidosVtex = () => {
             </table>
           </div>
         </div>
+        {/* Pagination no se ha definido, puedes agregarlo si lo necesitas */}
       </div>
     </section>
   );
