@@ -142,7 +142,7 @@ const PedidosVtex = () => {
       estado: '',
     });
     setValorCampo(''); // Limpia también el campo de textoas
-    setCurrentPage(1);
+    
   };
 
   /*const handleClearDates = () => {
