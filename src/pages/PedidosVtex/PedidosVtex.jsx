@@ -11,6 +11,7 @@ import BuscarLimpiar from '../../components/BotonLimpiar/BotonLimpiar.jsx';
 import FilterPedidosVtex from '../../components/FilterRow/FilterPedidosVtex.jsx';
 import CheckboxGroup from '../../components/Checkbox/CheckboxDoble/CheckboxGroup.jsx';
 import { urlapi } from '../../App';
+import axios from 'axios';
 
 // Componente para mostrar el estado
 const EstadoFactura = ({ estado }) => {
@@ -77,10 +78,19 @@ const PedidosVtex = () => {
   });
   const [selectedOrders, setSelectedOrders] = useState({}); // Estado para almacenar los pedidos seleccionados
 
-  const handleGenerate = () => {
+
+  const handleGenerate = async () => {
     const selectedPedidos = currentItems.filter(item => selectedOrders[item.id]); // Filtra los pedidos seleccionados
-    console.log(selectedPedidos); // Imprime los pedidos seleccionados en consola
+    const pedidoVtexList = selectedPedidos.map(item => item.pedidoVtex); // Extrae solo los valores de pedidoVtex
+  
+    try {
+      const response = await axios.post(`${urlapi}/get-orderDetail`, pedidoVtexList);
+      console.log('Response from API:', response.data);
+    } catch (error) {
+      console.error('Error sending pedidoVtexList:', error);
+    }
   };
+  
 
   // Carga de datos desde el backend
   useEffect(() => {
