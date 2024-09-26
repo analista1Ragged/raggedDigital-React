@@ -23,7 +23,7 @@ import PedidosVtex from './pages/PedidosVtex/PedidosVtex';
 //import CheckboxGroup from './components/Checkbox/CheckboxDoble/CheckboxGroup';
 import CheckboxSelectodo from './components/Checkbox/CheckboxDoble/CheckboxSelectodo';
 import CheckboxGroup from './components/Checkbox/CheckboxDoble/CheckboxGroup';
-import PowerPoint from './components/HelpRaggedDigital/PowerPoint';
+import PowerPoint from './components/HelpRaggedDigital/HelpNominaElectronica';
 
 
 //export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
@@ -208,11 +208,26 @@ function App() {
             <PedidosVtex />
           </div>
         } />
-        <Route path='/PowerPoint' element={
-          <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <PowerPoint />
-          </div>
-        } />
+        <Route 
+          path="/HelpNomina" 
+          element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <PowerPoint 
+                src="https://ragged-my.sharepoint.com/personal/greggo_ragged_com_co/_layouts/15/Doc.aspx?sourcedoc={523665fa-473f-430a-ade3-c886936e969f}&amp;action=embedview&amp;wdAr=1.7777777777777777" 
+              />
+            </div>
+          }
+        />
+        <Route 
+          path="/HelpCartera" 
+          element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <PowerPoint 
+                src="https://ragged-my.sharepoint.com/personal/greggo_ragged_com_co/_layouts/15/Doc.aspx?sourcedoc={df779a9c-d49e-42c8-9515-172133b2a4d5}&amp;action=embedview&amp;wdAr=1.7777777777777777" 
+              />
+            </div>
+          }
+        />
       </Routes>
       
       {shouldShowNavbar() && <Footer />}
