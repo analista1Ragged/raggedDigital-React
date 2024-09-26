@@ -13,6 +13,8 @@ import CheckboxGroup from '../../components/Checkbox/CheckboxDoble/CheckboxGroup
 import { urlapi } from '../../App';
 import axios from 'axios';
 
+
+
 // Componente para mostrar el estado
 const EstadoFactura = ({ estado }) => {
   let color, text;
