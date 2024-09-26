@@ -23,6 +23,7 @@ import PedidosVtex from './pages/PedidosVtex/PedidosVtex';
 //import CheckboxGroup from './components/Checkbox/CheckboxDoble/CheckboxGroup';
 import CheckboxSelectodo from './components/Checkbox/CheckboxDoble/CheckboxSelectodo';
 import CheckboxGroup from './components/Checkbox/CheckboxDoble/CheckboxGroup';
+import PowerPoint from './components/HelpRaggedDigital/PowerPoint';
 
 
 //export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
@@ -169,7 +170,7 @@ function App() {
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <CheckboxSelectodo />
+            <PowerPoint />
           </div>
         } />
         
@@ -205,6 +206,11 @@ function App() {
         <Route path='/Logistica/CanalDigital/Vtex' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <PedidosVtex />
+          </div>
+        } />
+        <Route path='/PowerPoint' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <PowerPoint />
           </div>
         } />
       </Routes>
