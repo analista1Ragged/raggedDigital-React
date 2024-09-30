@@ -14,6 +14,7 @@ import { urlapi } from '../../App.js';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import FilterRowCartera from '../../components/FilterRow/FilterRowCartera.jsx'
+import { LuBadgeHelp } from "react-icons/lu";
 
 // Componente EstadoFactura
 const EstadoFactura = ({ estado }) => {
@@ -334,6 +335,9 @@ const initialFiltersCartera = useMemo(() => ({
         <i className="bi bi-arrow-left-circle"></i>
       </a>
       {'  '} Consulta Cartera RagStyle
+      <a href="/RaggedDigital/HelpCartera" className="left" title="Help" target="_blank" rel="noopener noreferrer">
+          <LuBadgeHelp />
+        </a>
     </h2>
     <h3>
       <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">

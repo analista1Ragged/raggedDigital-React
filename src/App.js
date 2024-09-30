@@ -24,6 +24,7 @@ import PedidosVtex from './pages/PedidosVtex/PedidosVtex';
 import CheckboxSelectodo from './components/Checkbox/CheckboxDoble/CheckboxSelectodo';
 import CheckboxGroup from './components/Checkbox/CheckboxDoble/CheckboxGroup';
 import PowerPoint from './components/HelpRaggedDigital/HelpNominaElectronica';
+import Header from './components/Header/Header';
 
 
 //export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
@@ -63,7 +64,8 @@ function App() {
 
   return (
     <div className="App">
-      {shouldShowNavbar() && <MyMenu visible={navVisible} show={showNavbar} />}
+      {shouldShowNavbar() && <MyMenu  />}
+      {shouldShowNavbar() && <Header />}
       <Routes>
         <Route path="/" element={<Navigate to="/Login" />} />
         <Route path='/Login' element={
@@ -170,7 +172,7 @@ function App() {
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <PowerPoint />
+            <Header />
           </div>
         } />
         
