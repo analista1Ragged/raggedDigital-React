@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import './PedidosVtex.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Tag } from 'antd';
@@ -13,39 +13,39 @@ import CheckboxGroup from '../../components/Checkbox/CheckboxDoble/CheckboxGroup
 import { urlapi } from '../../App';
 import axios from 'axios';
 
-
-
-// Componente para mostrar el estado
 const EstadoFactura = ({ estado }) => {
   let color, text;
 
   switch (estado) {
-    case 'Importado':
+    case 'ready for handling':
       color = '#A0A0A0';
-      text = 'Importado';
+      text = 'listo para empacar';
       break;
-    case 'Preparando':
+    case 'canceled':
       color = '#FF5050';
-      text = 'Preparando';
+      text = 'Cancelado';
       break;
-    case 'Comprometido':
+    case 'payment-pending':
       color = '#FFA500';
-      text = 'Comprometido';
+      text = 'Pago pendiente';
       break;
     case 'invoiced':
-      color = '#D4B106';
+      color = '#87d068';
       text = 'Facturado';
       break;
+    case 'handling':
+        color = '#D4B106';
+        text = 'En preparación';
+        break;
     default:
-      color = '#87d068';
-      text = 'Guía preparada';
+      color = '#4f5d56';
+      text = 'error';
       break;
   }
 
   return <Tag color={color}>{text}</Tag>;
 };
 
-// Función para transformar los datos
 const transformData = (list) => {
   if (!Array.isArray(list)) {
     console.error('Expected an array but received:', list);
@@ -61,7 +61,7 @@ const transformData = (list) => {
     formaDePago: item['Forma de Pago'] || 'N/A',
     vrPedido: item['V/R Pedido'] || 'N/A',
     fechaPedido: item['Fecha Pedido'] || 'N/A',
-    estado: item.Estado || 'N/A',
+    estado: item.Estado_Vtex || 'N/A',
   }));
 };
 
@@ -78,12 +78,12 @@ const PedidosVtex = () => {
     fechaPedido: '',
     estado: '',
   });
-  const [selectedOrders, setSelectedOrders] = useState({}); // Estado para almacenar los pedidos seleccionados
-
+  const seleccionarFechaRef = useRef(null);
+  const [selectedOrders, setSelectedOrders] = useState({});
 
   const handleGenerate = async () => {
-    const selectedPedidos = currentItems.filter(item => selectedOrders[item.id]); // Filtra los pedidos seleccionados
-    const pedidoVtexList = selectedPedidos.map(item => item.pedidoVtex); // Extrae solo los valores de pedidoVtex
+    const selectedPedidos = currentItems.filter(item => selectedOrders[item.id]);
+    const pedidoVtexList = selectedPedidos.map(item => item.pedidoVtex);
   
     try {
       const response = await axios.post(`${urlapi}/get-orderDetail`, pedidoVtexList);
@@ -92,9 +92,7 @@ const PedidosVtex = () => {
       console.error('Error sending pedidoVtexList:', error);
     }
   };
-  
 
-  // Carga de datos desde el backend
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -113,9 +111,18 @@ const PedidosVtex = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
+
+  const handleBuscarClick = () => {
+    if (seleccionarFechaRef.current) {
+      const { date1, date2 } = seleccionarFechaRef.current.getDates(); // Obtener las fechas
+      console.log('Fecha Inicial:', date1 ? date1.format('YYYY-MM-DD') : 'No seleccionada');
+      console.log('Fecha Final:', date2 ? date2.format('YYYY-MM-DD') : 'No seleccionada');
+    } else {
+      console.log('No se ha seleccionado una fecha.');
+    }
+  };
 
   const handleFilter = (e) => {
     const { name, value } = e.target;
@@ -149,13 +156,13 @@ const PedidosVtex = () => {
       fechaPedido: '',
       estado: '',
     });
-    setSelectedOrders({}); // Limpiar los pedidos seleccionados
+    setSelectedOrders({});
   };
 
   const handleCheckboxChange = (id) => {
     setSelectedOrders(prev => ({
       ...prev,
-      [id]: !prev[id] // Alterna el estado del checkbox
+      [id]: !prev[id]
     }));
   };
 
@@ -177,8 +184,8 @@ const PedidosVtex = () => {
                     <CampoTexto placeholder="Buscar por # pedido:" />
                   </div>
                   <div className="separador">
-                    <SeleccionarFecha className="component-item" />
-                    <BuscarButton className="component-item" />
+                    <SeleccionarFecha className="component-item" ref={seleccionarFechaRef}/>
+                    <BuscarButton className="component-item" onClick={handleBuscarClick} />
                     <BuscarLimpiar onClick={clearSelector} />
                   </div>
                 </div>
@@ -232,7 +239,6 @@ const PedidosVtex = () => {
             </table>
           </div>
         </div>
-        {/* Pagination no se ha definido, puedes agregarlo si lo necesitas */}
       </div>
     </section>
   );
