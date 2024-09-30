@@ -125,8 +125,6 @@ const NominaElectronica = () => {
   return (
     <section className="formulario">
       
-
-      <form onSubmit={handleSubmit}>
       <h2>
         <a href="/RaggedDigital/Home" className="left" title="volver">
           <i className="bi bi-arrow-left-circle"></i>
@@ -134,13 +132,12 @@ const NominaElectronica = () => {
         {'  '}
         Informe de nómina electrónica.
         {'  '}
-        <a href="/RaggedDigital/Prueba" className="left" title="Help" target="_blank" rel="noopener noreferrer">
+        <a href="/RaggedDigital/HelpNomina" className="left" title="Help" target="_blank" rel="noopener noreferrer">
           <LuBadgeHelp />
         </a>
-
-        
-
       </h2>
+      <form onSubmit={handleSubmit}>
+      
         <SeleccionarFechaP onDate1Change={setFecha} />
         <ListaOpcionesP
           listas={[["HE", "Rancho Guadalupe"], ["HL", "Hacienda Amparo"]]}
