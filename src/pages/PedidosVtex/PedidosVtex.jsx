@@ -17,6 +17,10 @@ const EstadoFactura = ({ estado }) => {
   let color, text;
 
   switch (estado) {
+    case "Sin Importar a Siesa":
+      color = '#4f5d56';
+      text = 'Sin Importar';
+      break;
     case 'ready for handling':
       color = '#A0A0A0';
       text = 'listo para empacar';
@@ -62,6 +66,7 @@ const transformData = (list) => {
     vrPedido: item['V/R Pedido'] || 'N/A',
     fechaPedido: item['Fecha Pedido'] || 'N/A',
     estado: item.Estado_Vtex || 'N/A',
+    estado2: item.Estado_Siesa || 'N/A',
   }));
 };
 
@@ -84,7 +89,7 @@ const PedidosVtex = () => {
   const handleGenerate = async () => {
     const selectedPedidos = currentItems.filter(item => selectedOrders[item.id]);
     const pedidoVtexList = selectedPedidos.map(item => item.pedidoVtex);
-  
+    //console.log('Pedidos seleccionados:', pedidoVtexList);
     try {
       const response = await axios.post(`${urlapi}/get-orderDetail`, pedidoVtexList);
       console.log('Response from API:', response.data);
@@ -209,7 +214,8 @@ const PedidosVtex = () => {
                   <th scope="col">Forma de Pago</th>
                   <th scope="col">V/R Pedido</th>
                   <th scope="col">Fecha Pedido</th>
-                  <th scope="col">Estado</th>
+                  <th scope="col">Estado Vtex</th>
+                  <th scope="col">Estado Siesa</th>
                   <th scope="col">Seleccionar</th>
                 </tr>
                 <FilterPedidosVtex filtersPedidosVtex={filtersPedidoVtex} handleFilter={handleFilter} />
@@ -226,6 +232,7 @@ const PedidosVtex = () => {
                     <td>{item.vrPedido}</td>
                     <td>{item.fechaPedido}</td>
                     <td><EstadoFactura estado={item.estado} /></td>
+                    <td><EstadoFactura estado={item.estado2} /></td>
                     <td>
                       <input
                         type="checkbox"
