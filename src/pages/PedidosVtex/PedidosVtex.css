@@ -59,8 +59,22 @@
 
 /* Tabla de tickets */
 .pedidosvtex-ticket-table {
-    margin: 20px;
+    margin: 10px;
     width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.pedidosvtex-ticket-table2 {
+    margin: 10px;
+    width: 12%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.pedidosvtex-ticket-table3 {
+    margin: 10px;
+    width: 6%;
     border-collapse: collapse;
     table-layout: fixed;
 }
@@ -72,9 +86,11 @@
 
 .pedidosvtex-ticket-table th,
 .pedidosvtex-ticket-table td {
-    border: 1px solid #ddd;
     padding: 10px;
-    text-align: left;
+    border: 1px solid #ddd;
+    text-align: center;
+    word-wrap: break-word; /* Asegura que el contenido se ajuste a la celda */
+    overflow: hidden; /* Evita que el contenido se salga */
 }
 
 .pedidosvtex-ticket-table th {
