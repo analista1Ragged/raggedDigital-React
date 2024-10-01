@@ -12,11 +12,11 @@ const Header = () => {
   const getHelpLinkForPage = () => {
     switch (location.pathname) {
       case '/Mercadeo/Raqstyle/Inventario':
-        return 'https://glpi.ragged.com.com'; // Enlace para Inventario
+        return '/RaggedDigital/HelpCartera'; // Enlace para Inventario
       case '/Mercadeo/Raqstyle/Cartera':
-        return 'https://www.ragged.com.co'; // Enlace para Cartera
-      case '/RaggedDigital/TalentoHumano/Nomina/NominaElectronica':
-        return 'https://help.example.com/nominaelectronica'; // Enlace para Nómina Electrónica
+        return '/RaggedDigital/HelpCartera'; // Enlace para Cartera
+      case '/TalentoHumano/Nomina/NominaElectronica':
+        return '/RaggedDigital/HelpNomina'; // Enlace para Nómina Electrónica
       default:
         return null; // No mostrar el ícono si no está en una ruta especificada
     }
