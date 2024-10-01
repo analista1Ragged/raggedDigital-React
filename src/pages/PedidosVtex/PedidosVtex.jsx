@@ -202,48 +202,47 @@ const PedidosVtex = () => {
 
         <div className="pedidosvtex-tabla-container">
           <div className="pedidosvtex-tabla-scroll">
-          <table className="table table-striped table-hover pedidosvtex-ticket-table">
-  <thead>
-    <tr>
-      <th scope="col" className="pedidosvtex-ticket-table3">#</th>
-      <th scope="col">Almacén</th>
-      <th scope="col" className="pedidosvtex-ticket-table2">Pedido Vtex</th> {/* Aquí se agrega la clase */}
-      <th scope="col" >Pedido ERP</th>
-      <th scope="col">Cliente</th>
-      <th scope="col">Forma de Pago</th>
-      <th scope="col">V/R Pedido</th>
-      <th scope="col">Fecha Pedido</th>
-      <th scope="col" className="pedidosvtex-ticket-table2">Estado Vtex</th>
-      <th scope="col" >Estado Siesa</th>
-      <th scope="col">Seleccionar</th>
-    </tr>
-    <FilterPedidosVtex filtersPedidosVtex={filtersPedidoVtex} handleFilter={handleFilter} />
-  </thead>
-  <tbody>
-    {currentItems.map((item) => (
-      <tr key={item.id}>
-        <td>{item.id}</td>
-        <td>{item.almacen}</td>
-        <td>{item.pedidoVtex}</td>
-        <td>{item.pedidoERP}</td>
-        <td>{item.cliente}</td>
-        <td>{item.formaDePago}</td>
-        <td>{item.vrPedido}</td>
-        <td>{item.fechaPedido}</td>
-        <td><EstadoFactura estado={item.estado} /></td>
-        <td><EstadoFactura estado={item.estado2} /></td>
-        <td>
-          <input
-            type="checkbox"
-            checked={!!selectedOrders[item.id]}
-            onChange={() => handleCheckboxChange(item.id)}
-          />
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
-
+              <table className="table table-striped table-hover pedidosvtex-ticket-table">
+                <thead>
+                  <tr>
+                    <th scope="col" className="pedidosvtex-ticket-table3">#</th>
+                    <th scope="col">Almacén</th>
+                    <th scope="col" className="pedidosvtex-ticket-table2">Pedido Vtex</th> {/* Aquí se agrega la clase */}
+                    <th scope="col" >Pedido ERP</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Forma de Pago</th>
+                    <th scope="col">V/R Pedido</th>
+                    <th scope="col">Fecha Pedido</th>
+                    <th scope="col" className="pedidosvtex-ticket-table2">Estado Vtex</th>
+                    <th scope="col" >Estado Siesa</th>
+                    <th scope="col">Seleccionar</th>
+                  </tr>
+                  <FilterPedidosVtex filtersPedidosVtex={filtersPedidoVtex} handleFilter={handleFilter} />
+                </thead>
+                <tbody>
+                  {currentItems.map((item) => (
+                    <tr key={item.id}>
+                      <td>{item.id}</td>
+                      <td>{item.almacen}</td>
+                      <td>{item.pedidoVtex}</td>
+                      <td>{item.pedidoERP}</td>
+                      <td>{item.cliente}</td>
+                      <td>{item.formaDePago}</td>
+                      <td>{item.vrPedido}</td>
+                      <td>{item.fechaPedido}</td>
+                      <td><EstadoFactura estado={item.estado} /></td>
+                      <td><EstadoFactura estado={item.estado2} /></td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          checked={!!selectedOrders[item.id]}
+                          onChange={() => handleCheckboxChange(item.id)}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
           </div>
         </div>
       </div>
