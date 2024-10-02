@@ -21,12 +21,14 @@
 .custom-menu .ant-menu-item,
 .custom-menu .ant-menu-submenu-title {
   color: #fff;
+  
 }
 
 .custom-menu .ant-menu-item:hover,
 .custom-menu .ant-menu-submenu-title:hover,
 .custom-menu .ant-menu-item-selected {
   background-color: #373738;
+  
 }
 
 .custom-menu .ant-menu-item:hover a,

@@ -50,14 +50,17 @@ const CerrarSesion = () => {
   return null;
 };
 
+
+
 function App() {
   const [navVisible, showNavbar] = useState(false);
-  const location = useLocation();
+  const currentLocation = useLocation(); // Cambia el nombre de location a currentLocation
 
   // Función para verificar si se debe mostrar el navbar
   const shouldShowNavbar = () => {
-    return location.pathname !== '/Login' && location.pathname !== '/OlvidasteContrasena';
-
+    // Excluir rutas donde no quieres mostrar MyMenu
+    const excludedRoutes = ['/Login', '/OlvidasteContrasena', '/HelpNomina', '/HelpCartera'];
+    return !excludedRoutes.includes(currentLocation.pathname); // Usa currentLocation.pathname
   };
 
   

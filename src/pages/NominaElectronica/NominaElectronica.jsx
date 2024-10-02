@@ -132,9 +132,9 @@ const NominaElectronica = () => {
         {'  '}
         Informe de nómina electrónica.
         {'  '}
-        <a href="/RaggedDigital/HelpNomina" className="left" title="Help" target="_blank" rel="noopener noreferrer">
+        {/*<a href="/RaggedDigital/HelpNomina" className="left" title="Help" target="_blank" rel="noopener noreferrer">
           <LuBadgeHelp />
-        </a>
+        </a>}*/}
       </h2>
       <form onSubmit={handleSubmit}>
       

@@ -335,9 +335,9 @@ const initialFiltersCartera = useMemo(() => ({
         <i className="bi bi-arrow-left-circle"></i>
       </a>
       {'  '} Consulta Cartera RagStyle
-      <a href="/RaggedDigital/HelpCartera" className="left" title="Help" target="_blank" rel="noopener noreferrer">
+      {/*<a href="/RaggedDigital/HelpCartera" className="left" title="Help" target="_blank" rel="noopener noreferrer">
           <LuBadgeHelp />
-        </a>
+      </a>*/}
     </h2>
     <h3>
       <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
