@@ -284,21 +284,15 @@ const MyMenu = () => {
   };
 
   return (
-    <>
-      <Button
-        type="primary"
-        onClick={toggleCollapsed}
-        style={{
-          marginBottom: 16,
-          backgroundColor: "#373738",
-          position: "absolute",
-          top: 16,
-          left: 16,
-          zIndex: 1002,
-        }}
-      >
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      </Button>
+    <> 
+    <Button
+      type="primary"
+      onClick={toggleCollapsed}
+      title="Abrir Menu"  // Tooltip
+      className="custom-button"  // Usar la clase CSS
+    >
+      {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+    </Button>
       {!hidden && (
         <div
           ref={menuRef}

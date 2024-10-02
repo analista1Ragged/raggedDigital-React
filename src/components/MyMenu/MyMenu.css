@@ -55,3 +55,24 @@
   max-width: 100%;
   height: auto;
 }
+
+
+/* MyMenu.css */
+.custom-button {
+  margin-bottom: 16px;
+  background-color: #373738;
+  position: absolute;
+  top: 10px; /* Mueve el botón más arriba */
+  left: 16px;
+  z-index: 1002;
+  font-size: 18px; /* Aumenta el tamaño del texto/icono */
+  padding: 10px 20px; /* Aumenta el área de clic del botón */
+  color: white; /* Color de texto inicial */
+}
+
+/* Cambia el color cuando el mouse esté sobre el botón */
+.custom-button:hover {
+  background-color: #41D9A1 !important;
+  color: #373738 !important; /* Asegúrate de mantener el color del texto si es necesario */
+}
+

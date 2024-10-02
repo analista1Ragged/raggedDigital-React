@@ -3,6 +3,7 @@ import { RiCustomerServiceFill } from "react-icons/ri";
 import { LuBadgeHelp } from "react-icons/lu"; 
 import { useLocation } from 'react-router-dom'; // Importa el hook useLocation
 import './Header.css';
+import Logo from '../../assets/Images/logo.png'; // Importa la imagen que quieres centrar
 import TDiggital from '../../assets/Images/TDiggital.png';
 
 const Header = () => {
@@ -42,14 +43,17 @@ const Header = () => {
           />
         </a>
       </div>
-      <div className="top-bar-image">
-        <img src={TDiggital} alt="TDiggital" className="TDiggital"/>
+      
+      {/* Imagen centrada */}
+      <div className="top-bar-center">
+        <img src={Logo} alt="Logo" className="logo" />
       </div>
     </div>
   );
 };
 
 export default Header;
+
 
 
 

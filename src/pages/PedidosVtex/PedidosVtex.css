@@ -59,10 +59,8 @@
 
 /* Tabla de tickets */
 .pedidosvtex-ticket-table {
-    margin: 10px;
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
+    min-width: 600px; /* Asegúrate de que la tabla tenga un ancho mínimo */
+    border-collapse: collapse; /* Colapsa las fronteras de las celdas */
 }
 
 .pedidosvtex-ticket-table2 {
