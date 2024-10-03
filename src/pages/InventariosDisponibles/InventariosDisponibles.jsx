@@ -298,8 +298,8 @@ const initialFiltersCartera = useMemo(() => ({
       </a>
       {'  '} Filtrar por: 
     </h3>
-    <form onSubmit={handleConsulta}>
-      <div className="container">
+    <form onSubmit={handleConsulta} className='container'>
+      <div>
         <div className="multi-selector">
         <div className="row-3">
               {/*<MultiSelector2 
