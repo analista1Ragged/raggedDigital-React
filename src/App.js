@@ -21,10 +21,9 @@ import AdministracionMaestras from './pages/Perfiles/Perfiles';
 import PedidosVtex from './pages/PedidosVtex/PedidosVtex';
 //import Menu2BotonesP from './components/Menu3Botones/Menu2BotonesP';
 //import CheckboxGroup from './components/Checkbox/CheckboxDoble/CheckboxGroup';
-import CheckboxSelectodo from './components/Checkbox/CheckboxDoble/CheckboxSelectodo';
-import CheckboxGroup from './components/Checkbox/CheckboxDoble/CheckboxGroup';
 import PowerPoint from './components/HelpRaggedDigital/HelpNominaElectronica';
 import Header from './components/Header/Header';
+import Carrusel from './components/Carrusel/Carrusel';
 
 
 //export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
@@ -59,7 +58,7 @@ function App() {
   // Función para verificar si se debe mostrar el navbar
   const shouldShowNavbar = () => {
     // Excluir rutas donde no quieres mostrar MyMenu
-    const excludedRoutes = ['/Login', '/OlvidasteContrasena', '/HelpNomina', '/HelpCartera'];
+    const excludedRoutes = ['/Login', '/OlvidasteContrasena', '/HelpNomina', '/HelpCartera', '/HelpInventarios', '/HelpVerCapsulas'];
     return !excludedRoutes.includes(currentLocation.pathname); // Usa currentLocation.pathname
   };
 
@@ -175,7 +174,7 @@ function App() {
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <Header />
+            <Carrusel />
           </div>
         } />
         
@@ -229,6 +228,26 @@ function App() {
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
               <PowerPoint 
                 src="https://ragged-my.sharepoint.com/personal/greggo_ragged_com_co/_layouts/15/Doc.aspx?sourcedoc={df779a9c-d49e-42c8-9515-172133b2a4d5}&amp;action=embedview&amp;wdAr=1.7777777777777777" 
+              />
+            </div>
+          }
+        />
+        <Route 
+          path="/HelpInventarios" 
+          element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <PowerPoint 
+                src="https://ragged-my.sharepoint.com/personal/greggo_ragged_com_co/_layouts/15/Doc.aspx?sourcedoc={0d9a4aa6-5d34-40db-a2fa-ccfa8e92d3e1}&amp;action=embedview&amp;wdAr=1.777777777777777" 
+              />
+            </div>
+          }
+        />
+        <Route 
+          path="/HelpVerCapsulas" 
+          element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <PowerPoint 
+                src="https://ragged-my.sharepoint.com/personal/greggo_ragged_com_co/_layouts/15/Doc.aspx?sourcedoc={3b27d42d-26b3-4957-a17b-544a80a56fcc}&amp;action=embedview&amp;wdAr=1.7777777777777777" 
               />
             </div>
           }

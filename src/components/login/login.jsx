@@ -11,6 +11,7 @@ import { AuthContext } from "../../context/AuthContext";
 import CampoContraseña from "../CampoTexto/CampoContraseña";
 import { urlapi } from '../../App';
 import { Link } from 'react-router-dom';
+import { RiCustomerServiceFill } from "react-icons/ri";
 
 const Login = (props) => {
     const [usuario, actualizarNombre] = useState("");
@@ -102,6 +103,13 @@ const Login = (props) => {
                     />
                     <div className="forgot-password">
                     <Link to="/OlvidasteContrasena">¿Olvidaste tu contraseña?</Link>
+                    <br/><br/>
+                    <a href="https://glpi.ragged.com.co" target="_blank" rel="noopener noreferrer">
+                        <RiCustomerServiceFill 
+                            className="top-bar-icon"
+                            title='Mesa de Ayuda'
+                        />
+                    </a>
                     </div>
                     {mostrarExito && (
                         <Alert
