@@ -13,10 +13,10 @@ import CheckboxGroup from '../../components/Checkbox/CheckboxDoble/CheckboxGroup
 import { urlapi } from '../../App';
 import axios from 'axios';
 
-const EstadoFactura = ({ estado }) => {
+const EstadoFactura = ({ estadoVtex }) => {
   let color, text;
 
-  switch (estado) {
+  switch (estadoVtex) {
     case "Sin Importar a Siesa":
       color = '#4f5d56';
       text = 'Sin Importar';
@@ -27,7 +27,7 @@ const EstadoFactura = ({ estado }) => {
       break;
     case 'canceled':
       color = '#FF5050';
-      text = 'Cancelado';
+      text = 'Canceled';
       break;
     case 'payment-pending':
       color = '#FFA500';
@@ -35,7 +35,7 @@ const EstadoFactura = ({ estado }) => {
       break;
     case 'invoiced':
       color = '#87d068';
-      text = 'Facturado';
+      text = 'Invoiced';
       break;
     case 'handling':
         color = '#D4B106';
@@ -65,8 +65,8 @@ const transformData = (list) => {
     formaDePago: item['Forma de Pago'] || 'N/A',
     vrPedido: item['V/R Pedido'] || 'N/A',
     fechaPedido: item['Fecha Pedido'] || 'N/A',
-    estado: item.Estado_Vtex || 'N/A',
-    estado2: item.Estado_Siesa || 'N/A',
+    estadoVtex: item.Estado_Vtex || 'N/A',
+    estadoSiesa: item.Estado_Siesa || 'N/A',
   }));
 };
 
@@ -81,7 +81,9 @@ const PedidosVtex = () => {
     formaDePago: '',
     vrPedido: '',
     fechaPedido: '',
-    estado: '',
+    estadoVtex: '',
+    estadoSiesa: '',
+    
   });
   const seleccionarFechaRef = useRef(null);
   const [selectedOrders, setSelectedOrders] = useState({});
@@ -145,7 +147,8 @@ const PedidosVtex = () => {
       item.formaDePago.toLowerCase().includes(filtersPedidoVtex.formaDePago.toLowerCase()) &&
       item.vrPedido.toLowerCase().includes(filtersPedidoVtex.vrPedido.toLowerCase()) &&
       item.fechaPedido.toLowerCase().includes(filtersPedidoVtex.fechaPedido.toLowerCase()) &&
-      item.estado.toLowerCase().includes(filtersPedidoVtex.estado.toLowerCase())
+      item.estadoVtex.toLowerCase().includes(filtersPedidoVtex.estadoVtex.toLowerCase()) &&
+      item.estadoSiesa.toLowerCase().includes(filtersPedidoVtex.estadoSiesa.toLowerCase())
     );
   }, [data, filtersPedidoVtex]);
 
@@ -158,7 +161,8 @@ const PedidosVtex = () => {
       formaDePago: '',
       vrPedido: '',
       fechaPedido: '',
-      estado: '',
+      estadoVtex: '',
+      estadoSiesa: '',
     });
     setSelectedOrders({});
   };
@@ -231,8 +235,8 @@ const PedidosVtex = () => {
                   <td>{item.formaDePago}</td>
                   <td>{item.vrPedido}</td>
                   <td>{item.fechaPedido}</td>
-                  <td><EstadoFactura estado={item.estado} /></td>
-                  <td><EstadoFactura estado={item.estado2} /></td>
+                  <td><EstadoFactura estadoVtex={item.estadoVtex} /></td>
+                  <td><EstadoFactura estadoSiesa={item.estadoSiesa} /></td>
                   <td>
                     <input
                       type="checkbox"

@@ -12,6 +12,7 @@ import CampoContraseña from "../CampoTexto/CampoContraseña";
 import { urlapi } from '../../App';
 import { Link } from 'react-router-dom';
 import { RiCustomerServiceFill } from "react-icons/ri";
+import { LuBadgeHelp } from "react-icons/lu"; 
 
 const Login = (props) => {
     const [usuario, actualizarNombre] = useState("");
@@ -108,6 +109,12 @@ const Login = (props) => {
                         <RiCustomerServiceFill 
                             className="top-bar-icon"
                             title='Mesa de Ayuda'
+                        />
+                    </a>
+                    <a href='/RaggedDigital/ManualDeAcceso' target="_blank" rel="noopener noreferrer">
+                        <LuBadgeHelp 
+                            className="top-bar-icon"
+                            title='Manual de Usabilidad'
                         />
                     </a>
                     </div>

@@ -58,7 +58,7 @@ function App() {
   // Función para verificar si se debe mostrar el navbar
   const shouldShowNavbar = () => {
     // Excluir rutas donde no quieres mostrar MyMenu
-    const excludedRoutes = ['/Login', '/OlvidasteContrasena', '/HelpNomina', '/HelpCartera', '/HelpInventarios', '/HelpVerCapsulas', '/HelpBancos'];
+    const excludedRoutes = ['/Login', '/OlvidasteContrasena', '/HelpNomina', '/HelpCartera', '/HelpInventarios', '/HelpVerCapsulas', '/HelpBancos', '/HelpPedidosVtex', '/ManualDeAcceso'];
     return !excludedRoutes.includes(currentLocation.pathname); // Usa currentLocation.pathname
   };
 
@@ -258,6 +258,26 @@ function App() {
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
               <PowerPoint 
                 src="https://ragged-my.sharepoint.com/personal/greggo_ragged_com_co/_layouts/15/Doc.aspx?sourcedoc={58d6ea62-fea3-4f94-88c0-9f574cbe6418}&amp;action=embedview&amp;wdAr=1.7777777777777777" 
+              />
+            </div>
+          }
+        />
+        <Route 
+          path="/HelpPedidosVtex" 
+          element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <PowerPoint 
+                src="https://ragged-my.sharepoint.com/personal/greggo_ragged_com_co/_layouts/15/Doc.aspx?sourcedoc={c6c6200c-c00a-429f-84ba-8605ddc65b17}&amp;action=embedview&amp;wdAr=1.7777777777777777" 
+              />
+            </div>
+          }
+        />
+        <Route 
+          path="/ManualDeAcceso" 
+          element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <PowerPoint 
+                src="https://ragged-my.sharepoint.com/personal/greggo_ragged_com_co/_layouts/15/Doc.aspx?sourcedoc={a13baf38-881f-4680-8df0-9250521892ef}&amp;action=embedview&amp;wdAr=1.7777777777777777" 
               />
             </div>
           }
