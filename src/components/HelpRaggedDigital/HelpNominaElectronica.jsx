@@ -16,8 +16,8 @@ const PowerPoint = ({ src }) => {
       didOpen: () => {
         Swal.showLoading();
       },
-      allowOutsideClick: false,
-      showConfirmButton: false,
+      allowOutsideClick: false, // Evita que se cierre haciendo clic fuera
+      showConfirmButton: false, // Oculta el botón de confirmación
       background: `url(${ImagenSwal}) center/cover no-repeat`,
       customClass: {
         popup: 'swal-custom', // Aplicar la clase personalizada
@@ -59,5 +59,6 @@ const PowerPoint = ({ src }) => {
 };
 
 export default PowerPoint;
+
 
 

@@ -58,7 +58,7 @@ function App() {
   // Función para verificar si se debe mostrar el navbar
   const shouldShowNavbar = () => {
     // Excluir rutas donde no quieres mostrar MyMenu
-    const excludedRoutes = ['/Login', '/OlvidasteContrasena', '/HelpNomina', '/HelpCartera', '/HelpInventarios', '/HelpVerCapsulas'];
+    const excludedRoutes = ['/Login', '/OlvidasteContrasena', '/HelpNomina', '/HelpCartera', '/HelpInventarios', '/HelpVerCapsulas', '/HelpBancos'];
     return !excludedRoutes.includes(currentLocation.pathname); // Usa currentLocation.pathname
   };
 
@@ -248,6 +248,16 @@ function App() {
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
               <PowerPoint 
                 src="https://ragged-my.sharepoint.com/personal/greggo_ragged_com_co/_layouts/15/Doc.aspx?sourcedoc={3b27d42d-26b3-4957-a17b-544a80a56fcc}&amp;action=embedview&amp;wdAr=1.7777777777777777" 
+              />
+            </div>
+          }
+        />
+        <Route 
+          path="/HelpBancos" 
+          element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <PowerPoint 
+                src="https://ragged-my.sharepoint.com/personal/greggo_ragged_com_co/_layouts/15/Doc.aspx?sourcedoc={58d6ea62-fea3-4f94-88c0-9f574cbe6418}&amp;action=embedview&amp;wdAr=1.7777777777777777" 
               />
             </div>
           }

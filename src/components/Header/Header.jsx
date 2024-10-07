@@ -20,6 +20,8 @@ const Header = () => {
         return '/RaggedDigital/HelpNomina'; // Enlace para Nómina Electrónica
       case '/ecommerce/VerCapsulas':
           return '/RaggedDigital/HelpVerCapsulas'; // Enlace para Ver Cápsulas
+          case '/contabilidad/Bancos':
+            return '/RaggedDigital/HelpBancos'; // Enlace para Ver Cápsulas
       default:
         return null; // No mostrar el ícono si no está en una ruta especificada
     }

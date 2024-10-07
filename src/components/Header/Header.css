@@ -1,80 +1,112 @@
+/* Estilos generales para la barra superior */
+.top-bar {
+  justify-content: space-between; /* Espacio entre los elementos */
+  align-items: center;
+  background-color: #373738;
+  padding: 10px 20px;
+  height: 50px; /* Mantén la altura fija */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  color: white;
+  position: relative;
+}
+
+/* Estilo para el texto a la izquierda */
+.top-bar-left h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+/* Contenedor derecho para los íconos e imagen */
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espacio entre íconos y la imagen */
+  justify-content: flex-end;
+}
+
+/* Estilo para los íconos */
+.top-bar-icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+}
+
+.top-bar-icon:hover {
+  color: #41D9A1; /* Efecto hover */
+}
+
+/* Estilo para la imagen de la barra superior */
+.top-bar-image {
+  width: 33%;
+  max-width: 100px; /* Ajusta el tamaño máximo para pantallas más pequeñas */
+  border-radius: 50%; /* Hacerla circular */
+  object-fit: cover; /* Ajustar internamente la imagen */
+  display: block; /* Comportamiento de bloque */
+  margin-left: auto; /* Alinearla a la derecha */
+}
+
+/* Centrar los elementos en la barra superior */
+.top-bar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); /* Centrar horizontalmente */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-top: 5px;
+}
+
+/* Estilo para el logo */
+.logo {
+  height: 140%;
+  object-fit: contain; /* Asegura que la imagen se ajuste */
+  margin-top: -20px;
+}
+
+/* Estilos responsivos para diferentes tamaños de pantalla */
+@media (max-width: 768px) {
   .top-bar {
-    /*display: flex;*/
-    justify-content: space-between; /* Espacio entre los elementos */
-    align-items: center;
-    background-color: #373738;
-    padding: 10px 20px;
-    height: 50px; /* Mantén la altura fija */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    color: white;
-    position: relative;
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
   }
-  
+
   .top-bar-left h3 {
-    margin: 0;
-    font-size: 18px;
+    font-size: 16px; /* Ajustar el tamaño del texto */
+    margin-bottom: 10px;
   }
-  
+
   .top-bar-right {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* Espacio entre íconos y la imagen */
-    justify-content: right;
-  }
-  
-  .top-bar-icon {
-    font-size: 24px;
-    cursor: pointer;
-    color: white;
-    /* margin-left: -5px; Ajusta este valor según sea necesario */
+    gap: 10px; /* Reducir el espacio entre los íconos */
   }
 
-  
-  .top-bar-icon:hover {
-    color: #41D9A1; /* Efecto hover */
-  }
-  
-  /* Estilos para la imagen */
   .top-bar-image {
-    width: 33%; /* Reducir el tamaño a una tercera parte */
-    max-width: 20%; /* Limitar el tamaño máximo si es necesario */
-    border-radius: 50%; /* Hacerla circular */
-    object-fit: cover; /* Ajustar internamente la imagen */
-    display: block; /* Esto hace que la imagen se comporte como un bloque */
-    margin-left: 85%; /* Usa un valor en porcentaje */
-
-    
+    width: 25%;
+    max-width: 80px; /* Reducir el tamaño de la imagen */
   }
 
   .top-bar-center {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%); /* Centrar horizontalmente */
-      height: 100%; /* Mantener la altura de la barra */
-      display: flex;
-      align-items: flex-start; /* Alinea al principio (arriba) */
-      padding-top: 5px; /* Espacio desde el borde superior */
+    position: static; /* Ajustar para pantallas pequeñas */
+    transform: none;
+    margin-top: 10px;
+  }
+}
 
+@media (max-width: 480px) {
+  .top-bar {
+    padding: 5px;
   }
 
-  /* Ajustar la imagen a la altura de la barra */
-  .logo {
-    height: 140%;
-    object-fit: contain; /* Asegura que la imagen se ajuste */
-    margin-top: 5px;
+  .top-bar-left h3 {
+    font-size: 14px; /* Reducir el tamaño del texto */
   }
 
-  /* Estilos para los iconos */
   .top-bar-icon {
-    font-size: 24px;
-    cursor: pointer;
-    color: white;
+    font-size: 20px; /* Reducir el tamaño del ícono */
   }
 
-  .top-bar-icon:hover {
-    color: #41D9A1; /* Efecto hover */
+  .top-bar-image {
+    width: 20%;
+    max-width: 60px; /* Reducir aún más la imagen para pantallas muy pequeñas */
   }
-
-
-  
-  
+}
