@@ -42,27 +42,32 @@ const OlvidasteContrasena = () => {
     }, [message, error]);
 
     return (
-        <section className="forgot-password-form">
-            <a href="/RaggedDigital/Login" className="left button-large" title="Volver"><i className="bi bi-arrow-left-circle"></i></a>
-            <h2>¿Olvidaste tu contraseña?</h2>
-            <p>Introduce tu correo electrónico para recibir tu contraseña.</p>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">Correo Electrónico</label>
-                    <CampoTexto
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}  // Actualización del estado del email
-                        placeholder="Introduce tu correo electrónico"
-                    />
-                </div>
-                <Boton type="submit" texto="Enviar">
-                    Enviar
-                </Boton>
-            </form>
-            {message && <Alert message={message} type="success" showIcon />}
-            {error && <Alert message={error} type="error" showIcon />}
-        </section>
+        <section className="formulario-contrasena">
+    <div className="icon-container">
+        <a href="/RaggedDigital/Login" className="left button-large" title="Volver">
+            <i className="bi bi-arrow-left-circle"></i>
+        </a>
+    </div>
+    <h2 className="titulo">¿Olvidaste tu contraseña?</h2>
+    <p className="descripcion">Introduce tu correo electrónico para recibir tu contraseña.</p>
+    <form onSubmit={handleSubmit} >
+        <div>
+            <label htmlFor="email">Correo Electrónico</label>
+            <CampoTexto
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}  // Actualización del estado del email
+                placeholder="Introduce tu correo electrónico"
+            />
+        </div>
+        <Boton type="submit" texto="Enviar">
+            Enviar
+        </Boton>
+    </form>
+    {message && <Alert message={message} type="success" showIcon />}
+    {error && <Alert message={error} type="error" showIcon />}
+</section>
+
     );
 };
 
