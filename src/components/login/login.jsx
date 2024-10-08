@@ -11,6 +11,7 @@ import { AuthContext } from "../../context/AuthContext";
 import CampoContraseña from "../CampoTexto/CampoContraseña";
 import { urlapi } from '../../App';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Login = (props) => {
     const [usuario, actualizarNombre] = useState("");
@@ -35,7 +36,15 @@ const Login = (props) => {
                 usuario: usuario,
                 contrasena: contrasena
             });
-
+            if(response.data.qa == true){
+                Swal.fire({
+                    title: "Version de Prueba",
+                    text: "Comunicate con el area de soporte o intentalo mas tarde",
+                    icon: "info"
+                  });
+                return;
+            }
+            
             if (response.data.message === "success") {
                 sessionStorage.setItem('log', usuario);
                 sessionStorage.setItem('auth', JSON.stringify(response.data.text+",99"));

@@ -76,9 +76,17 @@ const NominaElectronica = () => {
     }
 
     try {
+      Swal.fire({
+        title: `Consultando pedidos mas recientes`,
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
       const formattedFecha = formatFecha(fecha); // Convertir la fecha al formato adecuado
       console.log(formattedFecha,unidadNegocio)
-
+      
       const response = await axios.post(urlapi + '/get-nomina', {
         fecha: formattedFecha, // Enviar la fecha formateada
         unidadNegocio: unidadNegocio, // Enviar la unidad de negocio seleccionada
@@ -111,6 +119,7 @@ const NominaElectronica = () => {
       XLSX.utils.book_append_sheet(workbook, worksheet2, 'Detalle');
 
       XLSX.writeFile(workbook, "NominaElectronica.xlsx");
+      Swal.close();
     } catch (error) {
       Swal.fire({
         title: 'Error',

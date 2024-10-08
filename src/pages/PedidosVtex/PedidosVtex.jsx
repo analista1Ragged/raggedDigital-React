@@ -12,6 +12,7 @@ import FilterPedidosVtex from '../../components/FilterRow/FilterPedidosVtex.jsx'
 import CheckboxGroup from '../../components/Checkbox/CheckboxDoble/CheckboxGroup.jsx';
 import { urlapi } from '../../App';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const EstadoFactura = ({ estado }) => {
   let color, text;
@@ -100,15 +101,25 @@ const PedidosVtex = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        Swal.fire({
+          title: `Consultando pedidos mas recientes`,
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
         setLoading(true);
-        const response = await fetch(`${urlapi}/get-orders`);
+        const response = await fetch(`${urlapi}/get-orders`, []);
         const result = await response.json();
         
         const dataToTransform = result.list || result; 
         console.log("Datos recibidos:", dataToTransform);
         
         const transformedData = transformData(dataToTransform); 
-        setData(transformedData);  
+        Swal.close();
+        setData(transformedData);
+          
       } catch (error) {
         console.error('Error fetching orders:', error);
       } finally {
@@ -118,15 +129,20 @@ const PedidosVtex = () => {
     fetchData();
   }, []);
 
-  const handleBuscarClick = () => {
+  const handleBuscarClick = async () => {
     if (seleccionarFechaRef.current) {
       const { date1, date2 } = seleccionarFechaRef.current.getDates();
       console.log('Fecha Inicial:', date1 ? date1.format('YYYY-MM-DD') : 'No seleccionada');
       console.log('Fecha Final:', date2 ? date2.format('YYYY-MM-DD') : 'No seleccionada');
+      const response = await axios.post(`${urlapi}/get-orders`, [date1,date2]);
+      console.log('Response from API:', response.data);
+      // Aquí puedes implementar la lógica que necesites con las fechas seleccionadas
+      // Por ejemplo, hacer una consulta a la API utilizando estas fechas.
     } else {
       console.log('No se ha seleccionado una fecha.');
     }
   };
+  
 
   const handleFilter = (e) => {
     const { name, value } = e.target;

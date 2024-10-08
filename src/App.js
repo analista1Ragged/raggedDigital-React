@@ -28,7 +28,7 @@ import Header from './components/Header/Header';
 
 
 //export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
-export const urlapi = 'http://localhost:5000/RaggedDigitalAPI'
+export const urlapi = 'http://localhost:5000/RaggedDigitalAPI';
 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = sessionStorage.getItem('log');

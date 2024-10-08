@@ -36,6 +36,12 @@ const MyForm = forwardRef(({ onDate1Change, onDate2Change }, ref) => {
         date2: undefined,
       }));
     },
+    getDates: () => {
+      return {
+        date1: formState.date1,
+        date2: formState.date2
+      };
+    }
   }));
 
   return (
