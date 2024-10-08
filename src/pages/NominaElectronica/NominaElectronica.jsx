@@ -8,7 +8,7 @@ import axios from "axios";
 import * as XLSX from 'xlsx';
 import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
-import { LuBadgeHelp } from "react-icons/lu";
+
 
 // Función para transformar los datos y organizar las columnas
 const transformData1 = (list) => {
@@ -141,9 +141,6 @@ const NominaElectronica = () => {
         {'  '}
         Informe de nómina electrónica.
         {'  '}
-        {/*<a href="/RaggedDigital/HelpNomina" className="left" title="Help" target="_blank" rel="noopener noreferrer">
-          <LuBadgeHelp />
-        </a>}*/}
       </h2>
       <form onSubmit={handleSubmit}>
       

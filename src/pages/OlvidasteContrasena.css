@@ -1,3 +1,54 @@
+.formulario-contrasena {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.formulario-contrasena form {
+    width: 100%;
+    max-width: 600px; /* Puedes ajustar este valor según sea necesario */
+    background-color: #f7f7f7;
+    box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.25); /* Corrige el valor del canal alfa */
+    border-radius: 20px;
+    padding: 8px 5%;
+}
+
+
+.icon-container {
+    margin-bottom: 16px; /* Espacio debajo del icono */
+    
+}
+
+.titulo {
+    margin-bottom: 24px; /* Espacio debajo del título */
+    font-size: 24px !important;
+}
+
+.descripcion {
+    margin-bottom: 32px; /* Espacio debajo de la descripción */
+    font-size: 18px !important;
+}
+
+form {
+    width: 100%;
+    max-width: 400px;
+}
+
+form div {
+    margin-bottom: 16px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+
 .forgot-password-form {
     display: flex;
     flex-direction: column;
@@ -9,12 +60,12 @@
     box-sizing: border-box;
 }
 
-.forgot-password-form h2 {
-    margin-bottom: 16px;
+.forgot-password-form h2{
+    margin-bottom: 24px;
 }
 
 .forgot-password-form p {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 }
 
 .forgot-password-form form {

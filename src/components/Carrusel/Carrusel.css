@@ -1,0 +1,14 @@
+/* CarouselFadeComponent.css */
+.slick-slide {
+    text-align: center;
+    height: 160px;
+    line-height: 160px;
+    background: #41D9A1;
+    overflow: hidden;
+  }
+  
+  .slick-slide h3 {
+    color: #fff;
+  }
+  
+  

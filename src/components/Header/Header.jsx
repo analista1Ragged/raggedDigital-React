@@ -13,11 +13,17 @@ const Header = () => {
   const getHelpLinkForPage = () => {
     switch (location.pathname) {
       case '/Mercadeo/Raqstyle/Inventario':
-        return '/RaggedDigital/HelpCartera'; // Enlace para Inventario
+        return '/RaggedDigital/HelpInventarios'; // Enlace para Inventario
       case '/Mercadeo/Raqstyle/Cartera':
         return '/RaggedDigital/HelpCartera'; // Enlace para Cartera
       case '/TalentoHumano/Nomina/NominaElectronica':
         return '/RaggedDigital/HelpNomina'; // Enlace para Nómina Electrónica
+      case '/ecommerce/VerCapsulas':
+          return '/RaggedDigital/HelpVerCapsulas'; // Enlace para Ver Cápsulas
+          case '/contabilidad/Bancos':
+            return '/RaggedDigital/HelpBancos'; // Enlace para Bancos
+      case '/Logistica/CanalDigital/Vtex':
+        return '/RaggedDigital/HelpPedidosVtex'; // Enlace para pedidos Vtex
       default:
         return null; // No mostrar el ícono si no está en una ruta especificada
     }

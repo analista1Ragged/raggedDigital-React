@@ -161,7 +161,7 @@ const menuItems = [
   },
   {
     key: "8",
-    title: "Logistica & Distribución",
+    title: "Logística & Distribución",
     icon: <IoClipboardSharp />,
     items: [
       {

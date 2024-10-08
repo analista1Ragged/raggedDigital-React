@@ -11,52 +11,54 @@ const PowerPoint = ({ src }) => {
     // Mostrar SweetAlert cuando se carga el componente
     Swal.fire({
       title: ' ',
-      html: '<p style="color: black; font-weight: bold;">POR FAVOR ESPERE MIENTRAS CARGA EL...</p>', // Usar html para soportar etiquetas HTML
+      html: '<p style="color: black; font-weight: bold;">POR FAVOR ESPERE MIENTRAS CARGA EL...</p>',
       timerProgressBar: true,
       didOpen: () => {
         Swal.showLoading();
       },
-      allowOutsideClick: false,
-      showConfirmButton: false,
-      background: `url(${ImagenSwal}) center/cover no-repeat`, // Utilizar la imagen como fondo
+      allowOutsideClick: false, // Evita que se cierre haciendo clic fuera
+      showConfirmButton: false, // Oculta el botón de confirmación
+      background: `url(${ImagenSwal}) center/cover no-repeat`,
       customClass: {
         popup: 'swal-custom', // Aplicar la clase personalizada
       },
     });
-  
-    // Simular la finalización de la carga (esto debería ajustarse según las necesidades del proyecto)
-    setTimeout(() => {
-      setLoading(false);
-      Swal.close(); // Cerrar el Swal una vez que se haya terminado de cargar
-    }, 3000); // Aquí 3000 es un ejemplo de tiempo de espera de 3 segundos
   }, []);
-  
-  
+
+  // Función para manejar el evento onLoad del iframe
+  const handleIframeLoad = () => {
+    setLoading(false);
+    Swal.close(); // Cerrar el Swal una vez que se haya terminado de cargar
+  };
 
   return (
     <section className="center-section">
-      {!loading && (
-        <div style={{ position: 'relative', width: '100%', height: 'calc(118.5vh - 100px)', overflow: 'hidden' }}>
-          <iframe
-            src={src} // Usar la prop src aquí
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              border: 'none', // Elimina el borde del iframe
-              margin: 0,
-              padding: 0,
-            }}
-            allowFullScreen={true}
-            mozallowfullscreen="true"
-          />
-        </div>
+      {loading && (
+        <div>Cargando...</div> // Mensaje mientras se carga (opcional)
       )}
+      <div style={{ position: 'relative', width: '100%', height: 'calc(118.5vh - 100px)', overflow: 'hidden' }}>
+        <iframe
+          src={src}
+          onLoad={handleIframeLoad} // Llama a la función cuando el iframe se haya cargado
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            border: 'none',
+            margin: 0,
+            padding: 0,
+          }}
+          allowFullScreen={true}
+          mozallowfullscreen="true"
+        />
+      </div>
     </section>
   );
 };
 
 export default PowerPoint;
+
+
 

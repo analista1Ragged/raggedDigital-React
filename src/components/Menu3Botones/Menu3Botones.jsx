@@ -101,7 +101,7 @@ const Menu3Botones = ({ marca ,nombre, archivo}) => (
       >
         <FloatButton
           icon={<CloudUploadOutlined />}
-          title="Subir Archivo"
+          title="Subir Productos a Vtex"
           style={{
             backgroundColor: '#1890ff', // Color for the upload button
             color: 'white',

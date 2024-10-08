@@ -11,6 +11,8 @@ import { AuthContext } from "../../context/AuthContext";
 import CampoContraseña from "../CampoTexto/CampoContraseña";
 import { urlapi } from '../../App';
 import { Link } from 'react-router-dom';
+import { RiCustomerServiceFill } from "react-icons/ri";
+import { LuBadgeHelp } from "react-icons/lu"; 
 import Swal from 'sweetalert2';
 
 const Login = (props) => {
@@ -111,6 +113,19 @@ const Login = (props) => {
                     />
                     <div className="forgot-password">
                     <Link to="/OlvidasteContrasena">¿Olvidaste tu contraseña?</Link>
+                    <br/><br/>
+                    <a href="https://glpi.ragged.com.co" target="_blank" rel="noopener noreferrer">
+                        <RiCustomerServiceFill 
+                            className="top-bar-icon"
+                            title='Mesa de Ayuda'
+                        />
+                    </a>
+                    <a href='/RaggedDigital/ManualDeAcceso' target="_blank" rel="noopener noreferrer">
+                        <LuBadgeHelp 
+                            className="top-bar-icon"
+                            title='Manual de Usabilidad'
+                        />
+                    </a>
                     </div>
                     {mostrarExito && (
                         <Alert
