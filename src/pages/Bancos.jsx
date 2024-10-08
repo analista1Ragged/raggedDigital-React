@@ -3,25 +3,14 @@ import AdjuntarArchivo from "../components/AdjuntarArchivo/AdjuntarArchivo";
 import ListaOpciones from "../components/ListaOpciones/ListaOpciones";
 import Boton from "../components/Boton/Boton";
 import Swal from 'sweetalert2';
-import emailjs from 'emailjs-com';
+
 import { urlapi } from '../App';
 
 const Bancos = () => {
   const [selectedBanco, setSelectedBanco] = useState("");
   const [fileData, setFileData] = useState(null);
 
-  const sendEmail = (subject, message) => {
-    emailjs.send('service_tnkzfmd', 'template_b0w6ahf', {
-      to_email: sessionStorage.getItem('log'),
-      subject: subject,
-      message: message
-    }, 'oxkvHR1qKePmFBaOS')
-    .then((result) => {
-      console.log('Email successfully sent!',result);
-    }, (error) => {
-      console.error('There was an error sending the email:', error);
-    });
-  };
+  
 
   const handleGenerarConciliacion = async (event) => {
     event.preventDefault(); // Prevenir el comportamiento por defecto del formulario

@@ -34,14 +34,6 @@
     font-size: 18px !important;
 }
 
-form {
-    width: 100%;
-    max-width: 400px;
-}
-
-form div {
-    margin-bottom: 16px;
-}
 
 form label {
     display: block;
