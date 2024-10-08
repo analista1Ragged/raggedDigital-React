@@ -138,6 +138,14 @@ const PedidosVtex = () => {
       console.log('Fecha Final:', date2 ? date2.format('YYYY-MM-DD') : 'No seleccionada');
       const response = await axios.post(`${urlapi}/get-orders`, [date1,date2]);
       console.log('Response from API:', response.data);
+      const result = response.data;
+        
+      const dataToTransform = result.list || result; 
+      console.log("Datos recibidos:", dataToTransform);
+        
+      const transformedData = transformData(dataToTransform); 
+      //Swal.close();
+      setData(transformedData);
       // Aquí puedes implementar la lógica que necesites con las fechas seleccionadas
       // Por ejemplo, hacer una consulta a la API utilizando estas fechas.
     } else {
