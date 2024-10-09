@@ -1,6 +1,17 @@
+.formulario {
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    display: flex;
+}
 
-
-
+.form-container {
+    max-width: 600px; /* Ancho máximo para el contenedor */
+    width: 100%; /* Asegura que ocupe el 100% del ancho disponible */
+    padding: 20px; /* Espaciado interno */
+    /* border: 1px solid #ddd; Opcional: borde para el contenedor */
+    border-radius: 8px; /* Esquinas redondeadas */
+    
+}
 
 
 .formulario h2 {
@@ -11,6 +22,7 @@
     display: flex; /* Utiliza flexbox para alinear icono y texto en una línea */
     align-items: center; /* Alinea verticalmente el icono y el texto */
     white-space: nowrap; /* Evita que el texto se envuelva en una nueva línea */
+    
 }
 
 .container {
@@ -18,6 +30,7 @@
     flex-wrap: wrap;
     width: 100%;
     justify-content: center; /* Centra los elementos hijos */
+    flex-direction: column;
 }
 
 .container2 {
@@ -43,6 +56,7 @@
 @media (max-width: 768px) {
     .TDiggital {
         max-width: 150px; /* Ajusta el ancho máximo en pantallas más pequeñas */
+        
     }
 }
 

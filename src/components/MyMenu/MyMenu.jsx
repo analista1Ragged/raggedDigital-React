@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Menu, Button } from "antd";
 import "antd/dist/reset.css";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill, FaCheck,  FaUsers, FaStore} from "react-icons/fa";
+import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill, FaCheck,  FaUsers, FaStore, FaRegHandshake} from "react-icons/fa";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
 import { PiEyeSlashFill, PiPasswordFill, PiUsersFill } from "react-icons/pi";
@@ -45,7 +45,7 @@ const menuItems = [
   {
     key: "3",
     title: "Ccial & Mercadeo",
-    icon: <FaShoppingCart />,
+    icon: <FaRegHandshake />,
     items: [
       {
         key: "3.1",

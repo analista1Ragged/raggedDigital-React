@@ -133,28 +133,28 @@ const NominaElectronica = () => {
 
   return (
     <section className="formulario">
-      
-      <h2>
-        <a href="/RaggedDigital/Home" className="left" title="volver">
-          <i className="bi bi-arrow-left-circle"></i>
-        </a>
-        {'  '}
-        Informe de nómina electrónica.
-        {'  '}
-      </h2>
-      <form onSubmit={handleSubmit}>
-      
-        <SeleccionarFechaP onDate1Change={setFecha} />
-        <ListaOpcionesP
-          listas={[["HE", "Rancho Guadalupe"], ["HL", "Hacienda Amparo"]]}
-          label="Seleccionar unidad de negocio."
-          selectText="Seleccionar..."
-          setSelectedBanco={setUnidadNegocio}
-        />
-        <Boton type="submit" texto="Enviar">
-          Descargar Nómina
-        </Boton>
-      </form>
+      <div className="form-container"> {/* Contenedor para alinear el título y el formulario */}
+        <h2>
+          <a href="/RaggedDigital/Home" className="left" title="volver">
+            <i className="bi bi-arrow-left-circle"></i>
+          </a>
+          {'  '}
+          Informe de nómina electrónica.
+          {'  '}
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <SeleccionarFechaP onDate1Change={setFecha} />
+          <ListaOpcionesP
+            listas={[["HE", "Rancho Guadalupe"], ["HL", "Hacienda Amparo"]]}
+            label="Seleccionar unidad de negocio."
+            selectText="Seleccionar..."
+            setSelectedBanco={setUnidadNegocio}
+          />
+          <Boton type="submit" texto="Enviar">
+            Descargar Nómina
+          </Boton>
+        </form>
+      </div>
     </section>
   );
 };
