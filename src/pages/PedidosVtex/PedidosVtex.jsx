@@ -23,7 +23,7 @@ const EstadoFactura = ({ estadoVtex }) => {
       text = 'Sin Importar';
       break;
     case 'ready for handling':
-      color = '#A0A0A0';
+      color = '#e3310e';
       text = 'listo para empacar';
       break;
     case 'canceled':
@@ -36,12 +36,20 @@ const EstadoFactura = ({ estadoVtex }) => {
       break;
     case 'invoiced':
       color = '#87d068';
-      text = 'Invoiced';
+      text = 'Facturado';
       break;
     case 'handling':
         color = '#D4B106';
         text = 'En preparación';
         break;
+    case 'window-to-cancel':
+        color = '#950ee3';
+        text = 'Ventana para cancelar';
+        break;
+    case 'payment-approved':
+      color = '#42A2C2';
+      text = 'Pago aprobado';
+      break;
     default:
       color = '#4f5d56';
       text = 'error';
@@ -50,6 +58,8 @@ const EstadoFactura = ({ estadoVtex }) => {
 
   return <Tag color={color}>{text}</Tag>;
 };
+
+
 
 const transformData = (list) => {
   if (!Array.isArray(list)) {
@@ -72,6 +82,7 @@ const transformData = (list) => {
 };
 
 const PedidosVtex = () => {
+  const [valorCampo, setValorCampo] = useState('');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filtersPedidoVtex, setFiltersPedidosVtex] = useState({
@@ -188,6 +199,7 @@ const PedidosVtex = () => {
       estadoVtex: '',
       estadoSiesa: '',
     });
+    setValorCampo(''); // Limpia también el campo de texto
     setSelectedOrders({});
   };
 
@@ -196,6 +208,10 @@ const PedidosVtex = () => {
       ...prev,
       [id]: !prev[id]
     }));
+  };
+
+  const manejarActualizacionValor = (e) => {
+    setValorCampo(e.target.value); // Actualiza el valor del campo de texto
   };
 
   return (
@@ -213,7 +229,9 @@ const PedidosVtex = () => {
               <div className="row">
                 <div className="col">
                   <div className="inlipedidosvtex-inline-components3ne-components3">
-                    <CampoTexto placeholder="Buscar por # pedido:" />
+                    <CampoTexto placeholder="Buscar por # pedido:" 
+                    value={valorCampo} // Vinculado al estado
+                    onChange={manejarActualizacionValor}/>
                   </div>
                   <div className="separador">
                     <SeleccionarFecha className="component-item" ref={seleccionarFechaRef}/>
