@@ -18,10 +18,24 @@ const EstadoFactura = ({ estadoVtex }) => {
   let color, text;
 
   switch (estadoVtex) {
+//Siesa
     case "Sin Importar a Siesa":
       color = '#4f5d56';
+      text = "Sin Importar";
+      break;
+    case "Comprometido":
+      color = '#FFA500';
       text = estadoVtex;
       break;
+    case "Elaboracion":
+      color = '#F3FF24';
+      text = estadoVtex;
+      break;
+    case "Aprobado":
+      color = '#42A2C2';
+      text = estadoVtex;
+      break;
+//Vtex
     case 'ready for handling':
       color = '#e3310e';
       text = estadoVtex;
@@ -278,7 +292,7 @@ const PedidosVtex = () => {
                   <td>{item.vrPedido}</td>
                   <td>{item.fechaPedido}</td>
                   <td><EstadoFactura estadoVtex={item.estadoVtex} /></td>
-                  <td><EstadoFactura estadoSiesa={item.estadoSiesa} /></td>
+                  <td><EstadoFactura estadoVtex={item.estadoSiesa} /></td>
                   <td>
                     <input
                       type="checkbox"
