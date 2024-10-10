@@ -39,7 +39,7 @@ const EstadoFactura = ({ estadoVtex }) => {
       text = 'Facturado';
       break;
     case 'handling':
-        color = '#F3FF24';
+        color = '#BD8989';
         text = 'En preparación';
         break;
     case 'window-to-cancel':
