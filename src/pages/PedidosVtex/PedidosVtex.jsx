@@ -20,35 +20,35 @@ const EstadoFactura = ({ estadoVtex }) => {
   switch (estadoVtex) {
     case "Sin Importar a Siesa":
       color = '#4f5d56';
-      text = 'Sin Importar';
+      text = estadoVtex;
       break;
     case 'ready for handling':
       color = '#e3310e';
-      text = 'listo para empacar';
+      text = estadoVtex;
       break;
-    case 'canceled':
+    case "Cancelado":
       color = '#FF5050';
-      text = 'Canceled';
+      text = estadoVtex;
       break;
-    case 'payment-pending':
+    case "Pendiente de pago":
       color = '#FFA500';
-      text = 'Pago pendiente';
+      text = estadoVtex;
       break;
-    case 'invoiced':
+    case "Facturado":
       color = '#87d068';
-      text = 'Facturado';
+      text = estadoVtex;
       break;
-    case 'handling':
-        color = '#BD8989';
-        text = 'En preparación';
+    case "Preparacion":
+        color = '#F3FF24';
+        text = estadoVtex;
         break;
     case 'window-to-cancel':
         color = '#950ee3';
-        text = 'Ventana para cancelar';
+        text = estadoVtex;
         break;
     case 'payment-approved':
       color = '#42A2C2';
-      text = 'Pago aprobado';
+      text = estadoVtex;
       break;
     default:
       color = '#4f5d56';
