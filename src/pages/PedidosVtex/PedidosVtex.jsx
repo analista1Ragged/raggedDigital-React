@@ -28,7 +28,7 @@ const EstadoFactura = ({ estadoVtex }) => {
       text = estadoVtex;
       break;
     case "Elaboracion":
-      color = '#F3FF24';
+      color = '#BD8989';
       text = estadoVtex;
       break;
     case "Aprobado":
