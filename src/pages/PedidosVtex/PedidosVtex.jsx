@@ -115,12 +115,22 @@ const PedidosVtex = () => {
   const [selectedOrders, setSelectedOrders] = useState({});
 
   const handleGenerate = async () => {
+    Swal.fire({
+      title: `Creando pedido en Siesa...`,
+      allowOutsideClick: true,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
     const selectedPedidos = currentItems.filter(item => selectedOrders[item.id]);
     const pedidoVtexList = selectedPedidos.map(item => item.pedidoVtex);
     try {
       const response = await axios.post(`${urlapi}/get-orderDetail`, pedidoVtexList);
       console.log('Response from API:', response.data);
+      Swal.close();
     } catch (error) {
+      Swal.close();
       console.error('Error sending pedidoVtexList:', error);
     }
   };
@@ -159,24 +169,91 @@ const PedidosVtex = () => {
   const handleBuscarClick = async () => {
     if (seleccionarFechaRef.current) {
       const { date1, date2 } = seleccionarFechaRef.current.getDates();
-      console.log('Fecha Inicial:', date1 ? date1.format('YYYY-MM-DD') : 'No seleccionada');
-      console.log('Fecha Final:', date2 ? date2.format('YYYY-MM-DD') : 'No seleccionada');
-      const response = await axios.post(`${urlapi}/get-orders`, [date1,date2]);
-      console.log('Response from API:', response.data);
-      const result = response.data;
-        
-      const dataToTransform = result.list || result; 
-      console.log("Datos recibidos:", dataToTransform);
-        
-      const transformedData = transformData(dataToTransform); 
-      //Swal.close();
-      setData(transformedData);
-      // Aquí puedes implementar la lógica que necesites con las fechas seleccionadas
-      // Por ejemplo, hacer una consulta a la API utilizando estas fechas.
+  
+      if (valorCampo != '') {
+        Swal.fire({
+          title: `Consultando pedidos de orden ${valorCampo}`,
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+      } else {
+        if (!date1 || !date2) {
+          Swal.fire({
+            title: "Filtros inválidos",
+            text: "Debe seleccionar un rango de fechas.",
+            icon: "info"
+          });
+          return;
+        }
+  
+        if (date1.isAfter(date2)) {
+          Swal.fire({
+            title: "Filtros inválidos",
+            text: "La fecha inicial debe ser anterior o igual a la fecha final.",
+            icon: "info"
+          });
+          return;
+        }
+  
+        Swal.fire({
+          title: `Consultando pedidos de ${date1.format('DD/MMM/YYYY')} a ${date2.format('DD/MMM/YYYY')}`,
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+  
+        console.log('Fecha Inicial:', date1.format('YYYY-MM-DD'));
+        console.log('Fecha Final:', date2.format('YYYY-MM-DD'));
+      }
+  
+      try {
+        // Solicitud con fetch
+        const response = await fetch(`${urlapi}/get-orders`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify([date1, date2, valorCampo]),
+        });
+  
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+  
+        const result = await response.json();
+        console.log('Response from API:', result);
+  
+        const dataToTransform = result.list || result;
+        console.log("Datos recibidos:", dataToTransform);
+  
+        const transformedData = transformData(dataToTransform);
+        Swal.close();
+        setData(transformedData);
+      } catch (error) {
+        console.error('Error en la solicitud:', error);
+        Swal.fire({
+          title: "Error",
+          text: "Hubo un problema al consultar los pedidos. Intente nuevamente más tarde.",
+          icon: "error"
+        });
+      }
     } else {
       console.log('No se ha seleccionado una fecha.');
+      Swal.fire({
+        title: "Filtros Invalidos",
+        text: "Debe seleccionar un rango de fechas o ingresar un numero de pedido '1468170630881-01'",
+        icon: "info"
+      });
     }
   };
+  
+  
+  
   
 
   const handleFilter = (e) => {
