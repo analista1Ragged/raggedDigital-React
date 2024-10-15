@@ -1,13 +1,14 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { Form, DatePicker } from 'antd';
+import dayjs from 'dayjs';  // Importa Day.js
 import './SeleccionarFecha.css';
 
 const MyForm = forwardRef(({ onDate1Change, onDate2Change }, ref) => {
   const [formState, setFormState] = useState({
     name: '',
     region: undefined,
-    date1: undefined,
-    date2: undefined,
+    date1: dayjs(), // Fecha actual por defecto usando Day.js
+    date2: dayjs(), // Fecha actual por defecto usando Day.js
     delivery: false,
     type: [],
     resource: '',
@@ -32,16 +33,16 @@ const MyForm = forwardRef(({ onDate1Change, onDate2Change }, ref) => {
     resetDateFields: () => {
       setFormState((prevState) => ({
         ...prevState,
-        date1: undefined,
-        date2: undefined,
+        date1: dayjs(), // Reiniciar a la fecha actual con Day.js
+        date2: dayjs(), // Reiniciar a la fecha actual con Day.js
       }));
     },
     getDates: () => {
       return {
         date1: formState.date1,
-        date2: formState.date2
+        date2: formState.date2,
       };
-    }
+    },
   }));
 
   return (
@@ -82,4 +83,6 @@ const MyForm = forwardRef(({ onDate1Change, onDate2Change }, ref) => {
 });
 
 export default MyForm;
+
+
 

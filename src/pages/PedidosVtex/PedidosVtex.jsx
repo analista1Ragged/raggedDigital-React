@@ -9,7 +9,6 @@ import BuscarButton from '../../components/BotonBuscar/BotonBuscar.jsx';
 import Menu2BotonesG from '../../components/Menu3Botones/Menu2BotonesG.jsx';
 import BuscarLimpiar from '../../components/BotonLimpiar/BotonLimpiar.jsx';
 import FilterPedidosVtex from '../../components/FilterRow/FilterPedidosVtex.jsx';
-import CheckboxGroup from '../../components/Checkbox/CheckboxDoble/CheckboxGroup.jsx';
 import { urlapi } from '../../App';
 import axios from 'axios';
 import Swal from 'sweetalert2';
