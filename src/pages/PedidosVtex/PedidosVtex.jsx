@@ -169,10 +169,13 @@ const PedidosVtex = () => {
   }, []);
 
   const handleBuscarClick = async () => {
+    // Limpia los campos antes de ejecutar la lógica
+    setSelectedOrders({});
+  
     if (seleccionarFechaRef.current) {
       const { date1, date2 } = seleccionarFechaRef.current.getDates();
   
-      if (valorCampo != '') {
+      if (valorCampo !== '') {
         Swal.fire({
           title: `Consultando pedidos de orden ${valorCampo}`,
           allowOutsideClick: false,
@@ -253,6 +256,7 @@ const PedidosVtex = () => {
       });
     }
   };
+  
   
   
   
