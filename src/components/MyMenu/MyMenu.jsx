@@ -84,7 +84,14 @@ const menuItems = [
         key: "3.4",
         title: "Venta Directa",
         icon: <AiOutlineShrink />,
-        path: "/ecommerce/Ragged",
+        items: [
+          {
+            key: '3.4.1',
+            title: 'Vtex',
+            icon: <BsVimeo />,
+            path: "/Logistica/CanalDigital/Vtex",
+          },
+        ],
       },
       {
         key: "3.5",

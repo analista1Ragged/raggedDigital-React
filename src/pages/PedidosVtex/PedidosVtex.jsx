@@ -12,6 +12,7 @@ import FilterPedidosVtex from '../../components/FilterRow/FilterPedidosVtex.jsx'
 import { urlapi } from '../../App';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import dayjs from 'dayjs';  // Importa Day.js
 
 const EstadoFactura = ({ estadoVtex }) => {
   let color, text;
