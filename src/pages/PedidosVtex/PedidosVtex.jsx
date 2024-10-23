@@ -321,26 +321,31 @@ const PedidosVtex = () => {
             <div className="pedidosvtex-multi-selector">
               
                   
-                  <div style={{ display: 'flex'}}>
-                  
+                  {/*<div style={{ display: 'flex'}}>
                     <CampoTexto placeholder="Buscar por # pedido:" 
                     value={valorCampo} // Vinculado al estado
                     onChange={manejarActualizacionValor}/>
-                 
-                
-                    <ListaOpcionesP
+                    <ListaOpcionesP/>
+                  </div>*/}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div className="perfiles-vtex">
+                      <ListaOpcionesP selectText="Asignar Vendedor" mode="1" />
+                    </div>
+                    <CampoTexto 
+                      placeholder="Buscar por # pedido:" 
+                      value={valorCampo} // Vinculado al estado
+                      onChange={manejarActualizacionValor} 
                     />
-                  
-                  
                   </div>
+
                   <div className="row">
-                <div className="col">
-                  <div className="separador">
-                    <SeleccionarFecha className="component-item" ref={seleccionarFechaRef}/>
-                    <BuscarButton className="component-item" onClick={handleBuscarClick} />
-                    <BuscarLimpiar onClick={clearSelector} />
+                    <div className="col">
+                        <div className="separador">
+                          <SeleccionarFecha className="component-item" ref={seleccionarFechaRef}/>
+                          <BuscarButton className="component-item" onClick={handleBuscarClick} />
+                          <BuscarLimpiar onClick={clearSelector} />
+                      </div>
                   </div>
-                </div>
               </div>
             </div>
           </div>
