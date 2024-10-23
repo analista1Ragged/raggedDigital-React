@@ -9,6 +9,8 @@ import BuscarButton from '../../components/BotonBuscar/BotonBuscar.jsx';
 import Menu2BotonesG from '../../components/Menu3Botones/Menu2BotonesG.jsx';
 import BuscarLimpiar from '../../components/BotonLimpiar/BotonLimpiar.jsx';
 import FilterPedidosVtex from '../../components/FilterRow/FilterPedidosVtex.jsx';
+import ListaOpcionesP from "../../components/ListaOpciones/ListaOpcionesP.jsx";
+
 import { urlapi } from '../../App';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -316,13 +318,22 @@ const PedidosVtex = () => {
         <form>
           <div className="pedidosvtex-container">
             <div className="pedidosvtex-multi-selector">
-              <div className="row">
-                <div className="col">
-                  <div className="inlipedidosvtex-inline-components3ne-components3">
+              
+                  
+                  <div style={{ display: 'flex'}}>
+                  
                     <CampoTexto placeholder="Buscar por # pedido:" 
                     value={valorCampo} // Vinculado al estado
                     onChange={manejarActualizacionValor}/>
+                 
+                
+                    <ListaOpcionesP
+                    />
+                  
+                  
                   </div>
+                  <div className="row">
+                <div className="col">
                   <div className="separador">
                     <SeleccionarFecha className="component-item" ref={seleccionarFechaRef}/>
                     <BuscarButton className="component-item" onClick={handleBuscarClick} />

@@ -24,7 +24,6 @@ const ListaOpciones = ({ setSelectedBanco }) => {
          //setBancos([]); // En caso de error, establecer bancos como un array vacío
        }
      };
-  
      fetchBancos();
    }, []);
   
