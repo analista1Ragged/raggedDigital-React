@@ -10,7 +10,7 @@ import Menu2BotonesG from '../../components/Menu3Botones/Menu2BotonesG.jsx';
 import BuscarLimpiar from '../../components/BotonLimpiar/BotonLimpiar.jsx';
 import FilterPedidosVtex from '../../components/FilterRow/FilterPedidosVtex.jsx';
 import ListaOpcionesP from "../../components/ListaOpciones/ListaOpcionesP.jsx";
-
+import * as XLSX from 'xlsx';
 import { urlapi } from '../../App';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -97,9 +97,26 @@ const transformData = (list) => {
   }));
 };
 
+const transformVendedor = (list) => {
+  if (!Array.isArray(list)) {
+    console.error('Expected an array but received:', list);
+    return [];
+  }
+
+  return list.map((item, index) => ({
+    id: index + 1,
+    //pedidoVtex: item['Pedido Vtex'] || 'N/A',
+    //pedidoERP: item['Pedido ERP'] || 'N/A',
+    cod: item.Codigo_Vendedor || 'N/A',
+    nom: item.Nombre || 'N/A',
+  }));
+};
+
 const PedidosVtex = () => {
   const [valorCampo, setValorCampo] = useState('');
   const [data, setData] = useState([]);
+  const [vendedores, setVendedores] = useState([]);
+  const [vendedor, setVendedor] = useState('');
   const [loading, setLoading] = useState(false);
   const [filtersPedidoVtex, setFiltersPedidosVtex] = useState({
     almacen: '',
@@ -115,25 +132,143 @@ const PedidosVtex = () => {
   });
   const seleccionarFechaRef = useRef(null);
   const [selectedOrders, setSelectedOrders] = useState({});
+  const [allSelected, setAllSelected] = useState(false);
+
+
 
   const handleGenerate = async () => {
+    if (vendedor === '') {
+      Swal.fire({
+        title: "Vendedor NO asignado",
+        text: "Debe seleccionar un vendedor para asignarlo a los pedidos.",
+        icon: "info"
+      });
+      return;
+    }
     Swal.fire({
       title: `Creando pedido en Siesa...`,
-      allowOutsideClick: true,
+      allowOutsideClick: false,
       showConfirmButton: false,
       didOpen: () => {
         Swal.showLoading();
       }
     });
+
+    
+    
+  
     const selectedPedidos = currentItems.filter(item => selectedOrders[item.id]);
     const pedidoVtexList = selectedPedidos.map(item => item.pedidoVtex);
+    const data = {
+      pedidoVtexList: pedidoVtexList,
+      vendedor: vendedor,
+    };
+  
     try {
-      const response = await axios.post(`${urlapi}/get-orderDetail`, pedidoVtexList);
-      console.log('Response from API:', response.data);
+      const response = await axios.post(`${urlapi}/get-orderDetail`, data);
+      const errores = response.data.message; // Lista de errores en JSON
+      console.log('Errores:', errores);
       Swal.close();
+  
+      if (errores.length === 0) {
+        Swal.fire({
+          title: 'Correcto',
+          text: 'Todos los pedidos se han creado en Siesa correctamente.',
+          icon: "success",
+          confirmButtonText: 'OK'
+        });
+      } else {
+        // Construir el texto para mostrar en el Swal alert
+        const errorMessages = errores.map(error => 
+          `Pedido ${error['ID de orden']}`
+        ).join('<br>');
+  
+        Swal.fire({
+          title: 'Completado con errores',
+          html: `Los pedidos se completaron con los siguientes errores:<br><br>${errorMessages}<br>Verifique el archivo descargado para ver los detalles.`,
+          icon: "info",
+          confirmButtonText: 'OK'
+        });
+  
+        // Generar y descargar el archivo Excel con los errores
+        const worksheet = XLSX.utils.json_to_sheet(errores, { header: ["ID de orden", "Tercero", "Inventario", "Pedido"] });
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Errores");
+  
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+        const url = URL.createObjectURL(blob);
+  
+        // Crear y hacer clic en el enlace de descarga
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "Errores_Pedidos.xlsx";
+        link.click();
+  
+        // Liberar el URL creado
+        URL.revokeObjectURL(url);
+      }
     } catch (error) {
       Swal.close();
       console.error('Error sending pedidoVtexList:', error);
+      Swal.fire({
+        title: "Error",
+        text: "Ocurrió un error al procesar los pedidos.",
+        icon: "error",
+        confirmButtonText: 'OK'
+      });
+    }
+  };
+  
+  const downloadExcelFile = async () => {
+    Swal.fire({
+      title: `Generando Guias de pedidos...`,
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+    try {
+      const response = await fetch(`${urlapi}/get-guias`, {
+        method: 'GET', // o 'GET' si no es necesario el JSON
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        //body: JSON.stringify({
+          // Aquí puedes incluir los datos que necesitas enviar
+          // si la solicitud es POST, o quitar 'body' si usas GET
+        //}),
+      });
+  
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'guias.xlsx'; // Nombre del archivo
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        Swal.close();
+        Swal.fire({
+          title: 'Excel Generado',
+          html: `Documento con guias ha sido descargado<br><b>Revisa tu carpeta de descargas</b>`,
+          icon: "success",
+          confirmButtonText: 'OK'
+        });
+      } else {
+        console.error('Error al descargar el archivo');
+        Swal.close();
+        Swal.fire({
+          title: 'No se pudo generar el excel',
+          html: `No hay guias disponibles o hubo un problema al descargar el archivo<br><b>Comunicate con el area de sistemas</b>`,
+          icon: "success",
+          confirmButtonText: 'OK'
+        });
+      }
+    } catch (error) {
+      console.error('Error en la petición:', error);
     }
   };
 
@@ -152,13 +287,18 @@ const PedidosVtex = () => {
         const response = await fetch(`${urlapi}/get-orders`, []);
         const result = await response.json();
         
-        const dataToTransform = result.list || result; 
-        console.log("Datos recibidos:", dataToTransform);
+        const dataToTransform = result.list || result[0]; 
+        const transformedData = transformData(dataToTransform);
         
-        const transformedData = transformData(dataToTransform); 
+        const vendedores = result.list || result[1];
+        const transformedVendedor = transformVendedor(vendedores);
+
+        console.log("Datos recibidos:", transformedData);
+        console.log("Vendedores:", transformedVendedor);
         Swal.close();
         setData(transformedData);
-          
+        setVendedores(transformedVendedor);
+
       } catch (error) {
         console.error('Error fetching orders:', error);
       } finally {
@@ -171,7 +311,6 @@ const PedidosVtex = () => {
   const handleBuscarClick = async () => {
     // Limpia los campos antes de ejecutar la lógica
     setSelectedOrders({});
-  
     if (seleccionarFechaRef.current) {
       const { date1, date2 } = seleccionarFechaRef.current.getDates();
   
@@ -233,7 +372,7 @@ const PedidosVtex = () => {
         const result = await response.json();
         console.log('Response from API:', result);
   
-        const dataToTransform = result.list || result;
+        const dataToTransform = result.list || result[0];
         console.log("Datos recibidos:", dataToTransform);
   
         const transformedData = transformData(dataToTransform);
@@ -307,6 +446,13 @@ const PedidosVtex = () => {
     }));
   };
 
+  const handleSelectedAllChange = () => {
+    setAllSelected((prevSelected) => {
+      console.log("Cambiando allSelected a:", !prevSelected); // Verificar el cambio de estado
+      return !prevSelected;
+    });
+  };
+
   const manejarActualizacionValor = (e) => {
     setValorCampo(e.target.value); // Actualiza el valor del campo de texto
   };
@@ -333,7 +479,11 @@ const PedidosVtex = () => {
                   </div>*/}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div className="perfiles-vtex">
-                      <ListaOpcionesP selectText="Asignar Vendedor" mode="1" />
+                      <ListaOpcionesP 
+                      selectText="Asignar Vendedor" 
+                      mode="1" 
+                      listas= {vendedores}
+                      setSelected={setVendedor}/>
                     </div>
                     <CampoTexto 
                       placeholder="Buscar por # pedido:" 
@@ -355,7 +505,7 @@ const PedidosVtex = () => {
           </div>
         </form>
 
-        <Menu2BotonesG onGenerate={handleGenerate} />
+        <Menu2BotonesG onGenerate={handleGenerate} onDownload={downloadExcelFile} />
 
         <div className="pedidosvtex-tabla-container">
           <div className="pedidosvtex-tabla-scroll">
@@ -375,7 +525,13 @@ const PedidosVtex = () => {
                 <th scope="col">Estado Siesa</th>
                 <th scope="col">Seleccionar</th>
               </tr>
-              <FilterPedidosVtex filtersPedidosVtex={filtersPedidoVtex} handleFilter={handleFilter} />
+              <FilterPedidosVtex filtersPedidosVtex={filtersPedidoVtex} handleFilter={handleFilter}
+              allSelected={allSelected}
+              setAllSelected={setAllSelected}
+              selectedOrders={selectedOrders}
+              setSelectedOrders={setSelectedOrders}
+              currentItems={currentItems} />
+
             </thead>
             <tbody>
               {currentItems.map((item) => (

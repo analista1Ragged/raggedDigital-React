@@ -148,7 +148,7 @@ const NominaElectronica = () => {
             listas={[["HE", "Rancho Guadalupe"], ["HL", "Hacienda Amparo"]]}
             label="Seleccionar unidad de negocio."
             selectText="Seleccionar..."
-            setSelectedBanco={setUnidadNegocio}
+            setSelected={setUnidadNegocio}
           />
           <Boton type="submit" texto="Enviar">
             Descargar Nómina
