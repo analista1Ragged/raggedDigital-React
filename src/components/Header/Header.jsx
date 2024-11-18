@@ -42,7 +42,7 @@ const Header = () => {
             />
           </a>
         )}
-        <a href="https://glpi.ragged.com.co" target="_blank" rel="noopener noreferrer">
+        <a href="https://serverrgd.eastus.cloudapp.azure.com:8084/" target="_blank" rel="noopener noreferrer">
           <RiCustomerServiceFill 
             className="top-bar-icon"
             title='Mesa de Ayuda'
