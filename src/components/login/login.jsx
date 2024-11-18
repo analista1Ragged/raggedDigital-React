@@ -98,7 +98,7 @@ const Login = (props) => {
                         type="text"
                         id="username"
                         name="username"
-                        autocomplete="username"
+                        autoComplete="username"
                     />
                     <CampoContraseña
                         titulo="Contraseña"
@@ -109,7 +109,7 @@ const Login = (props) => {
                         type="password"
                         id="password"
                         name="password"
-                        autocomplete="current-password"
+                        autoComplete="current-password"
                     />
                     <div className="forgot-password">
                     <Link to="/OlvidasteContrasena">¿Olvidaste tu contraseña?</Link>

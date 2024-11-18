@@ -1,14 +1,67 @@
-/* CarouselFadeComponent.css */
-.slick-slide {
-    text-align: center;
-    height: 160px;
-    line-height: 160px;
-    background: #41D9A1;
-    overflow: hidden;
-  }
+/* Estilos del Footer */
+
+/* Establece la imagen de fondo del footer */
+.footer-prueba {
+  background-image: url('../../assets/Images/fondoFoorterPrueba.jpg');
+  background-size: cover; /* Asegura que la imagen cubra todo el fondo */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  color: #000; /* Color del texto */
+  padding: 50px 0; /* Espaciado interno superior e inferior */
   
-  .slick-slide h3 {
-    color: #fff;
+  
+}
+
+
+/* Media queries para hacer responsivo el footer */
+@media (max-width: 768px) {
+  .footer-prueba-top {
+    flex-direction: column; /* Cambia a disposición de columna */
+    align-items: center; /* Alinea al centro horizontalmente */
   }
+
+
+
+  .social-media {
+    justify-content: center; /* Alinea al centro horizontalmente */
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-column {
+    font-size: 14px; /* Reduce el tamaño de fuente en dispositivos pequeños */
+  }
+}
+
+.footer-prueba {
+  background-color: #f8f8f8;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  height: 700px;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-column {
+  text-align: center; /* Centra el contenido dentro de cada columna */
+}
+
+.footer-left{
+  width: 50%;
+}
+
+/* Mantiene el video en la posición actual */
+.footer-left video {
+  width: 100% !important ; 
+  height: 40% !important ;
+}
+
+
+
+
   
   

@@ -23,7 +23,8 @@ import PedidosVtex from './pages/PedidosVtex/PedidosVtex';
 //import CheckboxGroup from './components/Checkbox/CheckboxDoble/CheckboxGroup';
 import PowerPoint from './components/HelpRaggedDigital/HelpNominaElectronica';
 import Header from './components/Header/Header';
-import Carrusel from './components/Carrusel/Carrusel';
+//import FooterPrueba from './components/Footer-prueba/FooterPrueba';
+import HeaderP from './components/Header/HeaderP';
 
 
 //export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
@@ -58,7 +59,7 @@ function App() {
   // Función para verificar si se debe mostrar el navbar
   const shouldShowNavbar = () => {
     // Excluir rutas donde no quieres mostrar MyMenu
-    const excludedRoutes = ['/Login', '/OlvidasteContrasena', '/HelpNomina', '/HelpCartera', '/HelpInventarios', '/HelpVerCapsulas', '/HelpBancos', '/HelpPedidosVtex', '/ManualDeAcceso'];
+    const excludedRoutes = ['/Login', '/OlvidasteContrasena', '/HelpNomina', '/HelpCartera', '/HelpInventarios', '/HelpVerCapsulas', '/HelpBancos', '/HelpPedidosVtex', '/ManualDeAcceso', '/Prueba'];
     return !excludedRoutes.includes(currentLocation.pathname); // Usa currentLocation.pathname
   };
 
@@ -174,7 +175,7 @@ function App() {
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <Carrusel />
+            <HeaderP />
           </div>
         } />
         

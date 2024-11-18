@@ -333,7 +333,7 @@ const PedidosVtex = () => {
                   </div>*/}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div className="perfiles-vtex">
-                      <ListaOpcionesP selectText="Asignar Vendedor" mode="1" />
+                      <ListaOpcionesP selectText="Asignar Vendedor(a)" mode="1" />
                     </div>
                     <CampoTexto 
                       placeholder="Buscar por # pedido:" 

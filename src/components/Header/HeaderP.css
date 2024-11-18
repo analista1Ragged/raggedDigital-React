@@ -1,0 +1,123 @@
+/* Estilos generales para la barra superior */
+.top-bar {
+    justify-content: space-between; /* Espacio entre los elementos */
+    align-items: center;
+    background-color: #FFF;
+    padding: 10px 20px;
+    height: 70px; /* Mantén la altura fija */
+    box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.5);
+    color: white;
+    position: relative;
+  }
+
+  /* Estilo para el contenedor izquierdo (logo y texto) */
+    .top-bar-left {
+        display: flex;
+        align-items: center;
+        gap: 15px; /* Espacio entre el logo y el texto */
+  }
+  
+  /* Estilo para el texto a la izquierda */
+  .top-bar-left h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  /* Contenedor derecho para los íconos e imagen */
+  .top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espacio entre íconos y la imagen */
+    justify-content: flex-end;
+  }
+  
+  /* Estilo para los íconos */
+  .top-bar-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+  }
+  
+  .top-bar-icon:hover {
+    color: #41D9A1; /* Efecto hover */
+  }
+  
+  /* Estilo para la imagen de la barra superior */
+  .top-bar-image {
+    width: 33%;
+    max-width: 100px; /* Ajusta el tamaño máximo para pantallas más pequeñas */
+    border-radius: 50%; /* Hacerla circular */
+    object-fit: cover; /* Ajustar internamente la imagen */
+    display: block; /* Comportamiento de bloque */
+    margin-left: auto; /* Alinearla a la derecha */
+  }
+  
+  /* Centrar los elementos en la barra superior */
+  .top-bar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* Centrar horizontalmente */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+  }
+  
+  /* Estilo para el logo */
+  .logo {
+    height: 140%;
+    object-fit: contain; /* Asegura que la imagen se ajuste */
+    margin-top: -20px;
+  }
+  
+  /* Estilos responsivos para diferentes tamaños de pantalla */
+  @media (max-width: 768px) {
+    .top-bar {
+      flex-direction: column;
+      height: auto;
+      padding: 10px;
+    }
+  
+    .top-bar-left h3 {
+      font-size: 16px; /* Ajustar el tamaño del texto */
+      margin-bottom: 10px;
+    }
+  
+    /* Contenedor derecho para los íconos e imagen */
+    .top-bar-right {
+        display: flex;
+        align-items: center;
+        gap: 20px; /* Espacio entre íconos y la imagen */
+        justify-content: flex-end;
+    }
+  
+    .top-bar-image {
+      width: 25%;
+      max-width: 80px; /* Reducir el tamaño de la imagen */
+    }
+  
+    .top-bar-center {
+      position: static; /* Ajustar para pantallas pequeñas */
+      transform: none;
+      margin-top: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .top-bar {
+      padding: 5px;
+    }
+  
+    .top-bar-left h3 {
+      font-size: 14px; /* Reducir el tamaño del texto */
+    }
+  
+    .top-bar-icon {
+      font-size: 20px; /* Reducir el tamaño del ícono */
+    }
+  
+    .top-bar-image {
+      width: 20%;
+      max-width: 60px; /* Reducir aún más la imagen para pantallas muy pequeñas */
+    }
+  }
