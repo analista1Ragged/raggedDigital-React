@@ -2,8 +2,20 @@ import React from 'react';
 import CheckboxSelectodo from '../Checkbox/CheckboxDoble/CheckboxSelectodo';
 
 // Este componente recibe dos props: filtersPedidosVtex y handleFilter
-const FilterPedidosVtex = ({ filtersPedidosVtex = {}, handleFilter }) => {
+const FilterPedidosVtex = ({ filtersPedidosVtex = {}, handleFilter , allSelected, setAllSelected, selectedOrders, setSelectedOrders, currentItems}) => {
   const columns = ['almacen', 'pedidoVtex', 'pedidoERP', 'cliente', 'formaDePago', 'vrPedido', 'fechaPedido', 'estadoVtex', 'estadoSiesa'];
+  
+  const handleSelectAllChange = () => {
+    const newSelectionState = !allSelected;
+    setAllSelected(newSelectionState);
+
+    // Actualiza `selectedOrders` para cada elemento en `currentItems`
+    const updatedSelection = {};
+    currentItems.forEach(item => {
+      updatedSelection[item.id] = newSelectionState;
+    });
+    setSelectedOrders(updatedSelection);
+  };
 
   return (
     <tr id="filterRowCartera">
@@ -22,7 +34,11 @@ const FilterPedidosVtex = ({ filtersPedidosVtex = {}, handleFilter }) => {
       ))}
       <th scope="col">
         {/* Checkbox para seleccionar todo */}
-        <CheckboxSelectodo />
+        <input
+        type="checkbox"
+        checked={allSelected}
+        onChange={handleSelectAllChange}
+      />
       </th>
     </tr>
   );
