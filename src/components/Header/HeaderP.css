@@ -2,7 +2,7 @@
 .top-bar {
     justify-content: space-between; /* Espacio entre los elementos */
     align-items: center;
-    background-color: #FFF;
+    background-color: #373738;
     padding: 10px 20px;
     height: 70px; /* Mantén la altura fija */
     box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.5);

@@ -10,6 +10,7 @@ import { PiEyeSlashFill, PiPasswordFill, PiUsersFill } from "react-icons/pi";
 import { FaUsersRays } from "react-icons/fa6";
 import { BsVimeo } from "react-icons/bs";
 import { NavLink, useNavigate } from "react-router-dom";
+import { MdOutlinePostAdd } from "react-icons/md";
 
 const { SubMenu } = Menu;
 
@@ -181,6 +182,12 @@ const menuItems = [
             title: 'Vtex',
             icon: <BsVimeo />,
             path: "/Logistica/CanalDigital/Vtex",
+          },
+          {
+            key: '8.1.2',
+            title: 'Publicar Catalógo',
+            icon: <MdOutlinePostAdd />,
+            path: "/Logistica/CanalDigital/Catalogo",
           },
         ],
       },
