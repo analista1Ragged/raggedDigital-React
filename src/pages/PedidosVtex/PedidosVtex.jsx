@@ -38,6 +38,10 @@ const EstadoFactura = ({ estadoVtex }) => {
       text = estadoVtex;
       break;
 //Vtex
+    case 'Guia Descargada':
+      color = '#42A2C2';
+      text = estadoVtex;
+      break;
     case 'ready for handling':
       color = '#e3310e';
       text = estadoVtex;
@@ -220,6 +224,8 @@ const PedidosVtex = () => {
     }
   };
   
+
+
   const downloadExcelFile = async () => {
     Swal.fire({
       title: `Generando Guias de pedidos...`,
@@ -229,16 +235,13 @@ const PedidosVtex = () => {
         Swal.showLoading();
       }
     });
+  
     try {
       const response = await fetch(`${urlapi}/get-guias`, {
-        method: 'GET', // o 'GET' si no es necesario el JSON
+        method: 'GET', // Cambia a POST si es necesario
         headers: {
           'Content-Type': 'application/json',
         },
-        //body: JSON.stringify({
-          // Aquí puedes incluir los datos que necesitas enviar
-          // si la solicitud es POST, o quitar 'body' si usas GET
-        //}),
       });
   
       if (response.ok) {
@@ -250,27 +253,68 @@ const PedidosVtex = () => {
         document.body.appendChild(a);
         a.click();
         a.remove();
-        Swal.close();
-        Swal.fire({
-          title: 'Excel Generado',
-          html: `Documento con guias ha sido descargado<br><b>Revisa tu carpeta de descargas</b>`,
-          icon: "success",
-          confirmButtonText: 'OK'
-        });
+  
+        // Leer y procesar el archivo Excel
+        const file = new File([blob], 'guias.xlsx');
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheet2 = workbook.Sheets[workbook.SheetNames[1]]; // Hoja 2
+  
+          if (sheet2) {
+            const jsonSheet2 = XLSX.utils.sheet_to_json(sheet2, { header: 1 });
+            const containsError = jsonSheet2.some(row => row.some(cell => typeof cell === 'string' && cell.includes('Error')));
+  
+            Swal.close();
+            if (containsError) {
+              Swal.fire({
+                title: 'Han ocurrido algunos errores',
+                html: `<b>Errores encontrados en la hoja 2:</b><br>${jsonSheet2.slice(1).map(row => row[0]).filter(cell => cell).join('<br>')}`,
+                icon: "warning",
+                width: 600,
+                confirmButtonText: 'OK'
+              });
+            } else {
+              Swal.fire({
+                title: 'Excel Generado',
+                html: `Documento con guias ha sido descargado<br><b>Revisa tu carpeta de descargas</b>`,
+                icon: "success",
+                confirmButtonText: 'OK'
+              });
+            }
+          } else {
+            Swal.fire({
+              title: 'Excel Generado',
+              html: `Documento con guias ha sido descargado<br><b>Revisa tu carpeta de descargas</b>`,
+              icon: "success",
+              confirmButtonText: 'OK'
+            });
+          }
+        };
+        reader.readAsArrayBuffer(file);
       } else {
         console.error('Error al descargar el archivo');
         Swal.close();
         Swal.fire({
           title: 'No se pudo generar el excel',
           html: `No hay guias disponibles o hubo un problema al descargar el archivo<br><b>Comunicate con el area de sistemas</b>`,
-          icon: "success",
+          icon: "error",
           confirmButtonText: 'OK'
         });
       }
     } catch (error) {
       console.error('Error en la petición:', error);
+      Swal.close();
+      Swal.fire({
+        title: 'Error inesperado',
+        html: `Hubo un error al generar el archivo<br><b>${error.message}</b>`,
+        icon: "error",
+        confirmButtonText: 'OK'
+      });
     }
   };
+  
 
   useEffect(() => {
     const fetchData = async () => {
