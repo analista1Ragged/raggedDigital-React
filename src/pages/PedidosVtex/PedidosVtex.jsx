@@ -157,10 +157,6 @@ const PedidosVtex = () => {
         Swal.showLoading();
       }
     });
-
-    
-    
-  
     const selectedPedidos = currentItems.filter(item => selectedOrders[item.id]);
     const pedidoVtexList = selectedPedidos.map(item => item.pedidoVtex);
     const data = {
@@ -237,11 +233,14 @@ const PedidosVtex = () => {
     });
   
     try {
+      const selectedPedidos = currentItems.filter(item => selectedOrders[item.id]);
+      const pedidoVtexList = selectedPedidos.map(item => item.pedidoVtex);
       const response = await fetch(`${urlapi}/get-guias`, {
-        method: 'GET', // Cambia a POST si es necesario
+        method: 'POST', // Cambia a POST si es necesario
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({pedidoVtexList: pedidoVtexList}),
       });
   
       if (response.ok) {
