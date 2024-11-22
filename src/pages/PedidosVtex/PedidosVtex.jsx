@@ -179,9 +179,12 @@ const PedidosVtex = () => {
         });
       } else {
         // Construir el texto para mostrar en el Swal alert
-        const errorMessages = errores.map(error => 
-          `Pedido ${error['ID de orden']}`
-        ).join('<br>');
+        const uniqueIds = [...new Set(errores.map(error => error['ID de orden']))];
+
+        const errorMessages = uniqueIds
+          .map(id => `Pedido ${id}`)
+          .join('<br>');
+
   
         Swal.fire({
           title: 'Completado con errores',

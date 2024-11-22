@@ -85,9 +85,11 @@ function App() {
           } />
         } />
         <Route path='/analytics' element={
+        <PrivateRoute element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
           </div>
         } />
+      }/>
         <Route path='/analytics/Reporte' element={
           <PrivateRoute element={
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
