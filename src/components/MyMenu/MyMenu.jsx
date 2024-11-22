@@ -92,6 +92,12 @@ const menuItems = [
             icon: <BsVimeo />,
             path: "/Logistica/CanalDigital/Vtex",
           },
+          {
+            key: '3.4.2',
+            title: 'Publicar Catalógo',
+            icon: <MdOutlinePostAdd />,
+            path: "/Logistica/CanalDigital/Catalogo",
+          },
         ],
       },
       {
@@ -182,12 +188,6 @@ const menuItems = [
             title: 'Vtex',
             icon: <BsVimeo />,
             path: "/Logistica/CanalDigital/Vtex",
-          },
-          {
-            key: '8.1.2',
-            title: 'Publicar Catalógo',
-            icon: <MdOutlinePostAdd />,
-            path: "/Logistica/CanalDigital/Catalogo",
           },
         ],
       },
