@@ -14,13 +14,13 @@ const AdjuntarArchivoP = ({ uploadPath, setFile }) => {
       } else {
         alert("Solo se permiten archivos PDF o PNG.");
         setFileName("Seleccionar archivo...");
-        setFile(null); // Resetear el archivo en el padre
       }
     } else {
       setFileName("Seleccionar archivo...");
-      setFile(null); // Resetear el archivo en el padre
+      setFile(null);
     }
   };
+  
 
   const handleButtonClick = (event) => {
     event.preventDefault();
