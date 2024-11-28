@@ -96,7 +96,7 @@ const menuItems = [
             key: '3.4.2',
             title: 'Publicar Catalógo',
             icon: <MdOutlinePostAdd />,
-            path: "/Logistica/CanalDigital/Catalogo",
+            path: "/ecommerce/VentaDirecta/PublicarCatalogo",
           },
         ],
       },

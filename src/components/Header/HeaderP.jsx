@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <div className="top-bar">
       <div className="top-bar-right">
-        <a href="https://glpi.ragged.com.co" target="_blank" rel="noopener noreferrer">
+        <a href="https://greggo.ragged.com.co" target="_blank" rel="noopener noreferrer">
           <RiCustomerServiceFill 
             className="top-bar-icon"
             title='Mesa de Ayuda'

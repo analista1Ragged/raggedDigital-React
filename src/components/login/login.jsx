@@ -114,7 +114,7 @@ const Login = (props) => {
                     <div className="forgot-password">
                     <Link to="/OlvidasteContrasena">¿Olvidaste tu contraseña?</Link>
                     <br/><br/>
-                    <a href="https://glpi.ragged.com.co" target="_blank" rel="noopener noreferrer">
+                    <a href="https://greggo.ragged.com.co" target="_blank" rel="noopener noreferrer">
                         <RiCustomerServiceFill 
                             className="top-bar-icon"
                             title='Mesa de Ayuda'
