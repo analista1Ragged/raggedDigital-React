@@ -49,6 +49,17 @@
     margin-bottom: 5px; /* Ajusta el margen inferior de la imagen */
 }
 
+    /* Estilo para los íconos */
+    .top-bar-icons {
+        font-size: 24px;
+        cursor: pointer;
+        color: #373738;
+    }
+    
+    .top-bar-icons:hover {
+        color: #41D9A1; /* Efecto hover */
+    }
+
 
 @media (max-width: 768px) {
     .TDiggital {

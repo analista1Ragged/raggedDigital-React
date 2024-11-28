@@ -116,13 +116,13 @@ const Login = (props) => {
                     <br/><br/>
                     <a href="https://greggo.ragged.com.co" target="_blank" rel="noopener noreferrer">
                         <RiCustomerServiceFill 
-                            className="top-bar-icon"
+                            className="top-bar-icons"
                             title='Mesa de Ayuda'
                         />
                     </a>
                     <a href='/RaggedDigital/ManualDeAcceso' target="_blank" rel="noopener noreferrer">
                         <LuBadgeHelp 
-                            className="top-bar-icon"
+                            className="top-bar-icons"
                             title='Manual de Usabilidad'
                         />
                     </a>
