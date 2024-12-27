@@ -14,10 +14,12 @@ const FooterPrueba = () => {
       <div className="footer-container">
       <div className="footer-left">
       
+      <div class="footer-video-container">
       <video width="50%" controls>
       <source src={videoDemo} type="video/mp4" />
         Tu navegador no soporta el video.
       </video>
+      </div>
     </div>
       <div className="footer-top">
         
