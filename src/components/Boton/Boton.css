@@ -1,4 +1,4 @@
-.boton{
+.boton {
     background-color: #343a40;
     border-radius: 10px;
     font-weight: 700;
@@ -10,6 +10,16 @@
     cursor: pointer;
 }
 
-.boton:hover{
+.boton:hover {
     color: #41D9A1;
+}
+
+.boton--disabled {
+    background-color: #d6d6d6;
+    color: #999999;
+    cursor: not-allowed; /* Cambia el cursor cuando está deshabilitado */
+}
+
+.boton:disabled {
+    pointer-events: none; /* Evita que el botón sea clickeable */
 }

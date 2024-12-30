@@ -1,14 +1,8 @@
 import React from 'react';
 import "./ReporteReferencias.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import Menu2Botones from '../../components/Menu3Botones/Menu2Botones.jsx';
 import { Pagination, Tag } from 'antd';
 import 'antd/dist/reset.css';
-import BuscarButton from '../../components/BotonBuscar/BotonBuscar.jsx';
-import BuscarLimpiar from '../../components/BotonLimpiar/BotonLimpiar.jsx';
-import SeleccionarFecha from '../../components/SeleccionarFecha/SeleccionarFecha.jsx';
-import ModalCartera from '../../components/ModalMenu/ModalMenu.jsx';
-import MultiSelector from '../../components/MultiSelector/MultiSelector.jsx';
 import Boton from 'src/components/Boton/Boton';
 
 
@@ -26,12 +20,8 @@ const ReporteReferencias = () => {
           <div className="container-2">
             <div className="row-3">
               <Boton>Generar</Boton>
-              <Boton className="btn-secondary" disabled>
-                Exportar CSV
-              </Boton>
-              <Boton className="btn-secondary" disabled>
-                Actualizar Maestras
-              </Boton>
+              <Boton>Exportar CSV</Boton>
+              <Boton>Actualizar Maestras</Boton>
             </div>
           </div>
         </form>
@@ -141,6 +131,7 @@ const ReporteReferencias = () => {
                   <td>M</td>
                   <td>000</td>
                 </tr>
+                
             </tbody>
           </table>
           </div>
