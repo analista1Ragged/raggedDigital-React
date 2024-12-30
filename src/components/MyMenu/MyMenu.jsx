@@ -6,7 +6,10 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill, FaCheck,  FaUsers, FaStore, FaRegHandshake} from "react-icons/fa";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
-import { PiEyeSlashFill, PiPasswordFill, PiUsersFill } from "react-icons/pi";
+import { PiEyeSlashFill, PiPasswordFill, PiUsersFill, PiEscalatorUpBold} from "react-icons/pi";
+import { ImBarcode } from "react-icons/im";
+import { BiDollarCircle } from "react-icons/bi";
+import { BsFolderPlus } from "react-icons/bs";
 import { FaUsersRays } from "react-icons/fa6";
 import { BsVimeo } from "react-icons/bs";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -198,6 +201,31 @@ const menuItems = [
     title: "Manufactura",
     icon: <IoCubeOutline />,
     path: "/ecommerce/Ragged",
+  },
+  {
+    key: "10",
+    title: "Maestros Mahalo",
+    icon: <BsFolderPlus />,
+    items: [
+      {
+        key: "10.1",
+        title: "Referencias y plus",
+        icon: <ImBarcode />,
+        path: "/Maestros/Referencias",
+      },
+      {
+        key: "10.2",
+        title: "Costos",
+        icon: <BiDollarCircle />,
+        path: "/Maestros/Costos",
+      },
+      {
+        key: "10.3",
+        title: "Escalas de precios",
+        icon: <PiEscalatorUpBold />,
+        path: "/Maestros/EscalasPrecios",
+      },
+    ],
   },
   {
     key: "96",

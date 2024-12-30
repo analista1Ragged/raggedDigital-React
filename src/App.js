@@ -24,9 +24,11 @@ import PedidosVtex from './pages/PedidosVtex/PedidosVtex';
 import PowerPoint from './components/HelpRaggedDigital/HelpNominaElectronica';
 import Header from './components/Header/Header';
 //import FooterPrueba from './components/Footer-prueba/FooterPrueba';
-import HeaderP from './components/Header/HeaderP';
 import PublicarCatalogo from './pages/PublicarCatalogo/PublicarCatalogo';
-
+import FooterPrueba from './components/Footer-prueba/FooterPrueba';
+import manualRagged from './assets/docts/MANUAL DE USABILIDAD RAGGED DIGITAL.pptx';
+import ReporteReferencias from './pages/ReporteReferencias/ReporteReferencias';
+import ReportesCostos from './pages/ReporteCostos/ReportesCostos';
 
 //export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
 export const urlapi = 'http://127.0.0.1:5000/RaggedDigitalAPI';
@@ -178,7 +180,7 @@ function App() {
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <HeaderP />
+            <FooterPrueba />
           </div>
         } />
         
@@ -217,6 +219,21 @@ function App() {
           </div>
         } />
         <Route path='/Logistica/CanalDigital/Catalogo' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <PublicarCatalogo />
+          </div>
+        } />
+        <Route path='/Maestros/Referencias' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <ReporteReferencias />
+          </div>
+        } />
+        <Route path='/Maestros/Costos' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <ReportesCostos />
+          </div>
+        } />
+        <Route path='/Maestros/Escalas' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <PublicarCatalogo />
           </div>
@@ -287,6 +304,7 @@ function App() {
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
               <PowerPoint 
                 src="https://ragged-my.sharepoint.com/personal/greggo_ragged_com_co/_layouts/15/Doc.aspx?sourcedoc={a13baf38-881f-4680-8df0-9250521892ef}&amp;action=embedview&amp;wdAr=1.7777777777777777" 
+
               />
             </div>
           }

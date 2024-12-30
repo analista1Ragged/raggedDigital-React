@@ -2,9 +2,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 80px 5%;
+    margin: 0 5%; /* Elimina el margen superior cambiándolo a 0 */
     flex-wrap: wrap; /* Permite que los elementos se envuelvan en líneas nuevas */
 }
+
 
 .formulario form {
     width: 100%;
