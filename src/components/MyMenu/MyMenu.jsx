@@ -31,7 +31,7 @@ const menuItems = [
     path: "/Home",
   },
   {
-    key: "02",
+    key: "2",
     title: "BI Analitycs",
     icon: <FaChartBar />,
     items: [
@@ -44,7 +44,7 @@ const menuItems = [
     ],
   },
   {
-    key: "03",
+    key: "3",
     title: "Ccial & Mercadeo",
     icon: <FaRegHandshake />,
     items: [
@@ -115,13 +115,13 @@ const menuItems = [
     ],
   },
   {
-    key: "04",
+    key: "4",
     title: "Compras",
     icon: <IoReceiptOutline />,
     path: "/ecommerce/Ragged",
   },
   {
-    key: "05",
+    key: "5",
     title: "Diseño & Dllo Productos",
     icon: <IoShirtSharp />,
     items: [
@@ -134,7 +134,7 @@ const menuItems = [
     ],
   },
   {
-    key: "06",
+    key: "6",
     title: "Talento Humano",
     icon: <IoAccessibilityOutline />,
     items: [
@@ -155,7 +155,7 @@ const menuItems = [
      ],
     },
     {
-    key: "07",
+    key: "7",
     title: "Financiero",
     icon: <FaCalculator />,
     items: [
@@ -174,7 +174,7 @@ const menuItems = [
     ],
   },
   {
-    key: "08",
+    key: "8",
     title: "Logística & Distribución",
     icon: <IoClipboardSharp />,
     items: [
@@ -194,7 +194,7 @@ const menuItems = [
    ],
   },
   {
-    key: "09",
+    key: "9",
     title: "Manufactura",
     icon: <IoCubeOutline />,
     path: "/ecommerce/Ragged",
