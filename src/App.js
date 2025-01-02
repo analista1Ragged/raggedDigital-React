@@ -29,6 +29,7 @@ import FooterPrueba from './components/Footer-prueba/FooterPrueba';
 import manualRagged from './assets/docts/MANUAL DE USABILIDAD RAGGED DIGITAL.pptx';
 import ReporteReferencias from './pages/ReporteReferencias/ReporteReferencias';
 import ReportesCostos from './pages/ReporteCostos/ReportesCostos';
+import EscalasPrecios from './pages/EscalasPrecios/EscalasPrecios';
 
 //export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
 export const urlapi = 'http://127.0.0.1:5000/RaggedDigitalAPI';
@@ -233,9 +234,9 @@ function App() {
             <ReportesCostos />
           </div>
         } />
-        <Route path='/Maestros/Escalas' element={
+        <Route path='/Maestros/EscalasPrecios' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <PublicarCatalogo />
+            <EscalasPrecios />
           </div>
         } />
         <Route 
