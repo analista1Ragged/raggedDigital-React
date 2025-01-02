@@ -10,8 +10,6 @@ const Bancos = () => {
   const [selectedBanco, setSelectedBanco] = useState("");
   const [fileData, setFileData] = useState(null);
 
-  
-
   const handleGenerarConciliacion = async (event) => {
     event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
 
