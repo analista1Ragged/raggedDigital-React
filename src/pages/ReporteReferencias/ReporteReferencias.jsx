@@ -32,7 +32,8 @@ const ReporteReferencias = () => {
   }, []);
 
   // Función para manejar el botón "Generar"
-const handleGenerar = async () => {
+const handleGenerar = async (event) => {
+  if (event) event.preventDefault();
   setLoading(true);
   try {
     const response = await fetch(`${urlapi}/mahalo/get-referencias`); // Mismo endpoint para actualizar los datos
@@ -50,15 +51,18 @@ const handleGenerar = async () => {
 };
 
 // Función para exportar las tablas como CSV
-const handleExportarCSV = () => {
-  // Convertir un array de objetos a formato CSV
-  const convertToCSV = (data) => {
-    const headers = Object.keys(data[0]).join(","); // Obtener los encabezados
-    const rows = data.map((row) => Object.values(row).join(",")); // Convertir cada fila
-    return [headers, ...rows].join("\n"); // Combinar encabezados y filas
+const handleExportarCSV = (event) => {
+  // Prevenir la recarga de la página
+  if (event) event.preventDefault();
+
+  // Convertir un array de objetos a formato CSV con un orden específico de columnas
+  const convertToCSV = (data, columnOrder) => {
+    return data
+      .map((row) => columnOrder.map((key) => row[key] || "").join(",")) // Ordenar columnas
+      .join("\n"); // Combinar filas
   };
 
-  // Descargar archivo CSV con retraso
+  // Descargar archivo CSV
   const downloadCSV = (data, filename, delay = 0) => {
     setTimeout(() => {
       const blob = new Blob([data], { type: "text/csv;charset=utf-8;" });
@@ -73,16 +77,59 @@ const handleExportarCSV = () => {
     }, delay);
   };
 
-  // Generar y descargar los archivos CSV con un retraso
-  // if (referencias.length > 0) {
-  //   const referenciasCSV = convertToCSV(referencias);
-  //   downloadCSV(referenciasCSV, "referencias.csv", 0); // Primer archivo
-  // }
+  // Definir el orden de columnas para las tablas
+  const referenciasColumnOrder = [
+    "C_REFERENCIA",
+    "F120_REFERENCIA",
+    "F120_DESCRIPCION",
+    "PROVEEDOR",
+    "MARCA",
+    "LINEA",
+    "C_CATEGORIA",
+    "SUBCATEGORIA",
+    "SEGMENTO",
+    "SECTOR",
+    "COLECCION",
+    "CLASIFICACION",
+    "IVA",
+    "PR_COMPRA",
+    "PR_VENTA",
+    "PR_PONDERADO",
+    "PRESENTACION",
+    "MAX_DCTO",
+    "CAMBIA_PRECIO",
+    "CATEGORIA",
+    "EXPLOSION",
+    "PROMOCION",
+    "UBICACION",
+    "UND_MEDIDA",
+    "SURTIDO",
+    "PR_MAXIMO",
+    "DECIMAL",
+    "SW_SERIAL",
+    "SW_VALIDA_MAX_DCTO",
+    "SW_VENTA_NEGATIVA",
+  ];
+
+  const pluDataColumnOrder = [
+    "REFERENCIA",
+    "BARRA",
+    "C_FACTURACION",
+    "TALLA",
+    "C_COLOR",
+  ];
+
+  // Generar y descargar los archivos CSV
+  if (referencias.length > 0) {
+    const referenciasCSV = convertToCSV(referencias, referenciasColumnOrder);
+    downloadCSV(referenciasCSV, "referencias.csv", 0);
+  }
   if (pluData.length > 0) {
-    const pluDataCSV = convertToCSV(pluData);
-    downloadCSV(pluDataCSV, "plu_data.csv", 0); // Segundo archivo con un retraso de 1 segundo
+    const pluDataCSV = convertToCSV(pluData, pluDataColumnOrder);
+    downloadCSV(pluDataCSV, "plu_data.csv", 2000); // Retraso para garantizar descarga múltiple
   }
 };
+
 
 
   
@@ -197,7 +244,6 @@ const handleExportarCSV = () => {
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">C_Plu</th>
                   <th scope="col">Referencia</th>
                   <th scope="col">Barra</th>
                   <th scope="col">C_Facturación</th>
@@ -209,12 +255,11 @@ const handleExportarCSV = () => {
                 {pluData.map((plu, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{plu.C_Plu}</td>
-                    <td>{plu.Referencia}</td>
-                    <td>{plu.Barra}</td>
-                    <td>{plu.C_Facturación}</td>
-                    <td>{plu.Talla}</td>
-                    <td>{plu.C_Color}</td>
+                    <td>{plu.REFERENCIA}</td>
+                    <td>{plu.BARRA}</td>
+                    <td>{plu.C_FACTURACION}</td>
+                    <td>{plu.TALLA}</td>
+                    <td>{plu.C_COLOR}</td>
                   </tr>
                 ))}
               </tbody>
