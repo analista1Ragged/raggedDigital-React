@@ -1,35 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
-import "./style/index.css";
-import Home from './pages/Home';
-import ReportePB from './pages/reportePB';
-import PaginaMtto from './pages/paginaMtto';
-import Login from "./components/login/login";
-import Bancos from './pages/Bancos';
-import TicketTable from './pages/VerCapsulas';
-import Footer from './components/Footer/Footer';
-import Layout from './pages/Layout';
-import MyMenu from './components/MyMenu/MyMenu';
-import Tabla from './pages/ConsultaCartera/ConsultaCartera';
-import { AuthContext, AuthProvider } from './context/AuthContext'; // Importa el contexto de autenticación y AuthProvider
-import Error404 from './components/Error404/Error404';
-import InventariosDisponibles from './pages/InventariosDisponibles/InventariosDisponibles';
-import OlvidasteContrasena from './pages/OlvidasteContrasena';
-import CambiarContraseña from './pages/CambiarContraseña';
-import NominaElectronica from './pages/NominaElectronica/NominaElectronica';
-import AdministracionMaestras from './pages/Perfiles/Perfiles';
-import PedidosVtex from './pages/PedidosVtex/PedidosVtex';
-//import Menu2BotonesP from './components/Menu3Botones/Menu2BotonesP';
-//import CheckboxGroup from './components/Checkbox/CheckboxDoble/CheckboxGroup';
-import PowerPoint from './components/HelpRaggedDigital/HelpNominaElectronica';
-import Header from './components/Header/Header';
-//import FooterPrueba from './components/Footer-prueba/FooterPrueba';
-import PublicarCatalogo from './pages/PublicarCatalogo/PublicarCatalogo';
-import FooterPrueba from './components/Footer-prueba/FooterPrueba';
+import { AuthProvider } from './context/AuthContext';
+import './style/index.css';
+
+import {
+  Home,
+  ReportePB,
+  PaginaMtto,
+  Bancos,
+  TicketTable,
+  Tabla,
+  InventariosDisponibles,
+  OlvidasteContrasena,
+  CambiarContraseña,
+  NominaElectronica,
+  AdministracionMaestras,
+  PedidosVtex,
+  PublicarCatalogo,
+  ReporteReferencias,
+  ReportesCostos,
+  EscalasPrecios,
+  Layout
+} from './pages';
+
+import {
+  Footer,
+  MyMenu,
+  Header,
+  PowerPoint,
+  FooterPrueba,
+  Error404,
+  Login
+} from './components';
+
 import manualRagged from './assets/docts/MANUAL DE USABILIDAD RAGGED DIGITAL.pptx';
-import ReporteReferencias from './pages/ReporteReferencias/ReporteReferencias';
-import ReportesCostos from './pages/ReporteCostos/ReportesCostos';
-import EscalasPrecios from './pages/EscalasPrecios/EscalasPrecios';
+
 
 //export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
 export const urlapi = 'http://127.0.0.1:5000/RaggedDigitalAPI';
