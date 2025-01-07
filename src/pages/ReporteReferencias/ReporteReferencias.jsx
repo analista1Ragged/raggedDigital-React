@@ -57,31 +57,142 @@ const ReporteReferencias = () => {
     fetchReferencias();
   }, []);
 
-  const handleGenerar = async (event) => {
-    if (event) event.preventDefault();
-    setLoading(true);
-    showLoading();
-    try {
-      const response = await fetch(`${urlapi}/mahalo/get-referencias`);
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-      const data = await response.json();
-      setReferencias(data[0] || []);
-      setPluData(data[1] || []);
-    } catch (err) {
-      setError(err.message);
-      showError(err.message);
-    } finally {
-      setLoading(false);
-      hideLoading();
+  // Función para manejar el botón "Generar"
+// Función para manejar el botón "Generar"
+const handleGenerar = async (event) => {
+  if (event) event.preventDefault();
+  setLoading(true);
+  try {
+    const response = await fetch(`${urlapi}/mahalo/get-referencias`); // Mismo endpoint para actualizar los datos
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
     }
+    const data = await response.json();
+    setReferencias(data[0] || []); // Actualizar tabla de referencias
+    setPluData(data[1] || []); // Actualizar tabla de plus
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+// Función para exportar las tablas como CSV
+const handleExportarCSV = (event) => {
+  // Prevenir la recarga de la página
+  if (event) event.preventDefault();
+
+  // Convertir un array de objetos a formato CSV con un orden específico de columnas y delimitador ;
+  const convertToCSV = (data, columnOrder, includeIndex = false) => {
+    return data
+      .map((row, index) => {
+        const rowData = columnOrder.map((key) => row[key] || "").join(";");
+        return includeIndex ? `${index + 1};${rowData}` : rowData; // Agregar índice si es necesario
+      })
+      .join("\n"); // Combinar filas
   };
 
-  const handleExportarCSV = (event) => {
-    if (event) event.preventDefault();
-    // Lógica de exportación CSV aquí
+  // Descargar archivo CSV
+  const downloadCSV = (data, filename, delay = 0) => {
+    setTimeout(() => {
+      const blob = new Blob([data], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", filename);
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, delay);
   };
+
+  // Definir el orden de columnas para las tablas
+  const referenciasColumnOrder = [
+    "C_REFERENCIA",
+    "F120_REFERENCIA",
+    "F120_DESCRIPCION",
+    "PROVEEDOR",
+    "MARCA",
+    "LINEA",
+    "C_CATEGORIA",
+    "SUBCATEGORIA",
+    "SEGMENTO",
+    "SECTOR",
+    "COLECCION",
+    "CLASIFICACION",
+    "IVA",
+    "PR_COMPRA",
+    "PR_VENTA",
+    "PR_PONDERADO",
+    "PRESENTACION",
+    "MAX_DCTO",
+    "CAMBIA_PRECIO",
+    "CATEGORIA",
+    "EXPLOSION",
+    "PROMOCION",
+    "UBICACION",
+    "UND_MEDIDA",
+    "SURTIDO",
+    "PR_MAXIMO",
+    "DECIMAL",
+    "SW_SERIAL",
+    "SW_VALIDA_MAX_DCTO",
+    "SW_VENTA_NEGATIVA",
+  ];
+
+  const pluDataColumnOrder = [
+    "REFERENCIA",
+    "BARRA",
+    "C_FACTURACION",
+    "TALLA",
+    "C_COLOR",
+  ];
+
+  // Generar y descargar los archivos CSV
+  if (referencias.length > 0) {
+    const referenciasCSV = convertToCSV(referencias, referenciasColumnOrder);
+    downloadCSV(referenciasCSV, "referencias.csv", 0);
+  }
+  if (pluData.length > 0) {
+    const pluDataCSV = convertToCSV(pluData, pluDataColumnOrder, true); // Incluir índice
+    downloadCSV(pluDataCSV, "plu_data.csv", 2000); // Retraso para garantizar descarga múltiple
+  }
+};
+
+
+const handleActualizarMaestras = async (event) => {
+  if (event) event.preventDefault();
+
+  // Extraer datos de las columnas requeridas
+  const referenciasStrings = referencias.map((ref) => ref.F120_REFERENCIA || "").join(",");
+  const barrasStrings = pluData.map((plu) => plu.BARRA || "").join(",");
+
+  const payload = {
+    referencias: referenciasStrings,
+    barras: barrasStrings,
+  };
+
+  try {
+    const response = await fetch(`${urlapi}/mahalo/post-referencias`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log("Maestras actualizadas correctamente:", result);
+  } catch (error) {
+    console.error("Error al actualizar las maestras:", error.message);
+  }
+};
+
 
   return (
     <section>
@@ -97,7 +208,7 @@ const ReporteReferencias = () => {
             <div className="row-3">
               <Boton onClick={handleGenerar}>Generar</Boton>
               <Boton onClick={handleExportarCSV}>Exportar CSV</Boton>
-              <Boton>Actualizar Maestras</Boton>
+              <Boton onClick={handleActualizarMaestras}>Actualizar Maestras</Boton>
             </div>
           </div>
         </form>
