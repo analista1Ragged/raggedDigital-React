@@ -32,6 +32,7 @@ const ReporteReferencias = () => {
   }, []);
 
   // Función para manejar el botón "Generar"
+// Función para manejar el botón "Generar"
 const handleGenerar = async (event) => {
   if (event) event.preventDefault();
   setLoading(true);
@@ -55,10 +56,13 @@ const handleExportarCSV = (event) => {
   // Prevenir la recarga de la página
   if (event) event.preventDefault();
 
-  // Convertir un array de objetos a formato CSV con un orden específico de columnas
-  const convertToCSV = (data, columnOrder) => {
+  // Convertir un array de objetos a formato CSV con un orden específico de columnas y delimitador ;
+  const convertToCSV = (data, columnOrder, includeIndex = false) => {
     return data
-      .map((row) => columnOrder.map((key) => row[key] || "").join(",")) // Ordenar columnas
+      .map((row, index) => {
+        const rowData = columnOrder.map((key) => row[key] || "").join(";");
+        return includeIndex ? `${index + 1};${rowData}` : rowData; // Agregar índice si es necesario
+      })
       .join("\n"); // Combinar filas
   };
 
@@ -125,14 +129,45 @@ const handleExportarCSV = (event) => {
     downloadCSV(referenciasCSV, "referencias.csv", 0);
   }
   if (pluData.length > 0) {
-    const pluDataCSV = convertToCSV(pluData, pluDataColumnOrder);
+    const pluDataCSV = convertToCSV(pluData, pluDataColumnOrder, true); // Incluir índice
     downloadCSV(pluDataCSV, "plu_data.csv", 2000); // Retraso para garantizar descarga múltiple
   }
 };
 
 
+const handleActualizarMaestras = async (event) => {
+  if (event) event.preventDefault();
 
-  
+  // Extraer datos de las columnas requeridas
+  const referenciasStrings = referencias.map((ref) => ref.F120_REFERENCIA || "").join(",");
+  const barrasStrings = pluData.map((plu) => plu.BARRA || "").join(",");
+
+  const payload = {
+    referencias: referenciasStrings,
+    barras: barrasStrings,
+  };
+
+  try {
+    const response = await fetch(`${urlapi}/mahalo/post-referencias`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log("Maestras actualizadas correctamente:", result);
+  } catch (error) {
+    console.error("Error al actualizar las maestras:", error.message);
+  }
+};
+
+
   return (
     <section>
       <div className="ticket-table">
@@ -147,7 +182,7 @@ const handleExportarCSV = (event) => {
             <div className="row-3">
               <Boton onClick={handleGenerar}>Generar</Boton>
               <Boton onClick={handleExportarCSV}>Exportar CSV</Boton>
-              <Boton>Actualizar Maestras</Boton>
+              <Boton onClick={handleActualizarMaestras}>Actualizar Maestras</Boton>
             </div>
           </div>
         </form>
