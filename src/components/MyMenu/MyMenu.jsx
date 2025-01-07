@@ -9,7 +9,7 @@ import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp,
 import { PiEyeSlashFill, PiPasswordFill, PiUsersFill, PiEscalatorUpBold} from "react-icons/pi";
 import { ImBarcode } from "react-icons/im";
 import { BiDollarCircle } from "react-icons/bi";
-import { BsFolderPlus } from "react-icons/bs";
+import { BsFolderPlus, BsClipboard2DataFill } from "react-icons/bs";
 import { FaUsersRays } from "react-icons/fa6";
 import { BsVimeo } from "react-icons/bs";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -152,6 +152,13 @@ const menuItems = [
               icon: <FaUsersRays />,
               path: "/TalentoHumano/Nomina/NominaElectronica",
               //items: [{ key: '2.1.1', title: 'Option 2.1.1' }],
+            },
+            {
+              key: '6.1.2',
+              title: 'Reporte Dane',
+              icon: <BsClipboard2DataFill />,
+              path: "/TalentoHumano/Nomina/ReporteDane",
+              
             },
           ],
         },

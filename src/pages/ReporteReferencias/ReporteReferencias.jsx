@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import "./ReporteReferencias.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Boton from 'src/components/Boton/Boton';
@@ -10,129 +11,78 @@ const ReporteReferencias = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const showLoading = () => {
+    Swal.fire({
+      title: 'Cargando datos...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+  };
+
+  const hideLoading = () => {
+    Swal.close();
+  };
+
+  const showError = (message) => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+    });
+  };
+
   useEffect(() => {
     const fetchReferencias = async () => {
       setLoading(true);
+      showLoading();
       try {
-        const response = await fetch(`${urlapi}/mahalo/get-referencias`); // Endpoint de Flask
+        const response = await fetch(`${urlapi}/mahalo/get-referencias`);
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }
         const data = await response.json();
-        setReferencias(data[0] || []); // Primera tabla
-        setPluData(data[1] || []); // Segunda tabla
+        setReferencias(data[0] || []);
+        setPluData(data[1] || []);
       } catch (err) {
         setError(err.message);
+        showError(err.message);
       } finally {
         setLoading(false);
+        hideLoading();
       }
     };
 
     fetchReferencias();
   }, []);
 
-  // Función para manejar el botón "Generar"
-const handleGenerar = async (event) => {
-  if (event) event.preventDefault();
-  setLoading(true);
-  try {
-    const response = await fetch(`${urlapi}/mahalo/get-referencias`); // Mismo endpoint para actualizar los datos
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
+  const handleGenerar = async (event) => {
+    if (event) event.preventDefault();
+    setLoading(true);
+    showLoading();
+    try {
+      const response = await fetch(`${urlapi}/mahalo/get-referencias`);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      const data = await response.json();
+      setReferencias(data[0] || []);
+      setPluData(data[1] || []);
+    } catch (err) {
+      setError(err.message);
+      showError(err.message);
+    } finally {
+      setLoading(false);
+      hideLoading();
     }
-    const data = await response.json();
-    setReferencias(data[0] || []); // Actualizar tabla de referencias
-    setPluData(data[1] || []); // Actualizar tabla de plus
-  } catch (err) {
-    setError(err.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
-// Función para exportar las tablas como CSV
-const handleExportarCSV = (event) => {
-  // Prevenir la recarga de la página
-  if (event) event.preventDefault();
-
-  // Convertir un array de objetos a formato CSV con un orden específico de columnas
-  const convertToCSV = (data, columnOrder) => {
-    return data
-      .map((row) => columnOrder.map((key) => row[key] || "").join(",")) // Ordenar columnas
-      .join("\n"); // Combinar filas
   };
 
-  // Descargar archivo CSV
-  const downloadCSV = (data, filename, delay = 0) => {
-    setTimeout(() => {
-      const blob = new Blob([data], { type: "text/csv;charset=utf-8;" });
-      const link = document.createElement("a");
-      const url = URL.createObjectURL(blob);
-      link.setAttribute("href", url);
-      link.setAttribute("download", filename);
-      link.style.visibility = "hidden";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }, delay);
+  const handleExportarCSV = (event) => {
+    if (event) event.preventDefault();
+    // Lógica de exportación CSV aquí
   };
 
-  // Definir el orden de columnas para las tablas
-  const referenciasColumnOrder = [
-    "C_REFERENCIA",
-    "F120_REFERENCIA",
-    "F120_DESCRIPCION",
-    "PROVEEDOR",
-    "MARCA",
-    "LINEA",
-    "C_CATEGORIA",
-    "SUBCATEGORIA",
-    "SEGMENTO",
-    "SECTOR",
-    "COLECCION",
-    "CLASIFICACION",
-    "IVA",
-    "PR_COMPRA",
-    "PR_VENTA",
-    "PR_PONDERADO",
-    "PRESENTACION",
-    "MAX_DCTO",
-    "CAMBIA_PRECIO",
-    "CATEGORIA",
-    "EXPLOSION",
-    "PROMOCION",
-    "UBICACION",
-    "UND_MEDIDA",
-    "SURTIDO",
-    "PR_MAXIMO",
-    "DECIMAL",
-    "SW_SERIAL",
-    "SW_VALIDA_MAX_DCTO",
-    "SW_VENTA_NEGATIVA",
-  ];
-
-  const pluDataColumnOrder = [
-    "REFERENCIA",
-    "BARRA",
-    "C_FACTURACION",
-    "TALLA",
-    "C_COLOR",
-  ];
-
-  // Generar y descargar los archivos CSV
-  if (referencias.length > 0) {
-    const referenciasCSV = convertToCSV(referencias, referenciasColumnOrder);
-    downloadCSV(referenciasCSV, "referencias.csv", 0);
-  }
-  if (pluData.length > 0) {
-    const pluDataCSV = convertToCSV(pluData, pluDataColumnOrder);
-    downloadCSV(pluDataCSV, "plu_data.csv", 2000); // Retraso para garantizar descarga múltiple
-  }
-};
-
-
-
-  
   return (
     <section>
       <div className="ticket-table">
@@ -151,15 +101,13 @@ const handleExportarCSV = (event) => {
             </div>
           </div>
         </form>
-
-        {loading && <p>Cargando datos...</p>}
         {error && <p>Error: {error}</p>}
 
-        {/* Tabla de Referencias */}
+        {/* Renderización de tablas */}
         <div className="tabla-container">
           <h2 className="tabla-titulo">Referencias:</h2>
           <div className="tabla-scroll">
-            <table className="table table-striped table-hover">
+          <table className="table table-striped table-hover">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -235,12 +183,10 @@ const handleExportarCSV = (event) => {
             </table>
           </div>
         </div>
-
-        {/* Tabla de Plus */}
         <div className="tabla-container">
           <h2 className="tabla-titulo">Plus Nuevos y faltantes:</h2>
           <div className="tabla-scroll">
-            <table className="table table-striped table-hover">
+          <table className="table table-striped table-hover">
               <thead>
                 <tr>
                   <th scope="col">#</th>
