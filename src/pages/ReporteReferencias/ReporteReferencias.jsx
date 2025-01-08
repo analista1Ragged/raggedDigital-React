@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import "./ReporteReferencias.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Boton from 'src/components/Boton/Boton';
@@ -10,21 +11,46 @@ const ReporteReferencias = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const showLoading = () => {
+    Swal.fire({
+      title: 'Cargando datos...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+  };
+
+  const hideLoading = () => {
+    Swal.close();
+  };
+
+  const showError = (message) => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+    });
+  };
+
   useEffect(() => {
     const fetchReferencias = async () => {
       setLoading(true);
+      showLoading();
       try {
-        const response = await fetch(`${urlapi}/mahalo/get-referencias`); // Endpoint de Flask
+        const response = await fetch(`${urlapi}/mahalo/get-referencias`);
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }
         const data = await response.json();
-        setReferencias(data[0] || []); // Primera tabla
-        setPluData(data[1] || []); // Segunda tabla
+        setReferencias(data[0] || []);
+        setPluData(data[1] || []);
       } catch (err) {
         setError(err.message);
+        showError(err.message);
       } finally {
         setLoading(false);
+        hideLoading();
       }
     };
 
@@ -186,15 +212,13 @@ const handleActualizarMaestras = async (event) => {
             </div>
           </div>
         </form>
-
-        {loading && <p>Cargando datos...</p>}
         {error && <p>Error: {error}</p>}
 
-        {/* Tabla de Referencias */}
+        {/* Renderización de tablas */}
         <div className="tabla-container">
           <h2 className="tabla-titulo">Referencias:</h2>
           <div className="tabla-scroll">
-            <table className="table table-striped table-hover">
+          <table className="table table-striped table-hover">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -270,12 +294,10 @@ const handleActualizarMaestras = async (event) => {
             </table>
           </div>
         </div>
-
-        {/* Tabla de Plus */}
         <div className="tabla-container">
           <h2 className="tabla-titulo">Plus Nuevos y faltantes:</h2>
           <div className="tabla-scroll">
-            <table className="table table-striped table-hover">
+          <table className="table table-striped table-hover">
               <thead>
                 <tr>
                   <th scope="col">#</th>

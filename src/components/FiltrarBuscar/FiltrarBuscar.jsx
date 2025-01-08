@@ -28,7 +28,7 @@ const FiltrarBuscar = () => {
             <Select
               style={{ width: 350 }}
               showSearch
-              placeholder="Selecciona una Almacén"
+              placeholder="Selecciona un Almacén"
               className="w-100"
             >
               {/* Opciones de ejemplo */}
