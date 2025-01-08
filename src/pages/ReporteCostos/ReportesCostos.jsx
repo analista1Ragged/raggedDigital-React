@@ -1,12 +1,75 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import "./ReporteCostos.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Pagination, Tag } from 'antd';
 import 'antd/dist/reset.css';
 import Boton from 'src/components/Boton/Boton';
-
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
+import { urlapi } from '../../App';
 
 const ReportesCostos = () => {
+
+
+// Estado para los costos
+const [costos, setCostos] = useState([]);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState(null);
+
+// Función para generar costos
+const handleGenerarCostos = async (event) => {
+  if (event) event.preventDefault();
+  setLoading(true);
+  try {
+    const response = await fetch(`${urlapi}/mahalo/get-costos`);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    const data = await response.json();
+    setCostos(data || []); // Llenar tabla de costos
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+// Función para exportar costos a CSV
+const handleExportarCostosCSV = async (event) => {
+  if (event) event.preventDefault();
+
+  // Convertir a CSV
+  const convertToCSV = (data) => {
+    return data.map((row) => `${row.REF};${row.COSTO}`).join("\n");
+  };
+
+  // Dividir datos en archivos de máximo 4950 líneas
+  const maxLines = 4950;
+  const splitDataIntoChunks = (data, maxLines) => {
+    const chunks = [];
+    for (let i = 0; i < data.length; i += maxLines) {
+      chunks.push(data.slice(i, i + maxLines));
+    }
+    return chunks;
+  };
+
+  // Crear archivo ZIP con múltiples CSVs
+  try {
+    const zip = new JSZip();
+    const chunks = splitDataIntoChunks(costos, maxLines);
+    chunks.forEach((chunk, index) => {
+      const csvContent = convertToCSV(chunk);
+      zip.file(`costos${index + 1}.csv`, csvContent);
+    });
+
+    // Generar archivo ZIP
+    const zipBlob = await zip.generateAsync({ type: "blob" });
+    saveAs(zipBlob, "costos_mahalo.zip");
+  } catch (err) {
+    console.error("Error generando el archivo ZIP:", err);
+  }
+};
+
   return (
     <section>
       <div className="ticket-table">
@@ -19,8 +82,8 @@ const ReportesCostos = () => {
         <form>
           <div className="container-2">
             <div className="row-3">
-              <Boton>Generar Costos</Boton>
-              <Boton>Importar</Boton>
+            <Boton onClick={handleGenerarCostos}>Generar Costos</Boton>
+            <Boton onClick={handleExportarCostosCSV}>Exportar CSV</Boton>
             </div>
           </div>
         </form>
@@ -36,18 +99,23 @@ const ReportesCostos = () => {
             </tr>
           </thead>
             <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>PF31122296</td>
-                  <td>34604</td>
+            {costos.length > 0 ? (
+              costos.map((costo, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{costo.REF}</td>
+                  <td>{costo.COSTO}</td>
                 </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3">No hay datos disponibles</td>
+              </tr>
+            )}
+
             </tbody>
             </table>
-            <div className="container-2">
-            <div className="row-3">
-              <Boton>Exportar</Boton>
-            </div>
-          </div>
+            
           </div>
         </div>
       </div>
