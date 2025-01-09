@@ -7,6 +7,7 @@ import BotonBuscar from 'src/components/BotonBuscar/BotonBuscar.jsx';
 import { Select } from 'antd'; // Importa el componente Select de Ant Design
 import { urlapi } from '../../App';
 import Swal from 'sweetalert2';
+import Boton from 'src/components/Boton/Boton';
 
 const { Option } = Select;
 const ReporteDane = () => {
@@ -124,8 +125,14 @@ const ReporteDane = () => {
 
             
         </div>
+
       </div>
     </form> 
+        <div className="col-12 col-md-5">
+        <Boton>
+            Exportar Excel
+        </Boton>
+        </div>
         {/* Contenedor con scroll horizontal */}
         <div className="tabla-container">
           <div className="tabla-scroll">
