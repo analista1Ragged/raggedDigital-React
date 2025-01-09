@@ -20,7 +20,8 @@ import {
   ReporteReferencias,
   ReportesCostos,
   EscalasPrecios,
-  Layout
+  Layout,
+  ReporteDane
 } from './pages';
 
 import {
@@ -212,6 +213,11 @@ function App() {
         <Route path='/TalentoHumano/Nomina/NominaElectronica' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <NominaElectronica />
+          </div>
+        } />
+        <Route path='/TalentoHumano/Nomina/ReporteDane' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <ReporteDane />
           </div>
         } />
         <Route path='/AdministracionMaestras/Perfiles' element={
