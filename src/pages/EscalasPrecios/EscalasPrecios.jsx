@@ -1,13 +1,109 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import "./EscalasPrecios.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Pagination, Tag } from 'antd';
 import 'antd/dist/reset.css';
 import Boton from 'src/components/Boton/Boton';
 import FiltrarBuscar from 'src/components/FiltrarBuscar/FiltrarBuscar';
+import AdjuntarArchivo from "../../components/AdjuntarArchivo/AdjuntarArchivo";
+import { urlapi } from '../../App';
 
 
 const EscalasPrecios = () => {
+  const [escalaPrecio, setEscalaPrecio] = useState('');
+  const [almacen, setAlmacen] = useState('');
+  const [precioObsequio, setPrecioObsequio] = useState('');
+  const [fileData, setFileData] = useState(null);
+  const [tablaDatos, setTablaDatos] = useState([]);
+
+
+  const handleFilterChange = (escala, almacen, precioObsequio) => {
+    setEscalaPrecio(escala);
+    setAlmacen(almacen);
+    setPrecioObsequio(precioObsequio);
+    console.log(escala, almacen, precioObsequio);
+  };
+
+  const handleGenerarTabla = async (event) => {
+    if (event) event.preventDefault();
+    try {
+      const response = await fetch(`${urlapi}/mahalo/get-escalas`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          escalaPrecio,
+          almacen,
+          precioObsequio,
+          fileData,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+  
+      const result = await response.json();
+  
+      // Asegurarse de que result sea un array
+      if (Array.isArray(result)) {
+        setTablaDatos(result);
+      } else {
+        console.error("El formato de respuesta no es un array:", result);
+        setTablaDatos([]); // Respaldo en caso de error
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Hubo un problema al generar los datos de la tabla.");
+    }
+  };
+  
+  const handleExportarCSVTabla = (event) => {
+    if (event) event.preventDefault(); // Prevenir recarga de la página
+  
+    // Convertir un array de objetos a formato CSV con ';' como delimitador
+    const convertToCSV = (data) => {
+      return data
+        .map((row) =>
+          [
+            row.ESCALA,
+            row.CODIGO,
+            row.PRECIO,
+            row.FECHA,
+            row.PRECIO1,
+            row.ALMACEN,
+            row.ESTADO,
+            row.IVA,
+          ].join(";")
+        )
+        .join("\n");
+    };
+  
+    // Descargar archivo CSV
+    const downloadCSV = (data, filename) => {
+      const blob = new Blob([data], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", filename);
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+  
+    // Verificar si hay datos en la tabla
+    if (tablaDatos.length > 0) {
+      const csvData = convertToCSV(tablaDatos); // Convertir los datos de la tabla
+      downloadCSV(csvData, "escalas_precios.csv"); // Descargar el archivo CSV
+    } else {
+      alert("No hay datos para exportar.");
+    }
+  };
+  
+
+  
   return (
     <section>
       <div className="ticket-table">
@@ -17,11 +113,14 @@ const EscalasPrecios = () => {
           </a>
           Escala de Precios
         </h2> 
-        <FiltrarBuscar/> 
+        <FiltrarBuscar onFilterChange={handleFilterChange}/>
         <form>
           <div className="container-2">
             <div className="row-3">
-              <Boton>Importar</Boton>
+              
+              <AdjuntarArchivo setFile={setFileData} />
+              <Boton onClick={handleGenerarTabla}>Generar</Boton>
+              <Boton onClick={handleExportarCSVTabla}>Exportar CSV</Boton>
             </div>
           </div>
         </form>
@@ -42,26 +141,29 @@ const EscalasPrecios = () => {
               <th scope="col">Iva</th>
             </tr>
           </thead>
-            <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>59</td>
-                  <td>47538</td>
-                  <td>49900</td>
-                  <td>09/09/2024</td>
-                  <td>0</td>
-                  <td>999</td>
-                  <td>1</td>
-                  <td>19</td>
-
+          <tbody>
+            {Array.isArray(tablaDatos) && tablaDatos.length > 0 ? (
+              tablaDatos.map((row, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{row.ESCALA}</td>
+                  <td>{row.CODIGO}</td>
+                  <td>{row.PRECIO}</td>
+                  <td>{row.FECHA}</td>
+                  <td>{row.PRECIO1}</td>
+                  <td>{row.ALMACEN}</td>
+                  <td>{row.ESTADO}</td>
+                  <td>{row.IVA}</td>
                 </tr>
-            </tbody>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="9">No hay datos disponibles.</td>
+              </tr>
+            )}
+          </tbody>
+
             </table>
-            <div className="container-2">
-            <div className="row-3">
-              <Boton>Exportar</Boton>
-            </div>
-          </div>
           </div>
         </div>
       </div>

@@ -18,6 +18,7 @@ const AdjuntarArchivo = ({ setFile }) => {
       };
       reader.readAsArrayBuffer(file);
       setFileName(file.name);
+      
     } else {
       setFileName("Seleccionar archivo...");
       setFile(null);
