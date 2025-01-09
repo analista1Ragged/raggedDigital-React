@@ -7,6 +7,7 @@ import Boton from 'src/components/Boton/Boton';
 import FiltrarBuscar from 'src/components/FiltrarBuscar/FiltrarBuscar';
 import AdjuntarArchivo from "../../components/AdjuntarArchivo/AdjuntarArchivo";
 import { urlapi } from '../../App';
+import Swal from 'sweetalert2';
 
 
 const EscalasPrecios = () => {
@@ -26,7 +27,42 @@ const EscalasPrecios = () => {
 
   const handleGenerarTabla = async (event) => {
     if (event) event.preventDefault();
+  
+    // Validar encabezados del archivo Excel
+    if (!fileData || fileData.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Debe adjuntar un archivo válido antes de generar la tabla.",
+      });
+      return;
+    }
+  
+    const expectedHeaders = ["referencias", "precios"];
+    const actualHeaders = Object.keys(fileData[0]);
+  
+    // Verificar si los encabezados coinciden con la estructura esperada
+    const isValidStructure = expectedHeaders.every((header, index) => header === actualHeaders[index]);
+  
+    if (!isValidStructure) {
+      Swal.fire({
+        icon: "error",
+        title: "Estructura de archivo inválida",
+        text: `El archivo debe contener los siguientes encabezados: ${expectedHeaders.join(", ")}.`,
+      });
+      return;
+    }
+  
     try {
+      Swal.fire({
+        title: "Cargando Datos",
+        text: "Por favor espera...",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+  
       const response = await fetch(`${urlapi}/mahalo/get-escalas`, {
         method: "POST",
         headers: {
@@ -46,18 +82,28 @@ const EscalasPrecios = () => {
   
       const result = await response.json();
   
-      // Asegurarse de que result sea un array
       if (Array.isArray(result)) {
         setTablaDatos(result);
+        Swal.close();
       } else {
         console.error("El formato de respuesta no es un array:", result);
-        setTablaDatos([]); // Respaldo en caso de error
+        setTablaDatos([]);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se pudieron cargar los datos.",
+        });
       }
     } catch (error) {
       console.error(error);
-      alert("Hubo un problema al generar los datos de la tabla.");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudieron cargar los datos.",
+      });
     }
   };
+  
   
   const handleExportarCSVTabla = (event) => {
     if (event) event.preventDefault(); // Prevenir recarga de la página
