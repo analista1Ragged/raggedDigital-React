@@ -1,45 +1,60 @@
-import React from 'react';
-import "./FiltrarBuscar.css";
-import BuscarButton from "../BotonBuscar/BotonBuscar";
-import BotonLimpiar from '../BotonLimpiar/BotonLimpiar';
-import { Select } from 'antd'; // Importa el componente Select de Ant Design
-import 'antd/dist/reset.css'; // Importa los estilos CSS prediseñados de Ant Design
+import React, { useState } from 'react';
+import { Select } from 'antd';
 import CheckboxPerfiles from '../CheckboxPefiles/CheckboxPerfiles';
+import 'antd/dist/reset.css';
 
 const { Option } = Select;
 
-const FiltrarBuscar = () => {
+const FiltrarBuscar = ({ onFilterChange }) => {
+  const [escalaPrecio, setEscalaPrecio] = useState(''); // Número
+  const [almacen, setAlmacen] = useState(''); // Opción seleccionada
+  const [precioObsequio, setPrecioObsequio] = useState(false); // Binario 1 o 0
+
+  const handleEscalaPrecioChange = (event) => {
+    setEscalaPrecio(event.target.value);
+    onFilterChange(event.target.value, almacen, precioObsequio ? '1' : '0');
+  };
+
+  const handleAlmacenChange = (value) => {
+    setAlmacen(value);
+    onFilterChange(escalaPrecio, value, precioObsequio ? '1' : '0');
+  };
+
+  const handlePrecioObsequioChange = (checked) => {
+    setPrecioObsequio(checked);
+    onFilterChange(escalaPrecio, almacen, checked ? '1' : '0');
+  };
+
   return (
     <form id="formBuscar" className="mb-3 mt-3" autoComplete="off">
       <div className="row align-items-end">
-    
         <div className="col-12 col-md-5">
           <label htmlFor="nombre" className="label-spacing">Escala de Precios</label>
           <input
             type="text"
             name="nombre"
             className="form-control"
-            placeholder=""
+            value={escalaPrecio}
+            onChange={handleEscalaPrecioChange}
           />
         </div>
         <div className="col-12 col-md-5">
           <label htmlFor="marca" className="label-spacing">Almacén</label>
-          <div>
-            <Select
-              style={{ width: 350 }}
-              showSearch
-              placeholder="Selecciona un Almacén"
-              className="w-100"
-            >
-              {/* Opciones de ejemplo */}
-              <Option value="capsula1">Almacenes</Option>
-              <Option value="capsula1">Franquicias</Option>
-            </Select>
-          </div>
+          <Select
+            style={{ width: 350 }}
+            showSearch
+            placeholder="Selecciona un Almacén"
+            value={almacen}
+            onChange={handleAlmacenChange}
+            className="w-100"
+          >
+            <Option value="Almacenes">Almacenes</Option>
+            <Option value="Franquicias">Franquicias</Option>
+          </Select>
         </div>
         <div className="col-12 col-md-5">
-            <label htmlFor="marca" className="label-spacing">Archivo con precio obsequio</label>
-            <CheckboxPerfiles checked={true}/>
+          <label htmlFor="marca" className="label-spacing">Archivo con precio obsequio</label>
+          <CheckboxPerfiles checked={precioObsequio} onChange={handlePrecioObsequioChange} />
         </div>
       </div>
     </form>
