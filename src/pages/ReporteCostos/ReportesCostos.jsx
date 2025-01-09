@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import "./ReporteCostos.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Pagination, Tag } from 'antd';
@@ -10,16 +10,31 @@ import { urlapi } from '../../App';
 import Swal from 'sweetalert2';
 
 const ReportesCostos = () => {
-
   // Estado para los costos
   const [costos, setCostos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Estados para la paginación
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  // Función para manejar el cambio de página y tamaño de página
+  const handlePaginationChange = (page, size) => {
+    setCurrentPage(page);
+    setPageSize(size);
+  };
+
+  // Obtener los elementos actuales según la página y el tamaño seleccionado
+  const paginatedCostos = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+    return costos.slice(start, end);
+  }, [currentPage, pageSize, costos]);
+
   // Función para generar costos
   const handleGenerarCostos = async (event) => {
     if (event) event.preventDefault();
-    // Mostrar Swal de carga
     Swal.fire({
       title: 'Cargando Datos',
       text: 'Por favor espera...',
@@ -37,7 +52,7 @@ const ReportesCostos = () => {
       }
       const data = await response.json();
       setCostos(data || []); // Llenar tabla de costos
-      Swal.close(); // Cerrar Swal al terminar
+      Swal.close();
     } catch (err) {
       setError(err.message);
       Swal.fire({
@@ -54,12 +69,7 @@ const ReportesCostos = () => {
   const handleExportarCostosCSV = async (event) => {
     if (event) event.preventDefault();
 
-    // Convertir a CSV
-    const convertToCSV = (data) => {
-      return data.map((row) => `${row.REF};${row.COSTO}`).join("\n");
-    };
-
-    // Dividir datos en archivos de máximo 4950 líneas
+    const convertToCSV = (data) => data.map((row) => `${row.REF};${row.COSTO}`).join("\n");
     const maxLines = 4950;
     const splitDataIntoChunks = (data, maxLines) => {
       const chunks = [];
@@ -69,7 +79,6 @@ const ReportesCostos = () => {
       return chunks;
     };
 
-    // Crear archivo ZIP con múltiples CSVs
     try {
       const zip = new JSZip();
       const chunks = splitDataIntoChunks(costos, maxLines);
@@ -77,8 +86,6 @@ const ReportesCostos = () => {
         const csvContent = convertToCSV(chunk);
         zip.file(`costos${index + 1}.csv`, csvContent);
       });
-
-      // Generar archivo ZIP
       const zipBlob = await zip.generateAsync({ type: "blob" });
       saveAs(zipBlob, "costos_mahalo.zip");
     } catch (err) {
@@ -94,7 +101,7 @@ const ReportesCostos = () => {
             <i className="bi bi-arrow-left-circle"></i>
           </a>
           Costos Mahalo
-        </h2>  
+        </h2>
         <form>
           <div className="container-2">
             <div className="row-3">
@@ -103,7 +110,6 @@ const ReportesCostos = () => {
             </div>
           </div>
         </form>
-        {/* Contenedor con scroll horizontal */}
         <div className="tabla-container">
           <div className="tabla-scroll">
             <table className="table table-striped table-hover">
@@ -115,10 +121,10 @@ const ReportesCostos = () => {
                 </tr>
               </thead>
               <tbody>
-                {costos.length > 0 ? (
-                  costos.map((costo, index) => (
+                {paginatedCostos.length > 0 ? (
+                  paginatedCostos.map((costo, index) => (
                     <tr key={index}>
-                      <td>{index + 1}</td>
+                      <td>{(currentPage - 1) * pageSize + index + 1}</td>
                       <td>{costo.REF}</td>
                       <td>{costo.COSTO}</td>
                     </tr>
@@ -131,6 +137,15 @@ const ReportesCostos = () => {
               </tbody>
             </table>
           </div>
+          <Pagination
+            current={currentPage}
+            pageSize={pageSize}
+            total={costos.length}
+            onChange={handlePaginationChange}
+            pageSizeOptions={['10', '20', '30', '50', '100']}
+            showSizeChanger
+            showQuickJumper
+          />
         </div>
       </div>
     </section>
@@ -138,3 +153,4 @@ const ReportesCostos = () => {
 };
 
 export default ReportesCostos;
+
