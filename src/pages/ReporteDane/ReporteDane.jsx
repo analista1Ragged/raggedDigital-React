@@ -47,7 +47,7 @@ const ReporteDane = () => {
             <table className="table table-striped table-hover">    
             <thead>
             <tr>
-              <th colspan="7">Datos Empleado</th>
+              <th colspan="8">Datos Empleado</th>
               <th colspan="3">Perfil Profesional</th>
               <th colspan="10">Devengado</th>
               <th colspan="5">Deducciones</th>
@@ -71,6 +71,7 @@ const ReporteDane = () => {
               <th scope="col">Dias liquidados</th>
               <th scope="col">Salario Devengado</th>
               <th scope="col">Horas Extras</th>
+              <th scope="col">Recargos Nocturnos</th>
               <th scope="col">Recargos Nocturnos</th>
               <th scope="col">Trabajo Dominical Festivo</th>
               <th scope="col">Incapacidades</th>
@@ -109,6 +110,7 @@ const ReporteDane = () => {
                   <td>2691100</td>
                   <td>29</td>
                   <td>2578971</td>
+                  <td>0</td>
                   <td>0</td>
                   <td>0</td>
                   <td>0</td>
