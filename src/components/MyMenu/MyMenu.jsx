@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Menu, Button } from "antd";
 import "antd/dist/reset.css";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill, FaCheck,  FaUsers, FaStore, FaRegHandshake} from "react-icons/fa";
+import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill, FaCheck,  FaUsers, FaStore, FaRegHandshake, FaDonate} from "react-icons/fa";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
 import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
 import { PiEyeSlashFill, PiPasswordFill, PiUsersFill, PiEscalatorUpBold} from "react-icons/pi";
@@ -105,8 +105,8 @@ const menuItems = [
       },
       {
         key: "3.5",
-        title: "Otros",
-        icon: <AiOutlineEllipsis />,
+        title: "Marketplace",
+        icon: <FaDonate />,
         path: "/ecommerce/Ragged",
       },
       {

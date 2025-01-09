@@ -44,8 +44,17 @@ const ReporteDane = () => {
         {/* Contenedor con scroll horizontal */}
         <div className="tabla-container">
           <div className="tabla-scroll">
-            <table className="table table-striped table-hover">
+            <table className="table table-striped table-hover">    
             <thead>
+            <tr>
+              <th colspan="7">Datos Empleado</th>
+              <th colspan="3">Perfil Profesional</th>
+              <th colspan="10">Devengado</th>
+              <th colspan="5">Deducciones</th>
+              <th colspan="3">Provisiones</th>
+              <th colspan="3">Parafiscales</th>
+              <th colspan="4">Prestaciones</th>
+            </tr>  
             <tr>
               <th scope="col">#</th>
               <th scope="col">Documento</th>
