@@ -14,6 +14,8 @@ const { Option } = Select;
 const ReporteDane = () => {
   const [tablaDatos, setTablaDatos] = useState([]);
   const [periodos, setPeriodos] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   // Función para obtener los periodos del endpoint
   const fetchPeriodos = async () => {
@@ -186,6 +188,16 @@ const ReporteDane = () => {
     XLSX.writeFile(workbook, "Reporte_Dane.xlsx");
   };
 
+  const handlePageChange = (page, pageSize) => {
+    setCurrentPage(page);
+    setPageSize(pageSize);
+  };
+
+  const paginatedData = tablaDatos.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
+
   return (
     <section>
       <div className="ticket-table">
@@ -282,7 +294,7 @@ const ReporteDane = () => {
             </tr>
           </thead>
           <tbody>
-            {tablaDatos.map((row, index) => (
+            {paginatedData.map((row, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{row.DOCUMENTO}</td>
@@ -325,6 +337,15 @@ const ReporteDane = () => {
           </tbody>
 
             </table>
+            <Pagination
+              current={currentPage}
+              pageSize={pageSize}
+              total={tablaDatos.length}
+              onChange={handlePageChange}
+              showSizeChanger
+              showQuickJumper
+              pageSizeOptions={['10', '20', '50']}
+            />
             <div className="container-2">
           </div>
           </div>
