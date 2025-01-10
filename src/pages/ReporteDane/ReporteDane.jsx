@@ -8,6 +8,7 @@ import { Select } from 'antd'; // Importa el componente Select de Ant Design
 import { urlapi } from '../../App';
 import Swal from 'sweetalert2';
 import Boton from 'src/components/Boton/Boton';
+import * as XLSX from "xlsx";
 
 const { Option } = Select;
 const ReporteDane = () => {
@@ -92,6 +93,99 @@ const ReporteDane = () => {
     }
   };
 
+  const handleExportarExcel = async (event) => {
+    if (event) event.preventDefault();
+    if (tablaDatos.length === 0) {
+      alert("No hay datos en la tabla para exportar.");
+      return;
+    }
+  
+    // Filtrar las columnas necesarias (sin la columna autoincremental)
+    const datosParaExportar = tablaDatos.map(
+      ({
+        DOCUMENTO,
+        "NOMBRE EMPLEADO": nombreEmpleado,
+        CARGO,
+        CCOSTOS,
+        SEXO,
+        CO,
+        UBICACION,
+        OPERARIO,
+        "TECNICO-TECNOLOGO": tecnicoTecnologo,
+        PROFESIONAL,
+        "SALARIO BASICO": salarioBasico,
+        "DIAS LIQUIDADOS": diasLiquidados,
+        "SALARIO DEVENGADO": salarioDevengado,
+        "HORAS EXTRAS": horasExtras,
+        "RECARGOS NOCTURNOS": recargosNocturnos,
+        "TRABAJO DOMINICAL-FESTIVO": trabajoFestivo,
+        INCAPACIDADES,
+        "AUXILIO TRANSPORTE": auxilioTransporte,
+        "TOTAL DEVENGADO": totalDevengado,
+        SALUD1,
+        PENSION1,
+        "FONDO SOLIDARIDAD PENS": fondoPens,
+        "RETENCION EN LA FUENTE": retencionFuente,
+        "OTRAS DEDUCCIONES": otrasDeducciones,
+        SALUD2,
+        PENSION2,
+        ARL,
+        SENA,
+        ICBF,
+        "CAJA COMPENSACION": cajaCompensacion,
+        "PRIMA DE SERVICIOS": primaServicios,
+        CESANTIAS,
+        "INTERESES A LAS CESANTIAS": interesesCesantias,
+        VACACIONES,
+      }) => ({
+        DOCUMENTO,
+        "NOMBRE EMPLEADO": nombreEmpleado,
+        CARGO,
+        CCOSTOS,
+        SEXO,
+        CO,
+        UBICACION,
+        OPERARIO,
+        "TECNICO-TECNOLOGO": tecnicoTecnologo,
+        PROFESIONAL,
+        "SALARIO BASICO": salarioBasico,
+        "DIAS LIQUIDADOS": diasLiquidados,
+        "SALARIO DEVENGADO": salarioDevengado,
+        "HORAS EXTRAS": horasExtras,
+        "RECARGOS NOCTURNOS": recargosNocturnos,
+        "TRABAJO DOMINICAL-FESTIVO": trabajoFestivo,
+        INCAPACIDADES,
+        "AUXILIO TRANSPORTE": auxilioTransporte,
+        "TOTAL DEVENGADO": totalDevengado,
+        SALUD1,
+        PENSION1,
+        "FONDO SOLIDARIDAD PENS": fondoPens,
+        "RETENCION EN LA FUENTE": retencionFuente,
+        "OTRAS DEDUCCIONES": otrasDeducciones,
+        SALUD2,
+        PENSION2,
+        ARL,
+        SENA,
+        ICBF,
+        "CAJA COMPENSACION": cajaCompensacion,
+        "PRIMA DE SERVICIOS": primaServicios,
+        CESANTIAS,
+        "INTERESES A LAS CESANTIAS": interesesCesantias,
+        VACACIONES,
+      })
+    );
+  
+    // Crear un libro y una hoja
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(datosParaExportar);
+  
+    // Agregar la hoja al libro
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Reporte Dane");
+  
+    // Exportar el archivo
+    XLSX.writeFile(workbook, "Reporte_Dane.xlsx");
+  };
+
   return (
     <section>
       <div className="ticket-table">
@@ -125,14 +219,15 @@ const ReporteDane = () => {
 
             
         </div>
+        <div className="col-12 col-md-5">
+        <Boton onClick={handleExportarExcel}>
+          Exportar Excel
+        </Boton>
 
+        </div>
       </div>
     </form> 
-        <div className="col-12 col-md-5">
-        <Boton>
-            Exportar Excel
-        </Boton>
-        </div>
+        
         {/* Contenedor con scroll horizontal */}
         <div className="tabla-container">
           <div className="tabla-scroll">
