@@ -21,7 +21,8 @@ import {
   ReportesCostos,
   EscalasPrecios,
   Layout,
-  ReporteDane
+  ReporteDane,
+  Marketplace
 } from './pages';
 
 import {
@@ -113,6 +114,11 @@ function App() {
         <Route path='Mercadeo/Raqstyle/Cartera' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <Tabla />
+          </div>
+        } />
+        <Route path='/Marketplace' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <Marketplace />
           </div>
         } />
         <Route path='Mercadeo/Raqstyle/Inventario' element={
@@ -250,6 +256,7 @@ function App() {
             <EscalasPrecios />
           </div>
         } />
+        
         <Route 
           path="/HelpNomina" 
           element={

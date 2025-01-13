@@ -196,7 +196,7 @@ const EscalasPrecios = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="9">No hay datos disponibles.</td>
+                    <td colSpan="9">Importar archivo para mostrar datos.</td>
                   </tr>
                 )}
               </tbody>

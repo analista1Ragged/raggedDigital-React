@@ -107,7 +107,7 @@ const menuItems = [
         key: "3.5",
         title: "Marketplace",
         icon: <FaDonate />,
-        path: "/ecommerce/Ragged",
+        path: "/Marketplace",
       },
       {
         key: "3.6",

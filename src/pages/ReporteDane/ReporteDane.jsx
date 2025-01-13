@@ -227,9 +227,7 @@ const ReporteDane = () => {
           </div>
         </div>
         <div className="col-12 col-md-5">
-          <BotonBuscar onClick={handleBuscarPeriodo} />
-
-            
+          <BotonBuscar onClick={handleBuscarPeriodo} />    
         </div>
         <div className="col-12 col-md-5">
         <Boton onClick={handleExportarExcel}>
