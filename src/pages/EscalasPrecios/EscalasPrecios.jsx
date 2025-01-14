@@ -8,6 +8,7 @@ import FiltrarBuscar from 'src/components/FiltrarBuscar/FiltrarBuscar';
 import AdjuntarArchivo from "../../components/AdjuntarArchivo/AdjuntarArchivo";
 import { urlapi } from '../../App';
 import Swal from 'sweetalert2';
+import { FaFileImport } from "react-icons/fa6";
 
 const EscalasPrecios = () => {
   const [escalaPrecio, setEscalaPrecio] = useState('');
@@ -196,7 +197,10 @@ const EscalasPrecios = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="9">Importar archivo para mostrar datos.</td>
+                    <td colSpan="9">
+                    <FaFileImport style={{ marginRight: '10px', verticalAlign: 'middle' }} />
+                      Importar archivo para mostrar datos.
+                    </td>
                   </tr>
                 )}
               </tbody>

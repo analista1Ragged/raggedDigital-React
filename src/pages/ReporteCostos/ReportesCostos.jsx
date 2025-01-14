@@ -8,6 +8,7 @@ import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { urlapi } from '../../App';
 import Swal from 'sweetalert2';
+import { GiClick } from "react-icons/gi";
 
 const ReportesCostos = () => {
   // Estado para los costos
@@ -131,7 +132,10 @@ const ReportesCostos = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="3">No hay datos disponibles</td>
+                    <td colSpan="3">
+                      <GiClick style={{ marginRight: '10px', verticalAlign: 'middle' }} />
+                      Presione generar costos para mostrar datos.
+                    </td>
                   </tr>
                 )}
               </tbody>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MultiSelector from '../../components/MultiSelector/MultiSelector.jsx';
 import BotonBuscar from 'src/components/BotonBuscar/BotonBuscar.jsx';
+import { TbHandClick } from "react-icons/tb";
 import './Marketplace.css';
 
 const Marketplace = () => {
@@ -91,12 +92,15 @@ const Marketplace = () => {
       </div>
       <table className="table table-striped table-hover">
         <tbody>
-          {/* Ejemplo de datos estáticos */}
-          <tr>
-            <td colSpan="8">Seleccione un marketplace para mostrar datos.</td>
-          </tr>
+            {/* Ejemplo de datos estáticos */}
+            <tr>
+            <td colSpan="9">
+                <TbHandClick style={{ marginRight: '10px', verticalAlign: 'middle' }} />
+                Seleccione las diferentes opciones para mostrar datos.
+            </td>
+            </tr>
         </tbody>
-      </table>
+        </table>
     </section>
   );
 };
