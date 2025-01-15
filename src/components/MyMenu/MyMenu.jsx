@@ -10,6 +10,7 @@ import { PiEyeSlashFill, PiPasswordFill, PiUsersFill, PiEscalatorUpBold} from "r
 import { ImBarcode } from "react-icons/im";
 import { BiDollarCircle } from "react-icons/bi";
 import { BsFolderPlus, BsClipboard2DataFill } from "react-icons/bs";
+import { HiCreditCard } from "react-icons/hi2";
 import { FaUsersRays } from "react-icons/fa6";
 import { BsVimeo } from "react-icons/bs";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -100,6 +101,12 @@ const menuItems = [
             title: 'Publicar Catalógo',
             icon: <MdOutlinePostAdd />,
             path: "/ecommerce/VentaDirecta/PublicarCatalogo",
+          },
+          {
+            key: '3.4.3',
+            title: 'Consulta Cupo Cliente',
+            icon: <HiCreditCard />,
+            path: "/ecommerce/VentaDirecta/CupoCliente",
           },
         ],
       },

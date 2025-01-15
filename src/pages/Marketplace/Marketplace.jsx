@@ -39,6 +39,7 @@ const Marketplace = () => {
                 placeholder="Marketplace"
                 onSelectChange={setMarketplace} // Actualiza el estado
                 value={marketplace} // Valor seleccionado
+                mode="single" // Modo de selección único
               />
               <MultiSelector
                 options={[
@@ -77,11 +78,13 @@ const Marketplace = () => {
                   { label: 'PDF', value: 'pdf' },
                   { label: 'Excel', value: 'excel' },
                 ]}
-                opc="1"
+                opc="1" // Define el índice del valor en las opciones
                 placeholder="Tipo de archivo"
-                onSelectChange={setTipoArchivo} // Actualiza el estado
-                value={tipoArchivo} // Valor seleccionado
+                onSelectChange={setTipoArchivo} // Actualiza el estado con el valor seleccionado
+                value={tipoArchivo} // Muestra el valor seleccionado
+                mode="single" // Modo de selección único
               />
+
               <div className="col-12 col-md-5">
                 <BotonBuscar onClick="{}" />
               </div>
