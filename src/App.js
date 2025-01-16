@@ -22,7 +22,8 @@ import {
   EscalasPrecios,
   Layout,
   ReporteDane,
-  Marketplace
+  Marketplace,
+  CupoCliente
 } from './pages';
 
 import {
@@ -239,6 +240,11 @@ function App() {
         <Route path='/Logistica/CanalDigital/Catalogo' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <PublicarCatalogo />
+          </div>
+        } />
+        <Route path='/Logistica/CanalDigital/CupoCliente' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <CupoCliente />
           </div>
         } />
         <Route path='/Maestros/Referencias' element={
