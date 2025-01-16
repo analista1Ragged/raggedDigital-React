@@ -37,6 +37,14 @@ const EscalasPrecios = () => {
       });
       return;
     }
+    if (escalaPrecio === "" || almacen === "" || precioObsequio === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Faltan Parametros",
+        text: "Debe ingresar escala de precios y Almacen.",
+      });
+      return;
+    }
   
     const expectedHeaders = ["referencias", "precios"];
     const actualHeaders = Object.keys(fileData[0]);
@@ -107,6 +115,15 @@ const EscalasPrecios = () => {
   
   const handleExportarCSVTabla = (event) => {
     if (event) event.preventDefault(); // Prevenir recarga de la página
+
+    if (tablaDatos.length === 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Sin datos',
+          text: 'No hay datos en ninguna tabla para exportar.',
+        });
+        return;
+      }
   
     // Convertir un array de objetos a formato CSV con ';' como delimitador
     const convertToCSV = (data) => {

@@ -53,7 +53,14 @@ const ReporteDane = () => {
     const selectedPeriodo = document.querySelector(".ant-select-selection-item")?.innerText;
   
     if (!selectedPeriodo) {
-      alert("Por favor selecciona un periodo antes de buscar.");
+      
+              Swal.fire({
+                icon: 'info',
+                title: 'Falta periodo',
+                text: 'favor selecciona un periodo antes de buscar.',
+              });
+              return;
+            
       return;
     }
   
@@ -96,7 +103,11 @@ const ReporteDane = () => {
   const handleExportarExcel = async (event) => {
     if (event) event.preventDefault();
     if (tablaDatos.length === 0) {
-      alert("No hay datos en la tabla para exportar.");
+      Swal.fire({
+        icon: 'info',
+        title: 'Sin Datos',
+        text: 'No hay datos en ninguna tabla para exportar.',
+      });
       return;
     }
   
