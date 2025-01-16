@@ -13,6 +13,12 @@ body {
     max-width: 1200px; /* Ancho máximo de la sección */
     margin: 0 auto; /* Centrar la sección */
     padding: 20px; /* Padding para la sección */
+    margin-top: 80px !important; /* Ajusta este valor según el margen que desees */
+  }
+
+  .container {
+    background-color: transparent;
+    
   }
   
   /* Select personalizado */
@@ -36,11 +42,9 @@ body {
   .inline-components2 {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
-    flex-wrap: wrap; /* Para que los componentes se ajusten en pantallas pequeñas */
-    gap: 105px;
-    justify-content: space-between; 
-    
+    justify-content: flex-start;
+    gap: 10px;
+    flex-wrap: wrap; /* Permite que los botones y el campo se ajusten correctamente */
   }
   
   
@@ -62,10 +66,10 @@ body {
   
   /* Tabla de tickets */
   .ticket-table {
-    margin: 20px auto;
+    margin: 20px;
     width: 100%;
     border-collapse: collapse;
-  
+    table-layout: fixed;
   }
   
   .ticket-table table {
@@ -76,8 +80,10 @@ body {
   .ticket-table th,
   .ticket-table td {
     border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
+    padding: 10px;
+    text-align: l;
+
+
   }
   
   .ticket-table th {
@@ -96,7 +102,6 @@ body {
   .paginacion {
     margin-top: 20px;
   }
-
   
   /* Media Queries para responsividad */
   @media (max-width: 1200px) {
@@ -129,6 +134,7 @@ body {
     .ticket-table th,
     .ticket-table td {
       padding: 6px;
+
     }
   }
   
@@ -184,43 +190,65 @@ body {
   }
   
   .container {
-    text-align: left !important;
     background-color: transparent;
   }
-  
-  /* Estilos para el contenedor con scroll horizontal */
-  .tabla-container {
-    width: 100%;
-    overflow-x: auto; /* Habilita el scroll horizontal */
-    margin-bottom: 20px; /* Espacio debajo de la tabla */
+
+  /* Agrega el estilo para permitir el desplazamiento horizontal */
+.tabla-container {
+  width: 100%;
+  overflow-x: auto; /* Habilita el scroll horizontal */
+  margin-bottom: 20px; /* Espacio debajo de la tabla */
+}
+
+.tabla-scroll {
+  width: 100%;
+  min-width: 600px; /* Ancho mínimo de la tabla para evitar que se colapse en pantallas pequeñas */
+}
+
+.ticket-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ticket-table th,
+.ticket-table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 576px) {
+  .ticket-table th,
+  .ticket-table td {
+    padding: 6px; /* Ajusta el padding para pantallas pequeñas */
   }
+}
+
+.row {
+  display: flex;
+  align-items: center; /* Alinea verticalmente */
+ 
+
+}
+
+.multi-selector {
+  width: 100%; /* Asegura que tengan el mismo ancho */
+  margin-bottom: 0; /* Remueve cualquier margen inferior que pueda causar desalineación */
   
-  .tabla-scroll {
-    width: 100%;
-    min-width: 1000px; /* Ancho mínimo de la tabla */
-  }
+}
   
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .table th,
-  .table td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #ddd;
-  }
-  
-  @media (max-width: 576px) {
-    .table th,
-    .table td {
-      padding: 6px; /* Ajusta el padding para pantallas pequeñas */
-    }
-  }
-  
-  .inline-components2 {
-    display: flex;
-    justify-content: flex-start; /* Alinea los componentes al lado izquierdo */
-    gap: 10px; /* Espaciado opcional entre los componentes */
-  }
+.inline-components2 {
+  display: flex;
+  justify-content: flex-start; /* Alinea los componentes al lado izquierdo */
+  gap: 10px; /* Espaciado opcional entre los componentes */
+}
+
+/* CampoTexto.css */
+.campo-texto {
+  padding: 8px;
+  font-size: 16px;
+}
+
+.input-largo {
+  height: 50px; /* Puedes ajustar este valor para aumentar el largo del input */
+}

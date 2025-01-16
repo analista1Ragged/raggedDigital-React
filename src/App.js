@@ -21,7 +21,9 @@ import {
   ReportesCostos,
   EscalasPrecios,
   Layout,
-  ReporteDane
+  ReporteDane,
+  Marketplace,
+  CupoCliente
 } from './pages';
 
 import {
@@ -113,6 +115,11 @@ function App() {
         <Route path='Mercadeo/Raqstyle/Cartera' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <Tabla />
+          </div>
+        } />
+        <Route path='/Marketplace' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <Marketplace />
           </div>
         } />
         <Route path='Mercadeo/Raqstyle/Inventario' element={
@@ -235,6 +242,11 @@ function App() {
             <PublicarCatalogo />
           </div>
         } />
+        <Route path='/Logistica/CanalDigital/CupoCliente' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <CupoCliente />
+          </div>
+        } />
         <Route path='/Maestros/Referencias' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <ReporteReferencias />
@@ -250,6 +262,7 @@ function App() {
             <EscalasPrecios />
           </div>
         } />
+        
         <Route 
           path="/HelpNomina" 
           element={

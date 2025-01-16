@@ -4,12 +4,20 @@ import "./ReporteReferencias.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Boton from 'src/components/Boton/Boton';
 import { urlapi } from '../../App';
+import { Pagination } from 'antd'; // Importa Pagination de antd
+
 
 const ReporteReferencias = () => {
   const [referencias, setReferencias] = useState([]);
   const [pluData, setPluData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Estados para la paginación
+  const [currentPageReferencias, setCurrentPageReferencias] = useState(1);
+  const [pageSizeReferencias, setPageSizeReferencias] = useState(10);
+  const [currentPagePlu, setCurrentPagePlu] = useState(1);
+  const [pageSizePlu, setPageSizePlu] = useState(10);
 
   const showLoading = () => {
     Swal.fire({
@@ -56,6 +64,29 @@ const ReporteReferencias = () => {
 
   //   fetchReferencias();
   // }, []);
+
+   // Manejar cambio de página para Referencias
+  const handlePageChangeReferencias = (page, pageSize) => {
+    setCurrentPageReferencias(page);
+    setPageSizeReferencias(pageSize);
+  };
+
+  // Manejar cambio de página para Plus
+  const handlePageChangePlu = (page, pageSize) => {
+    setCurrentPagePlu(page);
+    setPageSizePlu(pageSize);
+  };
+
+  // Filtrar datos para la página actual
+  const paginatedReferencias = referencias.slice(
+    (currentPageReferencias - 1) * pageSizeReferencias,
+    currentPageReferencias * pageSizeReferencias
+  );
+
+  const paginatedPluData = pluData.slice(
+    (currentPagePlu - 1) * pageSizePlu,
+    currentPagePlu * pageSizePlu
+  );
 
   // Función para manejar el botón "Generar"
 // Función para manejar el botón "Generar"
@@ -276,7 +307,7 @@ const handleActualizarMaestras = async (event) => {
                 </tr>
               </thead>
               <tbody>
-                {referencias.map((ref, index) => (
+                {paginatedReferencias.map((ref, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{ref.C_REFERENCIA}</td>
@@ -314,6 +345,14 @@ const handleActualizarMaestras = async (event) => {
               </tbody>
             </table>
           </div>
+          <Pagination
+            current={currentPageReferencias}
+            pageSize={pageSizeReferencias}
+            total={referencias.length}
+            onChange={handlePageChangeReferencias}
+            showSizeChanger
+            onShowSizeChange={handlePageChangeReferencias}
+          />
         </div>
         <div className="tabla-container">
           <h2 className="tabla-titulo">Plus Nuevos y faltantes:</h2>
@@ -330,7 +369,7 @@ const handleActualizarMaestras = async (event) => {
                 </tr>
               </thead>
               <tbody>
-                {pluData.map((plu, index) => (
+                {paginatedPluData.map((plu, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{plu.REFERENCIA}</td>
@@ -342,9 +381,17 @@ const handleActualizarMaestras = async (event) => {
                 ))}
               </tbody>
             </table>
+            <Pagination
+            current={currentPagePlu}
+            pageSize={pageSizePlu}
+            total={pluData.length}
+            onChange={handlePageChangePlu}
+            showSizeChanger
+            onShowSizeChange={handlePageChangePlu}
+          />
+        </div>
           </div>
         </div>
-      </div>
     </section>
   );
 };
