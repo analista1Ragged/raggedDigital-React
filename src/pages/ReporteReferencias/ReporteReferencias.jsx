@@ -41,29 +41,29 @@ const ReporteReferencias = () => {
     });
   };
 
-  useEffect(() => {
-    const fetchReferencias = async () => {
-      setLoading(true);
-      showLoading();
-      try {
-        const response = await fetch(`${urlapi}/mahalo/get-referencias`);
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
-        }
-        const data = await response.json();
-        setReferencias(data[0] || []);
-        setPluData(data[1] || []);
-      } catch (err) {
-        setError(err.message);
-        showError(err.message);
-      } finally {
-        setLoading(false);
-        hideLoading();
-      }
-    };
+  // useEffect(() => {
+  //   const fetchReferencias = async () => {
+  //     setLoading(true);
+  //     showLoading();
+  //     try {
+  //       const response = await fetch(`${urlapi}/mahalo/get-referencias`);
+  //       if (!response.ok) {
+  //         throw new Error(`Error: ${response.status}`);
+  //       }
+  //       const data = await response.json();
+  //       setReferencias(data[0] || []);
+  //       setPluData(data[1] || []);
+  //     } catch (err) {
+  //       setError(err.message);
+  //       showError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //       hideLoading();
+  //     }
+  //   };
 
-    fetchReferencias();
-  }, []);
+  //   fetchReferencias();
+  // }, []);
 
    // Manejar cambio de página para Referencias
   const handlePageChangeReferencias = (page, pageSize) => {
@@ -94,6 +94,7 @@ const handleGenerar = async (event) => {
   if (event) event.preventDefault();
   setLoading(true);
   try {
+    showLoading();
     const response = await fetch(`${urlapi}/mahalo/get-referencias`); // Mismo endpoint para actualizar los datos
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
@@ -105,22 +106,33 @@ const handleGenerar = async (event) => {
     setError(err.message);
   } finally {
     setLoading(false);
+    hideLoading();
   }
 };
 
 // Función para exportar las tablas como CSV
+// Función para exportar las tablas como CSV con validación
 const handleExportarCSV = (event) => {
-  // Prevenir la recarga de la página
   if (event) event.preventDefault();
 
-  // Convertir un array de objetos a formato CSV con un orden específico de columnas y delimitador ;
+  // Validar si las tablas tienen datos
+  if (referencias.length === 0 && pluData.length === 0) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Sin datos',
+      text: 'No hay datos en ninguna tabla para exportar.',
+    });
+    return;
+  }
+
+  // Convertir un array de objetos a formato CSV
   const convertToCSV = (data, columnOrder, includeIndex = false) => {
     return data
       .map((row, index) => {
         const rowData = columnOrder.map((key) => row[key] || "").join(";");
-        return includeIndex ? `${index + 1};${rowData}` : rowData; // Agregar índice si es necesario
+        return includeIndex ? `${index + 1};${rowData}` : rowData;
       })
-      .join("\n"); // Combinar filas
+      .join("\n");
   };
 
   // Descargar archivo CSV
@@ -194,6 +206,15 @@ const handleExportarCSV = (event) => {
 
 const handleActualizarMaestras = async (event) => {
   if (event) event.preventDefault();
+
+  if (referencias.length === 0 && pluData.length === 0) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Sin datos',
+      text: 'No hay datos en ninguna tabla para actualizar.',
+    });
+    return;
+  }
 
   // Extraer datos de las columnas requeridas
   const referenciasStrings = referencias.map((ref) => ref.F120_REFERENCIA || "").join(",");

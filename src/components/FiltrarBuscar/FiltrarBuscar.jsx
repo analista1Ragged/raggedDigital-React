@@ -52,10 +52,10 @@ const FiltrarBuscar = ({ onFilterChange }) => {
             <Option value="Franquicias">Franquicias</Option>
           </Select>
         </div>
-        <div className="col-12 col-md-5">
+        {/* <div className="col-12 col-md-5">
           <label htmlFor="marca" className="label-spacing">Archivo con precio obsequio</label>
           <CheckboxPerfiles checked={precioObsequio} onChange={handlePrecioObsequioChange} />
-        </div>
+        </div> */}
       </div>
     </form>
   );

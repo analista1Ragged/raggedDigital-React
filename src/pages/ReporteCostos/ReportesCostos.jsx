@@ -70,6 +70,15 @@ const ReportesCostos = () => {
   const handleExportarCostosCSV = async (event) => {
     if (event) event.preventDefault();
 
+    if (costos.length === 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Sin datos',
+          text: 'No hay datos en ninguna tabla para exportar.',
+        });
+        return;
+      }
+
     const convertToCSV = (data) => data.map((row) => `${row.REF};${row.COSTO}`).join("\n");
     const maxLines = 4950;
     const splitDataIntoChunks = (data, maxLines) => {
