@@ -7,22 +7,17 @@
   background-position: center; /* Centra la imagen */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
   color: #fff; /* Color del texto */
-  padding: 50px 0; /* Espaciado interno superior e inferior */
-  
-  
+  padding: 10px 0; /* Espaciado interno superior e inferior */
 }
    
-
-
-
-
 /* Estilo para la sección superior del footer */
 .footer-top {
   display: flex; /* Usa flexbox para el diseño */
   justify-content: space-between; /* Distribuye los elementos con espacio entre ellos */
   flex-wrap: wrap; /* Permite que los elementos se envuelvan en varias líneas */
-  margin: 0 auto; /* Centra el contenido horizontalmente */
-  padding: 20px; /* Espaciado interno */
+  margin: 10px auto; /* Centra el contenido horizontalmente */
+  margin-left: 50px;
+  /* padding: 20px; Espaciado interno */
 }
 
 /* Estilo para cada columna dentro del footer */

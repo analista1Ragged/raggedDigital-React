@@ -31,7 +31,6 @@ import {
   MyMenu,
   Header,
   PowerPoint,
-  FooterPrueba,
   Error404,
   Login
 } from './components';
@@ -194,7 +193,6 @@ function App() {
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <FooterPrueba />
           </div>
         } />
         
