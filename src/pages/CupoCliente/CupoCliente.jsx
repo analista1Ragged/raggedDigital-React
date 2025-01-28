@@ -2,9 +2,10 @@
 
 import React, { useState } from "react";
 import "./CupoCliente.css";
-import Swal from "sweetalert2"; // Asegúrate de instalarlo: npm install sweetalert2
+import Swal from "sweetalert2"; 
 import BuscarButton from "src/components/BotonBuscar/BotonBuscar";
 import CampoTextoReferencia from "src/components/CampoTexto/CampoTextoReferencia";
+import { urlapi } from '../../App.js';
 
 // Función para buscar cliente por cédula
 const buscarCliente = async (cedula, setClienteData) => {
@@ -23,7 +24,7 @@ const buscarCliente = async (cedula, setClienteData) => {
   });
 
   try {
-    const response = await fetch("http://localhost:5000/api/cliente", {
+    const response = await fetch(urlapi+'/api/cliente', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

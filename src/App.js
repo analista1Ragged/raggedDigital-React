@@ -39,8 +39,8 @@ import {
 import manualRagged from './assets/docts/MANUAL DE USABILIDAD RAGGED DIGITAL.pptx';
 
 
-//export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
-export const urlapi = 'http://127.0.0.1:5000/RaggedDigitalAPI';
+export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
+//export const urlapi = 'http://127.0.0.1:5000/RaggedDigitalAPI';
 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = sessionStorage.getItem('log');

@@ -106,7 +106,7 @@ const menuItems = [
             key: '3.4.3',
             title: 'Consulta Cupo Cliente',
             icon: <HiCreditCard />,
-            path: "/ecommerce/VentaDirecta/CupoCliente",
+            path: "/Logistica/CanalDigital/CupoCliente",
           },
         ],
       },
