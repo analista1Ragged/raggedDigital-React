@@ -1,55 +1,101 @@
-import React, { useState } from 'react';
-import './CupoCliente.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import MultiSelector2 from '../../components/MultiSelector/MultiSelector2';
-import CampoTexto from '../../components/CampoTexto/CampoTextoReferencia';
-import BuscarButton from '../../components/BotonBuscar/BotonBuscar';
+// CupoCliente.jsx
 
+import React, { useState } from "react";
+import "./CupoCliente.css";
+import Swal from "sweetalert2"; // Asegúrate de instalarlo: npm install sweetalert2
+import BuscarButton from "src/components/BotonBuscar/BotonBuscar";
+import CampoTextoReferencia from "src/components/CampoTexto/CampoTextoReferencia";
 
+// Función para buscar cliente por cédula
+const buscarCliente = async (cedula, setClienteData) => {
+  if (!cedula) {
+    Swal.fire("Debe ingresar un número de cédula para realizar la consulta");
+    return;
+  }
+
+  Swal.fire({
+    title: "Cargando datos...",
+    allowOutsideClick: false,
+
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
+
+  try {
+    const response = await fetch("http://localhost:5000/api/cliente", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ cedula }),
+    });
+
+    const data = await response.json();
+
+    Swal.close();
+
+    if (!response.ok) {
+      Swal.fire("Error", data.error || "Ocurrió un error inesperado", "error");
+      return;
+    }
+
+    // Mapear los datos del array a un objeto
+    const cleanedData = {
+      CEDULA: data[0][0]?.trim() || "N/A",
+      NOMBRE: data[0][1] || "N/A",
+      APELLIDOS: data[0][2] || "N/A",
+      EMAIL: data[0][3] || "N/A",
+      DIRECCION: data[0][4] || "N/A",
+      SUCURSAL: data[0][5] || "N/A",
+      COD_CONDICION_DE_PAGO: data[0][6] || "N/A",
+      CONDICION_DE_PAGO: data[0][7] || "N/A",
+      CUPO_ASIGNADO: data[0][8] || "N/A",
+      TOTAL_DEUDA: data[0][9] || "N/A",
+      DISPONIBLE: data[0][10] || "N/A",
+      BLOQUEADO: data[0][11] ? "Sí" : "No",
+    };
+
+    setClienteData(cleanedData);
+  } catch (error) {
+    Swal.close();
+    Swal.fire("Error", "No se pudo conectar al servidor", "error");
+  }
+};
+
+// El componente principal
 const CupoCliente = () => {
-  const [valorCampo, setValorCampo] = useState('');
-  
-  // Arreglo con los encabezados de la tabla
-  const headers = [
-    "#", 
-    "Cedula", 
-    "Nombre", 
-    "Apellidos", 
-    "Email", 
-    "Dirección", 
-    "Sucursal", 
-    "Cod_condición_Pago", 
-    "Cod_de_Pago", 
-    "Cupo_Asignado", 
-    "Total_Deuda", 
-    "Disponible", 
-    "Bloqueado"
-  ];
+  const [cedula, setCedula] = useState("");
+  const [clienteData, setClienteData] = useState(null);
+
+  const handleBuscarCliente = () => {
+    buscarCliente(cedula, setClienteData);
+  };
 
   return (
     <section>
       <div className="ticket-table">
-        <h2>
+      <h2>
           <a href="/RaggedDigital/Home" className="left" title="volver">
             <i className="bi bi-arrow-left-circle"></i>
           </a>
           {'  '} Consultar Cupo Clientes
         </h2>
-        <form className="container">
+        <form onSubmit={(e) => e.preventDefault()} className="container">
           <div className="container">
             <div className="multi-selector">
               <div className="row">
                 <div className="col">
-                  <div className="inline-components2">
-                    <CampoTexto
-                      placeholder="Ingrese Cedula:"
-                      //value="" 
-                      //onChange=""
+                  <div className="inline-components3">
+                    <CampoTextoReferencia
+                      placeholder="Ingrese # de Cédula:"
+                      value={cedula}
+                      onChange={(e) => setCedula(e.target.value)}
                     />
-                    <BuscarButton 
-                      //onClick=""
-                      className="component-item" 
-                    /> 
+                    <BuscarButton
+                      onClick={handleBuscarCliente}
+                      className="component-item"
+                    />
                   </div>
                 </div>
               </div>
@@ -57,34 +103,42 @@ const CupoCliente = () => {
           </div>
         </form>
         <div className="tabla-container">
-          <div className="tabla-scroll">
-            <table className="table table-striped table-hover ticket-table">
-              <thead>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Cédula</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Email</th>
+                <th>Dirección</th>
+                <th>Sucursal</th>
+                <th>Cod. Condición de Pago</th>
+                <th>Condición de Pago</th>
+                <th>Cupo Asignado</th>
+                <th>Total Deuda</th>
+                <th>Disponible</th>
+                <th>Bloqueado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clienteData && (
                 <tr>
-                  {headers.map((header, index) => (
-                    <th scope="col" key={index}>{header}</th>
-                  ))}
+                  <td>{clienteData.CEDULA}</td>
+                  <td>{clienteData.NOMBRE}</td>
+                  <td>{clienteData.APELLIDOS}</td>
+                  <td>{clienteData.EMAIL}</td>
+                  <td>{clienteData.DIRECCION}</td>
+                  <td>{clienteData.SUCURSAL}</td>
+                  <td>{clienteData.COD_CONDICION_DE_PAGO}</td>
+                  <td>{clienteData.CONDICION_DE_PAGO}</td>
+                  <td>{clienteData.CUPO_ASIGNADO}</td>
+                  <td>{clienteData.TOTAL_DEUDA}</td>
+                  <td>{clienteData.DISPONIBLE}</td>
+                  <td>{clienteData.BLOQUEADO}</td>
                 </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>1026130339</td>
-                  <td>Elizabeth</td>
-                  <td>Zapata</td>
-                  <td>elizazq</td>
-                  <td>Cra 49</td>
-                  <td>001</td>
-                  <td>011</td>
-                  <td>Contado 1 dia</td>
-                  <td>$0</td>
-                  <td>$0</td>
-                  <td>$0</td>
-                  <td>NO</td>               
-                </tr>
-              </tbody>
-            </table>
-          </div>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -92,6 +146,15 @@ const CupoCliente = () => {
 };
 
 export default CupoCliente;
+
+
+
+
+
+
+
+
+
 
 
 

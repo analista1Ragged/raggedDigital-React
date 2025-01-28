@@ -6,6 +6,7 @@ import instagram from '../../assets/Images/instagramimg-.png'
 import youtube from '../../assets/Images/youtubeimg-.png'
 import pinteres from '../../assets/Images/pinteresimg-.png'
 
+const currentYear = new Date().getFullYear(); // Obtiene el año actual
 
 const Footer = () => {
   return (
@@ -46,7 +47,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>&copy; 2024 Ragged. Todos los derechos reservados.</p>
+        <p><strong>&copy; {currentYear} Ragged. Todos los derechos reservados.</strong></p>
         <p>V-003</p>
       </div>
     </footer>

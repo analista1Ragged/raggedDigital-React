@@ -39,13 +39,19 @@ body {
   }
   
   /* Componentes en línea 2 */
-  .inline-components2 {
+  .inline-components3 {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    flex-wrap: wrap; /* Permite que los botones y el campo se ajusten correctamente */
+    align-items: center; /* Alineación vertical */
+    justify-content: flex-start; /* Elementos alineados al inicio */
+    gap: 10px; /* Espaciado entre elementos */
+    margin-bottom: 40px; /* Ajusta según el espacio deseado */
   }
+  
+  .inline-components3 > * {
+    margin: 0; /* Elimina márgenes adicionales */
+    flex-shrink: 0; /* Evita que los elementos se reduzcan demasiado */
+  }
+  
   
   
   .inline-components2 .boton {
