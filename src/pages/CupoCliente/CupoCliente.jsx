@@ -1,11 +1,10 @@
-// CupoCliente.jsx
-
 import React, { useState } from "react";
 import "./CupoCliente.css";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 import BuscarButton from "src/components/BotonBuscar/BotonBuscar";
 import CampoTextoReferencia from "src/components/CampoTexto/CampoTextoReferencia";
 import { urlapi } from '../../App.js';
+import { GiClick } from "react-icons/gi"; // Importamos el icono
 
 // Función para buscar cliente por cédula
 const buscarCliente = async (cedula, setClienteData) => {
@@ -17,14 +16,13 @@ const buscarCliente = async (cedula, setClienteData) => {
   Swal.fire({
     title: "Cargando datos...",
     allowOutsideClick: false,
-
     didOpen: () => {
       Swal.showLoading();
     },
   });
 
   try {
-    const response = await fetch(urlapi+'/api/cliente', {
+    const response = await fetch(urlapi + '/api/cliente', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +74,7 @@ const CupoCliente = () => {
   return (
     <section>
       <div className="ticket-table">
-      <h2>
+        <h2>
           <a href="/RaggedDigital/Home" className="left" title="volver">
             <i className="bi bi-arrow-left-circle"></i>
           </a>
@@ -122,6 +120,14 @@ const CupoCliente = () => {
               </tr>
             </thead>
             <tbody>
+              {!clienteData && (
+                <tr>
+                  <td colSpan="12">
+                    <GiClick style={{ marginRight: "10px", verticalAlign: "middle" }} />
+                    Ingrese el numero de cedula para mostrar la informacion del cliente.
+                  </td>
+                </tr>
+              )}
               {clienteData && (
                 <tr>
                   <td>{clienteData.CEDULA}</td>
@@ -147,6 +153,7 @@ const CupoCliente = () => {
 };
 
 export default CupoCliente;
+
 
 
 
