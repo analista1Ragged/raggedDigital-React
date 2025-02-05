@@ -2,6 +2,8 @@
 
 /* Establece la imagen de fondo del footer */
 .footer {
+  margin-top: auto; /* Empuja el footer hacia la parte inferior */
+  width: 100%;
   background-image: url('../../assets/Images/Footer.jpg') !important;
   background-size: cover; /* Asegura que la imagen cubra todo el fondo */
   background-position: center; /* Centra la imagen */
@@ -58,6 +60,7 @@
 .footer-column ul li a:hover {
   color: #41D9A1 /* Cambia el color al pasar el mouse */
 }
+
 
 /* Estilo para la sección de redes sociales */
 .social-media {

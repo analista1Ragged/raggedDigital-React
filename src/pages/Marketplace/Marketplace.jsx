@@ -147,7 +147,7 @@ const handleMarketplaceChange = async (value) => {
                 { label: 'Ref002', value: 'ref002' },
               ]}
               opc="0"
-              placeholder="Referencias"
+              placeholder="Colección"
               onSelectChange={setReferencias} // Actualiza el estado
               value={referencias} // Valor seleccionado
             />
@@ -159,7 +159,7 @@ const handleMarketplaceChange = async (value) => {
                   { label: 'Azul', value: 'azul' },
                 ]}
                 opc="0"
-                placeholder="Color"
+                placeholder="Referencia"
                 onSelectChange={setColor} // Actualiza el estado
                 value={color} // Valor seleccionado
               />
@@ -170,7 +170,7 @@ const handleMarketplaceChange = async (value) => {
                   { label: 'Invierno', value: 'invierno' },
                 ]}
                 opc="1"
-                placeholder="Colección"
+                placeholder="Color"
                 onSelectChange={setColeccion} // Actualiza el estado
                 value={coleccion} // Valor seleccionado
               />
