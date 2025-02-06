@@ -9,12 +9,14 @@ import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp,
 import { PiEyeSlashFill, PiPasswordFill, PiUsersFill, PiEscalatorUpBold} from "react-icons/pi";
 import { ImBarcode } from "react-icons/im";
 import { BiDollarCircle } from "react-icons/bi";
+import { MdOutlinePostAdd } from "react-icons/md";
+import { TbReportSearch } from "react-icons/tb";
 import { BsFolderPlus, BsClipboard2DataFill } from "react-icons/bs";
 import { HiCreditCard } from "react-icons/hi2";
 import { FaUsersRays } from "react-icons/fa6";
 import { BsVimeo } from "react-icons/bs";
 import { NavLink, useNavigate } from "react-router-dom";
-import { MdOutlinePostAdd } from "react-icons/md";
+
 
 const { SubMenu } = Menu;
 
@@ -187,6 +189,12 @@ const menuItems = [
         title: "Bancos",
         icon: <AiOutlineDollar />,
         path: "/contabilidad/Bancos",
+      },
+      {
+        key: "7.3",
+        title: "Exógena",
+        icon: <TbReportSearch />,
+        path: "/contabilidad/Exogena",
       },
     ],
   },

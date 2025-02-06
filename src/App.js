@@ -23,7 +23,8 @@ import {
   Layout,
   ReporteDane,
   Marketplace,
-  CupoCliente
+  CupoCliente,
+  InfoExogena
 } from './pages';
 
 import {
@@ -166,6 +167,13 @@ function App() {
           <PrivateRoute element={
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
               <Bancos />
+            </div>
+          } />
+        } />
+        <Route path='/contabilidad/Exogena' element={
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <InfoExogena />
             </div>
           } />
         } />
