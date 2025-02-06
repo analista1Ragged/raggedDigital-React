@@ -12,6 +12,7 @@ import * as XLSX from "xlsx";
 import CampoTextoReferencia from 'src/components/CampoTexto/CampoTextoReferencia.jsx';
 import CheckboxPerfiles from 'src/components/CheckboxPefiles/CheckboxPerfiles';
 import BuscarButton from 'src/components/BotonBuscar/BotonBuscar.jsx';
+import BotonDescargar from 'src/components/BotonDescargar/BotonDescargar.jsx';
 
 
 const { Option } = Select;
@@ -87,10 +88,18 @@ const InfoExogena    = () => {
             </div>
 
             </div>
-            
           </div>
           
-        
+        <div className="row">
+            <div className="inline-components2">
+            <CampoTextoReferencia placeholder="Tercero:" value="" onChange="" />
+              <BuscarButton 
+                onClick=""
+              />
+              <BotonDescargar 
+              />
+            </div>
+          </div>  
         
         </form> 
       </div>
