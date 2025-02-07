@@ -8,11 +8,11 @@ import { Select } from 'antd'; // Importa el componente Select de Ant Design
 import { urlapi } from '../../App';
 import Swal from 'sweetalert2';
 import Boton from 'src/components/Boton/Boton';
-import * as XLSX from "xlsx";
 import CampoTextoReferencia from 'src/components/CampoTexto/CampoTextoReferencia.jsx';
 import CheckboxPerfiles from 'src/components/CheckboxPefiles/CheckboxPerfiles';
 import BuscarButton from 'src/components/BotonBuscar/BotonBuscar.jsx';
 import BotonDescargar from 'src/components/BotonDescargar/BotonDescargar.jsx';
+import { TbHandClick } from "react-icons/tb";
 
 
 const { Option } = Select;
@@ -71,26 +71,25 @@ const InfoExogena    = () => {
             <label htmlFor="marca" className="label-spacing">Periodos:</label>
             <Select style={{ width: 270 }} showSearch placeholder="Periodo Inicial" className="w-100">
                 {periodos.map((periodo, index) => (
-                <Option key={index} value={periodo}>
-                    {periodo}
+                <Option key="" value="">
+                    -
                 </Option>
                 ))}
             </Select>
             <Select style={{ width: 270 }} showSearch placeholder="Periodo Final" className="w-100">
-                {periodos.map((periodo, index) => (
-                <Option key={index} value={periodo}>
-                    {periodo}
+            {periodos.map((periodo, index) => (
+                <Option key="" value="">
+                    -
                 </Option>
                 ))}
             </Select>
             <CheckboxPerfiles />
             <label htmlFor="marca" className="label-spacing">Acumulado</label>
             </div>
-
             </div>
           </div>
           
-        <div className="row">
+        <div className="col-12 col-md-5">
             <div className="inline-components2">
             <CampoTextoReferencia placeholder="Tercero:" value="" onChange="" />
               <BuscarButton 
@@ -101,7 +100,18 @@ const InfoExogena    = () => {
             </div>
           </div>  
         
-        </form> 
+        </form>
+        <table className="table table-striped table-hover">
+        <tbody>
+            {/* Ejemplo de datos estáticos */}
+            <tr>
+            <td colSpan="9">
+                <TbHandClick style={{ marginRight: '10px', verticalAlign: 'middle' }} />
+                Ingrese los diferentes filtros para mostrar datos.
+            </td>
+            </tr>
+        </tbody>
+        </table> 
       </div>
     </section>
   );
