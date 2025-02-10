@@ -331,7 +331,6 @@ const initialFiltersCartera = useMemo(() => ({
               <div className="row">
                 <div className='col'>
                     <div className="inline-components2">
-
                             <CampoTexto
                               placeholder="Ingrese ref: PF32111310,PF31310669..."
                               value={valorCampo} // Vinculado al estado

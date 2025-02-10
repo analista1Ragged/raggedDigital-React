@@ -102,10 +102,6 @@ body {
     cursor: not-allowed;
     background-color: #ccc;
   }
-
-  .custom-placeholder .ant-select-selection-placeholder {
-    font-size: 16px; /* Ajusta el tamaño según lo necesites */
-}
   
   /* Media Queries para responsividad */
   @media (max-width: 1200px) {
@@ -243,6 +239,18 @@ body {
     margin-top: 3rem;
   }
 
+  .contenedor-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .custom-placeholder .ant-select-selection-placeholder {
+    font-size: 16px; /* Ajusta el tamaño según lo necesites */
+}
+
   
   @media (max-width: 576px) {
     .table th,
@@ -254,5 +262,5 @@ body {
   .inline-components2 {
     display: flex;
     justify-content: flex-start; /* Alinea los componentes al lado izquierdo */
-    gap: 10px; /* Espaciado opcional entre los componentes */
+    gap: 15px; /* Espaciado opcional entre los componentes */
   }

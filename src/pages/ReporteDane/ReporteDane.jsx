@@ -7,8 +7,8 @@ import BotonBuscar from 'src/components/BotonBuscar/BotonBuscar.jsx';
 import { Select } from 'antd'; // Importa el componente Select de Ant Design
 import { urlapi } from '../../App';
 import Swal from 'sweetalert2';
-import Boton from 'src/components/Boton/Boton';
 import * as XLSX from "xlsx";
+import BotonDescargar from 'src/components/BotonDescargar/BotonDescargar.jsx';
 
 const { Option } = Select;
 const ReporteDane = () => {
@@ -227,7 +227,7 @@ const ReporteDane = () => {
                   style={{ width: 350 }}
                   showSearch
                   placeholder="Selecciona un Periodo"
-                  className="w-100"
+                  className="w-100 custom-placeholder"
                 >
                   {periodos.map((periodo, index) => (
                     <Option key={index} value={periodo}>
@@ -241,9 +241,9 @@ const ReporteDane = () => {
           <BotonBuscar onClick={handleBuscarPeriodo} />    
         </div>
         <div className="col-12 col-md-5">
-        <Boton onClick={handleExportarExcel}>
+        <BotonDescargar onClick={handleExportarExcel}>
           Exportar Excel
-        </Boton>
+        </BotonDescargar>
 
         </div>
       </div>
