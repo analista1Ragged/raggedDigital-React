@@ -247,6 +247,9 @@ body {
     width: 100%;
   }
   
+  .custom-placeholder .ant-select-selection-placeholder {
+    font-size: 16px; /* Ajusta el tamaño según lo necesites */
+}
 
   
   @media (max-width: 576px) {

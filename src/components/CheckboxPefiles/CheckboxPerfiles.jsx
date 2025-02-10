@@ -22,7 +22,7 @@ const CheckboxPerfiles = ({ checked, onChange }) => {
 
 // Componente principal App
 const App = () => {
-  const [isChecked, setIsChecked] = useState(true); // El checkbox viene marcado por defecto
+  const [isChecked, setIsChecked] = useState(false); // El checkbox viene marcado por defecto
 
   const handleCheckboxChange = (newChecked) => {
     setIsChecked(newChecked); // Actualiza el estado al hacer clic

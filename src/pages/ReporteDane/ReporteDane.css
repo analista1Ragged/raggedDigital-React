@@ -102,6 +102,10 @@ body {
     cursor: not-allowed;
     background-color: #ccc;
   }
+
+  .custom-placeholder .ant-select-selection-placeholder {
+    font-size: 16px; /* Ajusta el tamaño según lo necesites */
+}
   
   /* Media Queries para responsividad */
   @media (max-width: 1200px) {

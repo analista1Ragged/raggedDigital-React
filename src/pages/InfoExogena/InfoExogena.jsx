@@ -69,14 +69,20 @@ const InfoExogena    = () => {
             <div className="contenedor-flex">
             <CampoTextoReferencia placeholder="Cuenta Auxiliar:" value="" onChange="" />
             <label htmlFor="marca" className="label-spacing">Periodos:</label>
-            <Select style={{ width: 270 }} showSearch placeholder="Periodo Inicial" className="w-100">
+            <Select style={{ width: 270 }} 
+            showSearch 
+            placeholder="Periodo Inicial" 
+            className="w-100 custom-placeholder">
                 {periodos.map((periodo, index) => (
                 <Option key="" value="">
                     -
                 </Option>
                 ))}
             </Select>
-            <Select style={{ width: 270 }} showSearch placeholder="Periodo Final" className="w-100">
+            <Select style={{ width: 270 }} 
+            showSearch 
+            placeholder="Periodo Final" 
+            className="w-100 custom-placeholder">
             {periodos.map((periodo, index) => (
                 <Option key="" value="">
                     -

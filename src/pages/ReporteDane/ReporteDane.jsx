@@ -227,7 +227,7 @@ const ReporteDane = () => {
                   style={{ width: 350 }}
                   showSearch
                   placeholder="Selecciona un Periodo"
-                  className="w-100"
+                  className="w-100 custom-placeholder"
                 >
                   {periodos.map((periodo, index) => (
                     <Option key={index} value={periodo}>
