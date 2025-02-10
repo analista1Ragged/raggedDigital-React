@@ -226,6 +226,13 @@ const handleActualizarMaestras = async (event) => {
   };
 
   try {
+    Swal.fire({
+      title: 'Actualizando Maestras...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
     const response = await fetch(`${urlapi}/mahalo/post-referencias`, {
       method: "POST",
       headers: {
@@ -240,8 +247,21 @@ const handleActualizarMaestras = async (event) => {
 
     const result = await response.json();
     console.log("Maestras actualizadas correctamente:", result);
+    Swal.close();
+    Swal.fire({
+              title: 'Correcto',
+              text: 'Maestras Actualizadas correctamente.',
+              icon: "success",
+              confirmButtonText: 'OK'
+            });
   } catch (error) {
     console.error("Error al actualizar las maestras:", error.message);
+    Swal.close();
+    Swal.fire({
+      icon: 'warning',
+      title: 'Sin datos',
+      text: 'No hay datos en ninguna tabla para actualizar.',
+    });
   }
 };
 

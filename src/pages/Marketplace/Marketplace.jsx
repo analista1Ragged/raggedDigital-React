@@ -7,42 +7,61 @@ import { urlapi } from '../../App';
 import './Marketplace.css';
 
 const Marketplace = () => {
-  // Estados para almacenar los valores seleccionados
+  // inicializar tablas
+  const [tableData, setTableData] = useState([]); // Estado para almacenar los datos dinámicos
+  const [tableHeaders, setTableHeaders] = useState([]); // Estado para los encabezados dinámicos
+  // combos
   const [marketplaces, setMarketplaces] = useState([]);
-  const [selectedMarketplace, setSelectedMarketplace] = useState(null); // Estado para la opción seleccionada
-  const [coleccion, setColeccion] = useState([]);
-  const [referencias, setReferencias] = useState([]);
-  const [color, setColor] = useState([]);
-  const [tipoArchivoOptions, setTipoArchivoOptions] = useState([]); // Lista de tipos de archivo
-  const [selectedTipoArchivo, setSelectedTipoArchivo] = useState(null); // Tipo de archivo seleccionado
+  const [marketCap, setMarketCap] = useState([]);
+  const [marketRef, setMarketRef] = useState([]);
+  const [marketCol, setMarketCol] = useState([]);
   const [tiposArchivo, setTiposArchivo] = useState([]);
-
+  // seleccionados
+  const [selectedMarketplace, setSelectedMarketplace] = useState(null); 
+  const [selectedTipoArchivo, setSelectedTipoArchivo] = useState(null); 
+  const [selectedMarketCap, setSelectedMarketCap] = useState(null); 
+  const [selectedMarketRef, setSelectedMarketRef] = useState(null); 
+  const [selectedMarketCol, setSelectedMarketCol] = useState(null); 
+  
   // Función para obtener los datos del backend
   const fetchMarketplaces = async () => {
     try {
-        const response = await fetch(`${urlapi}/vtaDirecta/get-ConsultarMarcketplace`);
+        const response = await fetch(`${urlapi}/Marketplace/get-ConsultarMarketplace`);
 
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
         }
 
         // Convertir la respuesta a JSON
-        const data = await response.json();
+        const r = await response.json();
+        const data = r[0]
+
         console.log("Datos recibidos del backend:", data); // Verificar estructura
 
         if (Array.isArray(data) && data.length > 0) {
           const options = data
-              .filter(item => item?.nombre) // Filtrar solo los que tienen nombre
+              .filter(item => item?.Descripcion) // Filtrar solo los que tienen nombre
               .map(item => ({
-                  label: item.nombre,
-                  value: item.nombre
+                  label: item.Descripcion,
+                  value: item.ProcedimientoAlmacenado
               }));
-      
           setMarketplaces(options);
-          console.log("Opciones en MultiSelector después de cargar:", options);
-      } else {
-          console.error("Formato de datos incorrecto o vacío:", data);
-      }
+          console.log("Opciones en MultiSelector después de cargar:", options);} 
+          else {console.error("Formato de datos incorrecto o vacío:", data);}
+
+        console.log("caps:", r[1]);
+        if (Array.isArray(r[1]) && r[1].length > 0) {
+            const caps = r[1]
+                .filter(item => item?.F106_ID) // Filtrar solo los que tienen nombre
+                .map(item => ({
+                    label: item.F106_DESCRIPCION,
+                    value: item.F106_ID
+                }));
+                console.log("caps:", caps);
+          setMarketCap(caps);
+          console.log("Opciones en MultiSelector después de cargar:", options);} 
+          else {console.error("Formato de datos incorrecto o vacío:", r[1]);}
+
     } catch (error) {
         console.error("Error al obtener marketplaces:", error);
     }
@@ -52,12 +71,13 @@ const Marketplace = () => {
 // Cargar datos cuando el componente se monta
 useEffect(() => {
   fetchMarketplaces();
+  console.log(selectedMarketCap,typeof(selectedMarketCap));
 }, []);
 
 // 🔹 Obtener tipos de archivo desde el backend
 const fetchTipoArchivo = async () => {
   try {
-    const response = await fetch(`${urlapi}/vtaDirecta/get-ConsultarTipoArchivo`);
+    const response = await fetch(`${urlapi}/Marketplace/get-ConsultarTipoArchivo`);
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
     const data = await response.json();
@@ -93,17 +113,116 @@ const options = [
 ];
 
 // Manejar selección del marketplace
-const handleMarketplaceChange = async (value) => {
-  setSelectedMarketplace(value);
+const handleMarketCap = async (value) => {
+  console.log(value)
+  setSelectedMarketCap(value)
+  setMarketRef(await fetchReferencias(value));
+};
+const fetchReferencias = async (value) => {
+  try {
+    const response = await fetch(`${urlapi}/Marketplace/get-ReferenciasPorColeccion`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({cap : value}),
+    });
+    if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
-  if (value === "Falabella") {
-    const tipos = await fetchTipoArchivo();
-    setTipoArchivoOptions(tipos);
-  } else {
-    setTipoArchivoOptions([]);
-    setSelectedTipoArchivo(null);
+    const data = await response.json();
+    console.log("Tipos de archivo recibidos:", data);
+
+    if (Array.isArray(data) && data.length > 0) {
+      return data
+        .filter(item => item?.f120_referencia)
+        .map(item => ({ label: item.f120_referencia, value: item.f120_referencia}));
+    } else {
+      console.error("Formato incorrecto o vacío:", data);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error al obtener tipos de archivo:", error);
+    return [];
   }
 };
+
+const handleMarketRef = async (value) => {
+  console.log(value)
+  setSelectedMarketRef(value)
+  setMarketCol(await fetchColores(value));
+};
+const fetchColores = async (value) => {
+  try {
+    const response = await fetch(`${urlapi}/Marketplace/get-ColoresPorReferencia`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ref:value}),
+    });
+    if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+
+    const data = await response.json();
+    console.log("Tipos de archivo recibidos:", data);
+
+    if (Array.isArray(data) && data.length > 0) {
+      return data
+        .filter(item => item?.F117_ID)
+        .map(item => ({ label: item.F117_DESCRIPCION, value: item.F117_ID}));
+    } else {
+      console.error("Formato incorrecto o vacío:", data);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error al obtener tipos de archivo:", error);
+    return [];
+  }
+};
+
+
+const test = async (event) => {
+  if (event) event.preventDefault();
+  console.log(selectedMarketplace, selectedTipoArchivo, selectedMarketCap, selectedMarketRef, selectedMarketCol);
+  
+  if (selectedMarketCap !== null && selectedMarketRef !== null && selectedMarketCol !== null) {
+    try {
+      const response = await fetch(`${urlapi}/Marketplace/get-ReporteMarket`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: [
+            selectedMarketplace,
+            selectedMarketRef.toString(),
+            selectedMarketCol.toString(),
+            selectedTipoArchivo == null ? "" : selectedTipoArchivo
+          ],
+        }),
+      });
+
+      if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+
+      const data = await response.json();
+      console.log("Datos recibidos:", data);
+
+      if (Array.isArray(data) && data.length > 0) {
+        setTableData(data); // Guardar los datos en el estado
+        setTableHeaders(Object.keys(data[0])); // Generar encabezados dinámicos
+      } else {
+        console.warn("No se recibieron datos válidos.");
+        setTableData([]);
+        setTableHeaders([]);
+      }
+    } catch (error) {
+      console.error("Error al obtener datos:", error);
+    }
+  } else {
+    console.log("Algo falló");
+  }
+};
+
+
 
 
   return (
@@ -138,45 +257,45 @@ const handleMarketplaceChange = async (value) => {
               options={tiposArchivo}
               onChange={setSelectedTipoArchivo}
               value={selectedTipoArchivo}
-              disabled={selectedMarketplace !== "Falabella"} // Deshabilitar si no es "Falabella"
-          />
-
-            <MultiSelector
-              options={[
-                { label: 'Ref001', value: 'ref001' },
-                { label: 'Ref002', value: 'ref002' },
-              ]}
-              opc="0"
-              placeholder="Colección"
-              onSelectChange={setReferencias} // Actualiza el estado
-              value={referencias} // Valor seleccionado
+              disabled={selectedMarketplace !== "Falabella"} 
             />
-            </div>
-            <div className="row-3">
-              <MultiSelector
-                options={[
-                  { label: 'Rojo', value: 'rojo' },
-                  { label: 'Azul', value: 'azul' },
-                ]}
-                opc="0"
-                placeholder="Referencia"
-                onSelectChange={setColor} // Actualiza el estado
-                value={color} // Valor seleccionado
-              />
+            <Select
+              style={{ width: 270 }}
+              opc="66"
+              placeholder="Colección"
+              options={marketCap}
+              onChange={handleMarketCap}
+              value={selectedMarketCap}
+              mode = "multiple"
+            />
+              </div>
 
-              <MultiSelector
-                options={[
-                  { label: 'Verano', value: 'verano' },
-                  { label: 'Invierno', value: 'invierno' },
-                ]}
-                opc="1"
-                placeholder="Color"
-                onSelectChange={setColeccion} // Actualiza el estado
-                value={coleccion} // Valor seleccionado
-              />
+              <div className="row-3">
+                <Select
+                  opc="66"
+                  style={{ width: 270 }}
+                  placeholder="Referencia"
+                  options={marketRef}
+                  onChange={handleMarketRef}
+                  value={selectedMarketRef}
+                  disabled={marketRef.length < 1}
+                  mode = "multiple"
+                />
 
+              <div className="row-3">
+                <Select
+                  style={{ width: 270 }}
+                  placeholder="Color"
+                  options={marketCol}
+                  onChange={setSelectedMarketCol}
+                  value={selectedMarketCol}
+                  disabled={marketCol.length < 1}
+                  mode = "multiple"
+                />
+              </div>
+              
               <div className="col-12 col-md-5">
-                <BotonBuscar onClick="{}" />
+                <BotonBuscar onClick={test} />
               </div>
             </div>
           </div>
@@ -184,16 +303,35 @@ const handleMarketplaceChange = async (value) => {
         {/* Aquí puedes agregar el código para renderizar los datos de la tabla */}
       </div>
       <table className="table table-striped table-hover">
-        <tbody>
-            {/* Ejemplo de datos estáticos */}
-            <tr>
-            <td colSpan="9">
-                <TbHandClick style={{ marginRight: '10px', verticalAlign: 'middle' }} />
-                Seleccione las diferentes opciones para mostrar datos.
-            </td>
-            </tr>
-        </tbody>
-        </table>
+  <thead>
+    <tr>
+      {tableHeaders.length > 0 ? (
+        tableHeaders.map((header, index) => <th key={index}>{header}</th>)
+      ) : (
+        <th colSpan="9">
+          <TbHandClick style={{ marginRight: '10px', verticalAlign: 'middle' }} />
+          Seleccione las diferentes opciones para mostrar datos.
+        </th>
+      )}
+    </tr>
+  </thead>
+  <tbody>
+    {tableData.length > 0 ? (
+      tableData.map((row, rowIndex) => (
+        <tr key={rowIndex}>
+          {tableHeaders.map((header, colIndex) => (
+            <td key={colIndex}>{row[header]}</td>
+          ))}
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan="9">No hay datos disponibles.</td>
+      </tr>
+    )}
+  </tbody>
+</table>
+
     </section>
   );
 };
