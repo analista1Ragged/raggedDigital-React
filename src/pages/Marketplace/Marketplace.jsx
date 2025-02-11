@@ -3,7 +3,7 @@ import * as XLSX from 'xlsx';
 import MultiSelector from '../../components/MultiSelector/MultiSelector.jsx';
 import BotonDescargar from 'src/components/BotonDescargar/BotonDescargar.jsx';
 import BotonBuscar from 'src/components/BotonBuscar/BotonBuscar.jsx';
-import { Select } from 'antd'; // Importa el componente Select de Ant Design
+import { Select, Pagination } from 'antd'; // Importa el componente Select de Ant Design
 import { TbHandClick } from "react-icons/tb";
 import { urlapi } from '../../App';
 import Swal from 'sweetalert2';
@@ -231,6 +231,20 @@ const traerTabla = async (event) => {
             });
     }
   } else {
+
+     // Estados de paginación
+ const [currentPage, setCurrentPage] = useState(1);
+ const [pageSize, setPageSize] = useState(10);
+
+// Calcular los datos paginados
+const paginatedData = tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
+
+// Función para manejar el cambio de página y tamaño de página
+const handlePageChange = (page, size) => {
+  setCurrentPage(page);
+  setPageSize(size);
+};
     Swal.fire({
           icon: 'info',
           title: 'Sin Filtros',
@@ -270,24 +284,24 @@ const generarExcel = (event) => {
 };
 
 
-  return (
-    <section>
-      <div className="ticket-table">
-        <h2>
-          <a href="/RaggedDigital/Home" className="left" title="volver">
-            <i className="bi bi-arrow-left-circle"></i>
-          </a>
-          {'  '} Reportes Marketplace
-        </h2>
-        <h3>
-          <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
-            <i className="bi bi-filter"></i>
-          </a>
-          {'  '} Filtrar por:
-        </h3>
-        <form>
-          <div className="container">
-            <div className="row-3">
+return (
+  <section>
+    <div className="ticket-table">
+      <h2>
+        <a href="/RaggedDigital/Home" className="left" title="volver">
+          <i className="bi bi-arrow-left-circle"></i>
+        </a>
+        {'  '} Reportes Marketplace
+      </h2>
+      <h3>
+        <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
+          <i className="bi bi-filter"></i>
+        </a>
+        {'  '} Filtrar por:
+      </h3>
+      <form>
+        <div className="container">
+          <div className="row-3">
             <Select
               style={{ width: 270 }}
               opc="0"
@@ -311,9 +325,9 @@ const generarExcel = (event) => {
               options={marketCap}
               onChange={handleMarketCap}
               value={selectedMarketCap}
-              mode = "multiple"
+              mode="multiple"
             />
-              </div>
+          </div>
 
               <div className="row-3">
                 <Select
@@ -379,8 +393,19 @@ const generarExcel = (event) => {
   </tbody>
 </table>
 
-    </section>
-  );
+    {/* Paginación debajo de la tabla */}
+    <Pagination
+      current={currentPage}
+      pageSize={pageSize}
+      total={tableData.length}
+      onChange={handlePageChange}
+      showSizeChanger
+      showQuickJumper
+      pageSizeOptions={['5','10', '20', '50']}
+    />;
+  </section>
+);
+
 };
 
 export default Marketplace;
