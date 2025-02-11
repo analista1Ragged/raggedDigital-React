@@ -314,7 +314,9 @@ return (
     <thead>
             <tr>
               {tableHeaders.map((header, index) => (
-                <th key={index}>{header}</th>
+                <th key={index} style={index === 9 ? { width: '300px' } : {}}>
+                {header}
+              </th>
               ))}
             </tr>
           </thead>
@@ -338,7 +340,7 @@ return (
       showSizeChanger
       showQuickJumper
       pageSizeOptions={['5','10', '20', '50']}
-    />;
+    />
   </section>
 );
 
