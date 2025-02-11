@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import * as XLSX from 'xlsx';
 import MultiSelector from '../../components/MultiSelector/MultiSelector.jsx';
+import BotonDescargar from 'src/components/BotonDescargar/BotonDescargar.jsx';
 import BotonBuscar from 'src/components/BotonBuscar/BotonBuscar.jsx';
 import { Select, Pagination } from 'antd'; // Importa el componente Select de Ant Design
 import { TbHandClick } from "react-icons/tb";
 import { urlapi } from '../../App';
+import Swal from 'sweetalert2';
 import './Marketplace.css';
 
 const Marketplace = () => {
   // inicializar tablas
+  const [currentPage, setCurrentPage] = useState(1);
+ const [pageSize, setPageSize] = useState(10);
   const [tableData, setTableData] = useState([]); // Estado para almacenar los datos dinámicos
   const [tableHeaders, setTableHeaders] = useState([]); // Estado para los encabezados dinámicos
   // combos
@@ -59,7 +64,7 @@ const Marketplace = () => {
                 }));
                 console.log("caps:", caps);
           setMarketCap(caps);
-          console.log("Opciones en MultiSelector después de cargar:", options);} 
+          console.log("Opciones en MultiSelector después de cargar:", caps);} 
           else {console.error("Formato de datos incorrecto o vacío:", r[1]);}
 
     } catch (error) {
@@ -107,11 +112,6 @@ useEffect(() => {
 }, [selectedMarketplace]);
 
 
-const options = [
-  { label: "Seleccione un Marketplace", value: "" }, // 🔹 Opción vacía
-  ...marketplaces
-];
-
 // Manejar selección del marketplace
 const handleMarketCap = async (value) => {
   console.log(value)
@@ -125,7 +125,7 @@ const fetchReferencias = async (value) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({cap : value}),
+      body: JSON.stringify({cap : value.toString()}),
     });
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
@@ -158,7 +158,7 @@ const fetchColores = async (value) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ref:value}),
+      body: JSON.stringify({ref : value.toString()}),
     });
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
@@ -179,13 +179,20 @@ const fetchColores = async (value) => {
   }
 };
 
-
-const test = async (event) => {
+const traerTabla = async (event) => {
   if (event) event.preventDefault();
   console.log(selectedMarketplace, selectedTipoArchivo, selectedMarketCap, selectedMarketRef, selectedMarketCol);
-  
-  if (selectedMarketCap !== null && selectedMarketRef !== null && selectedMarketCol !== null) {
+
+  if (selectedMarketplace !== null && selectedMarketCap !== null && selectedMarketRef !== null && selectedMarketCol !== null) {
     try {
+      Swal.fire({
+            title: 'Cargando Datos',
+            text: 'Por favor espera...',
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+          });
       const response = await fetch(`${urlapi}/Marketplace/get-ReporteMarket`, {
         method: "POST",
         headers: {
@@ -203,28 +210,32 @@ const test = async (event) => {
 
       if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
-      const data = await response.json();
-      console.log("Datos recibidos:", data);
+      const result = await response.json();
+      console.log("Datos recibidos:", result);
 
-      if (Array.isArray(data) && data.length > 0) {
-        setTableData(data); // Guardar los datos en el estado
-        setTableHeaders(Object.keys(data[0])); // Generar encabezados dinámicos
+      // Verifica que la respuesta tenga datos y el orden de columnas
+      if (result.data && result.data.length > 0 && result.column_order) {
+        setTableData(result.data); // Guardar los datos en el estado
+        setTableHeaders(result.column_order);  // Usar el orden del backend
+        Swal.close();
       } else {
         console.warn("No se recibieron datos válidos.");
         setTableData([]);
         setTableHeaders([]);
+        Swal.close();
       }
     } catch (error) {
       console.error("Error al obtener datos:", error);
+      Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'No se encontraron datos con los filtros seleccionados.',
+            });
     }
   } else {
-    console.log("Algo falló");
-  }
-};
 
- // Estados de paginación
- const [currentPage, setCurrentPage] = useState(1);
- const [pageSize, setPageSize] = useState(10);
+     // Estados de paginación
+
 
 // Calcular los datos paginados
 const paginatedData = tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
@@ -235,7 +246,55 @@ const handlePageChange = (page, size) => {
   setCurrentPage(page);
   setPageSize(size);
 };
+    Swal.fire({
+          icon: 'info',
+          title: 'Sin Filtros',
+          text: 'Debes seleccionar Marketplace, Coleccion, Referencia y Color.',
+        });
+  }
+};
 
+const generarExcel = (event) => {
+  if (event) event.preventDefault();
+
+  if (tableData.length === 0) {
+    console.warn("No hay datos para exportar.");
+    Swal.fire({
+      icon: 'warning',
+      title: 'No hay Datos',
+      text: 'No hay datos encontrados para exportar.',
+    });
+    return;
+  }
+
+  // Crear una hoja de cálculo con los datos y respetar el orden de las columnas
+  const ws = XLSX.utils.json_to_sheet(tableData, { header: tableHeaders });
+
+  // Crear un libro de trabajo y añadir la hoja de datos
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+
+  // Generar el archivo Excel y descargarlo
+  XLSX.writeFile(wb, "Reporte_Marketplace.xlsx");
+  Swal.fire({
+                title: 'Correcto',
+                text: 'Reporte Generado Exitosamente.',
+                icon: "success",
+                confirmButtonText: 'OK'
+              });
+};
+
+
+ 
+// Calcular los datos paginados
+const paginatedData = tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+ 
+ 
+// Función para manejar el cambio de página y tamaño de página
+const handlePageChange = (page, size) => {
+  setCurrentPage(page);
+  setPageSize(size);
+};
 
 return (
   <section>
@@ -259,7 +318,7 @@ return (
               style={{ width: 270 }}
               opc="0"
               placeholder="Marketplace"
-              options={options}
+              options={marketplaces}
               onChange={setSelectedMarketplace}
               value={selectedMarketplace}
             />
@@ -282,54 +341,69 @@ return (
             />
           </div>
 
-          <div className="row-3">
-            <Select
-              opc="66"
-              style={{ width: 270 }}
-              placeholder="Referencia"
-              options={marketRef}
-              onChange={handleMarketRef}
-              value={selectedMarketRef}
-              disabled={marketRef.length < 1}
-              mode="multiple"
-            />
-            <Select
-              style={{ width: 270 }}
-              placeholder="Color"
-              options={marketCol}
-              onChange={setSelectedMarketCol}
-              value={selectedMarketCol}
-              disabled={marketCol.length < 1}
-              mode="multiple"
-            />
-            <div className="col-12 col-md-5">
-              <BotonBuscar onClick={test} />
+              <div className="row-3">
+                <Select
+                  opc="66"
+                  style={{ width: 270 }}
+                  placeholder="Referencia"
+                  options={marketRef}
+                  onChange={handleMarketRef}
+                  value={selectedMarketRef}
+                  disabled={marketRef.length < 1}
+                  mode = "multiple"
+                />
+
+              <div className="row-3">
+                <Select
+                  style={{ width: 270 }}
+                  placeholder="Color"
+                  options={marketCol}
+                  onChange={setSelectedMarketCol}
+                  value={selectedMarketCol}
+                  disabled={marketCol.length < 1}
+                  mode = "multiple"
+                />
+              </div>
+              
+              <div className="col-12 col-md-5">
+                <BotonBuscar onClick={traerTabla} />
+                
+              </div>
+                <BotonDescargar onClick={generarExcel} />
             </div>
           </div>
-        </div>
-      </form>
-    </div>
-
-    <table className="table table-striped table-hover">
-    <thead>
-            <tr>
-              {tableHeaders.map((header, index) => (
-                <th key={index} style={index === 9 ? { width: '300px' } : {}}>
-                {header}
-              </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedData.map((row, index) => (
-              <tr key={index}>
-                {Object.values(row).map((value, index) => (
-                  <td key={index}>{value}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-    </table>
+        </form>
+        {/* Aquí puedes agregar el código para renderizar los datos de la tabla */}
+      </div>
+      <table className="table table-striped table-hover">
+  <thead>
+    <tr>
+      {tableHeaders.length > 0 ? (
+        tableHeaders.map((header, index) => <th key={index}>{header}</th>)
+      ) : (
+        <th colSpan="9">
+          <TbHandClick style={{ marginRight: '10px', verticalAlign: 'middle' }} />
+          Seleccione las diferentes opciones para mostrar datos.
+        </th>
+      )}
+    </tr>
+  </thead>
+  <tbody>
+    {tableData.length > 0 ? (
+      tableData.map((row, rowIndex) => (
+        <tr key={rowIndex}>
+          {tableHeaders.map((header, colIndex) => (
+            <td key={colIndex}>{row[header]}</td>
+          ))}
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan="9">No hay datos disponibles.</td>
+      </tr>
+    )}
+  </tbody>
+</table>
 
     {/* Paginación debajo de la tabla */}
     <Pagination
