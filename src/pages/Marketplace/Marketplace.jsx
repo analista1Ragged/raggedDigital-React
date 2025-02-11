@@ -231,16 +231,10 @@ const traerTabla = async (event) => {
               title: 'Error',
               text: 'No se encontraron datos con los filtros seleccionados.',
             });
-    }
-  } else {
+    };
 
-     // Estados de paginación
-
-
-// Calcular los datos paginados
+    
 const paginatedData = tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-
-
 // Función para manejar el cambio de página y tamaño de página
 const handlePageChange = (page, size) => {
   setCurrentPage(page);
@@ -285,16 +279,121 @@ const generarExcel = (event) => {
 };
 
 
- 
+const generarReporte = async (event) => {
+  if (event) event.preventDefault();
+
+  if (
+    selectedMarketplace !== null &&
+    selectedMarketCap !== null &&
+    selectedMarketRef !== null &&
+    selectedMarketCol !== null
+  ) {
+    try {
+      Swal.fire({
+        title: "Cargando Datos",
+        text: "Por favor espera...",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      const response = await fetch(`${urlapi}/Marketplace/get-ReporteMarket`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: [
+            selectedMarketplace,
+            selectedMarketRef.toString(),
+            selectedMarketCol.toString(),
+            selectedTipoArchivo == null ? "" : selectedTipoArchivo,
+          ],
+        }),
+      });
+
+      if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+
+      const result = await response.json();
+      console.log("Datos recibidos:", result);
+
+      if (result.data && result.data.length > 0 && result.column_order) {
+        setTableData(result.data);
+        setTableHeaders(result.column_order);
+        await new Promise((resolve) => setTimeout(resolve, 500)); // Esperar actualización del estado
+        Swal.close();
+      } else {
+        console.warn("No se recibieron datos válidos.");
+        setTableData([]);
+        setTableHeaders([]);
+        Swal.fire({
+          icon: "warning",
+          title: "No hay Datos",
+          text: "No se encontraron datos con los filtros seleccionados.",
+        });
+        return; // Detener ejecución si no hay datos
+      }
+    } catch (error) {
+      console.error("Error al obtener datos:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se encontraron datos con los filtros seleccionados.",
+      });
+      return; // Detener ejecución en caso de error
+    }
+  } else {
+    Swal.fire({
+      icon: "info",
+      title: "Sin Filtros",
+      text: "Debes seleccionar Marketplace, Colección, Referencia y Color.",
+    });
+    return;
+  }
+
+  // Verificación final antes de generar el Excel
+  if (tableData.length === 0) {
+    console.warn("No hay datos para exportar.");
+    Swal.fire({
+      icon: "warning",
+      title: "No hay Datos",
+      text: "No hay datos encontrados para exportar.",
+    });
+    return;
+  }
+
+  // Crear y descargar el archivo Excel
+  const ws = XLSX.utils.json_to_sheet(tableData, { header: tableHeaders });
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+  XLSX.writeFile(wb, "Reporte_Marketplace.xlsx");
+
+  Swal.fire({
+    title: "Correcto",
+    text: "Reporte Generado Exitosamente.",
+    icon: "success",
+    confirmButtonText: "OK",
+  });
+};
+
+
+
+
+
+
 // Calcular los datos paginados
 const paginatedData = tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
- 
- 
 // Función para manejar el cambio de página y tamaño de página
 const handlePageChange = (page, size) => {
   setCurrentPage(page);
   setPageSize(size);
 };
+
+
+
+
+
 
 return (
   <section>
@@ -340,7 +439,9 @@ return (
               mode="multiple"
             />
           </div>
-
+          <div className="row-3"> 
+          <h3></h3>
+          </div>
               <div className="row-3">
                 <Select
                   opc="66"
@@ -366,16 +467,16 @@ return (
               </div>
               
               <div className="col-12 col-md-5">
-                <BotonBuscar onClick={traerTabla} />
+                {/* <BotonBuscar onClick={traerTabla} /> */}
                 
               </div>
-                <BotonDescargar onClick={generarExcel} />
+                <BotonDescargar onClick={generarReporte} />
             </div>
           </div>
         </form>
         {/* Aquí puedes agregar el código para renderizar los datos de la tabla */}
       </div>
-      <table className="table table-striped table-hover">
+      {/* <table className="table table-striped table-hover">
   <thead>
     <tr>
       {tableHeaders.length > 0 ? (
@@ -403,9 +504,8 @@ return (
       </tr>
     )}
   </tbody>
-</table>
+</table> 
 
-    {/* Paginación debajo de la tabla */}
     <Pagination
       current={currentPage}
       pageSize={pageSize}
@@ -414,7 +514,7 @@ return (
       showSizeChanger
       showQuickJumper
       pageSizeOptions={['5','10', '20', '50']}
-    />;
+    />; */}
   </section>
 );
 
