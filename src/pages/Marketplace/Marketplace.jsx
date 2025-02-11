@@ -11,6 +11,8 @@ import './Marketplace.css';
 
 const Marketplace = () => {
   // inicializar tablas
+  const [currentPage, setCurrentPage] = useState(1);
+ const [pageSize, setPageSize] = useState(10);
   const [tableData, setTableData] = useState([]); // Estado para almacenar los datos dinámicos
   const [tableHeaders, setTableHeaders] = useState([]); // Estado para los encabezados dinámicos
   // combos
@@ -233,8 +235,7 @@ const traerTabla = async (event) => {
   } else {
 
      // Estados de paginación
- const [currentPage, setCurrentPage] = useState(1);
- const [pageSize, setPageSize] = useState(10);
+
 
 // Calcular los datos paginados
 const paginatedData = tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
@@ -283,6 +284,17 @@ const generarExcel = (event) => {
               });
 };
 
+
+ 
+// Calcular los datos paginados
+const paginatedData = tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+ 
+ 
+// Función para manejar el cambio de página y tamaño de página
+const handlePageChange = (page, size) => {
+  setCurrentPage(page);
+  setPageSize(size);
+};
 
 return (
   <section>
