@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MultiSelector from '../../components/MultiSelector/MultiSelector.jsx';
 import BotonBuscar from 'src/components/BotonBuscar/BotonBuscar.jsx';
-import { Select } from 'antd'; // Importa el componente Select de Ant Design
+import { Select, Pagination } from 'antd'; // Importa el componente Select de Ant Design
 import { TbHandClick } from "react-icons/tb";
 import { urlapi } from '../../App';
 import './Marketplace.css';
@@ -222,27 +222,39 @@ const test = async (event) => {
   }
 };
 
+ // Estados de paginación
+ const [currentPage, setCurrentPage] = useState(1);
+ const [pageSize, setPageSize] = useState(10);
+
+// Calcular los datos paginados
+const paginatedData = tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
 
+// Función para manejar el cambio de página y tamaño de página
+const handlePageChange = (page, size) => {
+  setCurrentPage(page);
+  setPageSize(size);
+};
 
-  return (
-    <section>
-      <div className="ticket-table">
-        <h2>
-          <a href="/RaggedDigital/Home" className="left" title="volver">
-            <i className="bi bi-arrow-left-circle"></i>
-          </a>
-          {'  '} Reportes Marketplace
-        </h2>
-        <h3>
-          <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
-            <i className="bi bi-filter"></i>
-          </a>
-          {'  '} Filtrar por:
-        </h3>
-        <form>
-          <div className="container">
-            <div className="row-3">
+
+return (
+  <section>
+    <div className="ticket-table">
+      <h2>
+        <a href="/RaggedDigital/Home" className="left" title="volver">
+          <i className="bi bi-arrow-left-circle"></i>
+        </a>
+        {'  '} Reportes Marketplace
+      </h2>
+      <h3>
+        <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
+          <i className="bi bi-filter"></i>
+        </a>
+        {'  '} Filtrar por:
+      </h3>
+      <form>
+        <div className="container">
+          <div className="row-3">
             <Select
               style={{ width: 270 }}
               opc="0"
@@ -266,74 +278,70 @@ const test = async (event) => {
               options={marketCap}
               onChange={handleMarketCap}
               value={selectedMarketCap}
-              mode = "multiple"
+              mode="multiple"
             />
-              </div>
+          </div>
 
-              <div className="row-3">
-                <Select
-                  opc="66"
-                  style={{ width: 270 }}
-                  placeholder="Referencia"
-                  options={marketRef}
-                  onChange={handleMarketRef}
-                  value={selectedMarketRef}
-                  disabled={marketRef.length < 1}
-                  mode = "multiple"
-                />
-
-              <div className="row-3">
-                <Select
-                  style={{ width: 270 }}
-                  placeholder="Color"
-                  options={marketCol}
-                  onChange={setSelectedMarketCol}
-                  value={selectedMarketCol}
-                  disabled={marketCol.length < 1}
-                  mode = "multiple"
-                />
-              </div>
-              
-              <div className="col-12 col-md-5">
-                <BotonBuscar onClick={test} />
-              </div>
+          <div className="row-3">
+            <Select
+              opc="66"
+              style={{ width: 270 }}
+              placeholder="Referencia"
+              options={marketRef}
+              onChange={handleMarketRef}
+              value={selectedMarketRef}
+              disabled={marketRef.length < 1}
+              mode="multiple"
+            />
+            <Select
+              style={{ width: 270 }}
+              placeholder="Color"
+              options={marketCol}
+              onChange={setSelectedMarketCol}
+              value={selectedMarketCol}
+              disabled={marketCol.length < 1}
+              mode="multiple"
+            />
+            <div className="col-12 col-md-5">
+              <BotonBuscar onClick={test} />
             </div>
           </div>
-        </form>
-        {/* Aquí puedes agregar el código para renderizar los datos de la tabla */}
-      </div>
-      <table className="table table-striped table-hover">
-  <thead>
-    <tr>
-      {tableHeaders.length > 0 ? (
-        tableHeaders.map((header, index) => <th key={index}>{header}</th>)
-      ) : (
-        <th colSpan="9">
-          <TbHandClick style={{ marginRight: '10px', verticalAlign: 'middle' }} />
-          Seleccione las diferentes opciones para mostrar datos.
-        </th>
-      )}
-    </tr>
-  </thead>
-  <tbody>
-    {tableData.length > 0 ? (
-      tableData.map((row, rowIndex) => (
-        <tr key={rowIndex}>
-          {tableHeaders.map((header, colIndex) => (
-            <td key={colIndex}>{row[header]}</td>
-          ))}
-        </tr>
-      ))
-    ) : (
-      <tr>
-        <td colSpan="9">No hay datos disponibles.</td>
-      </tr>
-    )}
-  </tbody>
-</table>
+        </div>
+      </form>
+    </div>
 
-    </section>
-  );
+    <table className="table table-striped table-hover">
+    <thead>
+            <tr>
+              {tableHeaders.map((header, index) => (
+                <th key={index}>{header}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedData.map((row, index) => (
+              <tr key={index}>
+                {Object.values(row).map((value, index) => (
+                  <td key={index}>{value}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+    </table>
+
+    {/* Paginación debajo de la tabla */}
+    <Pagination
+      current={currentPage}
+      pageSize={pageSize}
+      total={tableData.length}
+      onChange={handlePageChange}
+      showSizeChanger
+      showQuickJumper
+      pageSizeOptions={['5','10', '20', '50']}
+    />;
+  </section>
+);
+
 };
 
 export default Marketplace;
