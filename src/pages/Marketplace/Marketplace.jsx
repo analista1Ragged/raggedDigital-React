@@ -31,6 +31,14 @@ const Marketplace = () => {
   // Función para obtener los datos del backend
   const fetchMarketplaces = async () => {
     try {
+      Swal.fire({
+        title: 'Cargando opciones',
+        //text: 'Por favor espera...',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
         const response = await fetch(`${urlapi}/Marketplace/get-ConsultarMarketplace`);
 
         if (!response.ok) {
@@ -40,7 +48,7 @@ const Marketplace = () => {
         // Convertir la respuesta a JSON
         const r = await response.json();
         const data = r[0]
-
+        Swal.close();
         console.log("Datos recibidos del backend:", data); // Verificar estructura
 
         if (Array.isArray(data) && data.length > 0) {
@@ -66,9 +74,10 @@ const Marketplace = () => {
           setMarketCap(caps);
           console.log("Opciones en MultiSelector después de cargar:", caps);} 
           else {console.error("Formato de datos incorrecto o vacío:", r[1]);}
-
+              
     } catch (error) {
         console.error("Error al obtener marketplaces:", error);
+        Swal.close();
     }
 };
 
@@ -114,10 +123,22 @@ useEffect(() => {
 
 // Manejar selección del marketplace
 const handleMarketCap = async (value) => {
+  Swal.fire({
+    title: 'consultando referencias...',
+    //text: 'Por favor espera...',
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
+
   console.log(value)
   setSelectedMarketCap(value)
   setMarketRef(await fetchReferencias(value));
+
+  Swal.close();
 };
+
 const fetchReferencias = async (value) => {
   try {
     const response = await fetch(`${urlapi}/Marketplace/get-ReferenciasPorColeccion`, {
@@ -147,10 +168,22 @@ const fetchReferencias = async (value) => {
 };
 
 const handleMarketRef = async (value) => {
+  Swal.fire({
+    title: 'consultando colores...',
+    //text: 'Por favor espera...',
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
+
   console.log(value)
   setSelectedMarketRef(value)
   setMarketCol(await fetchColores(value));
+
+  Swal.close();
 };
+
 const fetchColores = async (value) => {
   try {
     const response = await fetch(`${urlapi}/Marketplace/get-ColoresPorReferencia`, {
@@ -218,6 +251,12 @@ const traerTabla = async (event) => {
         setTableData(result.data); // Guardar los datos en el estado
         setTableHeaders(result.column_order);  // Usar el orden del backend
         Swal.close();
+        Swal.fire({
+          title: 'Reporte disponible',
+          text: 'Se ha habilitado el boton para descargar reporte.',
+          icon: "info",
+          confirmButtonText: 'OK'
+        });
       } else {
         console.warn("No se recibieron datos válidos.");
         setTableData([]);
@@ -233,15 +272,9 @@ const traerTabla = async (event) => {
             });
     };
 
-    
-const paginatedData = tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-// Función para manejar el cambio de página y tamaño de página
-const handlePageChange = (page, size) => {
-  setCurrentPage(page);
-  setPageSize(size);
-};
+  } else {
     Swal.fire({
-          icon: 'info',
+          icon: 'warning',
           title: 'Sin Filtros',
           text: 'Debes seleccionar Marketplace, Coleccion, Referencia y Color.',
         });
@@ -277,109 +310,6 @@ const generarExcel = (event) => {
                 confirmButtonText: 'OK'
               });
 };
-
-
-const generarReporte = async (event) => {
-  if (event) event.preventDefault();
-
-  if (
-    selectedMarketplace !== null &&
-    selectedMarketCap !== null &&
-    selectedMarketRef !== null &&
-    selectedMarketCol !== null
-  ) {
-    try {
-      Swal.fire({
-        title: "Cargando Datos",
-        text: "Por favor espera...",
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
-      });
-
-      const response = await fetch(`${urlapi}/Marketplace/get-ReporteMarket`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: [
-            selectedMarketplace,
-            selectedMarketRef.toString(),
-            selectedMarketCol.toString(),
-            selectedTipoArchivo == null ? "" : selectedTipoArchivo,
-          ],
-        }),
-      });
-
-      if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-
-      const result = await response.json();
-      console.log("Datos recibidos:", result);
-
-      if (result.data && result.data.length > 0 && result.column_order) {
-        setTableData(result.data);
-        setTableHeaders(result.column_order);
-        await new Promise((resolve) => setTimeout(resolve, 500)); // Esperar actualización del estado
-        Swal.close();
-      } else {
-        console.warn("No se recibieron datos válidos.");
-        setTableData([]);
-        setTableHeaders([]);
-        Swal.fire({
-          icon: "warning",
-          title: "No hay Datos",
-          text: "No se encontraron datos con los filtros seleccionados.",
-        });
-        return; // Detener ejecución si no hay datos
-      }
-    } catch (error) {
-      console.error("Error al obtener datos:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "No se encontraron datos con los filtros seleccionados.",
-      });
-      return; // Detener ejecución en caso de error
-    }
-  } else {
-    Swal.fire({
-      icon: "info",
-      title: "Sin Filtros",
-      text: "Debes seleccionar Marketplace, Colección, Referencia y Color.",
-    });
-    return;
-  }
-
-  // Verificación final antes de generar el Excel
-  if (tableData.length === 0) {
-    console.warn("No hay datos para exportar.");
-    Swal.fire({
-      icon: "warning",
-      title: "No hay Datos",
-      text: "No hay datos encontrados para exportar.",
-    });
-    return;
-  }
-
-  // Crear y descargar el archivo Excel
-  const ws = XLSX.utils.json_to_sheet(tableData, { header: tableHeaders });
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Reporte");
-  XLSX.writeFile(wb, "Reporte_Marketplace.xlsx");
-
-  Swal.fire({
-    title: "Correcto",
-    text: "Reporte Generado Exitosamente.",
-    icon: "success",
-    confirmButtonText: "OK",
-  });
-};
-
-
-
-
 
 
 // Calcular los datos paginados
@@ -467,10 +397,13 @@ return (
               </div>
               
               <div className="col-12 col-md-5">
-                {/* <BotonBuscar onClick={traerTabla} /> */}
+                <BotonBuscar onClick={traerTabla} /> 
                 
               </div>
-                <BotonDescargar onClick={generarReporte} />
+                <BotonDescargar 
+                  onClick={generarExcel}
+                  disabled={tableData.length < 1} 
+                />
             </div>
           </div>
         </form>
