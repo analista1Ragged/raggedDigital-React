@@ -5,29 +5,34 @@ import { useLocation } from 'react-router-dom'; // Importa el hook useLocation
 import './Header.css';
 import Logo from '../../assets/Images/logo.png'; // Importa la imagen que quieres centrar
 import TDiggital from '../../assets/Images/TDiggital.png';
+import { NominaElectronica } from 'src/pages';
+
+const manuals = {
+  ecommerce: require('../../assets/docts/MANUAL DE USABILIDAD ECOMMERCE.pdf'),
+  cartera: require('../../assets/docts/MANUAL DE USABILIDAD CARTERA.pdf'),
+  bancos: require('../../assets/docts/MANUAL DE USABILIDAD BANCOS.pdf'),
+  inventarios: require('../../assets/docts/MANUAL DE USABILIDAD INVENTARIOS.pdf'),
+  nomina: require('../../assets/docts/MANUAL DE USABILIDAD NÓMINA ELECTRONICA.pdf'),
+  pedidosVtex: require('../../assets/docts/MANUAL DE USABILIDAD PEDIDOS VTEX.pdf'),
+};
 
 const Header = () => {
   const location = useLocation(); // Hook para obtener la ruta actual
 
   // Función para obtener el enlace correcto basado en la ruta
   const getHelpLinkForPage = () => {
-    switch (location.pathname) {
-      case '/Mercadeo/Raqstyle/Inventario':
-        return '/RaggedDigital/HelpInventarios'; // Enlace para Inventario
-      case '/Mercadeo/Raqstyle/Cartera':
-        return '/RaggedDigital/HelpCartera'; // Enlace para Cartera
-      case '/TalentoHumano/Nomina/NominaElectronica':
-        return '/RaggedDigital/HelpNomina'; // Enlace para Nómina Electrónica
-      case '/ecommerce/VerCapsulas':
-          return '/RaggedDigital/HelpVerCapsulas'; // Enlace para Ver Cápsulas
-          case '/contabilidad/Bancos':
-            return '/RaggedDigital/HelpBancos'; // Enlace para Bancos
-      case '/Logistica/CanalDigital/Vtex':
-        return '/RaggedDigital/HelpPedidosVtex'; // Enlace para pedidos Vtex
-      default:
-        return null; // No mostrar el ícono si no está en una ruta especificada
-    }
+    const helpLinks = {
+      '/Mercadeo/Raqstyle/Inventario': manuals.inventarios,
+      '/Mercadeo/Raqstyle/Cartera': manuals.cartera,
+      '/TalentoHumano/Nomina/NominaElectronica': manuals.nomina,
+      '/ecommerce/VerCapsulas': manuals.ecommerce,
+      '/contabilidad/Bancos': manuals.bancos,
+      '/Logistica/CanalDigital/Vtex': manuals.pedidosVtex,
+    };
+  
+    return helpLinks[location.pathname] || null;
   };
+  
 
   const helpLink = getHelpLinkForPage();
 
@@ -42,7 +47,7 @@ const Header = () => {
             />
           </a>
         )}
-        <a href="https://serverrgd.eastus.cloudapp.azure.com:8084/" target="_blank" rel="noopener noreferrer">
+        <a href="https://greggo.ragged.com.co/" target="_blank" rel="noopener noreferrer">
           <RiCustomerServiceFill 
             className="top-bar-icon"
             title='Mesa de Ayuda'

@@ -15,6 +15,8 @@ import { RiCustomerServiceFill } from "react-icons/ri";
 import { LuBadgeHelp } from "react-icons/lu"; 
 import Swal from 'sweetalert2';
 
+const manualUsabilidad = require('../../assets/docts/MANUAL DE USABILIDAD RAGGED DIGITAL.pdf');
+
 const Login = (props) => {
     const [usuario, actualizarNombre] = useState("");
     const [contrasena, actualizarContrasena] = useState("");
@@ -120,7 +122,7 @@ const Login = (props) => {
                             title='Mesa de Ayuda'
                         />
                     </a>
-                    <a href='/RaggedDigital/ManualDeAcceso' target="_blank" rel="noopener noreferrer">
+                    <a href={manualUsabilidad} target="_blank" rel="noopener noreferrer">
                         <LuBadgeHelp 
                             className="top-bar-icons"
                             title='Manual de Usabilidad'
