@@ -74,6 +74,19 @@ const Marketplace = () => {
           setMarketCap(caps);
           console.log("Opciones en MultiSelector después de cargar:", caps);} 
           else {console.error("Formato de datos incorrecto o vacío:", r[1]);}
+
+          console.log("caps:", r[2]);
+        if (Array.isArray(r[2]) && r[2].length > 0) {
+            const arch = r[2]
+                .filter(item => item?.ID) // Filtrar solo los que tienen nombre
+                .map(item => ({
+                    label: item.ARCHIVO,
+                    value: item.ID
+                }));
+                console.log("tipos arch:", arch);
+          setTiposArchivo(arch);
+          console.log("Opciones en MultiSelector después de cargar:", arch);} 
+          else {console.error("Formato de datos incorrecto o vacío:", r[2]);}
               
     } catch (error) {
         console.error("Error al obtener marketplaces:", error);
@@ -111,15 +124,6 @@ const fetchTipoArchivo = async () => {
   }
 };
 
-useEffect(() => {
-  if (selectedMarketplace === "Falabella") {
-      fetchTipoArchivo().then(setTiposArchivo);
-  } else {
-      setTiposArchivo([]); // Vaciar opciones si se selecciona otro marketplace
-      setSelectedTipoArchivo(null); // Resetear selección
-  }
-}, [selectedMarketplace]);
-
 
 // Manejar selección del marketplace
 const handleMarketCap = async (value) => {
@@ -146,7 +150,7 @@ const fetchReferencias = async (value) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({cap : value.toString()}),
+      body: JSON.stringify({cap : value.toString(), tipo : selectedTipoArchivo == null ? "" : selectedTipoArchivo}),
     });
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
@@ -345,20 +349,12 @@ return (
           <div className="row-3">
             <Select
               style={{ width: 270 }}
-              opc="0"
               placeholder="Marketplace"
               options={marketplaces}
               onChange={setSelectedMarketplace}
               value={selectedMarketplace}
             />
-            <Select
-              style={{ width: 270 }}
-              placeholder="Tipo de archivo"
-              options={tiposArchivo}
-              onChange={setSelectedTipoArchivo}
-              value={selectedTipoArchivo}
-              disabled={selectedMarketplace !== "Falabella"} 
-            />
+            
             <Select
               style={{ width: 270 }}
               opc="66"
@@ -367,6 +363,14 @@ return (
               onChange={handleMarketCap}
               value={selectedMarketCap}
               mode="multiple"
+            />
+            <Select
+              style={{ width: 270 }}
+              placeholder="Tipo de archivo"
+              options={tiposArchivo}
+              onChange={setSelectedTipoArchivo}
+              value={selectedTipoArchivo}
+              disabled={selectedMarketplace !== "Comercial.Sp_Consultar_Marketplace_Falabella"} 
             />
           </div>
           <div className="row-3"> 
