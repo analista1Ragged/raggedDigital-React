@@ -181,7 +181,7 @@ function App() {
             </div>
           } />
         } />
-        <Route path='/cartera/PagoProveedores' element={
+        <Route path='/Cartera/Proveedores' element={
           <PrivateRoute element={
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
               <PagoProveedores />

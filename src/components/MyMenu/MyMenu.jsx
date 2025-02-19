@@ -65,6 +65,24 @@ const menuItems = [
             icon: <TbFaceIdError />,
             path: "/Mercadeo/Tiendas/Inconsistencias",
           },
+          {
+            key: '3.1.2',
+            title: "Referencias y plus",
+            icon: <ImBarcode />,
+            path: "/Maestros/Referencias",
+          },
+          {
+            key: '3.1.3',
+            title: "Costos",
+            icon: <BiDollarCircle />,
+            path: "/Maestros/Costos",
+          },
+          {
+            key: '3.1.4',
+            title: "Escalas de precios",
+            icon: <PiEscalatorUpBold />,
+            path: "/Maestros/EscalasPrecios",
+          },
         ],
       },
       {
@@ -250,31 +268,6 @@ const menuItems = [
     title: "Manufactura",
     icon: <IoCubeOutline />,
     path: "/ecommerce/Ragged",
-  },
-  {
-    key: "10",
-    title: "Maestros Mahalo",
-    icon: <BsFolderPlus />,
-    items: [
-      {
-        key: "10.1",
-        title: "Referencias y plus",
-        icon: <ImBarcode />,
-        path: "/Maestros/Referencias",
-      },
-      {
-        key: "10.2",
-        title: "Costos",
-        icon: <BiDollarCircle />,
-        path: "/Maestros/Costos",
-      },
-      {
-        key: "10.3",
-        title: "Escalas de precios",
-        icon: <PiEscalatorUpBold />,
-        path: "/Maestros/EscalasPrecios",
-      },
-    ],
   },
   {
     key: "96",
