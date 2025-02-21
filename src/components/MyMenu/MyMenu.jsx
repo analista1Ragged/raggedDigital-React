@@ -5,15 +5,15 @@ import "antd/dist/reset.css";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { FaHome, FaChartBar, FaShoppingCart, FaSignOutAlt, FaBars, FaCalculator, FaMoneyBill, FaCheck,  FaUsers, FaStore, FaRegHandshake, FaDonate} from "react-icons/fa";
 import { AiOutlineDollar, AiOutlineAppstore, AiOutlineEllipsis, AiOutlineHome, AiOutlineShrink, AiOutlineSearch } from "react-icons/ai";
-import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard } from "react-icons/io5";
+import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp, IoReceiptOutline, IoClipboardSharp, IoIdCard, IoWalletSharp } from "react-icons/io5";
 import { PiEyeSlashFill, PiPasswordFill, PiUsersFill, PiEscalatorUpBold} from "react-icons/pi";
 import { ImBarcode } from "react-icons/im";
 import { BiDollarCircle } from "react-icons/bi";
 import { MdOutlinePostAdd } from "react-icons/md";
-import { TbReportSearch } from "react-icons/tb";
-import { BsFolderPlus, BsClipboard2DataFill } from "react-icons/bs";
+import { TbReportSearch, TbFaceIdError, TbUserDollar} from "react-icons/tb";
+import { BsFolderPlus, BsClipboard2DataFill, BsPersonRaisedHand } from "react-icons/bs";
 import { HiCreditCard } from "react-icons/hi2";
-import { FaUsersRays } from "react-icons/fa6";
+import { FaUsersRays, FaMoneyCheckDollar } from "react-icons/fa6";
 import { BsVimeo } from "react-icons/bs";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -58,7 +58,32 @@ const menuItems = [
         key: "3.1",
         title: "Tiendas",
         icon: <AiOutlineAppstore />,
-        path: "/ecommerce/Ragged",
+        items: [
+          {
+            key: '3.1.1',
+            title: 'Logs terceros',
+            icon: <TbFaceIdError />,
+            path: "/Mercadeo/Tiendas/Inconsistencias",
+          },
+          {
+            key: '3.1.2',
+            title: "Referencias y plus",
+            icon: <ImBarcode />,
+            path: "/Maestros/Referencias",
+          },
+          {
+            key: '3.1.3',
+            title: "Costos",
+            icon: <BiDollarCircle />,
+            path: "/Maestros/Costos",
+          },
+          {
+            key: '3.1.4',
+            title: "Escalas de precios",
+            icon: <PiEscalatorUpBold />,
+            path: "/Maestros/EscalasPrecios",
+          },
+        ],
       },
       {
         key: "3.2",
@@ -186,15 +211,35 @@ const menuItems = [
       },
       {
         key: "7.2",
-        title: "Bancos",
+        title: "Contabilidad",
         icon: <AiOutlineDollar />,
-        path: "/contabilidad/Bancos",
+        items: [
+          {
+            key: '7.2.1',
+            title: 'Bancos',
+            icon: <FaMoneyCheckDollar />,
+            path: "/Contabilidad/Bancos",
+          },
+          {
+            key: '7.2.2',
+            title: 'Exógena',
+            icon: <TbReportSearch />,
+            path: "/Contabilidad/Exogena",
+          },
+        ],
       },
       {
         key: "7.3",
-        title: "Exógena",
-        icon: <TbReportSearch />,
-        path: "/contabilidad/Exogena",
+        title: "Cartera",
+        icon: <IoWalletSharp />,
+        items: [
+          {
+            key: '7.3.1',
+            title: 'Pago Proveedores',
+            icon: <TbUserDollar />,
+            path: "/Cartera/Proveedores",
+          },
+        ],
       },
     ],
   },
@@ -223,31 +268,6 @@ const menuItems = [
     title: "Manufactura",
     icon: <IoCubeOutline />,
     path: "/ecommerce/Ragged",
-  },
-  {
-    key: "10",
-    title: "Maestros Mahalo",
-    icon: <BsFolderPlus />,
-    items: [
-      {
-        key: "10.1",
-        title: "Referencias y plus",
-        icon: <ImBarcode />,
-        path: "/Maestros/Referencias",
-      },
-      {
-        key: "10.2",
-        title: "Costos",
-        icon: <BiDollarCircle />,
-        path: "/Maestros/Costos",
-      },
-      {
-        key: "10.3",
-        title: "Escalas de precios",
-        icon: <PiEscalatorUpBold />,
-        path: "/Maestros/EscalasPrecios",
-      },
-    ],
   },
   {
     key: "96",

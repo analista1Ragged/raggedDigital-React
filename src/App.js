@@ -26,7 +26,9 @@ import {
   ReporteDane,
   Marketplace,
   CupoCliente,
-  InfoExogena
+  InfoExogena,
+  LogsTerceros,
+  PagoProveedores
 } from './pages';
 
 import {
@@ -179,6 +181,13 @@ function App() {
             </div>
           } />
         } />
+        <Route path='/Cartera/Proveedores' element={
+          <PrivateRoute element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <PagoProveedores />
+            </div>
+          } />
+        } />
         <Route path='/Settings' element={
           <PrivateRoute element={
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
@@ -270,18 +279,12 @@ function App() {
             <EscalasPrecios />
           </div>
         } />
-      
-        
-        <Route 
-  path="/ManualDeAcceso" 
-  element={
-    <div className={!navVisible ? "page" : "page page-with-navbar"}>
-      src={manualUsabilidad}
+        <Route path='/Mercadeo/Tiendas/Inconsistencias' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <LogsTerceros />
+          </div>
+        } />
 
-
-    </div>
-  }
-/>
 
       </Routes>
       
