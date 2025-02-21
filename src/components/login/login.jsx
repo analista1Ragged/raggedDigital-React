@@ -90,9 +90,9 @@ const Login = (props) => {
                     <div>
                         <img src={TDiggital} alt="TDiggital" className="TDiggital"/>
                     </div>
-                    <h2>¡Bienvenido a Ragged Digital!</h2>
+                    <h2>¡Bienvenid@ a Ragged Digital!</h2>
                     <CampoTexto
-                        titulo="Usuario"
+                        titulo="Usuario:"
                         placeholder="Ingresar Usuario:"
                         required
                         valor={usuario}
@@ -103,7 +103,7 @@ const Login = (props) => {
                         autoComplete="username"
                     />
                     <CampoContraseña
-                        titulo="Contraseña"
+                        titulo="Contraseña:"
                         placeholder="Ingresar Contraseña:"
                         required
                         valor={contrasena}

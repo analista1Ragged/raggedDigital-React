@@ -2,26 +2,69 @@ import React, { useEffect, useState } from "react";
 import "./LogsTerceros.css";
 import { GiClick } from "react-icons/gi";
 import { urlapi } from '../../App.js';
+import Swal from "sweetalert2";
 
-const LogsTerceros = () => {
+  const LogsTerceros = () => {
   const [clientes, setClientes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [pagoData, setPagoData] = useState([]);
 
-  useEffect(() => {
-    fetch(`$urlapi}/api/inconsistencias-clientes`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(" Datos recibidos en React:", data); // Verifica la respuesta
-        if (data.error) {
-          console.error(data.error);
-          setClientes([]);
-        } else {
-          setClientes(data);
+   // Función para obtener los datos del backend
+    const fetchInconsistenciasClientes = async () => {
+      setLoading(true);
+      Swal.fire({
+        title: "Cargando datos...",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+  
+      try {
+        const response = await fetch(urlapi + "/api/get-inconsistencias-clientes");
+
+        const text = await response.text();
+  
+        console.log("🔍 Respuesta cruda del backend:", text);
+  
+        if (!response.ok) {
+          throw new Error(`Error: ${text}`);
         }
-      })
-      .catch((error) => console.error("Error al obtener datos:", error))
-      .finally(() => setLoading(false));
-  }, []);
+  
+        const data = JSON.parse(text);
+        if (!Array.isArray(data)) {
+          throw new Error("La respuesta del backend no es un array.");
+        }
+  
+        const cleanedData = data.map((row) => ({
+          Bodega: row[2] || "N/A",
+          Cédula: row[3] || "N/A",
+          Error: row[4] || "N/A",
+          Tipo_Ident: row[5] || "N/A",
+          Razón_Social: row[7] || "N/A",
+          Apellido_1: row[11] || "N/A",
+          Apellido_2: row[12] || "N/A",
+          Nombres: row[9] || "N/A",
+        }));
+  
+        console.log("✅ Datos procesados correctamente:", cleanedData);
+        setPagoData(cleanedData);
+      } catch (error) {
+        console.error("❌ Error al obtener los pagos:", error.message);
+        Swal.fire({
+          icon: "error",
+          title: "Error al cargar datos",
+          text: error.message || "No se pudo obtener la información.",
+        });
+      } finally {
+        setLoading(false);
+        Swal.close();
+      }
+    };
+
+    useEffect(() => {
+      fetchInconsistenciasClientes();
+    }, []);
 
   return (
     <section>
@@ -52,16 +95,21 @@ const LogsTerceros = () => {
                 <tr>
                   <td colSpan="8">Cargando datos...</td>
                 </tr>
-              ) : clientes.length === 0 ? (
+              ) : pagoData.length === 0 ? (
                 <tr>
                   <td colSpan="8">No se encontraron inconsistencias</td>
                 </tr>
-              ) : (
-                clientes.map((cliente, index) => (
+            ) : (
+                pagoData.map((cliente, index) => (
                   <tr key={index}>
-                    {cliente.map((dato, i) => (
-                      <td key={i}>{dato || "N/A"}</td>
-                    ))}
+                    <td>{cliente.Bodega}</td>
+                    <td>{cliente.Cédula}</td>
+                    <td>{cliente.Error}</td>
+                    <td>{cliente.Tipo_Ident}</td>
+                    <td>{cliente.Razón_Social}</td>
+                    <td>{cliente.Apellido_1}</td>
+                    <td>{cliente.Apellido_2}</td>
+                    <td>{cliente.Nombres}</td>
                   </tr>
                 ))
               )}

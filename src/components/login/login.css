@@ -2,18 +2,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 5%; /* Elimina el margen superior cambiándolo a 0 */
+    margin: 0 7%; /* Elimina el margen superior cambiándolo a 0 */
     flex-wrap: wrap; /* Permite que los elementos se envuelvan en líneas nuevas */
 }
 
 
 .formulario form {
     width: 100%;
+    max-height: 800px;
     max-width: 600px; /* Puedes ajustar este valor según sea necesario */
     background-color: #f7f7f7;
     box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.25); /* Corrige el valor del canal alfa */
     border-radius: 20px;
     padding: 8px 5%;
+    
 }
 
 .formulario h2 {
@@ -81,7 +83,7 @@
 }
 
 .image-container img {
-    width: 100%;
+    width: 90%;
     border-radius: 20px;
 }
 

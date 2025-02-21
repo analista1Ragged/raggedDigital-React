@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from "react";
-import Swal from "sweetalert2"; // Importar SweetAlert
+import Swal from "sweetalert2";
+import { Pagination } from "antd";
 import "./PagoProveedores.css";
 import { GiClick } from "react-icons/gi";
-import { urlapi } from '../../App.js';
+import { urlapi } from "../../App.js";
 
 const PagoProveedores = () => {
   const [pagoData, setPagoData] = useState([]);
-  const [loading, setLoading] = useState(false); // Estado para controlar la carga
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10); // Estado para la paginación
+
+  // Función para formatear la fecha a YYYY-MM-DD
+  const formatFecha = (fecha) => {
+    if (!fecha) return "N/A";
+    const date = new Date(fecha);
+    if (isNaN(date)) return "N/A"; // Si no es una fecha válida, retorna "N/A"
+    return date.toISOString().split("T")[0]; // Extrae solo la parte de la fecha
+  };
 
   // Función para obtener los datos del backend
   const fetchPagoProveedores = async () => {
-    setLoading(true); // Activar estado de carga
+    setLoading(true);
     Swal.fire({
       title: "Cargando datos...",
       allowOutsideClick: false,
@@ -21,7 +32,7 @@ const PagoProveedores = () => {
 
     try {
       const response = await fetch(urlapi + "/api/get-pago-proveedores");
-      const text = await response.text(); 
+      const text = await response.text();
 
       console.log("🔍 Respuesta cruda del backend:", text);
 
@@ -41,7 +52,7 @@ const PagoProveedores = () => {
         RazonSocialMovimiento: row[5] || "N/A",
         DctoSiesa: row[7] || "N/A",
         DctoProveedor: row[11] || "N/A",
-        Fecha: row[8] || "N/A",
+        Fecha: formatFecha(row[8]), // Se formatea la fecha aquí
         Pago: row[12] || "N/A",
         DB: row[9] || "N/A",
         CR: row[10] || "N/A",
@@ -49,7 +60,6 @@ const PagoProveedores = () => {
 
       console.log("✅ Datos procesados correctamente:", cleanedData);
       setPagoData(cleanedData);
-
     } catch (error) {
       console.error("❌ Error al obtener los pagos:", error.message);
       Swal.fire({
@@ -58,15 +68,25 @@ const PagoProveedores = () => {
         text: error.message || "No se pudo obtener la información.",
       });
     } finally {
-      setLoading(false); // Finalizar estado de carga
-      Swal.close(); // Cerrar el Swal de carga
+      setLoading(false);
+      Swal.close();
     }
   };
 
-  // Se ejecuta al montar el componente
   useEffect(() => {
     fetchPagoProveedores();
   }, []);
+
+  // Manejar cambio de página
+const handlePageChange = (page, pageSize) => {
+  setCurrentPage(page);
+  setItemsPerPage(pageSize); // Actualizar el tamaño de página
+};
+
+// Calcular los datos de la página actual
+const startIndex = (currentPage - 1) * itemsPerPage;
+const endIndex = startIndex + itemsPerPage;
+const currentData = pagoData.slice(startIndex, endIndex);
 
   return (
     <section>
@@ -77,6 +97,12 @@ const PagoProveedores = () => {
           </a>
           {"  "} Pago a Proveedores
         </h2>
+        <h3>
+      <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
+        <i className="bi bi-filter"></i>
+      </a>
+      {'  '} Filtrar por: 
+    </h3>
 
         <div className="tabla-container" style={{ marginTop: "40px" }}>
           <table className="table">
@@ -95,15 +121,15 @@ const PagoProveedores = () => {
               </tr>
             </thead>
             <tbody>
-              {pagoData.length === 0 ? (
+              {currentData.length === 0 ? (
                 <tr>
                   <td colSpan="10">
                     <GiClick style={{ marginRight: "10px", verticalAlign: "middle" }} />
-                    No se encontraron registros.
+                    Cargando Información...
                   </td>
                 </tr>
               ) : (
-                pagoData.map((pago, index) => (
+                currentData.map((pago, index) => (
                   <tr key={index}>
                     <td>{pago.NitTercero}</td>
                     <td>{pago.RazonSocialDocumento}</td>
@@ -121,10 +147,25 @@ const PagoProveedores = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Paginación */}
+        <div style={{ textAlign: "left", marginTop: "20px" }}>
+        <Pagination
+          current={currentPage}
+          total={pagoData.length}
+          pageSize={itemsPerPage} // Usar el estado actualizado
+          onChange={handlePageChange} // Llamar la función con la nueva firma
+          pageSizeOptions={['10', '20', '30', '50', '100']}
+          showSizeChanger
+          showQuickJumper
+        />
+        </div>
       </div>
     </section>
   );
 };
 
 export default PagoProveedores;
+
+
 

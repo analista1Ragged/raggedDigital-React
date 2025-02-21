@@ -1,0 +1,10 @@
+th, td {
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  }
+  
+  th:nth-child(2), td:nth-child(2),
+  th:nth-child(4), td:nth-child(4) {
+    max-width: 300px; /* Ajusta el ancho según sea necesario */
+    text-overflow: ellipsis; /* Si el texto es muy largo, lo corta con "..." */
+  }
+  
