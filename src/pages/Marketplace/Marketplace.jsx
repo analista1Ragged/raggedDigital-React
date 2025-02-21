@@ -75,18 +75,6 @@ const Marketplace = () => {
           console.log("Opciones en MultiSelector después de cargar:", caps);} 
           else {console.error("Formato de datos incorrecto o vacío:", r[1]);}
 
-          console.log("caps:", r[2]);
-        if (Array.isArray(r[2]) && r[2].length > 0) {
-            const arch = r[2]
-                .filter(item => item?.ID) // Filtrar solo los que tienen nombre
-                .map(item => ({
-                    label: item.ARCHIVO,
-                    value: item.ID
-                }));
-                console.log("tipos arch:", arch);
-          setTiposArchivo(arch);
-          console.log("Opciones en MultiSelector después de cargar:", arch);} 
-          else {console.error("Formato de datos incorrecto o vacío:", r[2]);}
               
     } catch (error) {
         console.error("Error al obtener marketplaces:", error);
@@ -102,9 +90,16 @@ useEffect(() => {
 }, []);
 
 // 🔹 Obtener tipos de archivo desde el backend
-const fetchTipoArchivo = async () => {
+const fetchTipoArchivo = async (value) => {
   try {
-    const response = await fetch(`${urlapi}/Marketplace/get-ConsultarTipoArchivo`);
+    const response = await fetch(`${urlapi}/Marketplace/get-ConsultarTipoArchivo`,{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({cap : value.toString()}),
+    });
+
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
     const data = await response.json();
@@ -112,8 +107,8 @@ const fetchTipoArchivo = async () => {
 
     if (Array.isArray(data) && data.length > 0) {
       return data
-        .filter(item => item?.nombre)
-        .map(item => ({ label: item.nombre, value: item.nombre }));
+        .filter(item => item?.ID)
+        .map(item => ({ label: item.ARCHIVO, value: item.ID }));
     } else {
       console.error("Formato incorrecto o vacío:", data);
       return [];
@@ -138,8 +133,14 @@ const handleMarketCap = async (value) => {
 
   console.log(value)
   setSelectedMarketCap(value)
-  setMarketRef(await fetchReferencias(value));
 
+  if(selectedMarketplace == "Comercial.Sp_Consultar_Marketplace_Falabella"){
+    console.log("Comercial.Sp_Consultar_Marketplace_Falabella");
+    setTiposArchivo(await fetchTipoArchivo(value));
+  } else {
+    setMarketRef(await fetchReferencias(value));
+  }
+  
   Swal.close();
 };
 
@@ -354,7 +355,6 @@ return (
               onChange={setSelectedMarketplace}
               value={selectedMarketplace}
             />
-            
             <Select
               style={{ width: 270 }}
               opc="66"
