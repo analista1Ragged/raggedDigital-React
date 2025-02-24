@@ -41,9 +41,9 @@ import Swal from "sweetalert2";
           Cédula: row[3] || "N/A",
           Error: row[4] || "N/A",
           Tipo_Ident: row[5] || "N/A",
-          Razón_Social: row[7] || "N/A",
-          Apellido_1: row[11] || "N/A",
-          Apellido_2: row[12] || "N/A",
+          Razón_Social: row[6] || "N/A",
+          Apellido_1: row[7] || "N/A",
+          Apellido_2: row[8] || "N/A",
           Nombres: row[9] || "N/A",
         }));
   
@@ -122,4 +122,5 @@ import Swal from "sweetalert2";
 };
 
 export default LogsTerceros;
+
 

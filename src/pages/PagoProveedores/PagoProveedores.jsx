@@ -4,6 +4,9 @@ import { Pagination } from "antd";
 import "./PagoProveedores.css";
 import { GiClick } from "react-icons/gi";
 import { urlapi } from "../../App.js";
+import BotonDescargar from 'src/components/BotonDescargar/BotonDescargar.jsx';
+import * as XLSX from "xlsx";
+
 
 const PagoProveedores = () => {
   const [pagoData, setPagoData] = useState([]);
@@ -88,6 +91,23 @@ const startIndex = (currentPage - 1) * itemsPerPage;
 const endIndex = startIndex + itemsPerPage;
 const currentData = pagoData.slice(startIndex, endIndex);
 
+const handleExportarExcel = () => {
+  if (pagoData.length === 0) {
+    Swal.fire({
+      icon: "warning",
+      title: "No hay datos para exportar",
+    });
+    return;
+  }
+
+  const ws = XLSX.utils.json_to_sheet(pagoData);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Pagos Proveedores");
+
+  // Generar el archivo y descargarlo
+  XLSX.writeFile(wb, "PagoProveedores.xlsx");
+};
+
   return (
     <section>
       <div className="ticket-table">
@@ -95,7 +115,8 @@ const currentData = pagoData.slice(startIndex, endIndex);
           <a href="/RaggedDigital/Home" className="left" title="volver">
             <i className="bi bi-arrow-left-circle"></i>
           </a>
-          {"  "} Pago a Proveedores
+          {"  "} Pago a Proveedores {"  "}{"  "}
+          <BotonDescargar onClick={handleExportarExcel}>Exportar Excel</BotonDescargar>
         </h2>
         <h3>
       <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">

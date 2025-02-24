@@ -8,7 +8,7 @@ import { TbHandClick } from "react-icons/tb";
 import { urlapi } from '../../App';
 import Swal from 'sweetalert2';
 import './Marketplace.css';
-
+ 
 const Marketplace = () => {
   // inicializar tablas
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,12 +22,12 @@ const Marketplace = () => {
   const [marketCol, setMarketCol] = useState([]);
   const [tiposArchivo, setTiposArchivo] = useState([]);
   // seleccionados
-  const [selectedMarketplace, setSelectedMarketplace] = useState(null); 
-  const [selectedTipoArchivo, setSelectedTipoArchivo] = useState(null); 
-  const [selectedMarketCap, setSelectedMarketCap] = useState(null); 
-  const [selectedMarketRef, setSelectedMarketRef] = useState(null); 
-  const [selectedMarketCol, setSelectedMarketCol] = useState(null); 
-  
+  const [selectedMarketplace, setSelectedMarketplace] = useState(null);
+  const [selectedTipoArchivo, setSelectedTipoArchivo] = useState(null);
+  const [selectedMarketCap, setSelectedMarketCap] = useState(null);
+  const [selectedMarketRef, setSelectedMarketRef] = useState(null);
+  const [selectedMarketCol, setSelectedMarketCol] = useState(null);
+ 
   // Función para obtener los datos del backend
   const fetchMarketplaces = async () => {
     try {
@@ -40,17 +40,17 @@ const Marketplace = () => {
         },
       });
         const response = await fetch(`${urlapi}/Marketplace/get-ConsultarMarketplace`);
-
+ 
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
         }
-
+ 
         // Convertir la respuesta a JSON
         const r = await response.json();
         const data = r[0]
         Swal.close();
         console.log("Datos recibidos del backend:", data); // Verificar estructura
-
+ 
         if (Array.isArray(data) && data.length > 0) {
           const options = data
               .filter(item => item?.Descripcion) // Filtrar solo los que tienen nombre
@@ -59,9 +59,9 @@ const Marketplace = () => {
                   value: item.ProcedimientoAlmacenado
               }));
           setMarketplaces(options);
-          console.log("Opciones en MultiSelector después de cargar:", options);} 
+          console.log("Opciones en MultiSelector después de cargar:", options);}
           else {console.error("Formato de datos incorrecto o vacío:", data);}
-
+ 
         console.log("caps:", r[1]);
         if (Array.isArray(r[1]) && r[1].length > 0) {
             const caps = r[1]
@@ -72,23 +72,23 @@ const Marketplace = () => {
                 }));
                 console.log("caps:", caps);
           setMarketCap(caps);
-          console.log("Opciones en MultiSelector después de cargar:", caps);} 
+          console.log("Opciones en MultiSelector después de cargar:", caps);}
           else {console.error("Formato de datos incorrecto o vacío:", r[1]);}
-
-              
+ 
+             
     } catch (error) {
         console.error("Error al obtener marketplaces:", error);
         Swal.close();
     }
 };
-
-
+ 
+ 
 // Cargar datos cuando el componente se monta
 useEffect(() => {
   fetchMarketplaces();
   console.log(selectedMarketCap,typeof(selectedMarketCap));
 }, []);
-
+ 
 // 🔹 Obtener tipos de archivo desde el backend
 const fetchTipoArchivo = async (value) => {
   try {
@@ -99,12 +99,12 @@ const fetchTipoArchivo = async (value) => {
       },
       body: JSON.stringify({cap : value.toString()}),
     });
-
+ 
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-
+ 
     const data = await response.json();
     console.log("Tipos de archivo recibidos:", data);
-
+ 
     if (Array.isArray(data) && data.length > 0) {
       return data
         .filter(item => item?.ID)
@@ -118,8 +118,8 @@ const fetchTipoArchivo = async (value) => {
     return [];
   }
 };
-
-
+ 
+ 
 // Manejar selección del marketplace
 const handleMarketCap = async (value) => {
   Swal.fire({
@@ -130,20 +130,20 @@ const handleMarketCap = async (value) => {
       Swal.showLoading();
     },
   });
-
+ 
   console.log(value)
   setSelectedMarketCap(value)
-
+ 
   if(selectedMarketplace == "Comercial.Sp_Consultar_Marketplace_Falabella"){
     console.log("Comercial.Sp_Consultar_Marketplace_Falabella");
     setTiposArchivo(await fetchTipoArchivo(value));
   } else {
     setMarketRef(await fetchReferencias(value));
   }
-  
+ 
   Swal.close();
 };
-
+ 
 const fetchReferencias = async (value) => {
   try {
     const response = await fetch(`${urlapi}/Marketplace/get-ReferenciasPorColeccion`, {
@@ -154,10 +154,10 @@ const fetchReferencias = async (value) => {
       body: JSON.stringify({cap : value.toString(), tipo : selectedTipoArchivo == null ? "" : selectedTipoArchivo}),
     });
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-
+ 
     const data = await response.json();
     console.log("Tipos de archivo recibidos:", data);
-
+ 
     if (Array.isArray(data) && data.length > 0) {
       return data
         .filter(item => item?.f120_referencia)
@@ -171,7 +171,7 @@ const fetchReferencias = async (value) => {
     return [];
   }
 };
-
+ 
 const handleMarketRef = async (value) => {
   Swal.fire({
     title: 'consultando colores...',
@@ -181,14 +181,14 @@ const handleMarketRef = async (value) => {
       Swal.showLoading();
     },
   });
-
+ 
   console.log(value)
   setSelectedMarketRef(value)
   setMarketCol(await fetchColores(value));
-
+ 
   Swal.close();
 };
-
+ 
 const fetchColores = async (value) => {
   try {
     const response = await fetch(`${urlapi}/Marketplace/get-ColoresPorReferencia`, {
@@ -199,10 +199,10 @@ const fetchColores = async (value) => {
       body: JSON.stringify({ref : value.toString()}),
     });
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-
+ 
     const data = await response.json();
     console.log("Tipos de archivo recibidos:", data);
-
+ 
     if (Array.isArray(data) && data.length > 0) {
       return data
         .filter(item => item?.F117_ID)
@@ -216,11 +216,11 @@ const fetchColores = async (value) => {
     return [];
   }
 };
-
+ 
 const traerTabla = async (event) => {
   if (event) event.preventDefault();
   console.log(selectedMarketplace, selectedTipoArchivo, selectedMarketCap, selectedMarketRef, selectedMarketCol);
-
+ 
   if (selectedMarketplace !== null && selectedMarketCap !== null && selectedMarketRef !== null && selectedMarketCol !== null) {
     try {
       Swal.fire({
@@ -245,12 +245,12 @@ const traerTabla = async (event) => {
           ],
         }),
       });
-
+ 
       if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-
+ 
       const result = await response.json();
       console.log("Datos recibidos:", result);
-
+ 
       // Verifica que la respuesta tenga datos y el orden de columnas
       if (result.data && result.data.length > 0 && result.column_order) {
         setTableData(result.data); // Guardar los datos en el estado
@@ -276,7 +276,7 @@ const traerTabla = async (event) => {
               text: 'No se encontraron datos con los filtros seleccionados.',
             });
     };
-
+ 
   } else {
     Swal.fire({
           icon: 'warning',
@@ -285,10 +285,10 @@ const traerTabla = async (event) => {
         });
   }
 };
-
+ 
 const generarExcel = (event) => {
   if (event) event.preventDefault();
-
+ 
   if (tableData.length === 0) {
     console.warn("No hay datos para exportar.");
     Swal.fire({
@@ -298,14 +298,14 @@ const generarExcel = (event) => {
     });
     return;
   }
-
+ 
   // Crear una hoja de cálculo con los datos y respetar el orden de las columnas
   const ws = XLSX.utils.json_to_sheet(tableData, { header: tableHeaders });
-
+ 
   // Crear un libro de trabajo y añadir la hoja de datos
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Reporte");
-
+ 
   // Generar el archivo Excel y descargarlo
   XLSX.writeFile(wb, "Reporte_Marketplace.xlsx");
   Swal.fire({
@@ -315,8 +315,8 @@ const generarExcel = (event) => {
                 confirmButtonText: 'OK'
               });
 };
-
-
+ 
+ 
 // Calcular los datos paginados
 const paginatedData = tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 // Función para manejar el cambio de página y tamaño de página
@@ -324,12 +324,12 @@ const handlePageChange = (page, size) => {
   setCurrentPage(page);
   setPageSize(size);
 };
-
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
+ 
 return (
   <section>
     <div className="ticket-table">
@@ -370,10 +370,10 @@ return (
               options={tiposArchivo}
               onChange={setSelectedTipoArchivo}
               value={selectedTipoArchivo}
-              disabled={selectedMarketplace !== "Comercial.Sp_Consultar_Marketplace_Falabella"} 
+              disabled={selectedMarketplace !== "Comercial.Sp_Consultar_Marketplace_Falabella"}
             />
           </div>
-          <div className="row-3"> 
+          <div className="row-3">
           <h3></h3>
           </div>
               <div className="row-3">
@@ -387,7 +387,7 @@ return (
                   disabled={marketRef.length < 1}
                   mode = "multiple"
                 />
-
+ 
               <div className="row-3">
                 <Select
                   style={{ width: 270 }}
@@ -399,14 +399,14 @@ return (
                   mode = "multiple"
                 />
               </div>
-              
+             
               <div className="col-12 col-md-5">
-                <BotonBuscar onClick={traerTabla} /> 
-                
+                <BotonBuscar onClick={traerTabla} />
+               
               </div>
-                <BotonDescargar 
+                <BotonDescargar
                   onClick={generarExcel}
-                  disabled={tableData.length < 1} 
+                  disabled={tableData.length < 1}
                 />
             </div>
           </div>
@@ -441,8 +441,8 @@ return (
       </tr>
     )}
   </tbody>
-</table> 
-
+</table>
+ 
     <Pagination
       current={currentPage}
       pageSize={pageSize}
@@ -454,7 +454,7 @@ return (
     />; */}
   </section>
 );
-
+ 
 };
-
+ 
 export default Marketplace;

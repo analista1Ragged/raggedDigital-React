@@ -2,14 +2,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 7%; /* Elimina el margen superior cambiándolo a 0 */
+    margin: 0% 7%; /* Elimina el margen superior cambiándolo a 0 */
     flex-wrap: wrap; /* Permite que los elementos se envuelvan en líneas nuevas */
+    
 }
 
 
 .formulario form {
     width: 100%;
-    max-height: 800px;
+    max-height: 600px;
     max-width: 600px; /* Puedes ajustar este valor según sea necesario */
     background-color: #f7f7f7;
     box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.25); /* Corrige el valor del canal alfa */
@@ -38,6 +39,22 @@
     padding-left: 20%;
     align-items: center;
 }
+
+.boton-login {
+    width: 100%; /* Asegura que el botón se ajuste al formulario */
+    max-width: 250px; /* Controla su ancho */
+    margin: 20px auto 0; /* Centra y ajusta la separación superior */
+    display: block; /* Asegura que respete los márgenes automáticos */
+    position: relative; /* Evita que se salga del contenedor */
+}
+
+
+.subir-boton {
+    margin: -50px 0 !important; 
+    padding: "30px 20px" !important;
+}
+
+
 
 .image-wrapper {
     display: flex;
@@ -103,7 +120,7 @@ image-container TDiggital{
 
 @media (max-width: 768px) {
     .formulario {
-        margin: 40px 5%;
+        margin: 0px 5%;
     }
 
     .formulario form {
@@ -117,7 +134,7 @@ image-container TDiggital{
 
 @media (max-width: 480px) {
     .formulario {
-        margin: 20px 5%;
+        margin: 0px 5%;
     }
 
     .formulario form {

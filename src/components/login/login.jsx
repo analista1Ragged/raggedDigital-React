@@ -113,9 +113,13 @@ const Login = (props) => {
                         name="password"
                         autoComplete="current-password"
                     />
+                    
                     <div className="forgot-password">
-                    <Link to="/OlvidasteContrasena">¿Olvidaste tu contraseña?</Link>
-                    <br/><br/>
+                    <Boton className="subir-boton">
+                        Ingresar
+                    </Boton>
+                    <Link to="/OlvidasteContrasena">{'  '}¿Olvidaste tu contraseña?</Link>
+                    {'  '}
                     <a href="https://greggo.ragged.com.co" target="_blank" rel="noopener noreferrer">
                         <RiCustomerServiceFill 
                             className="top-bar-icons"
@@ -129,6 +133,7 @@ const Login = (props) => {
                         />
                     </a>
                     </div>
+                    
                     {mostrarExito && (
                         <Alert
                             message="¡Inicio de sesión exitoso!"
@@ -143,9 +148,7 @@ const Login = (props) => {
                             showIcon
                         />
                     )}
-                    <Boton>
-                        Ingresar
-                    </Boton>
+                    
                 </div>
             </form>
         </section>
