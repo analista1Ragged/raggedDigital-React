@@ -13,6 +13,12 @@ section {
   max-width: 1200px; /* Ancho máximo de la sección */
   margin: 0 auto; /* Centrar la sección */
   padding: 20px; /* Padding para la sección */
+  margin-top: 0px !important;
+  padding-top: 0px !important;
+}
+
+.consulta-cartera-title {
+  margin-top: -25px;
 }
 
 /* Select personalizado */

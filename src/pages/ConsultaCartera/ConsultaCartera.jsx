@@ -330,7 +330,7 @@ const initialFiltersCartera = useMemo(() => ({
   return (
 <section>
   <div className="ticket-table">
-    <h2>
+    <h2 className="consulta-cartera-title">
       <a href="/RaggedDigital/Home" className="left" title="volver">
         <i className="bi bi-arrow-left-circle"></i>
       </a>

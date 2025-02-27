@@ -14,22 +14,31 @@ import BuscarButton from 'src/components/BotonBuscar/BotonBuscar.jsx';
 import BotonDescargar from 'src/components/BotonDescargar/BotonDescargar.jsx';
 import { TbHandClick } from "react-icons/tb";
 import CampoTexto from '../../components/CampoTexto/CampoTextoReferencia.jsx';
-
-
+import * as XLSX from "xlsx";
+ 
 const { Option } = Select;
 const InfoExogena    = () => {
   const [tablaDatos, setTablaDatos] = useState([]);
   const [periodos, setPeriodos] = useState([]);
-
+ 
   const [periodoI, setPeriodoI] = useState("");
   const [periodoF, setPeriodoF] = useState("");
   const [check, setCheck] = useState(false);
   const [cuentaAux, setCuentaAux] = useState("");
   const [tercero, setTercero] = useState("");
-
+ 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [data, setData] = useState([]);
 
+  const [cuentaAuxiliar, setCuentaAuxiliar] = useState('');
+  const [periodoInicial, setPeriodoInicial] = useState('');
+  const [periodoFinal, setPeriodoFinal] = useState('');
+  const [acumulado, setAcumulado] = useState(false);
+  const [nitTercero, setNitTercero] = useState('');
+  const [tablaFrontend, setTablaFrontend] = useState([]);
+  const [tablaExcel, setTablaExcel] = useState([]);
+ 
   // Función para obtener los periodos del endpoint
   const fetchPeriodos = async () => {
     try {
@@ -42,17 +51,17 @@ const InfoExogena    = () => {
         },
       });
         const response = await fetch(`${urlapi}/exogena/get-periodos`);
-
+ 
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
         }
-
+ 
         // Convertir la respuesta a JSON
         const r = await response.json();
         const data = r
         Swal.close();
         console.log("Datos recibidos del backend:", data); // Verificar estructura
-
+ 
         if (Array.isArray(data) && data.length > 0) {
           const options = data
               .filter(item => item?.Periodo) // Filtrar solo los que tienen nombre
@@ -61,7 +70,7 @@ const InfoExogena    = () => {
                   value: item.Periodo
               }));
           setPeriodos(options);
-          console.log("Opciones en MultiSelector después de cargar:", options);} 
+          console.log("Opciones en MultiSelector después de cargar:", options);}
           else {console.error("Formato de datos incorrecto o vacío:", data);}
    
     } catch (error) {
@@ -69,13 +78,13 @@ const InfoExogena    = () => {
         Swal.close();
     }
 };
-
+ 
 useEffect(() => {
   fetchPeriodos();
   console.log(periodos,typeof(periodos));
 }, []);
-
-
+ 
+ 
 const handleCheck = () => {
   setCheck(!check);
   console.log(periodoI,periodoF,check);
@@ -86,11 +95,11 @@ const handleCuentaAux = (e) => {
 const handleTercero = (e) => {
   setTercero(e.target.value); // Actualiza el valor del campo de texto
 };
-
+ 
 const traerTabla = async (event) => {
   if (event) event.preventDefault();
   console.log(periodoI,periodoF,check,cuentaAux,tercero);
-
+ 
   if (periodoI != "" && periodoF != "" && cuentaAux != "") {
     try {
       Swal.fire({
@@ -116,15 +125,14 @@ const traerTabla = async (event) => {
           ],
         }),
       });
-
+ 
       if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-
+ 
       const result = await response.json();
       console.log("Datos recibidos:", result);
-
+ 
       // Verifica que la respuesta tenga datos y el orden de columnas
-      if (result.data && result.data.length > 0 && result.column_order) {
-        
+      if (result.data && result.data.length > 0) {
         //setTableData(result.data); // Guardar los datos en el estado
         //setTableHeaders(result.column_order);  // Usar el orden del backend
         Swal.close();
@@ -148,7 +156,7 @@ const traerTabla = async (event) => {
               text: 'No se encontraron datos con los filtros seleccionados.',
             });
     };
-
+ 
   } else {
     Swal.fire({
           icon: 'warning',
@@ -158,11 +166,62 @@ const traerTabla = async (event) => {
   }
 };
 
-
-const test = async () => {
+useEffect(() => {
+  fetch('/exogena/get-reporte', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ /* parámetros */ }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Datos recibidos:', data);
+      setData(data.data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}, []);
+ 
+ 
+/*const test = async () => {
   console.log(periodoI,periodoF,check,cuentaAux,tercero);
+};*/
+
+const handleBuscar = async () => {
+  const param = {
+    cuentaAuxiliar,
+    periodoInicial,
+    periodoFinal,
+    acumulado,
+    nitTercero
+  };
+
+  try {
+    const response = await fetch('/exogena/get-reporte-tabla', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(param)
+    });
+
+    const data = await response.json();
+    setTablaFrontend(data.tabla_frontend);
+    setTablaExcel(data.tabla_excel);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
+
+const descargarReporte = async () => {
+  const excelFile = new Blob([tablaExcel], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(excelFile);
+    link.download = 'reporteInfoExogena.xlsx';
+    link.click();
+  };
+ 
   return (
     <section>
       <div className="ticket-table">
@@ -176,20 +235,20 @@ const test = async () => {
         <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
             <i className="bi bi-filter"></i>
         </a>
-        {'  '} Filtrar por: 
-        </h3> 
+        {'  '} Filtrar por:
+        </h3>
         <form id="formBuscar" className="mb-3 mt-3" autoComplete="off">
           <div className="row align-items-end">
             <div className="col-12 col-md-5">
             <div className="contenedor-flex">
             <div className="campo-texto2">
-            <CampoTexto 
-                      placeholder="Cuenta Auxiliar:" 
+            <CampoTexto
+                      placeholder="Cuenta Auxiliar:"
                       value={cuentaAux} // Vinculado al estado
-                      onChange={handleCuentaAux} 
+                      onChange={handleCuentaAux}
                     />
             </div>
-
+ 
             <label htmlFor="marca" className="label-spacing">Periodos:</label>
             <Select
                           style={{ width: 270 }}
@@ -197,7 +256,7 @@ const test = async () => {
                           placeholder="Periodo Inicial"
                           options={periodos}
                           onChange={setPeriodoI}
-
+ 
                         />
             <Select
                           style={{ width: 270 }}
@@ -205,9 +264,9 @@ const test = async () => {
                           placeholder="Periodo Final"
                           options={periodos}
                           onChange={setPeriodoF}
-
+ 
                         />
-
+ 
             <label>
               <input
                 type="checkbox"
@@ -215,45 +274,57 @@ const test = async () => {
                 onChange={handleCheck} // Maneja los cambios al hacer clic
               />
             </label>
-
+ 
             <label htmlFor="marca" className="label-spacing">Acumulado</label>
             </div>
             </div>
           </div>
-          
+         
         <div className="col-12 col-md-5">
             <div className="inline-components2">
-
-              <CampoTexto 
-                        placeholder="Terceros:" 
+ 
+              <CampoTexto
+                        placeholder="Terceros:"
                         value={tercero} // Vinculado al estado
-                        onChange={handleTercero} 
+                        onChange={handleTercero}
               />
-        
-            
-              <BuscarButton 
+       
+           
+              <BuscarButton
                 onClick={traerTabla}
               />
-              <BotonDescargar 
-                onClick={test}
+              <BotonDescargar
+                onClick={descargarReporte}
               />
             </div>
           </div>  
-        
+       
         </form>
-        <table className="table table-striped table-hover">
-        <tbody>
-            <tr>
-              <td colSpan="9">
-                <TbHandClick style={{ marginRight: '10px', verticalAlign: 'middle' }} />
-                Ingrese los diferentes filtros para mostrar datos.
-              </td>
-            </tr>
-        </tbody>
-        </table> 
+        <table>
+      <thead>
+        <tr>
+          <th>Periodo</th>
+          <th>Auxiliar</th>
+          <th>DB</th>
+          <th>CR</th>
+          <th>SaldoFinal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((row, index) => (
+          <tr key={index}>
+            <td>{row.Periodo}</td>
+            <td>{row.Auxiliar}</td>
+            <td>{row.DB}</td>
+            <td>{row.CR}</td>
+            <td>{row.SaldoFinal}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
       </div>
     </section>
   );
 };
-
+ 
 export default InfoExogena;
