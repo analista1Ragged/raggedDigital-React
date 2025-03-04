@@ -80,6 +80,17 @@ const Login = (props) => {
         }
     };
 
+    useEffect(() => {
+        // Ocultar el scroll al cargar la página
+        document.body.style.overflow = "hidden";
+    
+        return () => {
+            // Restaurar el scroll cuando el componente se desmonte
+            document.body.style.overflow = "auto";
+        };
+    }, []);
+    
+
     return (
         <section className="formulario">
             <div className="image-container">

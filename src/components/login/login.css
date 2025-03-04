@@ -108,6 +108,11 @@ image-container TDiggital{
     max-width: 50%;
 }
 
+html, body {
+    overflow: hidden;
+}
+
+
 @media (max-width: 1024px) {
     .formulario form {
         padding: 8px 10%;

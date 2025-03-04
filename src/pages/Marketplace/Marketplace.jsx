@@ -4,12 +4,11 @@ import MultiSelector from '../../components/MultiSelector/MultiSelector.jsx';
 import BotonDescargar from 'src/components/BotonDescargar/BotonDescargar.jsx';
 import BotonBuscar from 'src/components/BotonBuscar/BotonBuscar.jsx';
 import { Select, Pagination } from 'antd'; // Importa el componente Select de Ant Design
-import { TbHandClick } from "react-icons/tb";
 import { urlapi } from '../../App';
 import Swal from 'sweetalert2';
 import './Marketplace.css';
  
-const Marketplace = () => {
+const Marketplace = () => { 
   // inicializar tablas
   const [currentPage, setCurrentPage] = useState(1);
  const [pageSize, setPageSize] = useState(10);

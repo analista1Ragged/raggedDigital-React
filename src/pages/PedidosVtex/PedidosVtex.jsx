@@ -510,8 +510,13 @@ const PedidosVtex = () => {
           <a href="/RaggedDigital/Home" className="pedidosvtex-left" title="volver">
             <i className="bi bi-arrow-left-circle"></i>
           </a>
+          
           {'  '} Generar Pedidos Vtex
         </h2>
+        <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
+        <i className="bi bi-filter"></i>
+      </a>
+      {'  '} Filtrar por: 
         <form>
           <div className="pedidosvtex-container">
             <div className="pedidosvtex-multi-selector">
