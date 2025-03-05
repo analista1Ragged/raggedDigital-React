@@ -26,6 +26,7 @@ const Marketplace = () => {
   const [selectedMarketCap, setSelectedMarketCap] = useState(null);
   const [selectedMarketRef, setSelectedMarketRef] = useState(null);
   const [selectedMarketCol, setSelectedMarketCol] = useState(null);
+
  
   // Función para obtener los datos del backend
   const fetchMarketplaces = async () => {
@@ -88,60 +89,77 @@ useEffect(() => {
   console.log(selectedMarketCap,typeof(selectedMarketCap));
 }, []);
  
-// 🔹 Obtener tipos de archivo desde el backend
-const fetchTipoArchivo = async (value) => {
-  try {
-    const response = await fetch(`${urlapi}/Marketplace/get-ConsultarTipoArchivo`,{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({cap : value.toString()}),
-    });
- 
-    if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
- 
-    const data = await response.json();
-    console.log("Tipos de archivo recibidos:", data);
- 
-    if (Array.isArray(data) && data.length > 0) {
-      return data
-        .filter(item => item?.ID)
-        .map(item => ({ label: item.ARCHIVO, value: item.ID }));
-    } else {
-      console.error("Formato incorrecto o vacío:", data);
+  // 🔹 Obtener tipos de archivo desde el backend
+  const fetchTipoArchivo = async (value) => {
+    try {
+      const response = await fetch(`${urlapi}/Marketplace/get-ConsultarTipoArchivo`,{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({cap : value.toString()}),
+      });
+  
+      if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+  
+      const data = await response.json();
+      console.log("Tipos de archivo recibidos:", data);
+  
+      if (Array.isArray(data) && data.length > 0) {
+        return data
+          .filter(item => item?.ID)
+          .map(item => ({ label: item.ARCHIVO, value: item.ID }));
+      } else {
+        console.error("Formato incorrecto o vacío:", data);
+        return [];
+      }
+    } catch (error) {
+      console.error("Error al obtener tipos de archivo:", error);
       return [];
     }
-  } catch (error) {
-    console.error("Error al obtener tipos de archivo:", error);
-    return [];
-  }
-};
+  };
  
  
 // Manejar selección del marketplace
-const handleMarketCap = async (value) => {
-  Swal.fire({
-    title: 'consultando referencias...',
-    //text: 'Por favor espera...',
-    allowOutsideClick: false,
-    didOpen: () => {
-      Swal.showLoading();
-    },
-  });
- 
-  console.log(value)
-  setSelectedMarketCap(value)
- 
-  if(selectedMarketplace == "Comercial.Sp_Consultar_Marketplace_Falabella"){
-    console.log("Comercial.Sp_Consultar_Marketplace_Falabella");
-    setTiposArchivo(await fetchTipoArchivo(value));
-  } else {
-    setMarketRef(await fetchReferencias(value));
-  }
- 
-  Swal.close();
-};
+  const handleMarketCap = async (value) => {
+    Swal.fire({
+      title: "Consultando referencias...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    console.log(value);
+
+    let selectedValues = value;
+
+    if (value.includes("selectAll")) {
+      // Si selecciona "SELECCIONAR TODO", agregamos todas las opciones excepto "selectAll"
+      selectedValues = marketCap.map((item) => item.value);
+    }
+
+    // Si se intentan eliminar todas las opciones desde "x" en +N más, limpiamos la selección
+    if (value.length === 0) {
+      selectedValues = [];
+    }
+
+    setSelectedMarketCap(selectedValues);
+
+    if (selectedMarketplace === "Comercial.Sp_Consultar_Marketplace_Falabella") {
+      console.log("Comercial.Sp_Consultar_Marketplace_Falabella");
+      setTiposArchivo(await fetchTipoArchivo(selectedValues));
+      setSelectedTipoArchivo("Tipo de archivo"); // Establece el valor por defecto
+    } else {
+      setMarketRef(await fetchReferencias(selectedValues));
+      setSelectedTipoArchivo(null); // Desactiva el select
+    }
+
+    Swal.close();
+  };
+
+
+
  
 const fetchReferencias = async (value) => {
   try {
@@ -150,43 +168,63 @@ const fetchReferencias = async (value) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({cap : value.toString(), tipo : selectedTipoArchivo == null ? "" : selectedTipoArchivo}),
+      body: JSON.stringify({
+        cap: value.toString(),
+        tipo: selectedTipoArchivo == null ? "" : selectedTipoArchivo
+      }),
     });
+
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
- 
+
     const data = await response.json();
-    console.log("Tipos de archivo recibidos:", data);
- 
+    console.log("Referencias recibidas:", data);
+
     if (Array.isArray(data) && data.length > 0) {
-      return data
+      let referencias = data
         .filter(item => item?.f120_referencia)
-        .map(item => ({ label: item.f120_referencia, value: item.f120_referencia}));
+        .map(item => ({ label: item.f120_referencia, value: item.f120_referencia }));
+
+      // Agregar la opción "SELECCIONAR TODO" al inicio
+      return [{ label: "SELECCIONAR TODO", value: "selectAll" }, ...referencias];
     } else {
       console.error("Formato incorrecto o vacío:", data);
       return [];
     }
   } catch (error) {
-    console.error("Error al obtener tipos de archivo:", error);
+    console.error("Error al obtener referencias:", error);
     return [];
   }
 };
+
  
 const handleMarketRef = async (value) => {
   Swal.fire({
-    title: 'consultando colores...',
-    //text: 'Por favor espera...',
+    title: 'Consultando colores...',
     allowOutsideClick: false,
     didOpen: () => {
       Swal.showLoading();
     },
   });
- 
-  console.log(value)
-  setSelectedMarketRef(value)
-  setMarketCol(await fetchColores(value));
- 
+
+  let selectedValues = value.includes("selectAll")
+    ? marketRef.map(item => item.value).filter(val => val !== "selectAll")
+    : value;
+
+  setSelectedMarketRef(selectedValues);
+
+  const colores = await fetchColores(selectedValues);
+  console.log('Colores:', colores); // Verifica si se están recibiendo los colores correctamente
+
+  if (colores.length > 0) {
+    setMarketCol([{ label: "SELECCIONAR TODO", value: "selectAll" }].concat(colores));
+  } else {
+    setMarketCol([]);
+  }
+
   Swal.close();
 };
+
+
  
 const fetchColores = async (value) => {
   try {
@@ -195,26 +233,39 @@ const fetchColores = async (value) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ref : value.toString()}),
+      body: JSON.stringify({ ref: value.toString() }),
     });
+
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
- 
+
     const data = await response.json();
-    console.log("Tipos de archivo recibidos:", data);
- 
+    console.log("Colores recibidos:", data);
+
     if (Array.isArray(data) && data.length > 0) {
       return data
         .filter(item => item?.F117_ID)
-        .map(item => ({ label: item.F117_DESCRIPCION, value: item.F117_ID}));
+        .map(item => ({ label: item.F117_DESCRIPCION, value: item.F117_ID }));
     } else {
       console.error("Formato incorrecto o vacío:", data);
       return [];
     }
   } catch (error) {
-    console.error("Error al obtener tipos de archivo:", error);
+    console.error("Error al obtener colores:", error);
     return [];
   }
 };
+
+
+const handleMarketCol = (value) => {
+  console.log("Colores seleccionados:", value);
+
+  let selectedValues = value.includes("selectAll")
+    ? marketCol.map(item => item.value).filter(val => val !== "selectAll")
+    : value;
+
+  setSelectedMarketCol(selectedValues);
+};
+
  
 const traerTabla = async (event) => {
   if (event) event.preventDefault();
@@ -324,11 +375,6 @@ const handlePageChange = (page, size) => {
   setPageSize(size);
 };
  
- 
- 
- 
- 
- 
 return (
   <section>
     <div className="ticket-table">
@@ -356,13 +402,25 @@ return (
             />
             <Select
               style={{ width: 270 }}
-              opc="66"
               placeholder="Colección"
-              options={marketCap}
+              options={[
+                { value: "selectAll", label: "SELECCIONAR TODO" },
+                ...marketCap,
+              ]}
               onChange={handleMarketCap}
               value={selectedMarketCap}
               mode="multiple"
+              maxTagCount={1} // Muestra solo 2 etiquetas visibles
+              maxTagPlaceholder={(omittedValues) => (
+                <span onClick={() => setSelectedMarketCol([])} style={{ cursor: "pointer" }}>
+                  +{omittedValues.length} más
+                </span>
+              )} // Al hacer clic en +N más, limpia la selección
+              allowClear // Permite limpiar la selección con la "x"
+              showArrow
             />
+
+
             <Select
               style={{ width: 270 }}
               placeholder="Tipo de archivo"
@@ -376,27 +434,44 @@ return (
           <h3></h3>
           </div>
               <div className="row-3">
-                <Select
-                  opc="66"
-                  style={{ width: 270 }}
-                  placeholder="Referencia"
-                  options={marketRef}
-                  onChange={handleMarketRef}
-                  value={selectedMarketRef}
-                  disabled={marketRef.length < 1}
-                  mode = "multiple"
-                />
+              <Select
+                opc="66"
+                style={{ width: 270 }}
+                placeholder="Referencia"
+                options={marketRef}
+                onChange={handleMarketRef}
+                value={selectedMarketRef}
+                disabled={marketRef.length < 1}
+                mode="multiple"
+                maxTagCount={1}
+                maxTagPlaceholder={(omittedValues) => (
+                  <span onClick={() => setSelectedMarketRef([])} style={{ cursor: "pointer" }}>
+                    +{omittedValues.length} más
+                  </span>
+                )}
+                allowClear
+                showArrow
+              />
+
  
               <div className="row-3">
-                <Select
-                  style={{ width: 270 }}
-                  placeholder="Color"
-                  options={marketCol}
-                  onChange={setSelectedMarketCol}
-                  value={selectedMarketCol}
-                  disabled={marketCol.length < 1}
-                  mode = "multiple"
-                />
+              <Select
+                style={{ width: 270 }}
+                placeholder="Color"
+                options={marketCol}
+                onChange={handleMarketCol}
+                value={selectedMarketCol}
+                disabled={marketCol.length < 1}
+                mode="multiple"
+                maxTagCount={1} // Muestra solo 2 etiquetas visibles
+                maxTagPlaceholder={(omittedValues) => (
+                <span onClick={() => setSelectedMarketCol([])} style={{ cursor: "pointer" }}>
+                  +{omittedValues.length} más
+                </span>
+              )} // Al hacer clic en +N más, limpia la selección
+              allowClear // Permite limpiar la selección con la "x"
+              />
+
               </div>
              
               <div className="col-12 col-md-5">
