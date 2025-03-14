@@ -26,6 +26,8 @@ const Marketplace = () => {
   const [selectedMarketCap, setSelectedMarketCap] = useState(null);
   const [selectedMarketRef, setSelectedMarketRef] = useState(null);
   const [selectedMarketCol, setSelectedMarketCol] = useState(null);
+  const [selectedColeccion, setSelectedColeccion] = useState(null);
+  const [falabellaRef, setFalabellaRef] = useState([]);
 
  
   // Función para obtener los datos del backend
@@ -118,50 +120,52 @@ useEffect(() => {
       return [];
     }
   };
+
+  
  
  
-// Manejar selección del marketplace
-  const handleMarketCap = async (value) => {
-    Swal.fire({
-      title: "Consultando referencias...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+// Manejar selección del marketplace,  se ejecuta cuando se selecciona una colección en el MultiSelector
+const handleMarketCap = async (value) => {
+  Swal.fire({
+    title: "Consultando referencias...",
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
 
-    console.log(value);
+  console.log(value);
 
-    let selectedValues = value;
+  let selectedValues = value;
 
-    if (value.includes("selectAll")) {
-      // Si selecciona "SELECCIONAR TODO", agregamos todas las opciones excepto "selectAll"
-      selectedValues = marketCap.map((item) => item.value);
-    }
+  if (value.includes("selectAll")) {
+    selectedValues = marketCap.map((item) => item.value);
+  }
 
-    // Si se intentan eliminar todas las opciones desde "x" en +N más, limpiamos la selección
-    if (value.length === 0) {
-      selectedValues = [];
-    }
+  if (value.length === 0) {
+    selectedValues = [];
+  }
 
-    setSelectedMarketCap(selectedValues);
+  setSelectedMarketCap(selectedValues);
 
-    if (selectedMarketplace === "Comercial.Sp_Consultar_Marketplace_Falabella") {
-      console.log("Comercial.Sp_Consultar_Marketplace_Falabella");
-      setTiposArchivo(await fetchTipoArchivo(selectedValues));
-      setSelectedTipoArchivo("Tipo de archivo"); // Establece el valor por defecto
-    } else {
-      setMarketRef(await fetchReferencias(selectedValues));
-      setSelectedTipoArchivo(null); // Desactiva el select
-    }
+  if (selectedMarketplace === "Comercial.Sp_Consultar_Marketplace_Falabella") {
+    console.log("Se seleccionó Falabella");
+    console.log("Comercial.Sp_Consultar_Marketplace_Falabella");
+    setTiposArchivo(await fetchTipoArchivo(selectedValues));
+    setSelectedTipoArchivo("Tipo de archivo"); // Establece el valor por defecto
+    const marketRef = await fetchReferencias(selectedValues);
+    setMarketRef(marketRef);
+  } else {
+    setMarketRef(await fetchReferencias(selectedValues));
+    setSelectedTipoArchivo(null); // Desactiva el select
+  }
 
-    Swal.close();
-  };
-
-
+  Swal.close();
+};
 
  
 const fetchReferencias = async (value) => {
+  console.log('fetchReferencias llamada con valor:', value);
   try {
     const response = await fetch(`${urlapi}/Marketplace/get-ReferenciasPorColeccion`, {
       method: "POST",
@@ -177,7 +181,7 @@ const fetchReferencias = async (value) => {
     if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
     const data = await response.json();
-    console.log("Referencias recibidas:", data);
+    console.log('Respuesta del servidor:', data);
 
     if (Array.isArray(data) && data.length > 0) {
       let referencias = data
@@ -222,6 +226,44 @@ const handleMarketRef = async (value) => {
   }
 
   Swal.close();
+};
+
+const fetchReferenciasFalabella = async (tipoArchivo) => {
+  try {
+    const response = await fetch(`${urlapi}/Marketplace/get-ReferenciasFalabella`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tipo: tipoArchivo,
+      }),
+    });
+
+    const data = await response.json();
+    console.log("Referencias de Falabella:", data);
+
+    if (Array.isArray(data) && data.length > 0) {
+      let referencias = data.map((item) => ({ label: item.f120_referencia, value: item.f120_referencia }));
+      return referencias;
+    } else {
+      console.error("Formato incorrecto o vacío:", data);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error al obtener referencias de Falabella:", error);
+    return [];
+  }
+};
+
+const handleTipoArchivoChange = async (value) => {
+  if (selectedMarketplace === "Falabella") {
+    const referencias = await fetchReferenciasFalabella(value);
+    setMarketRef(referencias);
+  } else {
+    const referencias = await fetchReferencias(selectedMarketCap, value, selectedColeccion);
+    setMarketRef(referencias);
+  }
 };
 
 
@@ -438,22 +480,20 @@ return (
                 opc="66"
                 style={{ width: 270 }}
                 placeholder="Referencia"
-                options={marketRef}
+                options={marketRef} // trae las opciones al select
                 onChange={handleMarketRef}
                 value={selectedMarketRef}
-                disabled={marketRef.length < 1}
-                mode="multiple"
-                maxTagCount={1}
+                disabled={marketRef.length < 1 && (selectedTipoArchivo === null || selectedTipoArchivo === "Tipo de archivo")}
+                //disabled={marketRef.length < 1}
+                maxTagCount={1} // Muestra solo 2 etiquetas visibles
                 maxTagPlaceholder={(omittedValues) => (
-                  <span onClick={() => setSelectedMarketRef([])} style={{ cursor: "pointer" }}>
-                    +{omittedValues.length} más
-                  </span>
-                )}
-                allowClear
-                showArrow
+                <span onClick={() => setSelectedMarketCol([])} style={{ cursor: "pointer" }}>
+                  +{omittedValues.length} más
+                </span>
+                )} // Al hacer clic en +N más, limpia la selección
+                allowClear // Permite limpiar la selección con la "x"
+                mode = "multiple"
               />
-
- 
               <div className="row-3">
               <Select
                 style={{ width: 270 }}
