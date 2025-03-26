@@ -28,6 +28,9 @@ const Marketplace = () => {
   const [selectedMarketRef, setSelectedMarketRef] = useState(null);
   const [selectedMarketCol, setSelectedMarketCol] = useState(null);
 
+  const [isColeccionDisabled, setIsColeccionDisabled] = useState(false);
+
+
   // Función para obtener los datos del backend
   const fetchMarketplaces = async () => {
     try {
@@ -123,37 +126,35 @@ const Marketplace = () => {
         Swal.showLoading();
       },
     });
-  
+
     let selectedValues = value;
-  
+
     if (value.includes("selectAll")) {
       selectedValues = marketCap.map((item) => item.value);
     }
-  
+
     if (value.length === 0) {
       selectedValues = [];
     }
-  
+
     setSelectedMarketCap(selectedValues);
-  
-    if (selectedMarketplace === "Comercial.Sp_Consultar_Marketplace_Falabella") {
-      console.log("Se seleccionó Falabella");
-      setTiposArchivo(await fetchTipoArchivo(selectedValues));
-      setSelectedTipoArchivo("Tipo de archivo"); // Establece el valor por defecto
-      const marketRef = await fetchReferencias(selectedValues, selectedTipoArchivo); // Enviar tipoArchivo
-      setMarketRef(marketRef);
-    } else {
-      const marketRef = await fetchReferencias(selectedValues); // No enviar tipoArchivo
-      setMarketRef(marketRef);
-      setSelectedTipoArchivo(null); // Desactiva el select
-    }
-  
+
+    
+  if (selectedMarketplace === "Comercial.Sp_Consultar_Marketplace_Falabella") {
+    console.log("Comercial.Sp_Consultar_Marketplace_Falabella");
+    setTiposArchivo(await fetchTipoArchivo(selectedValues));
+    setSelectedTipoArchivo("Tipo de archivo"); // Establece el valor por defecto
+  } else {
+    setMarketRef(await fetchReferencias(selectedValues));
+    setSelectedTipoArchivo(null); // Desactiva el select
+  }
+
     Swal.close();
   };
-  
+
   const handleTipoArchivoChange = async (value) => {
     setSelectedTipoArchivo(value);
-  
+
     if (selectedMarketplace === "Comercial.Sp_Consultar_Marketplace_Falabella") {
       const marketRef = await fetchReferencias(selectedMarketCap, value); // Enviar tipoArchivo
       setMarketRef(marketRef);
@@ -173,17 +174,17 @@ const Marketplace = () => {
           tipo: tipoArchivo || "" // Enviar tipoArchivo solo si no es null
         }),
       });
-  
+
       if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-  
+
       const data = await response.json();
       console.log('Respuesta del servidor:', data);
-  
+
       if (Array.isArray(data) && data.length > 0) {
         let referencias = data
           .filter(item => item?.f120_referencia)
           .map(item => ({ label: item.f120_referencia, value: item.f120_referencia }));
-  
+
         return [{ label: "SELECCIONAR TODO", value: "selectAll" }, ...referencias];
       } else {
         console.error("Formato incorrecto o vacío:", data);
@@ -263,70 +264,107 @@ const Marketplace = () => {
 
   const traerTabla = async (event) => {
     if (event) event.preventDefault();
-    console.log(selectedMarketplace, selectedTipoArchivo, selectedMarketCap, selectedMarketRef, selectedMarketCol);
-
-    if (selectedMarketplace !== null && selectedMarketCap !== null && selectedMarketRef !== null && selectedMarketCol !== null) {
-      try {
-        Swal.fire({
-          title: 'Cargando Datos',
-          text: 'Por favor espera...',
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          },
-        });
-        const response = await fetch(`${urlapi}/Marketplace/get-ReporteMarket`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            data: [
-              selectedMarketplace,
-              selectedMarketRef.toString(),
-              selectedMarketCol.toString(),
-              selectedTipoArchivo == null ? "" : selectedTipoArchivo
-            ],
-          }),
-        });
-
-        if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-
-        const result = await response.json();
-        console.log("Datos recibidos:", result);
-
-        if (result.data && result.data.length > 0 && result.column_order) {
-          setTableData(result.data);
-          setTableHeaders(result.column_order);
-          Swal.close();
-          Swal.fire({
-            title: 'Reporte disponible',
-            text: 'Se ha habilitado el boton para descargar reporte.',
-            icon: "info",
-            confirmButtonText: 'OK'
-          });
-        } else {
-          console.warn("No se recibieron datos válidos.");
-          setTableData([]);
-          setTableHeaders([]);
-          Swal.close();
-        }
-      } catch (error) {
-        console.error("Error al obtener datos:", error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'No se encontraron datos con los filtros seleccionados.',
-        });
-      };
+  
+    // Validación mejorada con mensajes más descriptivos
+    if (selectedMarketplace === "Comercial.Sp_Consultar_Marketplace_Falabella") {
+      if (!selectedMarketplace) {
+        Swal.fire('Error', 'Debes seleccionar un Marketplace', 'error');
+        return;
+      }
+      if (!selectedMarketCap?.length) {
+        Swal.fire('Error', 'Debes seleccionar al menos una Colección', 'error');
+        return;
+      }
+      if (!selectedMarketRef?.length) {
+        Swal.fire('Error', 'Debes seleccionar al menos una Referencia', 'error');
+        return;
+      }
+      if (!selectedTipoArchivo) {
+        Swal.fire('Error', 'Debes seleccionar un Tipo de Archivo', 'error');
+        return;
+      }
     } else {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Sin Filtros',
-        text: 'Debes seleccionar Marketplace, Coleccion, Referencia y Color.',
+      // Validación para otros marketplaces...
+    }
+  
+    try {
+      const loadingSwal = Swal.fire({
+        title: 'Buscando datos...',
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
       });
+  
+      // Estructura de datos que EXACTAMENTE espera el backend
+      const requestData = {
+        data: [
+          selectedMarketplace,
+          selectedMarketRef.join(","),  // Referencias como string
+          selectedMarketplace === "Comercial.Sp_Consultar_Marketplace_Falabella" 
+            ? selectedMarketCap.join(",")  // Colecciones para Falabella
+            : selectedMarketCol.join(","), // Colores para otros
+          selectedMarketplace === "Comercial.Sp_Consultar_Marketplace_Falabella" 
+            ? selectedTipoArchivo.toString() // Tipo de archivo como string
+            : null
+        ]
+      };
+  
+      console.log("Enviando al backend:", requestData);
+  
+      const response = await fetch(`${urlapi}/Marketplace/get-ReporteMarket`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestData),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok || data.error) {
+        throw new Error(data.error || "Error al obtener datos");
+      }
+  
+      if (!data.data || data.data.length === 0) {
+        // Mensaje más amigable cuando no hay datos
+        await Swal.fire({
+          title: 'Sin resultados',
+          text: 'No se encontraron datos con los filtros seleccionados',  
+          icon: 'info'
+        });
+        return;
+      }
+  
+      setTableData(data.data);
+      setTableHeaders(data.column_order);
+      
+      await Swal.fire({
+        title: 'Reporte disponible',
+        text: 'Se ha habilitado el boton para descargar reporte.',
+        icon: "info",
+        confirmButtonText: 'OK'
+      });
+  
+    } catch (error) {
+      console.error("Error en traerTabla:", error);
+      setTableData([]);
+      
+      // Mensaje de error mejorado
+      await Swal.fire({
+        title: 'Error',
+        text: error.message.includes('No hay datos disponibles')
+          ? 'No se encontraron coincidencias con los criterios de búsqueda'
+          : `Error: ${error.message}`,
+        icon: 'error'
+      });
+    } finally {
+      Swal.close();
     }
   };
+  
+  console.log("Selected values for Falabella:", {
+    marketplace: selectedMarketplace,
+    coleccion: selectedMarketCap,
+    referencia: selectedMarketRef,
+    tipoArchivo: selectedTipoArchivo
+  });
 
   const generarExcel = (event) => {
     if (event) event.preventDefault();
@@ -358,6 +396,31 @@ const Marketplace = () => {
     setCurrentPage(page);
     setPageSize(size);
   };
+
+  const handleSelectMarketplace = (marketplace) => {
+    setSelectedMarketplace(marketplace);
+  
+    if (marketplace === "Comercial.Sp_Consultar_Marketplace_Falabella") {
+      setSelectedMarketCap("Falabella"); // Actualiza el estado selectedMarketCap
+    }
+  };
+
+  const marketplacesDeshabilitanColeccion = [
+    "Planilla Inventario Lista Precios(RS)",
+    "Planilla Pedidos(RS)",
+    "Planilla Terceros(RS)"
+  ];
+  
+  const handleMarketplaceChange = (value) => {
+    setSelectedMarketplace(value);
+  
+    // Si el marketplace seleccionado está en la lista, deshabilitar colección
+    if (marketplacesDeshabilitanColeccion.includes(value)) {
+      setSelectedMarketCap(null);
+    }
+  };
+  
+  
 
   return (
     <section>
