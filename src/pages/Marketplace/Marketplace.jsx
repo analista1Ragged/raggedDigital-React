@@ -3,6 +3,7 @@ import * as XLSX from 'xlsx';
 import MultiSelector from '../../components/MultiSelector/MultiSelector.jsx';
 import BotonDescargar from 'src/components/BotonDescargar/BotonDescargar.jsx';
 import BotonBuscar from 'src/components/BotonBuscar/BotonBuscar.jsx';
+import BotonLimpiar from 'src/components/BotonLimpiar/BotonLimpiar.jsx';
 import { Select, Pagination } from 'antd'; // Importa el componente Select de Ant Design
 import { urlapi } from '../../App';
 import Swal from 'sweetalert2';
@@ -420,7 +421,30 @@ const Marketplace = () => {
     }
   };
   
+  const limpiarCampos = () => {
+    // Resetear valores a null para que muestre el placeholder
+    setSelectedMarketCap(null);    // En lugar de "Colección"
+    setSelectedTipoArchivo(null);  // En lugar de "Tipo de archivo"
+    setSelectedMarketRef(null);    // En lugar de "Referencia"
+    setSelectedMarketCol(null);    // En lugar de "Color"
   
+    // Limpiar opciones disponibles
+    setTiposArchivo([]);
+    setMarketRef([]);
+    setMarketCol([]);
+  
+    // Limpiar resultados de tabla
+    setTableData([]);
+    setTableHeaders([]);
+  
+    // Mostrar confirmación automática
+    Swal.fire({
+      text: 'Todos los filtros han sido limpiados.',
+      icon: 'success',
+      timer: 3000,
+      showConfirmButton: false
+    });
+  };
 
   return (
     <section>
@@ -521,6 +545,7 @@ const Marketplace = () => {
                 onClick={generarExcel}
                 disabled={tableData.length < 1}
               />
+              <BotonLimpiar onClick={limpiarCampos} />
             </div>
           </div>
         </form>
