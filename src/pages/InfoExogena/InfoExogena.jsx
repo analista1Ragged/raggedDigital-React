@@ -21,6 +21,8 @@ const InfoExogena = () => {
   const [tercero, setTercero] = useState("");
   const [tablaFrontend, setTablaFrontend] = useState([]);
   const [tablaExcel, setTablaExcel] = useState([]);
+  const [tableData, setTableData] = useState([]); // Estado para almacenar los datos dinámicos
+    const [tableHeaders, setTableHeaders] = useState([]); // Estado para los encabezados dinámicos
 
   // Función para manejar cambios en los inputs
   const handleChange = (setter) => (e) => setter(e.target.value);
@@ -107,20 +109,101 @@ const InfoExogena = () => {
   };
 
   // Función para manejar la búsqueda
-  const TraerTablaExogena = async () => {
-    Swal.fire({
-      title: 'Cargando Datos...',
-      text: 'Por favor, espere mientras se cargan los datos.',
-      timerProgressBar: true,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-      allowOutsideClick: false,
-      showConfirmButton: false
-    });
-
+  // Función corregida para obtener el reporte
+  const traerReporteExogena = async (event) => {
+    if (event) event.preventDefault();
+  
+    // Validaciones frontend
+    if (!cuentaAux) {
+      Swal.fire('Error', 'Debes ingresar una cuenta auxiliar', 'error');
+      return;
+    }
+  
+    if (cuentaAux.length > 8) {
+      Swal.fire('Error', 'La cuenta auxiliar no puede exceder 8 caracteres', 'error');
+      return;
+    }
+  
+    if (!periodoI || periodoI.length > 8) {
+      Swal.fire('Error', 'Debes ingresar un período inicial válido (6 caracteres)', 'error');
+      return;
+    }
+  
+    if (!periodoF || periodoF.length > 8) {
+      Swal.fire('Error', 'Debes ingresar un período final válido (6 caracteres)', 'error');
+      return;
+    }
+  
     try {
-      await fetchDataForExogena();
+      const loadingSwal = Swal.fire({
+        title: 'Generando reporte exógena...',
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+      });
+  
+      // Estructura de datos para el backend
+      const requestData = {
+        Cuenta: cuentaAux,
+        PeriodoInicial: periodoI,
+        PeriodoFinal: periodoF,
+        Acumulado: check, // Esto será true/false según el estado del checkbox
+        Tercero: tercero || null
+      };
+  
+      console.log("Enviando al backend:", {
+        ...requestData,
+        Acumulado: check ? 1 : 0  // Mostrar en logs como 1/0 para verificación
+      });
+  
+      const response = await fetch(`${urlapi}/exogena/get-reporte`, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(requestData),
+      });
+      
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.error || "Error al obtener datos exógenos");
+      }
+  
+      if (!data.data || data.data.length === 0) {
+        await Swal.fire({
+          title: 'Sin resultados',
+          text: 'No se encontraron datos con los filtros seleccionados',  
+          icon: 'info'
+        });
+        return;
+      }
+  
+      setTableData(data.data);
+      setTableHeaders(data.column_order);
+      setTablaFrontend(data.data);
+      setTablaExcel(data.data);
+      
+      await Swal.fire({
+        title: 'Reporte exógena disponible',
+        text: 'Los datos exógenos se han cargado correctamente.',
+        icon: "success",
+        confirmButtonText: 'OK'
+      });
+  
+    } catch (error) {
+      console.error("Error en traerReporteExogena:", error);
+      setTableData([]);
+      setTablaFrontend([]);
+      setTablaExcel([]);
+      
+      await Swal.fire({
+        title: 'Error',
+        text: error.message.includes('No hay datos disponibles')
+          ? 'No se encontraron registros con los criterios de búsqueda'
+          : `Error: ${error.message}`,
+        icon: 'error'
+      });
     } finally {
       Swal.close();
     }
@@ -190,7 +273,7 @@ const InfoExogena = () => {
                     checked={check}
                     onChange={handleCheck}
                   />
-                  Acumulado
+                  {'  '} Acumulado
                 </label>
               </div>
             </div>
@@ -204,7 +287,7 @@ const InfoExogena = () => {
                 onChange={handleChange(setTercero)}
               />
 
-              <BuscarButton onClick={TraerTablaExogena} />
+              <BuscarButton onClick={traerReporteExogena} />
               <BotonDescargar onClick={descargarReporte} />
             </div>
           </div>
