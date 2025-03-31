@@ -21,8 +21,8 @@ const InfoExogena = () => {
   const [tercero, setTercero] = useState("");
   const [tablaFrontend, setTablaFrontend] = useState([]);
   const [tablaExcel, setTablaExcel] = useState([]);
-  const [tableData, setTableData] = useState([]); // Estado para almacenar los datos dinámicos
-    const [tableHeaders, setTableHeaders] = useState([]); // Estado para los encabezados dinámicos
+  const [tableData, setTableData] = useState([]);
+  const [tableHeaders, setTableHeaders] = useState([]);
 
   // Función para manejar cambios en los inputs
   const handleChange = (setter) => (e) => setter(e.target.value);
@@ -68,47 +68,10 @@ const InfoExogena = () => {
     fetchPeriodos();
   }, []);
 
-  // Función para manejar el checkbox
   const handleCheck = () => {
     setCheck(!check);
   };
 
-  // Función para obtener los datos de la API
-  const fetchDataForExogena = async () => {
-    const exo = [cuentaAux, periodoI, periodoF, check, tercero];
-  
-    try {
-      const response = await fetch(`${urlapi}/TraerTablaExogena`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data: exo })
-      });
-  
-      if (!response.ok) {
-        throw new Error('Error en la respuesta de la API');
-      }
-  
-      const data = await response.json();
-      console.log("Respuesta de la API:", data);
-  
-      if (Array.isArray(data)) {
-        setTablaFrontend(data);
-        setTablaExcel(data);
-      } else {
-        console.error('Error: La API no devolvió un array válido.', data);
-        setTablaFrontend([]);
-      }
-    } catch (error) {
-      console.error("Error al obtener los datos:", error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Hubo un problema al obtener los datos. Por favor, inténtelo de nuevo.'
-      });
-    }
-  };
-
-  // Función para manejar la búsqueda
   // Función corregida para obtener el reporte
   const traerReporteExogena = async (event) => {
     if (event) event.preventDefault();
@@ -124,12 +87,12 @@ const InfoExogena = () => {
       return;
     }
   
-    if (!periodoI || periodoI.length > 8) {
+    if (!periodoI || periodoI.length > 6) {
       Swal.fire('Error', 'Debes ingresar un período inicial válido (6 caracteres)', 'error');
       return;
     }
   
-    if (!periodoF || periodoF.length > 8) {
+    if (!periodoF || periodoF.length > 6) {
       Swal.fire('Error', 'Debes ingresar un período final válido (6 caracteres)', 'error');
       return;
     }
@@ -141,19 +104,20 @@ const InfoExogena = () => {
         didOpen: () => Swal.showLoading(),
       });
   
-      // Estructura de datos para el backend
+      // Crea un objeto requestData con los datos del formulario
       const requestData = {
         Cuenta: cuentaAux,
         PeriodoInicial: periodoI,
         PeriodoFinal: periodoF,
-        Acumulado: check, // Esto será true/false según el estado del checkbox
+        Acumulado: check,
         Tercero: tercero || null
       };
   
-      console.log("Enviando al backend:", {
-        ...requestData,
-        Acumulado: check ? 1 : 0  // Mostrar en logs como 1/0 para verificación
-      });
+      console.log("Enviando al backend:", requestData);
+
+      //Envía los datos al backend mediante una petición POST
+
+      //get_reporteExogena, Esta función es el endpoint del API que recibe y procesa la solicitud:
   
       const response = await fetch(`${urlapi}/exogena/get-reporte`, {
         method: "POST",
@@ -178,11 +142,28 @@ const InfoExogena = () => {
         });
         return;
       }
+
+      // Mapear los datos a la estructura esperada por la tabla
+      const datosParaTabla = data.data
+        .filter(item => item.col_0?.Periodo) // Solo items con campo Periodo
+        .map(item => ({
+          Periodo: item.col_0.Periodo,
+          Auxiliar: item.col_0.Auxiliar,
+          DB: item.col_0.DB,
+          CR: item.col_0.CR,
+          SaldoFinal: item.col_0.SaldoFinal
+        }));
+
+      // Procesar datos para Excel (todos los datos)
+      const datosParaExcel = data.data.map(item => item.col_0);
   
+      console.log("Datos para tabla:", datosParaTabla);
+      console.log("Datos para Excel:", datosParaExcel);
+  
+      setTablaFrontend(datosParaTabla);
+      setTablaExcel(datosParaExcel);
       setTableData(data.data);
       setTableHeaders(data.column_order);
-      setTablaFrontend(data.data);
-      setTablaExcel(data.data);
       
       await Swal.fire({
         title: 'Reporte exógena disponible',
@@ -209,7 +190,6 @@ const InfoExogena = () => {
     }
   };
 
-  // Función para descargar el reporte en Excel
   const descargarReporte = async () => {
     if (tablaExcel.length === 0) {
       Swal.fire({
