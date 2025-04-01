@@ -129,41 +129,54 @@ const InfoExogena = () => {
       });
       
       const data = await response.json();
-  
+      
+      // 👇 AQUÍ ES EL MEJOR LUGAR PARA COLOCAR EL CONSOLE.LOG
+      console.log("Respuesta completa:", data);  // ← Esto te mostrará la estructura exacta de los datos recibidos
+      
       if (!response.ok) {
         throw new Error(data.error || "Error al obtener datos exógenos");
       }
-  
-      if (!data.data || data.data.length === 0) {
-        await Swal.fire({
-          title: 'Sin resultados',
-          text: 'No se encontraron datos con los filtros seleccionados',  
-          icon: 'info'
+      
+      if (Array.isArray(data.data)) {
+        // Procesar todas las filas sin filtrar por col_0
+        const datosParaTabla = data.data.map(item => {
+          // Crear un objeto con todas las columnas disponibles
+          const rowData = {};
+          
+          // Recorrer todas las columnas (col_0, col_1, col_2, etc.)
+          data.column_order.forEach(col => {
+            if (item[col]) {
+              // Si la columna existe, agregamos sus propiedades al rowData
+              rowData[`${col}_Periodo`] = item[col]?.Periodo || 'N/A';
+              rowData[`${col}_Auxiliar`] = item[col]?.Auxiliar || 'N/A';
+              rowData[`${col}_DB`] = item[col]?.DB || 0;
+              rowData[`${col}_CR`] = item[col]?.CR || 0;
+              rowData[`${col}_SaldoFinal`] = item[col]?.SaldoFinal || 0;
+            }
+          });
+          
+          return rowData;
         });
-        return;
+      
+        // Para Excel podemos mantener una estructura más plana
+        const datosParaExcel = data.data.flatMap(item => 
+          data.column_order
+            .filter(col => item[col])
+            .map(col => ({
+              Columna: col,
+              ...item[col]
+            }))
+        );
+      
+        console.log("Todos los datos procesados:", datosParaTabla);
+        console.log("Datos para Excel:", datosParaExcel);
+      
+        setTablaFrontend(datosParaTabla);
+        setTablaExcel(datosParaExcel);
+        setTableData(data.data);
+        setTableHeaders(data.column_order);
       }
-
-      // Mapear los datos a la estructura esperada por la tabla
-      const datosParaTabla = data.data
-        .filter(item => item.col_0?.Periodo) // Solo items con campo Periodo
-        .map(item => ({
-          Periodo: item.col_0.Periodo,
-          Auxiliar: item.col_0.Auxiliar,
-          DB: item.col_0.DB,
-          CR: item.col_0.CR,
-          SaldoFinal: item.col_0.SaldoFinal
-        }));
-
-      // Procesar datos para Excel (todos los datos)
-      const datosParaExcel = data.data.map(item => item.col_0);
-  
-      console.log("Datos para tabla:", datosParaTabla);
-      console.log("Datos para Excel:", datosParaExcel);
-  
-      setTablaFrontend(datosParaTabla);
-      setTablaExcel(datosParaExcel);
-      setTableData(data.data);
-      setTableHeaders(data.column_order);
+      
       
       await Swal.fire({
         title: 'Reporte exógena disponible',
@@ -191,20 +204,24 @@ const InfoExogena = () => {
   };
 
   const descargarReporte = async () => {
-    if (tablaExcel.length === 0) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'No hay datos para descargar',
-        text: 'Por favor, realice una búsqueda antes de descargar el reporte.',
-      });
-      return;
-    }
+  if (tablaExcel.length === 0) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'No hay datos para descargar',
+      text: 'Por favor, realice una búsqueda antes de descargar el reporte.',
+    });
+    return;
+  }
 
-    const worksheet = XLSX.utils.json_to_sheet(tablaExcel);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Reporte');
-    XLSX.writeFile(workbook, 'reporteInfoExogena.xlsx');
-  };
+  // Validación adicional
+  console.log("Datos a exportar:", tablaExcel);
+
+  const worksheet = XLSX.utils.json_to_sheet(tablaExcel.slice(1));
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Reporte');
+  XLSX.writeFile(workbook, 'reporteInfoExogena.xlsx');
+};
+
 
   return (
     <section>
@@ -272,10 +289,10 @@ const InfoExogena = () => {
             </div>
           </div>
         </form>
-
         <table>
           <thead>
             <tr>
+              <th>Columna</th>
               <th>Periodo</th>
               <th>Auxiliar</th>
               <th>DB</th>
@@ -284,15 +301,18 @@ const InfoExogena = () => {
             </tr>
           </thead>
           <tbody>
-            {tablaFrontend.map((row, index) => (
-              <tr key={index}>
-                <td>{row.Periodo}</td>
-                <td>{row.Auxiliar}</td>
-                <td>{row.DB}</td>
-                <td>{row.CR}</td>
-                <td>{row.SaldoFinal}</td>
-              </tr>
-            ))}
+            {tablaFrontend.flatMap((row, rowIndex) => 
+              tableHeaders.map(header => (
+                <tr key={`${rowIndex}-${header}`}>
+                  <td>{header}</td>
+                  <td>{row[`${header}_Periodo`] || 'N/A'}</td>
+                  <td>{row[`${header}_Auxiliar`] || 'N/A'}</td>
+                  <td>{row[`${header}_DB`] || 0}</td>
+                  <td>{row[`${header}_CR`] || 0}</td>
+                  <td>{row[`${header}_SaldoFinal`] || 0}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
