@@ -21,8 +21,7 @@ const InfoExogena = () => {
   const [tercero, setTercero] = useState("");
   const [tablaFrontend, setTablaFrontend] = useState([]);
   const [tablaExcel, setTablaExcel] = useState([]);
-  const [tableData, setTableData] = useState([]);
-  const [tableHeaders, setTableHeaders] = useState([]);
+  const [tableHeaders, setTableHeaders] = useState(["Periodo", "Auxiliar", "DB", "CR", "SaldoFinal"]);
 
   // Función para manejar cambios en los inputs
   const handleChange = (setter) => (e) => setter(e.target.value);
@@ -72,7 +71,7 @@ const InfoExogena = () => {
     setCheck(!check);
   };
 
-  // Función corregida para obtener el reporte
+  // Función para obtener el reporte
   const traerReporteExogena = async (event) => {
     if (event) event.preventDefault();
   
@@ -104,7 +103,6 @@ const InfoExogena = () => {
         didOpen: () => Swal.showLoading(),
       });
   
-      // Crea un objeto requestData con los datos del formulario
       const requestData = {
         Cuenta: cuentaAux,
         PeriodoInicial: periodoI,
@@ -114,10 +112,6 @@ const InfoExogena = () => {
       };
   
       console.log("Enviando al backend:", requestData);
-
-      //Envía los datos al backend mediante una petición POST
-
-      //get_reporteExogena, Esta función es el endpoint del API que recibe y procesa la solicitud:
   
       const response = await fetch(`${urlapi}/exogena/get-reporte`, {
         method: "POST",
@@ -129,54 +123,24 @@ const InfoExogena = () => {
       });
       
       const data = await response.json();
-      
-      // 👇 AQUÍ ES EL MEJOR LUGAR PARA COLOCAR EL CONSOLE.LOG
-      console.log("Respuesta completa:", data);  // ← Esto te mostrará la estructura exacta de los datos recibidos
+      console.log("Respuesta completa del backend:", data);
       
       if (!response.ok) {
         throw new Error(data.error || "Error al obtener datos exógenos");
       }
       
-      if (Array.isArray(data.data)) {
-        // Procesar todas las filas sin filtrar por col_0
-        const datosParaTabla = data.data.map(item => {
-          // Crear un objeto con todas las columnas disponibles
-          const rowData = {};
-          
-          // Recorrer todas las columnas (col_0, col_1, col_2, etc.)
-          data.column_order.forEach(col => {
-            if (item[col]) {
-              // Si la columna existe, agregamos sus propiedades al rowData
-              rowData[`${col}_Periodo`] = item[col]?.Periodo || 'N/A';
-              rowData[`${col}_Auxiliar`] = item[col]?.Auxiliar || 'N/A';
-              rowData[`${col}_DB`] = item[col]?.DB || 0;
-              rowData[`${col}_CR`] = item[col]?.CR || 0;
-              rowData[`${col}_SaldoFinal`] = item[col]?.SaldoFinal || 0;
-            }
-          });
-          
-          return rowData;
-        });
-      
-        // Para Excel podemos mantener una estructura más plana
-        const datosParaExcel = data.data.flatMap(item => 
-          data.column_order
-            .filter(col => item[col])
-            .map(col => ({
-              Columna: col,
-              ...item[col]
-            }))
-        );
-      
-        console.log("Todos los datos procesados:", datosParaTabla);
-        console.log("Datos para Excel:", datosParaExcel);
-      
-        setTablaFrontend(datosParaTabla);
-        setTablaExcel(datosParaExcel);
-        setTableData(data.data);
-        setTableHeaders(data.column_order);
+      // Verificar estructura de datos
+      if (!data.success || !data.data || !data.data.tabla || !data.data.excel) {
+        throw new Error("Formato de respuesta inesperado del servidor");
       }
       
+      // Asignar datos para la tabla
+      setTablaFrontend(data.data.tabla);
+      
+      // Asignar datos para Excel
+      setTablaExcel(data.data.excel);
+      
+      // Configurar headers de tabla (ya están definidos por defecto)
       
       await Swal.fire({
         title: 'Reporte exógena disponible',
@@ -187,7 +151,6 @@ const InfoExogena = () => {
   
     } catch (error) {
       console.error("Error en traerReporteExogena:", error);
-      setTableData([]);
       setTablaFrontend([]);
       setTablaExcel([]);
       
@@ -204,24 +167,70 @@ const InfoExogena = () => {
   };
 
   const descargarReporte = async () => {
-  if (tablaExcel.length === 0) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'No hay datos para descargar',
-      text: 'Por favor, realice una búsqueda antes de descargar el reporte.',
-    });
-    return;
-  }
-
-  // Validación adicional
-  console.log("Datos a exportar:", tablaExcel);
-
-  const worksheet = XLSX.utils.json_to_sheet(tablaExcel.slice(1));
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'Reporte');
-  XLSX.writeFile(workbook, 'reporteInfoExogena.xlsx');
-};
-
+    if (tablaExcel.length === 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'No hay datos para descargar',
+        text: 'Por favor, realice una búsqueda antes de descargar el reporte.',
+      });
+      return;
+    }
+  
+    try {
+      // Definir el orden exacto de columnas
+      const columnOrder = [
+        "Periodo", "Tipo_Documento", "Cod_Tipo_Docto", "Numero_identificacion",
+        "Primer_Apellido", "Segundo_Apellido", "Primer_Nombre", "Segundo_nombre",
+        "Razon_social", "Cod_Pais", "Pais", "Cod_Ciudad", "Ciudad", "Auxiliar",
+        "DB", "CR", "SaldoFinal"
+      ];
+  
+      // Crear datos ordenados
+      const datosOrdenados = tablaExcel.map(row => {
+        const orderedRow = {};
+        columnOrder.forEach(col => {
+          orderedRow[col] = row[col] !== null ? row[col] : '';
+        });
+        return orderedRow;
+      });
+  
+      // Crear hoja de cálculo con columnas ordenadas
+      const worksheet = XLSX.utils.json_to_sheet(datosOrdenados, {
+        header: columnOrder // Esto asegura el orden de columnas
+      });
+  
+      // Ajustar el ancho de las columnas
+      worksheet['!cols'] = columnOrder.map(col => ({
+        wch: Math.max(
+          col.length, // Ancho mínimo = longitud del nombre de la columna
+          ...datosOrdenados.map(row => 
+            row[col] ? String(row[col]).length : 0
+          )
+        )
+      }));
+  
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'ReporteExogena');
+      
+      // Generar nombre de archivo con fecha
+      const fecha = new Date().toLocaleDateString('es-CO').replace(/\//g, '-');
+      XLSX.writeFile(workbook, `Reporte_Exogena_${fecha}.xlsx`);
+  
+      Swal.fire({
+        icon: 'success',
+        title: 'Descarga exitosa',
+        text: 'El archivo Excel se ha generado con el formato correcto.',
+        timer: 2000
+      });
+    } catch (error) {
+      console.error("Error al generar Excel:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Ocurrió un problema al generar el archivo Excel.'
+      });
+    }
+  };
 
   return (
     <section>
@@ -292,27 +301,21 @@ const InfoExogena = () => {
         <table>
           <thead>
             <tr>
-              <th>Columna</th>
-              <th>Periodo</th>
-              <th>Auxiliar</th>
-              <th>DB</th>
-              <th>CR</th>
-              <th>SaldoFinal</th>
+              {tableHeaders.map(header => (
+                <th key={header}>{header}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            {tablaFrontend.flatMap((row, rowIndex) => 
-              tableHeaders.map(header => (
-                <tr key={`${rowIndex}-${header}`}>
-                  <td>{header}</td>
-                  <td>{row[`${header}_Periodo`] || 'N/A'}</td>
-                  <td>{row[`${header}_Auxiliar`] || 'N/A'}</td>
-                  <td>{row[`${header}_DB`] || 0}</td>
-                  <td>{row[`${header}_CR`] || 0}</td>
-                  <td>{row[`${header}_SaldoFinal`] || 0}</td>
-                </tr>
-              ))
-            )}
+            {tablaFrontend.map((row, index) => (
+              <tr key={index}>
+                {tableHeaders.map(header => (
+                  <td key={`${index}-${header}`}>
+                    {typeof row[header] === 'number' ? row[header].toLocaleString() : row[header] || 'N/A'}
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
