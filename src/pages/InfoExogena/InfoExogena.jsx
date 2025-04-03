@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import "./InfoExogena.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'antd/dist/reset.css';
@@ -9,6 +9,7 @@ import BuscarButton from 'src/components/BotonBuscar/BotonBuscar.jsx';
 import BotonDescargar from 'src/components/BotonDescargar/BotonDescargar.jsx';
 import CampoTexto from '../../components/CampoTexto/CampoTextoReferencia.jsx';
 import * as XLSX from "xlsx";
+import Paginacion from 'src/components/Paginacion/Paginacion';
 
 const { Option } = Select;
 
@@ -22,6 +23,9 @@ const InfoExogena = () => {
   const [tablaFrontend, setTablaFrontend] = useState([]);
   const [tablaExcel, setTablaExcel] = useState([]);
   const [tableHeaders, setTableHeaders] = useState(["Periodo", "Auxiliar", "DB", "CR", "SaldoFinal"]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [data, setData] = useState([]);
 
   // Función para manejar cambios en los inputs
   const handleChange = (setter) => (e) => setter(e.target.value);
@@ -69,6 +73,21 @@ const InfoExogena = () => {
 
   const handleCheck = () => {
     setCheck(!check);
+  };
+
+  
+  // Calcular los items a mostrar en la página actual
+  const currentItems = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+    return tablaFrontend.slice(start, end);
+  }, [currentPage, pageSize, tablaFrontend]);
+
+
+  // Función para manejar cambios de página
+  const handleChangePage = (page, size) => {
+    setCurrentPage(page);
+    setPageSize(size);
   };
 
   // Función para obtener el reporte
@@ -232,6 +251,7 @@ const InfoExogena = () => {
     }
   };
 
+
   return (
     <section>
       <div className="ticket-table">
@@ -307,7 +327,7 @@ const InfoExogena = () => {
             </tr>
           </thead>
           <tbody>
-            {tablaFrontend.map((row, index) => (
+            {currentItems.map((row, index) => (
               <tr key={index}>
                 {tableHeaders.map(header => (
                   <td key={`${index}-${header}`}>
@@ -318,6 +338,13 @@ const InfoExogena = () => {
             ))}
           </tbody>
         </table>
+        <Paginacion
+          currentPage={currentPage}
+          pageSize={pageSize}
+          totalItems={tablaFrontend.length}
+          onChangePage={handleChangePage}
+          className="paginacion-exogena"
+        />
       </div>
     </section>
   );
