@@ -187,70 +187,158 @@ const InfoExogena = () => {
 
   const descargarReporte = async () => {
     if (tablaExcel.length === 0) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'No hay datos para descargar',
-        text: 'Por favor, realice una búsqueda antes de descargar el reporte.',
-      });
-      return;
-    }
-  
-    try {
-      // Definir el orden exacto de columnas
-      const columnOrder = [
-        "Periodo", "Tipo_Documento", "Cod_Tipo_Docto", "Numero_identificacion",
-        "Primer_Apellido", "Segundo_Apellido", "Primer_Nombre", "Segundo_nombre",
-        "Razon_social", "Cod_Pais", "Pais", "Cod_Ciudad", "Ciudad", "Auxiliar",
-        "DB", "CR", "SaldoFinal"
-      ];
-  
-      // Crear datos ordenados
-      const datosOrdenados = tablaExcel.map(row => {
-        const orderedRow = {};
-        columnOrder.forEach(col => {
-          orderedRow[col] = row[col] !== null ? row[col] : '';
+        Swal.fire({
+            icon: 'warning',
+            title: 'No hay datos para descargar',
+            text: 'Por favor, realice una búsqueda antes de descargar el reporte.',
         });
-        return orderedRow;
-      });
-  
-      // Crear hoja de cálculo con columnas ordenadas
-      const worksheet = XLSX.utils.json_to_sheet(datosOrdenados, {
-        header: columnOrder // Esto asegura el orden de columnas
-      });
-  
-      // Ajustar el ancho de las columnas
-      worksheet['!cols'] = columnOrder.map(col => ({
-        wch: Math.max(
-          col.length, // Ancho mínimo = longitud del nombre de la columna
-          ...datosOrdenados.map(row => 
-            row[col] ? String(row[col]).length : 0
-          )
-        )
-      }));
-  
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'ReporteExogena');
-      
-      // Generar nombre de archivo con fecha
-      const fecha = new Date().toLocaleDateString('es-CO').replace(/\//g, '-');
-      XLSX.writeFile(workbook, `Reporte_Exogena_${fecha}.xlsx`);
-  
-      Swal.fire({
-        icon: 'success',
-        title: 'Descarga exitosa',
-        text: 'El archivo Excel se ha generado con el formato correcto.',
-        timer: 2000
-      });
-    } catch (error) {
-      console.error("Error al generar Excel:", error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Ocurrió un problema al generar el archivo Excel.'
-      });
+        return;
     }
-  };
 
+    try {
+        // Mostrar progreso
+        const loadingSwal = Swal.fire({
+            title: 'Preparando archivo Excel',
+            html: `Procesando ${tablaExcel.length.toLocaleString()} registros...`,
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+
+        // Definir columnas y configuración
+        const columnOrder = [
+            "Periodo", "Tipo_Documento", "Cod_Tipo_Docto", "Numero_identificacion",
+            "Primer_Apellido", "Segundo_Apellido", "Primer_Nombre", "Segundo_nombre",
+            "Razon_social", "Cod_Pais", "Pais", "Cod_Ciudad", "Ciudad", "Auxiliar",
+            "DB", "CR", "SaldoFinal"
+        ];
+
+        // Columnas que deben alinearse a la derecha (normalmente las numéricas)
+        const rightAlignColumns = ["DB", "CR", "SaldoFinal"];
+
+        // Configuración de paginación
+        const MAX_ROWS_PER_SHEET = 400000;
+        const CHUNK_SIZE = 50000;
+        const totalSheets = Math.ceil(tablaExcel.length / MAX_ROWS_PER_SHEET);
+        
+        // Crear nuevo libro de trabajo
+        const workbook = XLSX.utils.book_new();
+
+        // Procesar cada hoja necesaria
+        for (let sheetNum = 0; sheetNum < totalSheets; sheetNum++) {
+            const startRow = sheetNum * MAX_ROWS_PER_SHEET;
+            const endRow = Math.min((sheetNum + 1) * MAX_ROWS_PER_SHEET, tablaExcel.length);
+            const sheetData = tablaExcel.slice(startRow, endRow);
+            
+            // Actualizar progreso
+            Swal.update({
+                html: `Generando hoja ${sheetNum + 1}/${totalSheets}<br>
+                       Filas: ${startRow.toLocaleString()} - ${endRow.toLocaleString()} de ${tablaExcel.length.toLocaleString()}`
+            });
+
+            // Procesar en chunks para no bloquear el UI
+            const worksheet = XLSX.utils.json_to_sheet([], { header: columnOrder });
+            
+            for (let i = 0; i < sheetData.length; i += CHUNK_SIZE) {
+                const chunk = sheetData.slice(i, i + CHUNK_SIZE);
+                
+                const datosOrdenados = chunk.map(row => {
+                    const orderedRow = {};
+                    columnOrder.forEach(col => {
+                        orderedRow[col] = row[col] ?? '';
+                    });
+                    return orderedRow;
+                });
+
+                // Agregar datos al worksheet
+                XLSX.utils.sheet_add_json(worksheet, datosOrdenados, {
+                    header: columnOrder,
+                    skipHeader: i > 0 || sheetNum > 0,
+                    origin: i === 0 && sheetNum === 0 ? 'A1' : -1
+                });
+
+                // Liberar el event loop periódicamente
+                if (i % (CHUNK_SIZE * 2) === 0) {
+                    await new Promise(resolve => setTimeout(resolve, 0));
+                }
+            }
+
+            // Calcular anchos de columnas
+            worksheet['!cols'] = columnOrder.map(col => {
+                let maxLength = col.length;
+                const sampleSize = Math.min(100, sheetData.length);
+                for (let i = 0; i < sampleSize; i++) {
+                    const value = sheetData[i][col];
+                    if (value != null) {
+                        maxLength = Math.max(maxLength, String(value).length);
+                    }
+                }
+                return { wch: Math.min(maxLength, 50) };
+            });
+
+            // Aplicar alineación a la derecha para columnas numéricas
+            if (!worksheet['!rows']) worksheet['!rows'] = [];
+            
+            // Obtener índices de las columnas a alinear
+            const rightAlignColIndexes = rightAlignColumns.map(col => columnOrder.indexOf(col));
+            
+            // Aplicar estilo a todas las celdas de las columnas numéricas
+            const range = XLSX.utils.decode_range(worksheet['!ref']);
+            for (let R = range.s.r; R <= range.e.r; ++R) {
+                for (let C = range.s.c; C <= range.e.c; ++C) {
+                    if (rightAlignColIndexes.includes(C)) {
+                        const cell_address = XLSX.utils.encode_cell({r:R, c:C});
+                        if (!worksheet[cell_address]) continue;
+                        
+                        // Crear o actualizar el estilo de la celda
+                        worksheet[cell_address].s = worksheet[cell_address].s || {};
+                        worksheet[cell_address].s.alignment = worksheet[cell_address].s.alignment || {};
+                        worksheet[cell_address].s.alignment.horizontal = 'right';
+                        
+                        // Formato numérico para valores que parecen números
+                        if (!isNaN(parseFloat(worksheet[cell_address].v))) {
+                            worksheet[cell_address].t = 'n'; // Tipo numérico
+                            worksheet[cell_address].z = '#,##0.00'; // Formato con separador de miles y 2 decimales
+                        }
+                    }
+                }
+            }
+
+            // Agregar hoja al libro
+            XLSX.utils.book_append_sheet(
+                workbook, 
+                worksheet, 
+                `Reporte_${sheetNum + 1}`
+            );
+        }
+
+        // Generar nombre de archivo con fecha
+        const fecha = new Date().toLocaleDateString('es-CO').replace(/\//g, '-');
+        const filename = `Reporte_Exogena_${fecha}.xlsx`;
+        
+        // Descargar archivo
+        XLSX.writeFile(workbook, filename);
+
+        // Mostrar resultado final
+        Swal.fire({
+            icon: 'success',
+            title: 'Descarga exitosa',
+            html: `Archivo generado con:<br>
+                   <strong>${tablaExcel.length.toLocaleString()}</strong> registros totales<br>
+                   <strong>${totalSheets}</strong> hojas de cálculo<br>
+                   <strong>~${MAX_ROWS_PER_SHEET.toLocaleString()}</strong> filas por hoja`,
+            timer: 5000
+        });
+
+    } catch (error) {
+        console.error("Error al generar Excel:", error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error en la exportación',
+            html: `Ocurrió un problema al generar el archivo.<br><br>
+                   <small>${error.message || 'Error desconocido'}</small>`
+        });
+    }
+};
 
   return (
     <section>
