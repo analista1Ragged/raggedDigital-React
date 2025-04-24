@@ -186,158 +186,118 @@ const InfoExogena = () => {
   };
 
   const descargarReporte = async () => {
-    if (tablaExcel.length === 0) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'No hay datos para descargar',
-            text: 'Por favor, realice una búsqueda antes de descargar el reporte.',
-        });
-        return;
-    }
-
     try {
+        // Verificar si hay datos (opcional, podrías dejarlo en el backend)
+        if (tablaExcel.length === 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'No hay datos para descargar',
+                text: 'Por favor, realice una búsqueda antes de descargar el reporte.',
+            });
+            return;
+        }
+
         // Mostrar progreso
         const loadingSwal = Swal.fire({
-            title: 'Preparando archivo Excel',
-            html: `Procesando ${tablaExcel.length.toLocaleString()} registros...`,
+            title: 'Preparando descarga',
+            html: 'Solicitando archivo Excel al servidor...',
             allowOutsideClick: false,
             didOpen: () => Swal.showLoading()
         });
 
-        // Definir columnas y configuración
-        const columnOrder = [
-            "Periodo", "Tipo_Documento", "Cod_Tipo_Docto", "Numero_identificacion",
-            "Primer_Apellido", "Segundo_Apellido", "Primer_Nombre", "Segundo_nombre",
-            "Razon_social", "Cod_Pais", "Pais", "Cod_Ciudad", "Ciudad", "Auxiliar",
-            "DB", "CR", "SaldoFinal"
-        ];
-
-        // Columnas que deben alinearse a la derecha (normalmente las numéricas)
-        const rightAlignColumns = ["DB", "CR", "SaldoFinal"];
-
-        // Configuración de paginación
-        const MAX_ROWS_PER_SHEET = 400000;
-        const CHUNK_SIZE = 50000;
-        const totalSheets = Math.ceil(tablaExcel.length / MAX_ROWS_PER_SHEET);
-        
-        // Crear nuevo libro de trabajo
-        const workbook = XLSX.utils.book_new();
-
-        // Procesar cada hoja necesaria
-        for (let sheetNum = 0; sheetNum < totalSheets; sheetNum++) {
-            const startRow = sheetNum * MAX_ROWS_PER_SHEET;
-            const endRow = Math.min((sheetNum + 1) * MAX_ROWS_PER_SHEET, tablaExcel.length);
-            const sheetData = tablaExcel.slice(startRow, endRow);
-            
-            // Actualizar progreso
-            Swal.update({
-                html: `Generando hoja ${sheetNum + 1}/${totalSheets}<br>
-                       Filas: ${startRow.toLocaleString()} - ${endRow.toLocaleString()} de ${tablaExcel.length.toLocaleString()}`
-            });
-
-            // Procesar en chunks para no bloquear el UI
-            const worksheet = XLSX.utils.json_to_sheet([], { header: columnOrder });
-            
-            for (let i = 0; i < sheetData.length; i += CHUNK_SIZE) {
-                const chunk = sheetData.slice(i, i + CHUNK_SIZE);
-                
-                const datosOrdenados = chunk.map(row => {
-                    const orderedRow = {};
-                    columnOrder.forEach(col => {
-                        orderedRow[col] = row[col] ?? '';
-                    });
-                    return orderedRow;
-                });
-
-                // Agregar datos al worksheet
-                XLSX.utils.sheet_add_json(worksheet, datosOrdenados, {
-                    header: columnOrder,
-                    skipHeader: i > 0 || sheetNum > 0,
-                    origin: i === 0 && sheetNum === 0 ? 'A1' : -1
-                });
-
-                // Liberar el event loop periódicamente
-                if (i % (CHUNK_SIZE * 2) === 0) {
-                    await new Promise(resolve => setTimeout(resolve, 0));
-                }
+        // Llamar al endpoint de descarga
+        const response = await fetch(`${urlapi}/descargar-reporte`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                // Si necesitas autenticación:
+                'Authorization': `Bearer ${localStorage.getItem('token')}` 
             }
+        });
 
-            // Calcular anchos de columnas
-            worksheet['!cols'] = columnOrder.map(col => {
-                let maxLength = col.length;
-                const sampleSize = Math.min(100, sheetData.length);
-                for (let i = 0; i < sampleSize; i++) {
-                    const value = sheetData[i][col];
-                    if (value != null) {
-                        maxLength = Math.max(maxLength, String(value).length);
-                    }
-                }
-                return { wch: Math.min(maxLength, 50) };
-            });
-
-            // Aplicar alineación a la derecha para columnas numéricas
-            if (!worksheet['!rows']) worksheet['!rows'] = [];
-            
-            // Obtener índices de las columnas a alinear
-            const rightAlignColIndexes = rightAlignColumns.map(col => columnOrder.indexOf(col));
-            
-            // Aplicar estilo a todas las celdas de las columnas numéricas
-            const range = XLSX.utils.decode_range(worksheet['!ref']);
-            for (let R = range.s.r; R <= range.e.r; ++R) {
-                for (let C = range.s.c; C <= range.e.c; ++C) {
-                    if (rightAlignColIndexes.includes(C)) {
-                        const cell_address = XLSX.utils.encode_cell({r:R, c:C});
-                        if (!worksheet[cell_address]) continue;
-                        
-                        // Crear o actualizar el estilo de la celda
-                        worksheet[cell_address].s = worksheet[cell_address].s || {};
-                        worksheet[cell_address].s.alignment = worksheet[cell_address].s.alignment || {};
-                        worksheet[cell_address].s.alignment.horizontal = 'right';
-                        
-                        // Formato numérico para valores que parecen números
-                        if (!isNaN(parseFloat(worksheet[cell_address].v))) {
-                            worksheet[cell_address].t = 'n'; // Tipo numérico
-                            worksheet[cell_address].z = '#,##0.00'; // Formato con separador de miles y 2 decimales
-                        }
-                    }
-                }
-            }
-
-            // Agregar hoja al libro
-            XLSX.utils.book_append_sheet(
-                workbook, 
-                worksheet, 
-                `Reporte_${sheetNum + 1}`
-            );
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Error al descargar el reporte');
         }
 
-        // Generar nombre de archivo con fecha
-        const fecha = new Date().toLocaleDateString('es-CO').replace(/\//g, '-');
-        const filename = `Reporte_Exogena_${fecha}.xlsx`;
+        // Obtener el blob (archivo binario)
+        const blob = await response.blob();
         
-        // Descargar archivo
-        XLSX.writeFile(workbook, filename);
+        // Crear URL temporal para descarga
+        const downloadUrl = window.URL.createObjectURL(blob);
+        
+        // Crear elemento <a> invisible para forzar la descarga
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        
+        // Obtener el nombre del archivo del header Content-Disposition
+        const contentDisposition = response.headers.get('content-disposition');
+        let filename = 'Reporte_Exogena.xlsx';
+        
+        if (contentDisposition) {
+            const filenameMatch = contentDisposition.match(/filename="?(.+)"?/);
+            if (filenameMatch && filenameMatch[1]) {
+                filename = filenameMatch[1];
+            }
+        }
+        
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        
+        // Limpiar
+        window.URL.revokeObjectURL(downloadUrl);
+        document.body.removeChild(a);
 
-        // Mostrar resultado final
+        // Cerrar loading y mostrar éxito
         Swal.fire({
             icon: 'success',
             title: 'Descarga exitosa',
-            html: `Archivo generado con:<br>
-                   <strong>${tablaExcel.length.toLocaleString()}</strong> registros totales<br>
-                   <strong>${totalSheets}</strong> hojas de cálculo<br>
-                   <strong>~${MAX_ROWS_PER_SHEET.toLocaleString()}</strong> filas por hoja`,
-            timer: 5000
+            text: 'El archivo se ha descargado correctamente',
+            timer: 3000
         });
 
     } catch (error) {
-        console.error("Error al generar Excel:", error);
+        console.error("Error al descargar reporte:", error);
         Swal.fire({
             icon: 'error',
-            title: 'Error en la exportación',
-            html: `Ocurrió un problema al generar el archivo.<br><br>
+            title: 'Error en la descarga',
+            html: `Ocurrió un problema al descargar el archivo.<br><br>
                    <small>${error.message || 'Error desconocido'}</small>`
         });
+    } finally {
+        Swal.close();
     }
+};
+
+const excelReporteExogena = async () => {
+  const requestData = {
+    Cuenta: cuentaAux,
+    PeriodoInicial: periodoI,
+    PeriodoFinal: periodoF,
+    Acumulado: check,
+    Tercero: tercero || null
+  };
+
+  try {
+    const response = await fetch(`${urlapi}/exogena/get-reporte-excel`, {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(requestData),
+    });
+
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Reporte_Exogena.xlsx';
+    a.click();
+  } catch (error) {
+    console.error("Error al descargar reporte:", error);
+  }
 };
 
   return (
