@@ -68,6 +68,7 @@ const transformData = (list, handleIconClick) => {
     abono:item[11]|| 'N/A',
     saldo:item[12]|| 'N/A',
     state:item[9]|| 'N/A'
+    
   }));
 };
 
@@ -334,7 +335,7 @@ const initialFiltersCartera = useMemo(() => ({
       <a href="/RaggedDigital/Home" className="left" title="volver">
         <i className="bi bi-arrow-left-circle"></i>
       </a>
-      {'  '} Consulta Cartera RagStyle
+      {'  '} Consulta Cartera Clientes
     </h2>
     <h3>
       <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
@@ -407,6 +408,7 @@ const initialFiltersCartera = useMemo(() => ({
               <th scope="col">Saldo Factura</th>
               <th scope="col">Estado</th>
               <th scope="col">Ver Detalle NC</th>
+              <th scope="col">Ver Cupo Cliente</th>
             </tr>
             <FilterRowCartera filtersCartera={filtersCartera} handleFilter={handleFilter} handleButtonClick={handleButtonClick}/>
           </thead>
@@ -425,6 +427,7 @@ const initialFiltersCartera = useMemo(() => ({
                 <td>{item.saldoFactura}</td>
                 <td><EstadoFactura estado={item.estado} /></td>
                 <td>{item.ver_detalle_NC}</td>
+                <td>{item.ver_detalle_NC}</td>
               </tr>
             ))}
           </tbody>
@@ -435,7 +438,7 @@ const initialFiltersCartera = useMemo(() => ({
               <td colSpan="2"></td>
               <td className="total-value">{total[1]}</td>
               <td className="total-value">{total[2]}</td>
-              <td colSpan="2"></td>
+              <td colSpan="3"></td>
             </tr>
           </tfoot>
         </table>

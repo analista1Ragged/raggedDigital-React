@@ -311,7 +311,7 @@ const Marketplace = () => {
   
       console.log("Enviando al backend:", requestData);
   
-      const response = await fetch(`${urlapi}/Marketplace/get-ReporteMarket`, {
+      const response = await fetch(`${urlapi}/Marketplace/get-ReporteMarket`,{
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestData),
@@ -359,6 +359,8 @@ const Marketplace = () => {
       Swal.close();
     }
   };
+
+  
   
   console.log("Selected values for Falabella:", {
     marketplace: selectedMarketplace,

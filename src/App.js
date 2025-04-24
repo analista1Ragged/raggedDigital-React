@@ -44,6 +44,7 @@ import {
 
 
 //export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
+//export const urlapi = 'https://Ragged.app/RaggedDigitalAPI'
 export const urlapi = 'http://127.0.0.1:5000/RaggedDigitalAPI';
 
 const PrivateRoute = ({ element }) => {
