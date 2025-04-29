@@ -270,35 +270,6 @@ const InfoExogena = () => {
     }
 };
 
-const excelReporteExogena = async () => {
-  const requestData = {
-    Cuenta: cuentaAux,
-    PeriodoInicial: periodoI,
-    PeriodoFinal: periodoF,
-    Acumulado: check,
-    Tercero: tercero || null
-  };
-
-  try {
-    const response = await fetch(`${urlapi}/exogena/get-reporte-excel`, {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify(requestData),
-    });
-
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'Reporte_Exogena.xlsx';
-    a.click();
-  } catch (error) {
-    console.error("Error al descargar reporte:", error);
-  }
-};
 
   return (
     <section>

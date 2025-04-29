@@ -26,52 +26,52 @@ const EstadoFactura = ({ estadoVtex }) => {
       text = "Sin Importar";
       break;
     case "Comprometido":
-      color = '#FFA500';
+      color = '#FFA500'; // Naranja
       text = estadoVtex;
       break;
     case "Elaboracion":
-      color = '#BD8989';
+      color = '#BD8989'; // Naranja claro
       text = estadoVtex;
       break;
     case "Aprobado":
-      color = '#42A2C2';
+      color = '#42A2C2'; // Azul 
       text = estadoVtex;
       break;
 //Vtex
     case 'Guia Descargada':
-      color = '#42A2C2';
+      color = '#42A2C2'; //Azul
       text = estadoVtex;
       break;
     case 'ready for handling':
-      color = '#e3310e';
+      color = '#e3310e'; 
       text = estadoVtex;
       break;
     case "Cancelado":
-      color = '#FF5050';
+      color = '#FF5050'; //Rojo
       text = estadoVtex;
       break;
     case "Pendiente de pago":
-      color = '#FFA500';
+      color = '#FFA500'; //Naranja
       text = estadoVtex;
       break;
     case "Facturado":
-      color = '#87d068';
+      color = '#87d068'; //Verde
       text = estadoVtex;
       break;
     case "Preparacion":
-        color = '#BD8989';
+        color = '#BD8989'; // Naranja claro 
         text = estadoVtex;
         break;
     case 'window-to-cancel':
-        color = '#950ee3';
+        color = '#950ee3'; // Morado
         text = estadoVtex;
         break;
     case 'payment-approved':
-      color = '#42A2C2';
+      color = '#42A2C2'; // Azul
       text = estadoVtex;
       break;
     default:
-      color = '#4f5d56';
+      color = '#4f5d56'; // Gris
       text = 'error';
       break;
   }

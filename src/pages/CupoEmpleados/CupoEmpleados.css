@@ -1,0 +1,17 @@
+/* Estilos para las celdas */
+.excede-cupo {
+    background-color: #FF5050; /* Rojo */
+  }
+  
+  .no-excede-cupo {
+    background-color: #87d068; /* Verde */
+  }
+
+  .inline-components3 {
+    display: flex;
+    align-items: center; 
+    gap: 10px;
+    margin-bottom: 50px;  
+  }
+
+  

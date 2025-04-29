@@ -61,9 +61,9 @@ const menuItems = [
         items: [
           {
             key: '3.1.1',
-            title: 'Logs terceros',
-            icon: <TbFaceIdError />,
-            path: "/Mercadeo/Tiendas/Inconsistencias",
+            title: 'Cupo Empleados',
+            icon: <HiCreditCard />,
+            path: "/Mercadeo/Tiendas/CupoEmpleados",
           },
           {
             key: '3.1.2',
@@ -80,6 +80,12 @@ const menuItems = [
           {
             key: '3.1.4',
             title: "Escalas de precios",
+            icon: <PiEscalatorUpBold />,
+            path: "/Maestros/EscalasPrecios",
+          },
+          {
+            key: '3.1.5',
+            title: "Logs terceros",
             icon: <PiEscalatorUpBold />,
             path: "/Maestros/EscalasPrecios",
           },
@@ -129,12 +135,12 @@ const menuItems = [
             icon: <MdOutlinePostAdd />,
             path: "/ecommerce/VentaDirecta/PublicarCatalogo",
           },
-          {
+          {/*
             key: '3.4.3',
             title: 'Consulta Cupo Cliente',
             icon: <HiCreditCard />,
             path: "/Logistica/CanalDigital/CupoCliente",
-          },
+          */},
         ],
       },
       {

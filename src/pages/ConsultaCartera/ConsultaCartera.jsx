@@ -39,7 +39,7 @@ const EstadoFactura = ({ estado }) => {
 
 
 
-const transformData = (list, handleIconClick) => {
+const transformData = (list, handleIconClick, managecustomerquota) => {
   if (!Array.isArray(list)) {
     console.error("Expected an array but received:", list);
     return [];
@@ -60,6 +60,12 @@ const transformData = (list, handleIconClick) => {
     estado: String(item[9]) || 'N/A',
     ver_detalle_NC: (
       <button onClick={() => handleIconClick(index,item[4])} className="icon-button">
+        <i className="bi bi-eye" title='Ver Detalle'></i>
+      </button>
+    ),
+    
+    ver_cupo_cliente: (
+      <button onClick={() => managecustomerquota(index,item[4])} className="icon-button">
         <i className="bi bi-eye" title='Ver Detalle'></i>
       </button>
     ),
@@ -171,7 +177,37 @@ const ConsultaCartera = () => {
     setPageSize(size);
   };
 
+  // Función para manejar funcion ver Notas Credito
   const handleIconClick = async (index, data) => {
+    const nroFactura = data;
+    console.log('Detalles de la fila:', data);
+
+    try {
+      Swal.fire({
+        title: `Consultando Abonos de \n${nroFactura}`,
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      const response = await axios.post(`${urlapi}/get-facturas-detalle`, {
+        nroFactura: nroFactura
+      });
+
+      const facturaDetalles = response.data;
+      console.log(facturaDetalles)
+      setModalData(facturaDetalles); // Guardar los datos en el estado
+      Swal.close();
+      setModal1Visible(true); // Mostrar el modal
+    } catch (error) {
+      console.error('Error fetching factura details:', error);
+      Swal.fire('Error', 'Hubo un problema al consultar los detalles de la factura.', 'error');
+    }
+  };
+
+  // Función para manejar funcion ver Cupo Cliente
+  const managecustomerquota = async (index, data) => {
     const nroFactura = data;
     console.log('Detalles de la fila:', data);
 
@@ -204,6 +240,9 @@ const ConsultaCartera = () => {
     console.log('Clientes seleccionados:', selected);
     setSelectedClientes(selected);
   };
+
+
+
 
   const handleNombresChange = (selected) => {
     console.log('Nombres seleccionadas:', selected);
@@ -260,7 +299,7 @@ const ConsultaCartera = () => {
         const dataWithoutLastLine = response.data.slice(0, -1);
 
         // Transformar y actualizar los datos
-        const transformedData = transformData(dataWithoutLastLine, handleIconClick);
+        const transformedData = transformData(dataWithoutLastLine, handleIconClick, managecustomerquota);
         setData(transformedData);
         setExcel(transformedData);
         
@@ -427,7 +466,7 @@ const initialFiltersCartera = useMemo(() => ({
                 <td>{item.saldoFactura}</td>
                 <td><EstadoFactura estado={item.estado} /></td>
                 <td>{item.ver_detalle_NC}</td>
-                <td>{item.ver_detalle_NC}</td>
+                <td>{item.ver_cupo_cliente}</td>
               </tr>
             ))}
           </tbody>

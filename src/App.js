@@ -25,7 +25,7 @@ import {
   Layout,
   ReporteDane,
   Marketplace,
-  CupoCliente,
+  CupoEmpleados,
   InfoExogena,
   LogsTerceros,
   PagoProveedores
@@ -260,9 +260,9 @@ function App() {
             <PublicarCatalogo />
           </div>
         } />
-        <Route path='/Logistica/CanalDigital/CupoCliente' element={
+        <Route path='/Mercadeo/Tiendas/CupoEmpleados' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <CupoCliente />
+            <CupoEmpleados />
           </div>
         } />
         <Route path='/Maestros/Referencias' element={

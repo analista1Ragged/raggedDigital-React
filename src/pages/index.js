@@ -17,7 +17,7 @@ export { default as EscalasPrecios } from './EscalasPrecios/EscalasPrecios';
 export { default as Layout } from './Layout';
 export { default as ReporteDane } from './ReporteDane/ReporteDane';
 export { default as Marketplace } from './Marketplace/Marketplace';
-export { default as CupoCliente } from './CupoCliente/CupoCliente';
+export { default as CupoEmpleados } from './CupoEmpleados/CupoEmpleados';
 export { default as InfoExogena } from './InfoExogena/InfoExogena';
 export { default as LogsTerceros } from './Tiendas/LogsTerceros';
 export { default as PagoProveedores } from './PagoProveedores/PagoProveedores';
