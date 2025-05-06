@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal } from 'antd';
 
+//Este es el componente modal OK
 const ModalCartera = ({ modal1Visible, setModal1Visible, modalData = [] }) => {
   return (
     <Modal

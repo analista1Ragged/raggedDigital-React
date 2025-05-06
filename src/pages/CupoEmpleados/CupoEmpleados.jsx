@@ -22,7 +22,7 @@ const buscarCliente = async (cedula, setClienteData) => {
   });
 
   try {
-    const response = await fetch(urlapi + '/api/cliente', {
+    const response = await fetch(urlapi + '/api/cupoEmpleados', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

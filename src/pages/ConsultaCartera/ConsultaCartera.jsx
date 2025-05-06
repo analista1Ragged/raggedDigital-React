@@ -9,6 +9,7 @@ import BuscarButton from '../../components/BotonBuscar/BotonBuscar.jsx';
 import BuscarLimpiar from '../../components/BotonLimpiar/BotonLimpiar.jsx';
 import SeleccionarFecha from '../../components/SeleccionarFecha/SeleccionarFecha.jsx';
 import ModalCartera from '../../components/ModalMenu/ModalMenu.jsx';
+import ModalCupoCliente from '../../components/ModalCliente/ModalCliente.jsx';
 import MultiSelector from '../../components/MultiSelector/MultiSelector.jsx';
 import { urlapi } from '../../App.js';
 import Swal from 'sweetalert2';
@@ -65,8 +66,8 @@ const transformData = (list, handleIconClick, managecustomerquota) => {
     ),
     
     ver_cupo_cliente: (
-      <button onClick={() => managecustomerquota(index,item[4])} className="icon-button">
-        <i className="bi bi-eye" title='Ver Detalle'></i>
+      <button onClick={() => managecustomerquota(index, item[0])} className="icon-button">
+        <i className="bi bi-eye" title='Ver Cupo'></i>
       </button>
     ),
 
@@ -97,6 +98,7 @@ const ConsultaCartera = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [modal1Visible, setModal1Visible] = useState(false);
+  const [modal2Visible, setModal2Visible] = useState(false);
   const [listaClientes, setListaClientes] = useState([]);
   const [listaFacturas, setListaFacturas] = useState([]);
   const [selectedClientes, setSelectedClientes] = useState([]);
@@ -105,6 +107,7 @@ const ConsultaCartera = () => {
   const [date1, setDate1] = useState(null);
   const [date2, setDate2] = useState(null);
   const [modalData, setModalData] = useState([]);
+  const [modalData2, setModalData2] = useState([]);
   const [total,setTotal] = useState([]);
   
   
@@ -208,30 +211,55 @@ const ConsultaCartera = () => {
 
   // Función para manejar funcion ver Cupo Cliente
   const managecustomerquota = async (index, data) => {
-    const nroFactura = data;
-    console.log('Detalles de la fila:', data);
-
+    const documento = String(data);
+    console.log('Consultando cupo para documento:', documento);
+  
     try {
       Swal.fire({
-        title: `Consultando Abonos de \n${nroFactura}`,
+        title: `Consultando Cupo de \n${documento}`,
         allowOutsideClick: false,
         showConfirmButton: false,
-        didOpen: () => {
-          Swal.showLoading();
+        didOpen: () => Swal.showLoading(),
+      });
+  
+      const response = await axios.post(`${urlapi}/api/cliente`, {
+        documento: documento
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
         }
       });
-      const response = await axios.post(`${urlapi}/get-facturas-detalle`, {
-        nroFactura: nroFactura
-      });
-
-      const facturaDetalles = response.data;
-      console.log(facturaDetalles)
-      setModalData(facturaDetalles); // Guardar los datos en el estado
+  
+      console.log('Respuesta completa:', response);
+  
+      if (!response.data.success) {
+        throw new Error(response.data.error || 'Error desconocido del servidor');
+      }
+  
+      // Asegúrate que los datos vienen en el formato esperado
+      const clienteData = response.data.data;
+      
+      if (!clienteData || clienteData.length === 0) {
+        throw new Error('No se encontraron datos del cliente');
+      }
+  
+      setModalData2(clienteData);
+      setModal2Visible(true);
       Swal.close();
-      setModal1Visible(true); // Mostrar el modal
+  
     } catch (error) {
-      console.error('Error fetching factura details:', error);
-      Swal.fire('Error', 'Hubo un problema al consultar los detalles de la factura.', 'error');
+      console.error('Error detallado:', {
+        message: error.message,
+        response: error.response?.data
+      });
+      
+      Swal.fire({
+        title: "Error",
+        text: error.response?.data?.error || 
+              error.message || 
+              "No se pudo obtener la información del cliente",
+        icon: "error"
+      });
     }
   };
 
@@ -315,18 +343,18 @@ const ConsultaCartera = () => {
     }
 };
 
-const initialFiltersCartera = useMemo(() => ({
-  documento: '',
-  nombre: '',
-  fecha: '',
-  nroFactura: '',
-  valorFactura: '',
-  fechaVenc: '',
-  diasCart: '',
-  valorAbono: '',
-  saldoFactura: '',
-  estado: ''
-}), []);
+  const initialFiltersCartera = useMemo(() => ({
+    documento: '',
+    nombre: '',
+    fecha: '',
+    nroFactura: '',
+    valorFactura: '',
+    fechaVenc: '',
+    diasCart: '',
+    valorAbono: '',
+    saldoFactura: '',
+    estado: ''
+  }), []);
 
 
   const formRef = useRef();
@@ -500,6 +528,12 @@ const initialFiltersCartera = useMemo(() => ({
       modal1Visible={modal1Visible}
       setModal1Visible={setModal1Visible}
       modalData={modalData}
+    />
+
+    <ModalCupoCliente
+      modal2Visible={modal2Visible}
+      setModal2Visible={setModal2Visible}
+      modalData2={modalData2}
     />
   </div>
 </section>

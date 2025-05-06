@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaFileInvoiceDollar, FaIdCard } from "react-icons/fa";
 
 const FilterRowCartera = ({ filtersCartera, handleFilter}) => {
   const columns = ['documento', 'nombre', 'fecha','nroFactura','valorFactura', 'fechaVenc', 'diasCart', 'valorAbono',
@@ -19,8 +20,8 @@ const FilterRowCartera = ({ filtersCartera, handleFilter}) => {
           />
         </th>
       ))}
-      <th scope="col"></th>
-      <th scope="col"></th>
+      <th scope="col"><FaFileInvoiceDollar style={{ color: 'white', fontSize: '20px', width: '24px', height: '24px' }} /></th>
+      <th scope="col"><FaIdCard style={{ color: 'white', fontSize: '20px', width: '24px', height: '24px' }} /></th>
       {/*<th scope="col"></th>*/}
     </tr>
   );

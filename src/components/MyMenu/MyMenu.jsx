@@ -60,6 +60,12 @@ const menuItems = [
         icon: <AiOutlineAppstore />,
         items: [
           {
+            key: '3.1.0',
+            title: 'Cartera Clientes',
+            icon: <FaMoneyBill />,
+            path: "/Mercadeo/Raqstyle/Cartera",
+          },
+          {
             key: '3.1.1',
             title: 'Cupo Empleados',
             icon: <HiCreditCard />,
@@ -86,7 +92,7 @@ const menuItems = [
           {
             key: '3.1.5',
             title: "Logs terceros",
-            icon: <PiEscalatorUpBold />,
+            icon: <TbFaceIdError />,
             path: "/Maestros/EscalasPrecios",
           },
         ],
@@ -96,13 +102,13 @@ const menuItems = [
         title: "RagStyle",
         icon: <AiOutlineHome />,
         items: [
-          {
+          {/*
             key: '3.2.1',
             title: 'Consulta Cartera',
             icon: <FaMoneyBill />,
             path: "/Mercadeo/Raqstyle/Cartera",
             //items: [{ key: '2.1.1', title: 'Option 2.1.1' }],
-          },
+          */},
           {
             key: '3.2.2',
             title: 'Inventario Disponible',
