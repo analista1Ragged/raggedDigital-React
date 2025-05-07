@@ -1,0 +1,59 @@
+/* Estilo para el título del modal */
+.modal-with-title-line .ant-modal-title {
+    position: relative;
+    padding-bottom: 12px;
+  }
+  
+  .modal-with-title-line .ant-modal-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #f0f0f0;
+  }
+  
+  /* Contenedor principal */
+  .documento-container {
+    margin-bottom: 16px;
+  }
+  
+  /* Título del documento */
+  .documento-title {
+    margin-bottom: 12px;
+    color: #000; /* Color azul de Ant Design */
+  }
+  
+  /* Grid de dos columnas */
+  .documento-grid {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 8px 16px;
+    align-items: baseline;
+  }
+  
+  /* Cada fila de datos */
+  .documento-row {
+    display: contents;
+  }
+  
+  /* Estilo para las etiquetas (columna izquierda) */
+  .documento-label {
+    font-weight: bold;
+    white-space: nowrap;
+    padding-right: 8px;
+  }
+  
+  /* Estilo para los valores (columna derecha) */
+  .documento-value {
+    word-break: break-word;
+    margin-left: 50px;
+  }
+  
+  /* Divisor entre documentos */
+  .documento-divider {
+    margin: 16px 0;
+    border: none;
+    border-top: 1px solid #f0f0f0;
+  }

@@ -48,6 +48,8 @@ const transformData = (list, handleIconClick, managecustomerquota) => {
   
 
   return list.map((item, index) => ({
+
+
     item: index + 1,
     documento: item[0] || 'N/A',
     nombre: item[1] || 'N/A',
@@ -216,7 +218,7 @@ const ConsultaCartera = () => {
   
     try {
       Swal.fire({
-        title: `Consultando Cupo de \n${documento}`,
+        title: `Consultando Cupo Cliente`,
         allowOutsideClick: false,
         showConfirmButton: false,
         didOpen: () => Swal.showLoading(),
@@ -484,7 +486,7 @@ const ConsultaCartera = () => {
               <tr key={index}>
                 <td>{item.item}</td>
                 <td>{item.documento}</td>
-                <td>{item.nombre}</td>
+                <td class="align-left">{item.nombre}</td>
                 <td>{item.fecha}</td>
                 <td>{item.nroFactura}</td>
                 <td>{item.valorFactura}</td>

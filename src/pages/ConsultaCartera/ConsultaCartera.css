@@ -49,6 +49,10 @@ section {
   
 }
 
+.align-left {
+  text-align: left !important;
+}
+
 
 .inline-components2 .boton {
   margin-top: -10px; /* Ajusta este valor según sea necesario */

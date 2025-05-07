@@ -55,16 +55,23 @@ const menuItems = [
     icon: <FaRegHandshake />,
     items: [
       {
-        key: "3.1",
-        title: "Tiendas",
-        icon: <AiOutlineAppstore />,
+        key: "3.0",
+        title: "Cartera Clientes",
+        icon: <IoWalletSharp />,
         items: [
           {
-            key: '3.1.0',
+            key: '3.0.1',
             title: 'Cartera Clientes',
             icon: <FaMoneyBill />,
             path: "/Mercadeo/Raqstyle/Cartera",
           },
+        ],
+      },
+      {
+        key: "3.1",
+        title: "Tiendas",
+        icon: <AiOutlineAppstore />,
+        items: [
           {
             key: '3.1.1',
             title: 'Cupo Empleados',

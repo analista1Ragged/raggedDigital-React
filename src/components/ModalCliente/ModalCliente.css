@@ -1,0 +1,38 @@
+/* CSS */
+.detalle-grid-container {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 8px 16px;
+    align-items: center;
+  }
+  
+  .grid-row {
+    display: contents; /* Hace que los hijos participen directamente en el grid */
+  }
+  
+  .grid-label {
+    font-weight: bold;
+    padding-right: 16px;
+    white-space: nowrap;
+  }
+  
+  .grid-value {
+    word-break: break-word;
+    margin-left: 50px; /* Añade este margen izquierdo */
+  }
+
+  /* En ModalCliente.css */
+.ant-modal-title {
+    position: relative;
+    padding-bottom: 12px;
+  }
+  
+  .ant-modal-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #343a40;
+  }
