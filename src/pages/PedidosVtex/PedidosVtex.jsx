@@ -591,9 +591,9 @@ const PedidosVtex = () => {
                   <td>{item.almacen}</td>
                   <td>{item.pedidoVtex}</td>
                   <td>{item.pedidoERP}</td>
-                  <td>{item.cliente}</td>
+                  <td class="align-left">{item.cliente}</td>
                   <td>{item.formaDePago}</td>
-                  <td>{item.vrPedido}</td>
+                  <td className="text-right">{item.vrPedido}</td>
                   <td>{item.fechaPedido}</td>
                   <td><EstadoFactura estadoVtex={item.estadoVtex} /></td>
                   <td><EstadoFactura estadoVtex={item.estadoSiesa} /></td>

@@ -489,11 +489,11 @@ const ConsultaCartera = () => {
                 <td class="align-left">{item.nombre}</td>
                 <td>{item.fecha}</td>
                 <td>{item.nroFactura}</td>
-                <td>{item.valorFactura}</td>
+                <td className="text-right">{item.valorFactura}</td>
                 <td>{item.fechaVenc}</td>
                 <td>{item.diasCart}</td>
-                <td>{item.valorAbono}</td>
-                <td>{item.saldoFactura}</td>
+                <td className="text-right">{item.valorAbono}</td>
+                <td className="text-right">{item.saldoFactura}</td>
                 <td><EstadoFactura estado={item.estado} /></td>
                 <td>{item.ver_detalle_NC}</td>
                 <td>{item.ver_cupo_cliente}</td>

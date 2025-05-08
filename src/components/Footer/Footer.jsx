@@ -47,8 +47,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <p><strong>&copy; {currentYear} Ragged. Todos los derechos reservados.</strong></p>
-        <p>V-004</p>
+        <p><strong>&copy; {currentYear} Ragged - Todos los derechos reservados. V-004</strong></p>
       </div>
     </footer>
   );

@@ -9,7 +9,7 @@
   background-position: center; /* Centra la imagen */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
   color: #fff; /* Color del texto */
-  padding: 10px 0; /* Espaciado interno superior e inferior */
+  height: 130px;  
 }
    
 /* Estilo para la sección superior del footer */
@@ -88,9 +88,9 @@
 /* Estilo para la sección inferior del footer */
 .footer-bottom {
   text-align: center; /* Alineación del texto al centro */
-  padding: 10px 0; /* Espaciado interno superior e inferior */
-  border-top: 1px solid #444; /* Borde superior */
-  margin-top: 20px; /* Espaciado superior */
+  padding: 0; /* Espaciado interno superior e inferior */
+  /*border-top: 1px solid #444;  Borde superior */
+  align-items: center;
 }
 
 /* Media queries para hacer responsivo el footer */
