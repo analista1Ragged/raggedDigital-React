@@ -72,7 +72,7 @@ const EstadoFactura = ({ estadoVtex }) => {
       break;
     default:
       color = '#4f5d56'; // Gris
-      text = 'error';
+      text = 'cancelando';
       break;
   }
 
