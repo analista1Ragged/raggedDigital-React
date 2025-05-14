@@ -108,7 +108,7 @@ section {
 }
 
 /* Media Queries para responsividad */
-@media (max-width: 1600px) {
+@media (max-width: 1200px) {
   section {
     max-width: 1000px;
   }

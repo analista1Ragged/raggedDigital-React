@@ -4,7 +4,7 @@
     align-items: center;
     margin: 0% 7%; /* Elimina el margen superior cambiándolo a 0 */
     flex-wrap: wrap; /* Permite que los elementos se envuelvan en líneas nuevas */
-    
+    max-width: 1200px;
 }
 
 

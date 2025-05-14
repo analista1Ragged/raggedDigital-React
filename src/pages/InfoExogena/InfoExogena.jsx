@@ -185,7 +185,7 @@ const InfoExogena = () => {
     }
   };
 
-  const descargarReporte = async () => {
+  /*const descargarReporte = async () => {
     try {
         // Verificar si hay datos (opcional, podrías dejarlo en el backend)
         if (tablaExcel.length === 0) {
@@ -268,6 +268,66 @@ const InfoExogena = () => {
     } finally {
         Swal.close();
     }
+};*/
+
+const descargarReporteZip = async () => {
+  try {
+      if (tablaExcel.length === 0) {
+          Swal.fire('Error', 'No hay datos para exportar', 'error');
+          return;
+      }
+
+      const loadingSwal = Swal.fire({
+          title: 'Generando archivos...',
+          html: `Preparando ${Math.ceil(tablaExcel.length / 100000)} archivos...`,
+          allowOutsideClick: false,
+          didOpen: () => Swal.showLoading()
+      });
+
+      // Enviar todos los datos al backend
+      const response = await fetch(`${urlapi}/descargar-reporte-zip`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify({ datos: tablaExcel })
+      });
+
+      if (!response.ok) {
+          throw new Error(await response.text());
+      }
+
+      // Descargar el ZIP
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Reporte_Exogena_${new Date().toISOString().slice(0,10)}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      
+      // Limpiar
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
+      Swal.fire({
+          icon: 'success',
+          title: 'Descarga completada',
+          text: `Se han generado ${Math.ceil(tablaExcel.length / 100000)} archivos en formato ZIP`,
+          timer: 5000
+      });
+
+  } catch (error) {
+      console.error("Error:", error);
+      Swal.fire({
+          icon: 'error',
+          title: 'Error en la descarga',
+          text: error.message || 'Error al generar los archivos'
+      });
+  } finally {
+      Swal.close();
+  }
 };
 
 
@@ -333,7 +393,7 @@ const InfoExogena = () => {
               />
 
               <BuscarButton onClick={traerReporteExogena} />
-              <BotonDescargar onClick={descargarReporte} />
+              <BotonDescargar onClick={descargarReporteZip} />
             </div>
           </div>
         </form>

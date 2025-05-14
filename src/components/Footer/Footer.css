@@ -98,6 +98,7 @@
   .footer-top {
     flex-direction: column; /* Cambia a disposición de columna */
     align-items: center; /* Alinea al centro horizontalmente */
+    height: px;
   }
 
   .footer-column {
