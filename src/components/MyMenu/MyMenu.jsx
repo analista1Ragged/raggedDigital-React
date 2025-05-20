@@ -9,7 +9,7 @@ import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp,
 import { PiEyeSlashFill, PiPasswordFill, PiUsersFill, PiEscalatorUpBold} from "react-icons/pi";
 import { ImBarcode } from "react-icons/im";
 import { BiDollarCircle } from "react-icons/bi";
-import { MdOutlinePostAdd } from "react-icons/md";
+import { MdOutlinePostAdd, MdOutlineMarkEmailUnread} from "react-icons/md";
 import { TbReportSearch, TbFaceIdError, TbUserDollar} from "react-icons/tb";
 import { BsFolderPlus, BsClipboard2DataFill, BsPersonRaisedHand } from "react-icons/bs";
 import { HiCreditCard } from "react-icons/hi2";
@@ -102,6 +102,12 @@ const menuItems = [
             icon: <TbFaceIdError />,
             path: "/Mercadeo/Tiendas/Inconsistencias",
           },
+          {
+            key: '3.1.6',
+            title: "Validar Email",
+            icon: <MdOutlineMarkEmailUnread />,
+            path: "/Mercadeo/Tiendas/ValidarEmail",
+          },
         ],
       },
       {
@@ -109,13 +115,13 @@ const menuItems = [
         title: "RagStyle",
         icon: <AiOutlineHome />,
         items: [
-          {/*
+          {
             key: '3.2.1',
             title: 'Consulta Cartera',
             icon: <FaMoneyBill />,
             path: "/Mercadeo/Raqstyle/Cartera",
             //items: [{ key: '2.1.1', title: 'Option 2.1.1' }],
-          */},
+          },
           {
             key: '3.2.2',
             title: 'Inventario Disponible',

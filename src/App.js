@@ -30,6 +30,7 @@ import {
   LogsTerceros,
   PagoProveedores,
   CupoCliente,
+  ValidarEmail,
 } from './pages';
 
 import {
@@ -289,6 +290,11 @@ function App() {
         <Route path='/Mercadeo/Tiendas/Inconsistencias' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <LogsTerceros />
+          </div>
+        } />
+        <Route path='/Mercadeo/Tiendas/ValidarEmail' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <ValidarEmail />
           </div>
         } />
 
