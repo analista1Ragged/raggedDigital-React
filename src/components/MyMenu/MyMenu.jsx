@@ -100,7 +100,7 @@ const menuItems = [
             key: '3.1.5',
             title: "Logs terceros",
             icon: <TbFaceIdError />,
-            path: "/Maestros/EscalasPrecios",
+            path: "/Mercadeo/Tiendas/Inconsistencias",
           },
         ],
       },
@@ -148,12 +148,12 @@ const menuItems = [
             icon: <MdOutlinePostAdd />,
             path: "/ecommerce/VentaDirecta/PublicarCatalogo",
           },
-          {/*
+          {
             key: '3.4.3',
             title: 'Consulta Cupo Cliente',
             icon: <HiCreditCard />,
             path: "/Logistica/CanalDigital/CupoCliente",
-          */},
+          },
         ],
       },
       {

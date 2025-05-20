@@ -5,7 +5,7 @@ const FilterRowInventarios = ({ filtersInventario, handleFilter}) => {
 
   return (
     <tr id="filterRowCartera">
-      <th scope="col">Buscar por:</th>
+      <th scope="col">Buscar:</th>
       {columns.map((column, i) => (
         <th scope="col" key={i}>
           <input

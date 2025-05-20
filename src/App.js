@@ -28,7 +28,8 @@ import {
   CupoEmpleados,
   InfoExogena,
   LogsTerceros,
-  PagoProveedores
+  PagoProveedores,
+  CupoCliente,
 } from './pages';
 
 import {
@@ -253,6 +254,11 @@ function App() {
         <Route path='/Logistica/CanalDigital/Vtex' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
             <PedidosVtex />
+          </div>
+        } />
+        <Route path='/Logistica/CanalDigital/CupoCliente' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <CupoCliente />
           </div>
         } />
         <Route path='/Logistica/CanalDigital/Catalogo' element={

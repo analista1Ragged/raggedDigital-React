@@ -26,7 +26,7 @@ const EstadoFactura = ({ estado }) => {
     text = "Vencido";
   } else if (estado === "Por Vencer") {
     color = "#D4B106"; // Amarillo mostaza
-    text = "Por Vencer";
+    text = "Por Vencer"; 
   } else {
     color = "#87d068"; // Verde
     text = "Sin Vencer";
@@ -469,15 +469,15 @@ const ConsultaCartera = () => {
               <th scope="col">Nit</th>
               <th scope="col">Nombre Cliente</th>
               <th scope="col">Fecha</th>
-              <th scope="col">Numero Factura</th>
+              <th scope="col"># Factura</th>
               <th scope="col">Valor Factura</th>
               <th scope="col">Fecha Vencimiento</th>
-              <th scope="col">Dias Cartera</th>
+              <th scope="col"># Dias</th>
               <th scope="col">Valor Abono</th>
               <th scope="col">Saldo Factura</th>
               <th scope="col">Estado</th>
-              <th scope="col">Ver Detalle NC</th>
-              <th scope="col">Ver Cupo Cliente</th>
+              <th scope="col">Ver NC</th>
+              <th scope="col">Ver Cupo</th>
             </tr>
             <FilterRowCartera filtersCartera={filtersCartera} handleFilter={handleFilter} handleButtonClick={handleButtonClick}/>
           </thead>
