@@ -1,75 +1,107 @@
 import React, { useEffect, useState } from "react";
 import "../Tiendas/LogsTerceros.css";
-import { GiClick } from "react-icons/gi";
 import { urlapi } from '../../App.js';
 import Swal from "sweetalert2";
 import Boton from 'src/components/Boton/Boton';
+import * as XLSX from 'xlsx';
+import { Pagination } from 'antd';
+import 'antd/dist/reset.css';
 
-
-
-  const LogsTerceros = () => {
-  const [clientes, setClientes] = useState([]);
+const ValidarEmail = () => {
   const [loading, setLoading] = useState(true);
-  const [pagoData, setPagoData] = useState([]);
+  const [clientData, setClientData] = useState([]);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
-   // Función para obtener los datos del backend
-    const fetchValidarEmail = async () => {
-      setLoading(true);
+  // Función para exportar a Excel
+  const exportToExcel = () => {
+    if (clientData.length === 0) {
       Swal.fire({
-        title: "Cargando datos...",
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
+        icon: "warning",
+        title: "No hay datos para exportar",
       });
-  
-      try {
-        const response = await fetch(urlapi + "/api/get-validar-email");
+      return;
+    }
 
-        const text = await response.text();
-  
-        console.log("🔍 Respuesta cruda del backend:", text);
-  
-        if (!response.ok) {
-          throw new Error(`Error: ${text}`);
-        }
-  
-        const data = JSON.parse(text);
-        if (!Array.isArray(data)) {
-          throw new Error("La respuesta del backend no es un array.");
-        }
-  
-        const cleanedData = data.map((row) => ({
-          Cédula: row[2] || "N/A",
-          Nombre: row[3] || "N/A",
-          Apellidos: row[4] || "N/A",
-          Email: row[5] || "N/A",
-          Telefono: row[6] || "N/A",
-          Dirección: row[7] || "N/A",
-          Fecha_de_Nacimiento: row[8] || "N/A",
-        }));
-  
-        console.log("✅ Datos procesados correctamente:", cleanedData);
-        setPagoData(cleanedData);
-      } catch (error) {
-        console.error("❌ Error al obtener los pagos:", error.message);
-        Swal.fire({
-          icon: "error",
-          title: "Error al cargar datos",
-          text: error.message || "No se pudo obtener la información.",
-        });
-      } finally {
-        setLoading(false);
-        Swal.close();
+    const worksheet = XLSX.utils.json_to_sheet(clientData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Validación_Email");
+    XLSX.writeFile(workbook, "validacion_email.xlsx");
+  };
+
+  // Función para obtener y procesar datos
+  const fetchValidarEmail = async () => {
+    setLoading(true);
+    setError(null);
+    
+    Swal.fire({
+      title: "Cargando datos...",
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading(),
+    });
+
+    try {
+      const response = await fetch(`${urlapi}/api/get-validar-email`);
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.error || `Error HTTP: ${response.status}`);
       }
-    };
 
-    useEffect(() => {
-        fetchValidarEmail();
-    }, []);
+      const result = await response.json();
+      
+      if (!result.success) {
+        throw new Error(result.error || "Error desconocido del servidor");
+      }
+
+      if (!result.data || !Array.isArray(result.data)) {
+        throw new Error("Formato de datos inválido");
+      }
+
+      const processedData = result.data.map(item => ({
+        Cédula: item.id_cliente || "N/A",
+        Nombre: item.nombres || "N/A",
+        Apellidos: item.apellidos || "N/A",
+        Email: item.email || "N/A",
+        Telefono: item.telefono || "N/A",
+        Dirección: item.direccion || "N/A",
+        Fecha_de_Nacimiento: item.fecha_nacimiento || "N/A"
+      }));
+
+      setClientData(processedData);
+      
+    } catch (err) {
+      console.error("Error al obtener datos:", err);
+      setError(err.message);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: err.message,
+      });
+    } finally {
+      setLoading(false);
+      Swal.close();
+    }
+  };
+
+  // Calcular datos paginados
+  const indexOfLastItem = currentPage * pageSize;
+  const indexOfFirstItem = indexOfLastItem - pageSize;
+  const currentItems = clientData.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Manejar cambio de página
+  const handleChangePage = (page, size) => {
+    setCurrentPage(page);
+    setPageSize(size);
+  };
+
+  useEffect(() => {
+    fetchValidarEmail();
+  }, []);
 
   return (
-    <section>
+    <section className="email-validation-container">
       <div className="ticket-table">
         <h2>
           <a href="/RaggedDigital/Home" className="left" title="volver">
@@ -78,14 +110,20 @@ import Boton from 'src/components/Boton/Boton';
           {'  '} Validación de Email
         </h2>
 
-        <div className="container-2">
-            <div className="row-3">
-              <Boton onClick={""}>Generar Excel</Boton>
-            </div>
-          </div>
+        <div className="action-buttons">
+          <Boton onClick={exportToExcel} disabled={loading || clientData.length === 0}>
+            Generar Excel
+          </Boton>
+        </div>
 
-        <div className="tabla-container" style={{ marginTop: "40px" }}>
-          <table className="table">
+        {error && (
+          <div className="alert alert-danger">
+            <strong>Error:</strong> {error}
+          </div>
+        )}
+
+        <div className="tabla-container" style={{ marginTop: "20px" }}>
+          <table className="client-table">
             <thead>
               <tr>
                 <th>Cédula</th>
@@ -94,21 +132,23 @@ import Boton from 'src/components/Boton/Boton';
                 <th>Email</th>
                 <th>Teléfono</th>
                 <th>Dirección</th>
-                <th>Fecha de Nacimiento</th>
+                <th>Fecha Nacimiento</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan="8">Cargando datos...</td>
+                  <td colSpan="7" className="loading-message">
+                    <i className="bi bi-arrow-repeat"></i> Cargando datos...
+                  </td>
                 </tr>
-              ) : pagoData.length === 0 ? (
+              ) : clientData.length === 0 ? (
                 <tr>
-                  <td colSpan="8">No se encontraron Email</td>
+                  <td colSpan="7">No se encontraron registros para validar</td>
                 </tr>
-            ) : (
-                pagoData.map((cliente, index) => (
-                  <tr key={index}>
+              ) : (
+                currentItems.map((cliente, index) => (
+                  <tr key={index} className={!cliente.Email || cliente.Email === "N/A" ? "invalid-email" : ""}>
                     <td>{cliente.Cédula}</td>
                     <td>{cliente.Nombre}</td>
                     <td>{cliente.Apellidos}</td>
@@ -116,15 +156,29 @@ import Boton from 'src/components/Boton/Boton';
                     <td>{cliente.Telefono}</td>
                     <td>{cliente.Dirección}</td>
                     <td>{cliente.Fecha_de_Nacimiento}</td>
-                 </tr>
+                  </tr>
                 ))
               )}
             </tbody>
           </table>
         </div>
+
+        {/* Paginación - Solo se muestra si hay datos */}
+        {!loading && clientData.length > 0 && (
+          <div className='paginacion'>
+            <Pagination
+              current={currentPage}
+              pageSize={pageSize}
+              total={clientData.length}
+              onChange={handleChangePage}
+              showSizeChanger
+              showQuickJumper
+            />
+          </div>
+        )}
       </div>
     </section>
   );
 };
 
-export default LogsTerceros;
+export default ValidarEmail;
