@@ -36,3 +36,9 @@
     height: 1px;
     background-color: #343a40;
   }
+
+  /* Asegúrate de que el subrayado se vea consistente */
+.documento-title u {
+  text-decoration: underline;
+  text-underline-offset: 3px; /* Espacio entre texto y subrayado */
+}

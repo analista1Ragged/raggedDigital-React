@@ -24,4 +24,34 @@
     height: 100%;
     border: 0;
   }
+
+  .link-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.boton-reporte {
+  display: inline-block;
+  background-color: #0078d4;
+  background-image: url('../assets/Images/power\ bi.png'); /* Cambia esta ruta */
+  background-repeat: no-repeat;
+  background-size: cover; /* O puedes usar 'contain' si quieres que toda la imagen sea visible */
+  background-position: center;
+  color: white;
+  padding: 24px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  height: 40px;
+  width: 180px; /* Establece un ancho si quieres que el botón no dependa solo del texto */
+  text-align: center;
+  line-height: 26px; /* Asegura el centrado vertical del texto */
+  
+}
+
+.parrafo-powerbi {
+  font-size: 1.1rem; /* Puedes ajustar el valor a tu gusto */
+}
+
+
   

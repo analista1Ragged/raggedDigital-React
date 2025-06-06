@@ -44,7 +44,9 @@ const buscarCliente = async (cedula, setClienteData) => {
       CEDULA: data[0][0]?.trim() || "N/A",
       NOMBRE: data[0][1] || "N/A",
       C_COSTOS: data[0][2] || "N/A",
-      HABILITADO: data[0][3] || "N/A",
+      DISPONIBLE: data[0][3] || "N/A",
+      HABILITADO: data[0][4] || "N/A",
+      
     };
 
     setClienteData(cleanedData);
@@ -100,6 +102,7 @@ const CupoEmpleados = () => {
                 <th>Cédula</th>
                 <th>Nombre</th>
                 <th>Centro de Costos</th>
+                <th>Cupo Disponible</th>
                 <th>Habilitado</th>
               </tr>
             </thead>
@@ -117,6 +120,7 @@ const CupoEmpleados = () => {
                   <td>{clienteData.CEDULA}</td>
                     <td>{clienteData.NOMBRE}</td>
                     <td>{clienteData.C_COSTOS}</td>
+                    <td>{clienteData.DISPONIBLE}</td>
                     <td className={clienteData.HABILITADO === "EXCEDE CUPO" ? "excede-cupo" : "no-excede-cupo"}>
                     {clienteData.HABILITADO}
                   </td>

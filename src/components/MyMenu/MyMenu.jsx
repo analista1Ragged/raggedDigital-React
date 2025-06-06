@@ -13,7 +13,7 @@ import { MdOutlinePostAdd, MdOutlineMarkEmailUnread} from "react-icons/md";
 import { TbReportSearch, TbFaceIdError, TbUserDollar} from "react-icons/tb";
 import { BsFolderPlus, BsClipboard2DataFill, BsPersonRaisedHand } from "react-icons/bs";
 import { HiCreditCard } from "react-icons/hi2";
-import { FaUsersRays, FaMoneyCheckDollar } from "react-icons/fa6";
+import { FaUsersRays, FaMoneyCheckDollar, FaHandHoldingDollar} from "react-icons/fa6";
 import { BsVimeo } from "react-icons/bs";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -43,7 +43,7 @@ const menuItems = [
     items: [
       {
         key: "2.1",
-        title: "Reporte PB",
+        title: "Balance Score Card",
         icon: <FaChartBar />,
         path: "/analytics/Reporte",
       },
@@ -265,6 +265,12 @@ const menuItems = [
             icon: <TbUserDollar />,
             path: "/Cartera/Proveedores",
           },
+          {
+            key: '7.3.2',
+            title: 'Recibos de Caja',
+            icon: <FaHandHoldingDollar />,
+            path: "/Cartera/RecibosCaja",
+          },
         ],
       },
     ],
@@ -289,12 +295,14 @@ const menuItems = [
       },
    ],
   },
+
   {
-    key: "9",
+    key: "90",
     title: "Manufactura",
     icon: <IoCubeOutline />,
     path: "/ecommerce/Ragged",
   },
+
   {
     key: "96",
     title: "Cambiar Contraseña",

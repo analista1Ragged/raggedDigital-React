@@ -31,6 +31,7 @@ import {
   PagoProveedores,
   CupoCliente,
   ValidarEmail,
+  RecibosDeCaja
 } from './pages';
 
 import {
@@ -82,7 +83,23 @@ function App() {
     return !excludedRoutes.includes(currentLocation.pathname); // Usa currentLocation.pathname
   };
 
-  
+  const PowerBIRedirect = () => {
+  const [redirect, setRedirect] = useState(false);
+
+  useEffect(() => {
+    window.open(
+      "https://app.powerbi.com/Redirect?action=OpenApp&appId=91e09a3c-6d36-4460-be40-11afd0003f49&ctid=7e404d7c-242e-44b0-8443-15fe0f2bcb55&experience=power-bi",
+      "_blank"
+    );
+    setRedirect(true);
+  }, []);
+
+  if (redirect) {
+    return <Navigate to="/Home" replace />;
+  }
+
+  return <div>Cargadndo Power BI</div>;
+};
 
   return (
     <div className="App">
@@ -111,7 +128,7 @@ function App() {
         <Route path='/analytics/Reporte' element={
           <PrivateRoute element={
             <div className={!navVisible ? "page" : "page page-with-navbar"}>
-              <ReportePB />
+              <PrivateRoute element={<PowerBIRedirect />} />
             </div>
           } />
         } />
@@ -297,7 +314,11 @@ function App() {
             <ValidarEmail />
           </div>
         } />
-
+        <Route path='/Cartera/RecibosCaja' element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <RecibosDeCaja />
+          </div>
+        } />
 
       </Routes>
       
