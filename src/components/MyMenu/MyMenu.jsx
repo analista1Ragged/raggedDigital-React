@@ -246,12 +246,14 @@ const menuItems = [
             icon: <FaMoneyCheckDollar />,
             path: "/Contabilidad/Bancos",
           },
+          {/*}
           {
             key: '7.2.2',
             title: 'Exógena',
             icon: <TbReportSearch />,
             path: "/Contabilidad/Exogena",
           },
+          */}  
         ],
       },
       {
@@ -265,12 +267,14 @@ const menuItems = [
             icon: <TbUserDollar />,
             path: "/Cartera/Proveedores",
           },
+          {/*}
           {
             key: '7.3.2',
             title: 'Recibos de Caja',
             icon: <FaHandHoldingDollar />,
             path: "/Cartera/RecibosCaja",
           },
+          */}  
         ],
       },
     ],

@@ -1,26 +1,37 @@
 import React from 'react';
-import { FaFileInvoiceDollar, FaIdCard } from "react-icons/fa";
 
-const FilterRecibosCaja = ({ filtersRecibosCaja, handleFilter}) => {
-  const columns = ['Fecha_Recibo', 'Nit', 'Razon_Social','Recibo_Caja','Auxiliar', 'Descripcion_Auxiliar', 'DB', 'CR',
-'Dcto_Cruce', 'Fecha_Recaudo','Fecha_Vencimiento','Usuario_Aprobación', 'Origen'];
+const FilterRecibosCaja = ({ filtersRecibosCaja, handleFilter }) => {
+  const columns = [
+    { key: 'fecha_recibo', label: 'Fecha Recibo' },
+    { key: 'nit', label: 'NIT' },
+    { key: 'razonSocial', label: 'Razón Social' },
+    { key: 'reciboDeCaja', label: 'Recibo Caja' },
+    { key: 'auxiliar', label: 'Auxiliar' },
+    { key: 'descripcionAuxiliar', label: 'Descripción Auxiliar' },
+    { key: 'debito', label: 'Débito' },
+    { key: 'credito', label: 'Crédito' },
+    { key: 'dctoCruce', label: 'Dcto Cruce' },
+    { key: 'fechaRecaudo', label: 'Fecha Recaudo' },
+    { key: 'fechaVencimiento', label: 'Fecha Vencimiento' },
+    { key: 'usuarioAprobacion', label: 'Usuario Aprobación' },
+    { key: 'origen', label: 'Origen' }
+  ];
 
   return (
     <tr id="FilterRecibosCaja">
       <th scope="col">Buscar:</th>
-      {columns.map((column, i) => (
-        <th scope="col" key={i}>
+      {columns.map(({ key, label }) => (
+        <th scope="col" key={key}>
           <input
             type="text"
             className="form-control"
-            placeholder={` ${column}`}
-            name={column}
-            value={filtersRecibosCaja[column]}
+            placeholder={label}
+            name={key}
+            value={filtersRecibosCaja[key] || ''}
             onChange={handleFilter}
           />
         </th>
       ))}
-      {/*<th scope="col"></th>*/}
     </tr>
   );
 };

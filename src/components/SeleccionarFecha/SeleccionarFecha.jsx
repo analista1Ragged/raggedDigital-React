@@ -30,20 +30,23 @@ const MyForm = forwardRef(({ onDate1Change, onDate2Change }, ref) => {
 
   // Exponer la función para limpiar solo las fechas
   useImperativeHandle(ref, () => ({
-    resetDateFields: () => {
-      setFormState((prevState) => ({
-        ...prevState,
-        date1: dayjs(), // Reiniciar a la fecha actual con Day.js
-        date2: dayjs(), // Reiniciar a la fecha actual con Day.js
-      }));
-    },
-    getDates: () => {
-      return {
-        date1: formState.date1,
-        date2: formState.date2,
-      };
-    },
-  }));
+  resetDateFields: () => {
+    setFormState((prevState) => ({
+      ...prevState,
+      date1: dayjs(), // Reiniciar a la fecha actual con Day.js
+      date2: dayjs(), // Reiniciar a la fecha actual con Day.js
+    }));
+  },
+  getDates: () => {
+    return {
+      date1: formState.date1,
+      date2: formState.date2,
+    };
+  },
+  hasDates: () => {
+    return !!formState.date1 && !!formState.date2;
+  },
+}));
 
   return (
     <Form
