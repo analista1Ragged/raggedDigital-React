@@ -177,105 +177,75 @@ const RecibosDeCaja = () => {
   const handleBuscarRecibos = async (event) => {
   event.preventDefault();
   try {
-    // Nueva validación - permite buscar solo por fechas, solo por NITs o por ambos
+    // Validación
     if (!selectedClientes.length && !seleccionarFechaRef.current?.hasDates()) {
-      Swal.fire('Advertencia', 'Debe seleccionar al menos un NIT o un rango de fechas', 'warning');
+      Swal.fire('Advertencia', 'Seleccione NITs o fechas', 'warning');
       return;
     }
 
+    // Obtener fechas
+    const dates = seleccionarFechaRef.current?.getDates() || {};
+    const requestData = {
+      nits: selectedClientes,
+      fecha_inicio: dates.startDate?.toISOString().split('T')[0] || null,
+      fecha_fin: dates.endDate?.toISOString().split('T')[0] || null
+    };
+
+    // Mostrar carga
     Swal.fire({
-      title: 'Consultando Recibos de Caja...',
+      title: 'Buscando recibos...',
       allowOutsideClick: false,
-      showConfirmButton: false,
       didOpen: () => Swal.showLoading()
     });
 
-    // Formateo seguro de datos
-    const formatDate = (date) => {
-      if (!date) return null;
-      return new Date(date).toISOString().split('T')[0];
-    };
+    // Llamada API
+    const response = await axios.post(`${urlapi}/get-cruce-documentos`, requestData);
 
-    const fechas = seleccionarFechaRef.current?.getDates();
-
-    // Datos a enviar - NITs será null si no hay selección
-    const requestData = {
-      nits: selectedClientes.length > 0 ? selectedClientes : null, // Cambio clave aquí
-      fecha_inicio: formatDate(fechas?.startDate),
-      fecha_fin: formatDate(fechas?.endDate)
-    };
-
-    console.log('Datos enviados al backend:', requestData);
-
-    const response = await axios.post(`${urlapi}/get-cruce-documentos`, requestData, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    if (!response.data.success) {
-      throw new Error(response.data.message || 'Error en la respuesta del servidor');
+    // Procesar respuesta
+    if (!response.data.success || !response.data.data) {
+      throw new Error(response.data.message || 'Datos no válidos');
     }
 
-    // Procesamiento de datos (mantén el existente)
-    const processedData = response.data.data.map((item, idx) => {
-      if (!Array.isArray(item) || item.length < 13) {
-        console.error('Estructura de datos incorrecta:', item);
-        return {
-          id: idx + 1,
-          error: 'Estructura de datos incorrecta'
-        };
-      }
-
-      return {
-        id: idx + 1,
-        fecha_recibo: item[0] || '--',
-        nit: item[1] || '--',
-        razonSocial: item[2] || '--',
-        reciboDeCaja: item[3] || '--',
-        auxiliar: item[4] || '--',
-        descripcionAuxiliar: item[5] || '--',
-        debito: item[6] ? new Intl.NumberFormat('es-CO', { 
-          style: 'currency', 
-          currency: 'COP',
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0
-        }).format(item[6]) : '$0',
-        credito: item[7] ? new Intl.NumberFormat('es-CO', { 
-          style: 'currency', 
-          currency: 'COP',
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0
-        }).format(item[7]) : '$0',
-        dctoCruce: item[8] || '--',
-        fechaRecaudo: item[9] || '--',
-        fechaVencimiento: item[10] || '--',
-        usuarioAprobacion: item[11] || '--',
-        origen: item[12] || '--',
-        rawDebito: item[6] || 0,
-        rawCredito: item[7] || 0
-      };
-    });
+    // Transformar datos para la tabla
+    const processedData = response.data.data.map((item, index) => ({
+      id: index + 1,
+      fecha_recibo: item.fecha_recibo || '--',
+      nit: item.nit || '--',
+      razonSocial: item.razonSocial || '--',
+      reciboDeCaja: item.reciboDeCaja || '--',
+      auxiliar: item.auxiliar || '--',
+      descripcionAuxiliar: item.descripcionAuxiliar || '--',
+      debito: formatCurrency(item.debito),
+      credito: formatCurrency(item.credito),
+      dctoCruce: item.dctoCruce || '--',
+      fechaRecaudo: item.fechaRecaudo || '--',
+      fechaVencimiento: item.fechaVencimiento || '--',
+      usuarioAprobacion: item.usuarioAprobacion || '--',
+      origen: item.origen || '--',
+    }));
 
     setData(processedData);
-    
-    if (processedData.length === 0) {
-      Swal.fire('Información', 'No se encontraron recibos con los filtros aplicados', 'info');
-    } else {
-      Swal.close();
-    }
+    Swal.close();
+
   } catch (error) {
-    console.error('Error completo:', error);
-    if (error.response) {
-      console.error('Detalles del error:', error.response.data);
-    }
-    Swal.fire({
-      title: 'Error',
-      text: error.response?.data?.message || error.message || 'Error al consultar recibos',
-      icon: 'error'
-    });
+    Swal.fire('Error', error.message, 'error');
+    console.error('Detalles del error:', error.response?.data || error);
   }
 };
+
+// Función para formatear valores monetarios
+  const formatCurrency = (value) => {
+    if (value === null || value === undefined) return '$0';
+    const numericValue = typeof value === 'string' ? 
+      parseFloat(value.replace(/[^0-9.-]/g, '')) : 
+      Number(value);
+    return new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(numericValue);
+  };
 
   return (
     <section className="pedidosvtex-section">

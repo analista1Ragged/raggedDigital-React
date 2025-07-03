@@ -267,14 +267,13 @@ const menuItems = [
             icon: <TbUserDollar />,
             path: "/Cartera/Proveedores",
           },
-          {/*}
           {
             key: '7.3.2',
             title: 'Recibos de Caja',
             icon: <FaHandHoldingDollar />,
             path: "/Cartera/RecibosCaja",
           },
-          */}  
+
         ],
       },
     ],
