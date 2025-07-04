@@ -104,7 +104,7 @@ const RecibosDeCaja = () => {
 
       // Manejo especial para campos numéricos
       if (key === 'debito' || key === 'credito') {
-        const numericValue = parseFloat(value.replace(/[^0-9.-]+/g, ""));
+        const numericValue = parseFloat(value.replace(/[^0-9.,-]+/g, ""));
         const itemValue = key === 'debito' ? item.rawDebito : item.rawCredito;
         
         // Permitir búsqueda por rango (ej: ">100000")
@@ -185,11 +185,16 @@ const RecibosDeCaja = () => {
 
     // Obtener fechas
     const dates = seleccionarFechaRef.current?.getDates() || {};
+    console.log("Fechas crudas:", dates);
+
     const requestData = {
       nits: selectedClientes,
-      fecha_inicio: dates.startDate?.toISOString().split('T')[0] || null,
-      fecha_fin: dates.endDate?.toISOString().split('T')[0] || null
+      fecha_inicio: dates.date1 ? dates.date1.toISOString().split('T')[0] : null,
+      fecha_fin: dates.date2 ? dates.date2.toISOString().split('T')[0] : null
     };
+
+    console.log("RequestData:", requestData);
+
 
     // Mostrar carga
     Swal.fire({
@@ -235,17 +240,27 @@ const RecibosDeCaja = () => {
 
 // Función para formatear valores monetarios
   const formatCurrency = (value) => {
-    if (value === null || value === undefined) return '$0';
-    const numericValue = typeof value === 'string' ? 
-      parseFloat(value.replace(/[^0-9.-]/g, '')) : 
-      Number(value);
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(numericValue);
-  };
+  if (value === null || value === undefined) return '$0';
+  
+  // Si viene como string, convertir a número seguro
+  const numericValue = typeof value === 'string'
+    ? parseFloat(value.replace(/[^0-9.-]/g, ''))
+    : Number(value);
+
+  // Formatear usando es-CO y reemplazar el espacio y punto
+  let formatted = new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(numericValue);
+
+  // Elimina espacios después del signo de pesos y reemplaza punto por coma si existiera
+  formatted = formatted.replace(/\s/g, '').replace('.', ',');
+
+  return formatted;
+};
+
 
   return (
     <section className="pedidosvtex-section">
@@ -321,12 +336,12 @@ const RecibosDeCaja = () => {
                     <td>{item.id}</td>
                     <td>{item.fecha_recibo}</td>
                     <td>{item.nit}</td>
-                    <td>{item.razonSocial}</td>
+                    <td class="align-left">{item.razonSocial}</td>
                     <td>{item.reciboDeCaja}</td>
                     <td>{item.auxiliar}</td>
-                    <td>{item.descripcionAuxiliar}</td>
-                    <td>{item.debito}</td>
-                    <td>{item.credito}</td>
+                    <td class="align-left">{item.descripcionAuxiliar}</td>
+                    <td className="text-right">{item.debito}</td>
+                    <td className="text-right">{item.credito}</td>
                     <td>{item.dctoCruce}</td>
                     <td>{item.fechaRecaudo}</td>
                     <td>{item.fechaVencimiento}</td>

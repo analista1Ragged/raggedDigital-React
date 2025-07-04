@@ -116,6 +116,14 @@
     width: 30%;
   }
 
+  .text-right {
+  text-align: right !important;
+}
+
+.align-left {
+  text-align: left !important;
+}
+
 /* Media Queries para responsividad */
 @media (max-width: 1200px) {
     .pedidosvtex-section {
