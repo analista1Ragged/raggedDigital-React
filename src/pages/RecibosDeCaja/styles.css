@@ -1,0 +1,12 @@
+.filtro-nit-input {
+  width: 280px;          /* ancho personalizado */
+  margin-top: 12px;       /* margen superior */
+  margin-bottom: 12px;    /* margen inferior */
+  margin-left: 12px;      /* margen izquierdo */
+  margin-right: 12px;     /* margen derecho */
+  padding: 8px 8px;      /* padding interno */
+  border: 1px solid #ccc; /* borde sutil */
+  border-radius: 4px;    /* esquinas redondeadas */
+  font-size: 14px;       /* tamaño de texto */
+  outline-color: #41D9A1;
+}

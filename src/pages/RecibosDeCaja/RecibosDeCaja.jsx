@@ -7,13 +7,13 @@ import SeleccionarFecha from '../../components/SeleccionarFecha/SeleccionarFecha
 import BuscarButton from '../../components/BotonBuscar/BotonBuscar.jsx';
 import BuscarDescargar from '../../components/BotonDescargar/BotonDescargar.jsx';
 import FilterRecibosDeCaja from '../../components/FilterRow/FilterRecibosCaja';
-import MultiSelector from 'src/components/MultiSelector/MultiSelector';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { urlapi } from '../../App';
 import * as XLSX from 'xlsx';
+import '../../pages/RecibosDeCaja/styles.css';
 
-// ✅ Función para exportar a Excel
+// Función para exportar a Excel
 const exportToExcel = (data, fileName = 'archivo_cruce_documentos.xlsx') => {
   if (!Array.isArray(data) || data.length === 0) {
     Swal.fire('Advertencia', 'No hay datos para exportar', 'warning');
@@ -21,7 +21,7 @@ const exportToExcel = (data, fileName = 'archivo_cruce_documentos.xlsx') => {
   }
 
   const worksheet = XLSX.utils.json_to_sheet(
-    data.map(({ id, ...rest }) => rest) // Opcional: quita id si no lo quieres
+    data.map(({ id, ...rest }) => rest)
   );
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Recibos');
@@ -30,15 +30,12 @@ const exportToExcel = (data, fileName = 'archivo_cruce_documentos.xlsx') => {
 };
 
 const RecibosDeCaja = () => {
-  const [valorCampo, setValorCampo] = useState('');
   const [data, setData] = useState([]);
   const seleccionarFechaRef = useRef(null);
-  const [listaClientes, setListaClientes] = useState([]);
-  const [selectedClientes, setSelectedClientes] = useState([]);
 
   const [filtersRecibosCaja, setFiltersRecibosCaja] = useState({
     fecha_recibo: '',
-    nit: '',
+    nit: '', // 👈 Aquí se guarda el NIT ingresado manualmente
     razonSocial: '',
     reciboDeCaja: '',
     auxiliar: '',
@@ -54,56 +51,6 @@ const RecibosDeCaja = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      Swal.fire({
-        title: 'Cargando nits, clientes y facturas...',
-        allowOutsideClick: false,
-        showConfirmButton: false,
-        didOpen: () => Swal.showLoading(),
-      });
-
-      const correo = sessionStorage.getItem('log');
-      const response = await fetch(urlapi + '/get-clientes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ usuario: correo }),
-      });
-
-      const listas = await response.json();
-      setListaClientes(listas[0]);
-      Swal.close();
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      Swal.fire('Error', 'No se pudieron cargar los datos de clientes', 'error');
-    }
-  };
-
-  const clearSelector = () => {
-    setFiltersRecibosCaja({
-      fecha_recibo: '',
-      nit: '',
-      razonSocial: '',
-      reciboDeCaja: '',
-      auxiliar: '',
-      descripcionAuxiliar: '',
-      debito: '',
-      credito: '',
-      dctoCruce: '',
-      fechaRecaudo: '',
-      fechaVencimiento: '',
-      usuarioAprobacion: '',
-      origen: '',
-    });
-    setValorCampo('');
-    setData([]);
-    setCurrentPage(1);
-  };
 
   const filterData = (data, filters) => {
     return data.filter((item) =>
@@ -128,20 +75,22 @@ const RecibosDeCaja = () => {
   const handleBuscarRecibos = async (event) => {
     event.preventDefault();
     try {
-      if (!selectedClientes.length && !seleccionarFechaRef.current?.hasDates()) {
-        Swal.fire('Advertencia', 'Seleccione NITs o fechas', 'warning');
+      const nitIngresado = filtersRecibosCaja.nit.trim();
+      const dates = seleccionarFechaRef.current?.getDates() || {};
+
+      if (!nitIngresado && !seleccionarFechaRef.current?.hasDates()) {
+        Swal.fire('Advertencia', 'Ingrese un NIT o seleccione fechas', 'warning');
         return;
       }
 
-      const dates = seleccionarFechaRef.current?.getDates() || {};
       const requestData = {
-        nits: selectedClientes,
+        nits: nitIngresado ? [nitIngresado] : [],
         fecha_inicio: dates.date1 ? dates.date1.toISOString().split('T')[0] : null,
         fecha_fin: dates.date2 ? dates.date2.toISOString().split('T')[0] : null,
       };
 
       Swal.fire({
-        title: 'Buscando recibos...',
+        title: 'Buscando documentos...',
         allowOutsideClick: false,
         didOpen: () => Swal.showLoading(),
       });
@@ -178,6 +127,26 @@ const RecibosDeCaja = () => {
     }
   };
 
+  const clearSelector = () => {
+    setFiltersRecibosCaja({
+      fecha_recibo: '',
+      nit: '',
+      razonSocial: '',
+      reciboDeCaja: '',
+      auxiliar: '',
+      descripcionAuxiliar: '',
+      debito: '',
+      credito: '',
+      dctoCruce: '',
+      fechaRecaudo: '',
+      fechaVencimiento: '',
+      usuarioAprobacion: '',
+      origen: '',
+    });
+    setData([]);
+    setCurrentPage(1);
+  };
+
   const formatCurrency = (value) => {
     if (value === null || value === undefined) return '$0';
     const numericValue = typeof value === 'string'
@@ -210,13 +179,20 @@ const RecibosDeCaja = () => {
         <form>
           <div className="pedidosvtex-container">
             <div className="pedidosvtex-multi-selector">
-              <MultiSelector
-                options={listaClientes}
-                opc="0"
+              {/* ✅ CAMPO TEXTO PARA NIT */}
+              <input
+                type="text"
                 placeholder="Filtrar por Nit:"
-                onSelectChange={setSelectedClientes}
-                value={selectedClientes}
+                className="filtro-nit-input"
+                value={filtersRecibosCaja.nit}
+                onChange={(e) =>
+                  setFiltersRecibosCaja({
+                    ...filtersRecibosCaja,
+                    nit: e.target.value,
+                  })
+                }
               />
+
               <div className="row">
                 <div className="col">
                   <div className="separador">
