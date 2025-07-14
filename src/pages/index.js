@@ -24,4 +24,5 @@ export { default as PagoProveedores } from './PagoProveedores/PagoProveedores';
 export { default as CupoCliente } from './CupoCliente/CupoCliente';
 export { default as ValidarEmail } from './ValidarEmail/ValidarEmail';
 export { default as RecibosDeCaja } from './RecibosDeCaja/RecibosDeCaja';
+export { default as IngresoRetiroPnal } from './IngresoRetiroPnal/IngresoRetiroPnal';
 

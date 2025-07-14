@@ -9,12 +9,16 @@ import { IoAccessibilityOutline, IoCubeOutline, IoSettingsOutline, IoShirtSharp,
 import { PiEyeSlashFill, PiPasswordFill, PiUsersFill, PiEscalatorUpBold} from "react-icons/pi";
 import { ImBarcode } from "react-icons/im";
 import { BiDollarCircle } from "react-icons/bi";
-import { MdOutlinePostAdd, MdOutlineMarkEmailUnread} from "react-icons/md";
-import { TbReportSearch, TbFaceIdError, TbUserDollar} from "react-icons/tb";
+import { MdOutlinePostAdd, MdOutlineMarkEmailUnread, MdProductionQuantityLimits, MdOutlineAddBusiness} from "react-icons/md";
+import { TbReportSearch, TbFaceIdError, TbUserDollar, TbDirectionSignFilled} from "react-icons/tb";
 import { BsFolderPlus, BsClipboard2DataFill, BsPersonRaisedHand } from "react-icons/bs";
 import { HiCreditCard } from "react-icons/hi2";
 import { FaUsersRays, FaMoneyCheckDollar, FaHandHoldingDollar} from "react-icons/fa6";
+import { FaTags } from "react-icons/fa";
+import { SiReacthookform, SiGoogleforms } from "react-icons/si";
+import { GoPasskeyFill } from "react-icons/go";
 import { BsVimeo } from "react-icons/bs";
+import { IoMdAnalytics } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 
 
@@ -44,7 +48,7 @@ const menuItems = [
       {
         key: "2.1",
         title: "Balance Score Card",
-        icon: <FaChartBar />,
+        icon: <IoMdAnalytics />,
         path: "/analytics/Reporte",
       },
     ],
@@ -70,7 +74,7 @@ const menuItems = [
       {
         key: "3.1",
         title: "Tiendas",
-        icon: <AiOutlineAppstore />,
+        icon: <MdOutlineAddBusiness />,
         items: [
           {
             key: '3.1.1',
@@ -141,7 +145,7 @@ const menuItems = [
       {
         key: "3.4",
         title: "Venta Directa",
-        icon: <AiOutlineShrink />,
+        icon: <TbDirectionSignFilled />,
         items: [
           {
             key: '3.4.1',
@@ -191,7 +195,7 @@ const menuItems = [
       {
         key: "5.1",
         title: "Productos",
-        icon: <IoShirtSharp />,
+        icon: <MdProductionQuantityLimits />,
         path: "/ecommerce/Ragged",
       },
     ],
@@ -219,6 +223,19 @@ const menuItems = [
               icon: <BsClipboard2DataFill />,
               path: "/TalentoHumano/Nomina/ReporteDane",
               
+            },
+          ],
+        },
+        {
+          key: "6.2",
+          title: "Formularios",
+          icon: <SiGoogleforms />,
+          items: [
+            {
+              key: '6.2.1',
+              title: 'Ingreso/Retiro de Pnal',
+              icon: <SiReacthookform />,
+              path: "/TalentoHumano/Nomina/Ingreso/RetiroPnal",
             },
           ],
         },
@@ -302,14 +319,14 @@ const menuItems = [
   {
     key: "90",
     title: "Manufactura",
-    icon: <IoCubeOutline />,
+    icon: <FaTags />,
     path: "/ecommerce/Ragged",
   },
 
   {
     key: "96",
     title: "Cambiar Contraseña",
-    icon: <PiPasswordFill />,
+    icon: <GoPasskeyFill />,
     path: "/CambiarContraseña",
   },
   {

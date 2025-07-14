@@ -31,7 +31,8 @@ import {
   PagoProveedores,
   CupoCliente,
   ValidarEmail,
-  RecibosDeCaja
+  RecibosDeCaja,
+  IngresoRetiroPnal
 } from './pages';
 
 import {
@@ -83,22 +84,20 @@ function App() {
     return !excludedRoutes.includes(currentLocation.pathname); // Usa currentLocation.pathname
   };
 
-  const PowerBIRedirect = () => {
+  // Funcion Url Power BI
+  const ExternalRedirect = ({ url, redirectTo = "/Home", message = "Cargando..." }) => {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    window.open(
-      "https://app.powerbi.com/Redirect?action=OpenApp&appId=91e09a3c-6d36-4460-be40-11afd0003f49&ctid=7e404d7c-242e-44b0-8443-15fe0f2bcb55&experience=power-bi",
-      "_blank"
-    );
-    setRedirect(true);
-  }, []);
+    window.open(url, "_blank");  // Abre la URL en una nueva pestaña
+    setRedirect(true);           // Cambia estado para redirigir dentro de la app
+  }, [url]);
 
   if (redirect) {
-    return <Navigate to="/Home" replace />;
+    return <Navigate to={redirectTo} replace />;
   }
 
-  return <div>Cargadndo Power BI</div>;
+  return <div>{message}</div>;
 };
 
   return (
@@ -126,12 +125,17 @@ function App() {
         } />
       }/>
         <Route path='/analytics/Reporte' element={
-          <PrivateRoute element={
-            <div className={!navVisible ? "page" : "page page-with-navbar"}>
-              <PrivateRoute element={<PowerBIRedirect />} />
-            </div>
-          } />
+        <PrivateRoute element={
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <ExternalRedirect
+              url="https://app.powerbi.com/Redirect?action=OpenApp&appId=91e09a3c-6d36-4460-be40-11afd0003f49&ctid=7e404d7c-242e-44b0-8443-15fe0f2bcb55&experience=power-bi"
+              redirectTo="/Home"
+              message="Cargando Power BI…"
+            />
+          </div>
         } />
+      } />
+
         <Route path='/Mercadeo' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
           </div>
@@ -319,6 +323,15 @@ function App() {
             <RecibosDeCaja />
           </div>
         } />
+        <Route path='/TalentoHumano/Nomina/Ingreso/RetiroPnal' element={
+        <div className={!navVisible ? "page" : "page page-with-navbar"}>
+          <ExternalRedirect
+            url="https://forms.cloud.microsoft/r/NHbkWWV88y"
+            redirectTo="/Home"
+            message="Cargando formulario de ingreso y retiro de personal..."
+          />
+        </div>
+      } />
 
       </Routes>
       
