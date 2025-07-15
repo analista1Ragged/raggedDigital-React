@@ -67,7 +67,7 @@ import Swal from "sweetalert2";
     }, []);
 
   return (
-    <section>
+    <section className="logs-section">
       <div className="ticket-table">
         <h2>
           <a href="/RaggedDigital/Home" className="left" title="volver">

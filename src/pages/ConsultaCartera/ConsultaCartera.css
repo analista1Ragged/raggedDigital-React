@@ -15,6 +15,8 @@ section {
   padding: 20px; /* Padding para la sección */
   margin-top: 0px !important;
   padding-top: 0px !important;
+  margin-left: 10px !important; /* Esto corrio la tabla hacia la izquierda */
+  margin-right: 10px !important;
 }
 
 .consulta-cartera-title {
@@ -106,6 +108,11 @@ section {
 .paginacion {
   margin-top: 20px;
 }
+
+.consultaCartera-section {
+  padding-bottom: 130px; /* o el alto exacto del footer */
+}
+
 
 /* Media Queries para responsividad */
 @media (max-width: 1200px) {

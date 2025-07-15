@@ -60,6 +60,10 @@ section {
   overflow-x: auto; /* Asegura que toda la sección tenga barra de desplazamiento si es necesario */
 }
 
+.verCapsulas-section {
+  padding-bottom: 130px; /* o el alto exacto del footer */
+}
+
 @media (max-width: 768px) {
   .ticket-table {
     overflow-x: auto; /* Barra de desplazamiento horizontal en pantallas pequeñas */

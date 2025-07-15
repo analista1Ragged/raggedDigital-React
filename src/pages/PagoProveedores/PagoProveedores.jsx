@@ -109,7 +109,7 @@ const handleExportarExcel = () => {
 };
 
   return (
-    <section>
+    <section class="pagoProveedores-section">
       <div className="ticket-table">
         <h2>
           <a href="/RaggedDigital/Home" className="left" title="volver">

@@ -8,3 +8,6 @@ th, td {
     text-overflow: ellipsis; /* Si el texto es muy largo, lo corta con "..." */
   }
   
+  .pagoProveedores-section {
+  padding-bottom: 130px; /* o el alto exacto del footer */
+}

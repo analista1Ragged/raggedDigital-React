@@ -284,7 +284,7 @@ const initialFiltersCartera = useMemo(() => ({
     };
 
   return (
-    <section>
+    <section class="inventarioDisponible-section">
   <div className="ticket-table">
     <h2>
       <a href="/RaggedDigital/Home" className="left" title="volver">

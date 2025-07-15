@@ -103,6 +103,10 @@ body {
     margin-top: 20px;
   }
   
+  .inventarioDisponible-section {
+  padding-bottom: 130px; /* o el alto exacto del footer */
+  }
+
   /* Media Queries para responsividad */
   @media (max-width: 1200px) {
     section {

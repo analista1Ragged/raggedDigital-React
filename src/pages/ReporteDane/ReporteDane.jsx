@@ -210,7 +210,7 @@ const ReporteDane = () => {
   );
 
   return (
-    <section>
+    <section class="reporteDane-section">
       <div className="ticket-table">
       <h2>
           <a href="/RaggedDigital/Home" className="left" title="volver">

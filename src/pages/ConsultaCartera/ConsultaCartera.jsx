@@ -398,7 +398,7 @@ const ConsultaCartera = () => {
     
 
   return (
-<section>
+<section class="consultaCartera-section">
   <div className="ticket-table">
     <h2 className="consulta-cartera-title">
       <a href="/RaggedDigital/Home" className="left" title="volver">
@@ -466,7 +466,7 @@ const ConsultaCartera = () => {
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Nit</th>
+              <th style={{ width:'10%'}} scope="col">Nit</th>
               <th scope="col">Nombre Cliente</th>
               <th scope="col">Fecha</th>
               <th scope="col"># Factura</th>

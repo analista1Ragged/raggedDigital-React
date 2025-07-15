@@ -118,7 +118,7 @@ const TicketTable = () => {
   };
 
   return (
-    <section>
+    <section class="verCapsulas-section">
       <div className="ticket-table">
         <h2>
         <a href="/RaggedDigital/Home" className="left" title="volver">

@@ -105,7 +105,11 @@ body {
 
   .custom-placeholder .ant-select-selection-placeholder {
     font-size: 16px; /* Ajusta el tamaño según lo necesites */
-}
+  }
+
+  .reporteDane-section {
+  padding-bottom: 130px; /* o el alto exacto del footer */
+  }
   
   /* Media Queries para responsividad */
   @media (max-width: 1200px) {

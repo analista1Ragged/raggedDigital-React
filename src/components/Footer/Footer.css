@@ -10,6 +10,10 @@
   background-repeat: no-repeat; /* Evita que la imagen se repita */
   color: #fff; /* Color del texto */
   height: 130px;  
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  min-height: 50px;
 }
    
 /* Estilo para la sección superior del footer */
@@ -91,6 +95,22 @@
   /*border-top: 1px solid #444;  Borde superior */
   align-items: center;
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Altura mínima igual a la ventana */
+}
+
+.main-content {
+  flex: 1; /* Empuja el footer hacia abajo */
+}
+
 
 /* Media queries para hacer responsivo el footer */
 @media (max-width: 768px) {
