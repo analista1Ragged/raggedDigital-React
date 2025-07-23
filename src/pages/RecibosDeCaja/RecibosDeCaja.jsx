@@ -171,7 +171,7 @@ const RecibosDeCaja = () => {
           Recibos de Caja
         </h2>
 
-        <a href="/RaggedDigital/Mercadeo/Raqstyle/Cartera" className="left" title="Limpiar Campos">
+        <a href="/RaggedDigital" className="left" title="Limpiar Campos">
           <i className="bi bi-filter"></i>
         </a>{' '}
         Filtrar por:

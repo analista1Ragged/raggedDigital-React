@@ -14,6 +14,10 @@ const manuals = {
   inventarios: require('../../assets/docts/MANUAL DE USABILIDAD INVENTARIOS.pdf'),
   nomina: require('../../assets/docts/MANUAL DE USABILIDAD NÓMINA ELECTRONICA.pdf'),
   pedidosVtex: require('../../assets/docts/MANUAL DE USABILIDAD PEDIDOS VTEX.pdf'),
+  referenciasyplus: require('../../assets/docts/MANUAL DE USABILIDAD REFERENCIAS Y PLUS.pdf'),
+  costos: require('../../assets/docts/MANUAL DE USABILIDAD COSTOS.pdf'),
+  escalaDePrecios: require('../../assets/docts/MANUAL DE USABILIDAD ESCALA DE PRECIOS.pdf'),
+  cruceDocumentos: require('../../assets/docts/MANUAL DE USABILIDAD CRUCE DOCUMENTOS.pdf'),
 };
 
 const Header = () => {
@@ -26,8 +30,12 @@ const Header = () => {
       '/Mercadeo/Raqstyle/Cartera': manuals.cartera,
       '/TalentoHumano/Nomina/NominaElectronica': manuals.nomina,
       '/ecommerce/VerCapsulas': manuals.ecommerce,
-      '/contabilidad/Bancos': manuals.bancos,
+      '/Contabilidad/Bancos': manuals.bancos,
       '/Logistica/CanalDigital/Vtex': manuals.pedidosVtex,
+      '/Maestros/Referencias': manuals.referenciasyplus,
+      '/Maestros/Costos': manuals.costos,
+      '/Maestros/EscalasPrecios' : manuals.escalaDePrecios,
+      '/Cartera/RecibosCaja': manuals.cruceDocumentos
     };
   
     return helpLinks[location.pathname] || null;

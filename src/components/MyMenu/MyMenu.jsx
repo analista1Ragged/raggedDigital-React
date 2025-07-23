@@ -10,7 +10,7 @@ import { PiEyeSlashFill, PiPasswordFill, PiUsersFill, PiEscalatorUpBold} from "r
 import { ImBarcode } from "react-icons/im";
 import { BiDollarCircle } from "react-icons/bi";
 import { MdOutlinePostAdd, MdOutlineMarkEmailUnread, MdProductionQuantityLimits, MdOutlineAddBusiness} from "react-icons/md";
-import { TbReportSearch, TbFaceIdError, TbUserDollar, TbDirectionSignFilled} from "react-icons/tb";
+import { TbReportSearch, TbFaceIdError, TbUserDollar, TbDirectionSignFilled, TbWorldSearch, TbCircleLetterR} from "react-icons/tb";
 import { BsFolderPlus, BsClipboard2DataFill, BsPersonRaisedHand } from "react-icons/bs";
 import { HiCreditCard } from "react-icons/hi2";
 import { FaUsersRays, FaMoneyCheckDollar, FaHandHoldingDollar} from "react-icons/fa6";
@@ -21,6 +21,7 @@ import { BsVimeo } from "react-icons/bs";
 import { IoMdAnalytics } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 
+const currentYear = new Date().getFullYear(); // Obtiene el año actual
 
 const { SubMenu } = Menu;
 
@@ -50,6 +51,19 @@ const menuItems = [
         title: "Balance Score Card",
         icon: <IoMdAnalytics />,
         path: "/analytics/Reporte",
+      },
+    ],
+  },
+  {
+    key: "91",
+    title: "Generales",
+    icon: <TbWorldSearch />,
+    items: [
+      {
+        key: "91.1",
+        title: "Ingreso/Retiro de Pnal",
+        icon: <SiGoogleforms />,
+        path: "/TalentoHumano/Nomina/Ingreso/RetiroPnal",
       },
     ],
   },
@@ -215,7 +229,6 @@ const menuItems = [
               title: 'Nómina Electrónica',
               icon: <FaUsersRays />,
               path: "/TalentoHumano/Nomina/NominaElectronica",
-              //items: [{ key: '2.1.1', title: 'Option 2.1.1' }],
             },
             {
               key: '6.1.2',
@@ -223,19 +236,6 @@ const menuItems = [
               icon: <BsClipboard2DataFill />,
               path: "/TalentoHumano/Nomina/ReporteDane",
               
-            },
-          ],
-        },
-        {
-          key: "6.2",
-          title: "Formularios",
-          icon: <SiGoogleforms />,
-          items: [
-            {
-              key: '6.2.1',
-              title: 'Ingreso/Retiro de Pnal',
-              icon: <SiReacthookform />,
-              path: "/TalentoHumano/Nomina/Ingreso/RetiroPnal",
             },
           ],
         },
@@ -322,7 +322,6 @@ const menuItems = [
     icon: <FaTags />,
     path: "/ecommerce/Ragged",
   },
-
   {
     key: "96",
     title: "Cambiar Contraseña",
@@ -350,6 +349,32 @@ const menuItems = [
     icon: <IoSettingsOutline />,
     path: "/ecommerce/Ragged",
   },
+  {
+    key: "92",
+    title: "Acerca De",
+    icon: <TbCircleLetterR />,
+    items: [
+      {
+        key: "92.1",
+        title: "Comercializadora Ragged S.A.S",
+        //icon: <MdProductionQuantityLimits />,
+        //path: "/ecommerce/Ragged",
+      },
+      {
+        key: "92.2",
+        title: "NIT: 890.937.146-8",
+      },
+      {
+        key: "92.3",
+        title: "Calle 6 sur # 51-14",
+      },
+      {
+        key: "92.4",
+        title: "PBX: (604) 6042301",
+      },
+    ],
+  },
+
   {
     key: "99",
     title: "Cerrar Sesión",
@@ -449,9 +474,11 @@ const MyMenu = () => {
             onOpenChange={handleOpenChange}
             style={{ backgroundColor: "#373738", fontSize: "16px" }}
           >
+            {/*
             <NavLink to="/Home">
               <img src={require("../../assets/Images/logo.png")} alt="logo" className="logo"/>
             </NavLink>
+            */}
             {filteredMenuItems.map((item) =>
               item.items ? (
                 <SubMenu key={item.key} icon={item.icon} title={item.title}>
@@ -487,6 +514,9 @@ const MyMenu = () => {
                 </Menu.Item>
               )
             )}
+            <div className="footer-bottom">
+              <p><strong>&copy; {currentYear} Ragged Digital - V004</strong></p>
+            </div>
           </Menu>
         </div>
       )}

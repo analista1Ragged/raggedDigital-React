@@ -76,3 +76,16 @@
   color: #373738 !important; /* Asegúrate de mantener el color del texto si es necesario */
 }
 
+.footer-bottom {
+  text-align: center; /* Alineación del texto al centro */
+  padding: 0; /* Espaciado interno superior e inferior */
+  /*border-top: 1px solid #444;  Borde superior */
+  align-items: center;
+  font-size: 0.85rem; /* Tamaño de letra pequeño pero legible */
+  color: #666666; /* Gris oscuro para buena legibilidad */
+  border-top: 1px solid #dddddd; /* Línea separadora delgada */
+  padding-top: 10px; /* Espacio entre la línea y el texto */
+  margin-top: 20px; /* Separación con el contenido anterior */
+  text-align: center; /* Centrar el texto */
+}
+

@@ -13,7 +13,7 @@
     max-width: 1800px; /* Ancho máximo de la sección */
     margin: 0 auto; /* Centrar la sección */
     padding: 20px; /* Padding para la sección */
-    padding-bottom: 130px; /* Igual al alto del footer */
+    /*padding-bottom: 130px;  Igual al alto del footer */
 }
 
 /* Select personalizado */

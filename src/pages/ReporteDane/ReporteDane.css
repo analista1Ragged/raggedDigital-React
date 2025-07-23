@@ -111,66 +111,78 @@ body {
   padding-bottom: 130px; /* o el alto exacto del footer */
   }
   
-  /* Media Queries para responsividad */
-  @media (max-width: 1200px) {
-    section {
-      max-width: 1000px;
-    }
+  section {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Media Queries para responsividad */
+@media (min-width: 1400px) {
+  section {
+    max-width: 1400px;
   }
-  
-  @media (max-width: 992px) {
-    section {
-      max-width: 750px;
-    }
-  
-    .custom-select {
-      max-width: 100%;
-    }
+}
+
+@media (max-width: 1200px) {
+  section {
+    max-width: 1000px;
   }
-  
-  @media (max-width: 768px) {
-    .inline-components {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  
-    .component-item {
-      margin-right: 0;
-      margin-bottom: 10px;
-    }
-  
-    .ticket-table th,
-    .ticket-table td {
-      padding: 6px;
-    }
+}
+
+@media (max-width: 992px) {
+  section {
+    max-width: 750px;
   }
-  
-  @media (max-width: 576px) {
-    section {
-      width: 95%;
-    }
-  
-    .ticket-table th,
-    .ticket-table td {
-      padding: 4px;
-    }
+
+  .custom-select {
+    max-width: 100%;
   }
-  
-  @media (max-width: 400px) {
-    section {
-      padding: 20px 5px;
-    }
-  
-    .inline-components {
-      margin-bottom: 10px;
-    }
-  
-    .component-item {
-      flex: 1;
-      width: 100%;
-      margin-right: 0;
-    }
+}
+
+@media (max-width: 768px) {
+  .inline-components {
+    flex-direction: column;
+    align-items: stretch;
   }
+
+  .component-item {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .ticket-table th,
+  .ticket-table td {
+    padding: 6px;
+  }
+}
+
+@media (max-width: 576px) {
+  section {
+    width: 95%;
+  }
+
+  .ticket-table th,
+  .ticket-table td {
+    padding: 4px;
+  }
+}
+
+@media (max-width: 400px) {
+  section {
+    padding: 20px 5px;
+  }
+
+  .inline-components {
+    margin-bottom: 10px;
+  }
+
+  .component-item {
+    flex: 1;
+    width: 100%;
+    margin-right: 0;
+  }
+}
+
   
   .icon-button {
     background: none;
