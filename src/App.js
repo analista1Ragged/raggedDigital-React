@@ -32,7 +32,8 @@ import {
   CupoCliente,
   ValidarEmail,
   RecibosDeCaja,
-  IngresoRetiroPnal
+  IngresoRetiroPnal,
+  RecibosDeCaja2
 } from './pages';
 
 import {
@@ -43,6 +44,7 @@ import {
   Error404,
   Login
 } from './components';
+
 
 
 
@@ -236,6 +238,7 @@ function App() {
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <RecibosDeCaja2 />
           </div>
         } />
         

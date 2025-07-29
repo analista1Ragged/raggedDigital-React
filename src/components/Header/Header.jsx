@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'; // Importa el hook useLocation
 import './Header.css';
 import Logo from '../../assets/Images/logo.png'; // Importa la imagen que quieres centrar
 import TDiggital from '../../assets/Images/TDiggital.png';
-import { NominaElectronica } from 'src/pages';
+import { CupoEmpleados, NominaElectronica } from 'src/pages';
 
 const manuals = {
   ecommerce: require('../../assets/docts/MANUAL DE USABILIDAD ECOMMERCE.pdf'),
@@ -18,6 +18,7 @@ const manuals = {
   costos: require('../../assets/docts/MANUAL DE USABILIDAD COSTOS.pdf'),
   escalaDePrecios: require('../../assets/docts/MANUAL DE USABILIDAD ESCALA DE PRECIOS.pdf'),
   cruceDocumentos: require('../../assets/docts/MANUAL DE USABILIDAD CRUCE DOCUMENTOS.pdf'),
+  CupoEmpleados: require('../../assets/docts/MANUAL DE USABILIDAD CONSULTA CUPO EMPLEADO.pdf')
 };
 
 const Header = () => {
@@ -35,7 +36,8 @@ const Header = () => {
       '/Maestros/Referencias': manuals.referenciasyplus,
       '/Maestros/Costos': manuals.costos,
       '/Maestros/EscalasPrecios' : manuals.escalaDePrecios,
-      '/Cartera/RecibosCaja': manuals.cruceDocumentos
+      '/Cartera/RecibosCaja': manuals.cruceDocumentos,
+      '/Mercadeo/Tiendas/CupoEmpleados': manuals.CupoEmpleados
     };
   
     return helpLinks[location.pathname] || null;

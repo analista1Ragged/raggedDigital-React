@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import BuscarButton from "src/components/BotonBuscar/BotonBuscar";
 import CampoTextoReferencia from "src/components/CampoTexto/CampoTextoReferencia";
 import { urlapi } from '../../App.js';
-import { GiClick } from "react-icons/gi"; // Importamos el icono
+import { GiClick } from "react-icons/gi";
 
 // Función para buscar cliente por cédula
 const buscarCliente = async (cedula, setClienteData) => {
@@ -38,28 +38,27 @@ const buscarCliente = async (cedula, setClienteData) => {
       return;
     }
 
-    // Verifica si los datos vienen en result.data o directamente en result
     const responseData = result.data || result;
 
-    // Si es un array de arrays (como en tu código original)
+    // Si es un array de arrays (varios registros)
     if (Array.isArray(responseData) && responseData.length > 0 && Array.isArray(responseData[0])) {
-      const cleanedData = {
-        CEDULA: responseData[0][2]?.trim() || "N/A",
-        NOMBRE: responseData[0][3] || "N/A",
-        APELLIDOS: responseData[0][4] || "N/A",
-        EMAIL: responseData[0][5] || "N/A",
-        DIRECCION: responseData[0][6] || "N/A",
-        SUCURSAL: responseData[0][7] || "N/A",
-        COD_CONDICION_DE_PAGO: responseData[0][8] || "N/A",
-        CONDICION_DE_PAGO: responseData[0][9] || "N/A",
-        CUPO_ASIGNADO: responseData[0][10] || "N/A",
-        TOTAL_DEUDA: responseData[0][11] || "N/A",
-        DISPONIBLE: responseData[0][12] || "N/A",
-        BLOQUEADO: responseData[0][13] ? "Sí" : "No",
-      };
-      setClienteData(cleanedData);
+      const cleanedDataArray = responseData.map((item) => ({
+        CEDULA: item[2]?.trim() || "N/A",
+        NOMBRE: item[3] || "N/A",
+        APELLIDOS: item[4] || "N/A",
+        EMAIL: item[5] || "N/A",
+        DIRECCION: item[6] || "N/A",
+        SUCURSAL: item[7] || "N/A",
+        COD_CONDICION_DE_PAGO: item[8] || "N/A",
+        CONDICION_DE_PAGO: item[9] || "N/A",
+        CUPO_ASIGNADO: item[10] || "N/A",
+        TOTAL_DEUDA: item[11] || "N/A",
+        DISPONIBLE: item[12] || "N/A",
+        BLOQUEADO: item[13] ? "Sí" : "No",
+      }));
+      setClienteData(cleanedDataArray);
     } 
-    // Si es un objeto con propiedades nombradas
+    // Si es un solo objeto
     else if (typeof responseData === 'object' && responseData !== null) {
       const cleanedData = {
         CEDULA: responseData.documento?.trim() || responseData.cedula?.trim() || "N/A",
@@ -75,7 +74,7 @@ const buscarCliente = async (cedula, setClienteData) => {
         DISPONIBLE: responseData.disponible || "N/A",
         BLOQUEADO: responseData.bloqueado ? "Sí" : "No",
       };
-      setClienteData(cleanedData);
+      setClienteData([cleanedData]); // Convertimos en array para renderizar igual
     } else {
       Swal.fire("Error", "Formato de datos no reconocido", "error");
     }
@@ -86,10 +85,10 @@ const buscarCliente = async (cedula, setClienteData) => {
   }
 };
 
-// El componente principal
+// Componente principal
 const CupoCliente = () => {
   const [cedula, setCedula] = useState("");
-  const [clienteData, setClienteData] = useState(null);
+  const [clienteData, setClienteData] = useState([]);
 
   const handleBuscarCliente = () => {
     buscarCliente(cedula, setClienteData);
@@ -144,28 +143,29 @@ const CupoCliente = () => {
               </tr>
             </thead>
             <tbody>
-              {!clienteData && (
+              {clienteData.length > 0 ? (
+                clienteData.map((cliente, index) => (
+                  <tr key={index}>
+                    <td>{cliente.CEDULA}</td>
+                    <td>{cliente.NOMBRE}</td>
+                    <td>{cliente.APELLIDOS}</td>
+                    <td>{cliente.EMAIL}</td>
+                    <td>{cliente.DIRECCION}</td>
+                    <td>{cliente.SUCURSAL}</td>
+                    <td>{cliente.COD_CONDICION_DE_PAGO}</td>
+                    <td>{cliente.CONDICION_DE_PAGO}</td>
+                    <td>{cliente.CUPO_ASIGNADO}</td>
+                    <td>{cliente.TOTAL_DEUDA}</td>
+                    <td>{cliente.DISPONIBLE}</td>
+                    <td>{cliente.BLOQUEADO}</td>
+                  </tr>
+                ))
+              ) : (
                 <tr>
                   <td colSpan="12">
                     <GiClick style={{ marginRight: "10px", verticalAlign: "middle" }} />
-                    Ingrese el numero de cedula para mostrar la informacion del cliente.
+                    Ingrese el número de cédula para mostrar la información del cliente.
                   </td>
-                </tr>
-              )}
-              {clienteData && (
-                <tr>
-                  <td>{clienteData.CEDULA}</td>
-                  <td>{clienteData.NOMBRE}</td>
-                  <td>{clienteData.APELLIDOS}</td>
-                  <td>{clienteData.EMAIL}</td>
-                  <td>{clienteData.DIRECCION}</td>
-                  <td>{clienteData.SUCURSAL}</td>
-                  <td>{clienteData.COD_CONDICION_DE_PAGO}</td>
-                  <td>{clienteData.CONDICION_DE_PAGO}</td>
-                  <td>{clienteData.CUPO_ASIGNADO}</td>
-                  <td>{clienteData.TOTAL_DEUDA}</td>
-                  <td>{clienteData.DISPONIBLE}</td>
-                  <td>{clienteData.BLOQUEADO}</td>
                 </tr>
               )}
             </tbody>
@@ -177,6 +177,7 @@ const CupoCliente = () => {
 };
 
 export default CupoCliente;
+
 
 
 
