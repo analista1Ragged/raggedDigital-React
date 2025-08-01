@@ -10,15 +10,17 @@ import { PiEyeSlashFill, PiPasswordFill, PiUsersFill, PiEscalatorUpBold} from "r
 import { ImBarcode } from "react-icons/im";
 import { BiDollarCircle } from "react-icons/bi";
 import { MdOutlinePostAdd, MdOutlineMarkEmailUnread, MdProductionQuantityLimits, MdOutlineAddBusiness} from "react-icons/md";
-import { TbReportSearch, TbFaceIdError, TbUserDollar, TbDirectionSignFilled, TbWorldSearch, TbCircleLetterR} from "react-icons/tb";
+import { TbReportSearch, TbFaceIdError, TbUserDollar, TbDirectionSignFilled, TbWorldSearch, TbCircleLetterR, TbFileExport} from "react-icons/tb";
 import { BsFolderPlus, BsClipboard2DataFill, BsPersonRaisedHand } from "react-icons/bs";
 import { HiCreditCard } from "react-icons/hi2";
 import { FaUsersRays, FaMoneyCheckDollar, FaHandHoldingDollar} from "react-icons/fa6";
 import { FaTags } from "react-icons/fa";
+import { GiAutomaticSas } from "react-icons/gi";
 import { SiReacthookform, SiGoogleforms } from "react-icons/si";
 import { GoPasskeyFill } from "react-icons/go";
 import { BsVimeo } from "react-icons/bs";
 import { IoMdAnalytics } from "react-icons/io";
+
 import { NavLink, useNavigate } from "react-router-dom";
 
 const currentYear = new Date().getFullYear(); // Obtiene el año actual
@@ -264,17 +266,15 @@ const menuItems = [
             path: "/Contabilidad/Bancos",
           },
           {
-            key: '93',
+            key: '7.2.2',
             title: 'Automatizaciones',
-            icon: <TbReportSearch />,
-            items: [
-              {
-                key: '93.1',
-                title: 'Extraer Dian Rut',
-                icon: <BsVimeo />,
-                path: "/Contabilidad/Automatizaciones/DianRut",
-              },
-            ],
+            icon: <GiAutomaticSas />,
+          },
+          {
+            key: '7.2.3',
+            title: 'Extraer Rut Dian',
+            icon: <TbFileExport />,
+            path: "Contabilidad/Automatizaciones/DianRut",
           },
         ],
       },
