@@ -33,7 +33,8 @@ import {
   ValidarEmail,
   RecibosDeCaja,
   IngresoRetiroPnal,
-  RecibosDeCaja2
+  RecibosDeCaja2,
+  AutomatizacionDIanRut
 } from './pages';
 
 import {
@@ -327,16 +328,20 @@ function App() {
           </div>
         } />
         <Route path='/TalentoHumano/Nomina/Ingreso/RetiroPnal' element={
-        <div className={!navVisible ? "page" : "page page-with-navbar"}>
-          <ExternalRedirect
-            url="https://forms.cloud.microsoft/r/NHbkWWV88y"
-            redirectTo="/Home"
-            message="Cargando formulario de ingreso y retiro de personal..."
-          />
-        </div>
-      } />
-
-      </Routes>
+          <div className={!navVisible ? "page" : "page page-with-navbar"}>
+            <ExternalRedirect
+              url="https://forms.cloud.microsoft/r/NHbkWWV88y"
+              redirectTo="/Home"
+              message="Cargando formulario de ingreso y retiro de personal..."
+            />
+          </div>
+        } />
+        <Route path='/Contabilidad/Automatizaciones/DianRut' element={
+            <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <AutomatizacionDIanRut />
+            </div>
+          } />
+        </Routes>
       
       {/*shouldShowNavbar() && <Footer />*/}
       {shouldShowNavbar()}

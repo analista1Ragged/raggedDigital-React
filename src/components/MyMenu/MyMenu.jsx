@@ -263,14 +263,19 @@ const menuItems = [
             icon: <FaMoneyCheckDollar />,
             path: "/Contabilidad/Bancos",
           },
-          {/*}
           {
-            key: '7.2.2',
-            title: 'Exógena',
+            key: '93',
+            title: 'Automatizaciones',
             icon: <TbReportSearch />,
-            path: "/Contabilidad/Exogena",
+            items: [
+              {
+                key: '93.1',
+                title: 'Extraer Dian Rut',
+                icon: <BsVimeo />,
+                path: "/Contabilidad/Automatizaciones/DianRut",
+              },
+            ],
           },
-          */}  
         ],
       },
       {
