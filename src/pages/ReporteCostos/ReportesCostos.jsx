@@ -26,7 +26,7 @@ const ReportesCostos = () => {
     setPageSize(size);
   };
 
-  // Obtener los elementos actuales según la página y el tamaño seleccionado
+  // Obtener los elementos actuales según la página y el tamaño seleccionado final
   const paginatedCostos = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
     const end = start + pageSize;
