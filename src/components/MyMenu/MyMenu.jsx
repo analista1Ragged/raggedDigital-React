@@ -272,9 +272,9 @@ const menuItems = [
           },
           {
             key: '7.2.3',
-            title: 'Extraer Rut Dian',
-            icon: <TbFileExport />,
+            title: ' <TbFileExport /> Extraer Rut Dian',
             path: "Contabilidad/Automatizaciones/DianRut",
+            icon: <TbFileExport /> '',
           },
         ],
       },

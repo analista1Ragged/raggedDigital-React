@@ -34,7 +34,8 @@ import {
   RecibosDeCaja,
   IngresoRetiroPnal,
   RecibosDeCaja2,
-  AutomatizacionDIanRut
+  AutomatizacionDIanRut,
+  AbastecimientoPdtos
 } from './pages';
 
 import {
@@ -52,7 +53,7 @@ import {
 
 //export const urlapi = 'https://serverrgd.eastus.cloudapp.azure.com:8082/RaggedDigitalAPI'
 //export const urlapi = 'https://Ragged.app/RaggedDigitalAPI'
-export const urlapi = 'http://127.0.0.1:5000';
+export const urlapi = 'http://127.0.0.1:5000/RaggedDigitalAPI';
 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = sessionStorage.getItem('log');
@@ -239,7 +240,7 @@ function App() {
         } />
         <Route path='/Prueba' element={
           <div className={!navVisible ? "page" : "page page-with-navbar"}>
-            <RecibosDeCaja2 />
+            <AbastecimientoPdtos/>
           </div>
         } />
         
