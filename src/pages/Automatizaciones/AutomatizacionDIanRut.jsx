@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Boton from "../../components/Boton/Boton";
 import Swal from "sweetalert2";
 import { urlapi } from "../../App"; // Asegúrate de tener esto configurado
-import excelExample from '../../assets/Images/contabilidad_rut_captura1.png';
-import folderExample from '../../assets/Images/contabilidad_rut_captura2.png';
+
 
 const AutomatizacionDIanRut = () => {
   const [loading, setLoading] = useState(false);
@@ -77,10 +76,6 @@ return (
       <div className="pasos-container">
         {/* Paso 1: Descargar ejecutable */}
         <div className="paso-card">
-          <div className="paso-header">
-            <span className="paso-numero">1</span>
-            <h3>Descarga el ejecutable</h3>
-          </div>
           <div className="paso-content">
             <Boton type="submit" disabled={loading} className="download-btn">
               {loading ? (
@@ -93,42 +88,6 @@ return (
                 </>
               )}
             </Boton>
-          </div>
-        </div>
-
-        {/* Paso 2: Preparar archivo Excel */}
-        <div className="paso-card">
-          <div className="paso-header">
-            <span className="paso-numero">2</span>
-            <h3>Coloca los ID a consultar en la columna A del archivo <strong>"CedulaRut.xlsx"</strong> 
-                en la misma carpeta donde descargaste el ejecutable.</h3>
-          </div>
-          <div className="paso-content">
-            <div className="file-example">
-              <img 
-                src={excelExample}
-                alt="Ejemplo de archivo Excel" 
-                className="example-image"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Paso 3: Ejecutar el programa */}
-        <div className="paso-card">
-          <div className="paso-header">
-            <span className="paso-numero">3</span>
-            <h3> Ejecuta <strong>"Ragged_Cedulas_Rut.exe"</strong> (asegúrate que el archivo Excel <strong>NO</strong> esté abierto).
-                Al terminar, tendrás la información completa en el mismo archivo.</h3>
-          </div>
-          <div className="paso-content">
-            <div className="folder-example">
-              <img 
-                src={folderExample}
-                alt="Contenido de la carpeta" 
-                className="example-image"
-              />
-            </div>
           </div>
         </div>
       </div>

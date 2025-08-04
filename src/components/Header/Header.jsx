@@ -18,7 +18,8 @@ const manuals = {
   costos: require('../../assets/docts/MANUAL DE USABILIDAD COSTOS.pdf'),
   escalaDePrecios: require('../../assets/docts/MANUAL DE USABILIDAD ESCALA DE PRECIOS.pdf'),
   cruceDocumentos: require('../../assets/docts/MANUAL DE USABILIDAD CRUCE DOCUMENTOS.pdf'),
-  CupoEmpleados: require('../../assets/docts/MANUAL DE USABILIDAD CONSULTA CUPO EMPLEADO.pdf')
+  CupoEmpleados: require('../../assets/docts/MANUAL DE USABILIDAD CONSULTA CUPO EMPLEADO.pdf'),
+  DianRut: require('../../assets/docts/MANUAL DE USABILIDAD EXTRAER RUT DIAN.pdf'),
 };
 
 const Header = () => {
@@ -37,7 +38,8 @@ const Header = () => {
       '/Maestros/Costos': manuals.costos,
       '/Maestros/EscalasPrecios' : manuals.escalaDePrecios,
       '/Cartera/RecibosCaja': manuals.cruceDocumentos,
-      '/Mercadeo/Tiendas/CupoEmpleados': manuals.CupoEmpleados
+      '/Mercadeo/Tiendas/CupoEmpleados': manuals.CupoEmpleados,
+      '/Contabilidad/Automatizaciones/DianRut' : manuals.DianRut
     };
   
     return helpLinks[location.pathname] || null;
