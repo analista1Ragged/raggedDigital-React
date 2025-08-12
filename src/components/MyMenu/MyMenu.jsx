@@ -270,11 +270,11 @@ const menuItems = [
             title: 'Automatizaciones',
             icon: <GiAutomaticSas />,
           },
-          {
+           {
             key: '7.2.3',
-            title: ' <TbFileExport /> Extraer Rut Dian',
+            title: '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0Extraer Rut Dian',
             path: "Contabilidad/Automatizaciones/DianRut",
-            icon: <TbFileExport /> '',
+            //icon: <TbFileExport />,
           },
         ],
       },

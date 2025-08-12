@@ -28,38 +28,33 @@ const RecibosDeCaja2 = () => {
           </a>{' '}Reporte
         </h2>
 
-
-        <div className="pedidosvtex-container">
-          <div className="pedidosvtex-multi-selector">
-            <input type="text" placeholder="Filtrar por Nit:" className="filtro-nit-input" />      
-          </div>
-        </div>
-
         <div className="pedidosvtex-tabla-container">
           <div className="pedidosvtex-tabla-scroll">
             <table className="table table-striped table-hover pedidosvtex-ticket-table">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Fecha</th>
-                  <th>Día</th>
-                  <th>Festivo</th>
-                  <th>Hora Entrada</th>
-                  <th>Hora Salida</th>
-                  <th>Total horas</th>
-                  <th>HD</th>
-                  <th>HED</th>
-                  <th>HEN</th>
-                  <th>HEFD</th>
-                  <th>HEFN</th>
-                  <th>RN</th>
-                  <th>DLD</th>
-                  <th>Total</th>
+                  <th>Cod_Barras</th>
+                  <th>Referencia</th>
+                  <th>Descripción</th>
+                  <th>Color</th>
+                  <th>Talla</th>
+                  <th>Marca</th>
+                  <th>Tienda</th>
+                  <th>Ciudad</th>
+                  <th>Stock Actual</th> {/* Hasta campo los campos vienen de la API */}
+                  <th>Producto Nuevo</th>
+                  <th>Semanas en Tienda</th>
+                  <th>Dias sin venta</th>
+                  <th>Rotación nacional</th>
+                  <th>Prom. Ventas Familia</th>
+                  <th>Exceso</th>
+                  <th>Acción</th> {/* Estos son los campos que vamos a mostrar en la tabla calculados con IA */}
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td colSpan="15" className="text-center">
+                  <td colSpan="17" className="text-center">
                     No hay datos para mostrar. Seleccione un rango de fechas y haga clic en Generar.
                   </td>
                 </tr>
