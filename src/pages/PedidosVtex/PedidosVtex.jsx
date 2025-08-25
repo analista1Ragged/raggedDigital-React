@@ -82,8 +82,9 @@ const EstadoFactura = ({ estadoVtex }) => {
 
 
 const transformData = (list) => {
+  console.log("🔄 Transformando datos:", list);
   if (!Array.isArray(list)) {
-    console.error('Expected an array but received:', list);
+    console.error('❌ Expected an array but received:', list);
     return [];
   }
 
@@ -102,15 +103,14 @@ const transformData = (list) => {
 };
 
 const transformVendedor = (list) => {
+  console.log("🔄 Transformando vendedores:", list);
   if (!Array.isArray(list)) {
-    console.error('Expected an array but received:', list);
+    console.error('❌ Expected an array but received:', list);
     return [];
   }
 
   return list.map((item, index) => ({
     id: index + 1,
-    //pedidoVtex: item['Pedido Vtex'] || 'N/A',
-    //pedidoERP: item['Pedido ERP'] || 'N/A',
     cod: item.Codigo_Vendedor || 'N/A',
     nom: item.Nombre || 'N/A',
   }));
@@ -319,41 +319,75 @@ const PedidosVtex = () => {
   
 
   useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
+    try {
+      Swal.fire({
+        title: `Consultando pedidos mas recientes`,
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      setLoading(true);
+      
+      console.log("🌐 Solicitando datos a:", `${urlapi}/get-orders`);
+      const response = await fetch(`${urlapi}/get-orders`);
+      
+      console.log("📋 Status de respuesta:", response.status);
+      console.log("📋 Headers:", Object.fromEntries([...response.headers]));
+      
+      const textResponse = await response.text();
+      console.log("📦 Respuesta cruda:", textResponse);
+      
+      let result;
       try {
-        Swal.fire({
-          title: `Consultando pedidos mas recientes`,
-          allowOutsideClick: false,
-          showConfirmButton: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        });
-        setLoading(true);
-        const response = await fetch(`${urlapi}/get-orders`, []);
-        const result = await response.json();
-        
-        const dataToTransform = result.list || result[0]; 
-        const transformedData = transformData(dataToTransform);
-        
-        const vendedores = result.list || result[1];
-        const transformedVendedor = transformVendedor(vendedores);
-
-        console.log("Datos recibidos:", transformedData);
-        console.log("Vendedores:", transformedVendedor);
-        Swal.close();
-        setData(transformedData);
-        setVendedores(transformedVendedor);
-
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-      } finally {
-        setLoading(false);
+        result = JSON.parse(textResponse);
+        console.log("📦 JSON parseado:", result);
+      } catch (parseError) {
+        console.error("❌ Error parseando JSON:", parseError);
+        throw new Error("Respuesta inválida del servidor");
       }
-    };
-    fetchData();
-  }, []);
 
+      // Verificar si es el error de ruta base
+      if (result.message && result.message.includes("ruta base")) {
+        throw new Error("Error de configuración del backend - Contactar a sistemas");
+      }
+
+      if (!Array.isArray(result)) {
+        throw new Error("La respuesta del backend no es un array");
+      }
+
+      const dataToTransform = Array.isArray(result[0]) ? result[0] : [];
+      const vendedoresData = Array.isArray(result[1]) ? result[1] : [];
+
+      console.log("📊 Datos a transformar:", dataToTransform);
+      console.log("📊 Vendedores a transformar:", vendedoresData);
+
+      const transformedData = transformData(dataToTransform);
+      const transformedVendedor = transformVendedor(vendedoresData);
+
+      console.log("✅ Datos transformados:", transformedData);
+      console.log("✅ Vendedores transformados:", transformedVendedor);
+      
+      Swal.close();
+      setData(transformedData);
+      setVendedores(transformedVendedor);
+
+    } catch (error) {
+      console.error('❌ Error fetching orders:', error);
+      Swal.fire({
+        icon: "error",
+        title: "Error de conexión",
+        text: error.message || "No se pudo conectar con el servidor",
+      });
+    } finally {
+      setLoading(false);
+      Swal.close();
+    }
+  };
+  fetchData();
+}, []);
   const handleBuscarClick = async () => {
     // Limpia los campos antes de ejecutar la lógica
     setSelectedOrders({});

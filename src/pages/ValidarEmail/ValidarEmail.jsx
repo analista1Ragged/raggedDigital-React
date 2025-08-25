@@ -32,33 +32,27 @@ const ValidarEmail = () => {
 
   // Función para obtener y procesar datos
   const fetchValidarEmail = async () => {
-    setLoading(true);
-    setError(null);
+  try {
+    console.log("🌐 Solicitando datos a:", `${urlapi}/api/get-validar-email`);
+    const response = await fetch(`${urlapi}/api/get-validar-email`);
     
-    Swal.fire({
-      title: "Cargando datos...",
-      allowOutsideClick: false,
-      didOpen: () => Swal.showLoading(),
-    });
-
+    console.log("📋 Status:", response.status);
+    
+    // Ver la respuesta como texto primero
+    const textResponse = await response.text();
+    console.log("📦 Respuesta cruda:", textResponse);
+    
+    // Luego intentar parsear como JSON
+    let result;
     try {
-      const response = await fetch(`${urlapi}/api/get-validar-email`);
-      
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
-        throw new Error(errorData?.error || `Error HTTP: ${response.status}`);
-      }
+      result = JSON.parse(textResponse);
+      console.log("📦 JSON parseado:", result);
+    } catch (parseError) {
+      console.error("❌ Error parseando JSON:", parseError);
+      throw new Error("Respuesta inválida del servidor");
+    }
 
-      const result = await response.json();
-      
-      if (!result.success) {
-        throw new Error(result.error || "Error desconocido del servidor");
-      }
-
-      if (!result.data || !Array.isArray(result.data)) {
-        throw new Error("Formato de datos inválido");
-      }
-
+      // Procesar datos
       const processedData = result.data.map(item => ({
         Cédula: item.id_cliente || "N/A",
         Nombre: item.nombres || "N/A",
@@ -69,15 +63,16 @@ const ValidarEmail = () => {
         Fecha_de_Nacimiento: item.fecha_nacimiento || "N/A"
       }));
 
+      console.log("✅ Datos procesados:", processedData.length, "registros");
       setClientData(processedData);
       
     } catch (err) {
-      console.error("Error al obtener datos:", err);
+      console.error("❌ Error al obtener datos:", err);
       setError(err.message);
       Swal.fire({
         icon: "error",
-        title: "Error",
-        text: err.message,
+        title: "Error al cargar datos",
+        text: err.message || "No se pudo obtener la información",
       });
     } finally {
       setLoading(false);
@@ -111,14 +106,33 @@ const ValidarEmail = () => {
         </h2>
 
         <div className="action-buttons">
-          <Boton onClick={exportToExcel} disabled={loading || clientData.length === 0}>
-            Generar Excel
+          <Boton 
+            onClick={exportToExcel} 
+            disabled={loading || clientData.length === 0}
+            style={{marginBottom: '15px'}}
+          >
+            📊 Generar Excel
+          </Boton>
+          
+          <Boton 
+            onClick={fetchValidarEmail} 
+            disabled={loading}
+            style={{marginBottom: '15px', marginLeft: '10px'}}
+          >
+            🔄 Actualizar
           </Boton>
         </div>
 
         {error && (
           <div className="alert alert-danger">
             <strong>Error:</strong> {error}
+          </div>
+        )}
+
+        {!loading && !error && clientData.length > 0 && (
+          <div className="summary-info">
+            <p>Total de registros: <strong>{clientData.length}</strong></p>
+            <p>Registros sin email: <strong>{clientData.filter(item => !item.Email || item.Email === "N/A").length}</strong></p>
           </div>
         )}
 
@@ -144,15 +158,17 @@ const ValidarEmail = () => {
                 </tr>
               ) : clientData.length === 0 ? (
                 <tr>
-                  <td colSpan="7">No se encontraron registros para validar</td>
+                  <td colSpan="7" className="no-data">
+                    No se encontraron registros para validar
+                  </td>
                 </tr>
               ) : (
                 currentItems.map((cliente, index) => (
-                  <tr key={index} className={!cliente.Email || cliente.Email === "N/A" ? "invalid-email" : ""}>
+                  <tr key={index} className={!cliente.Email || cliente.Email === "N/A" ? "invalid-email" : "valid-email"}>
                     <td>{cliente.Cédula}</td>
                     <td>{cliente.Nombre}</td>
                     <td>{cliente.Apellidos}</td>
-                    <td>{cliente.Email}</td>
+                    <td className="email-cell">{cliente.Email}</td>
                     <td>{cliente.Telefono}</td>
                     <td>{cliente.Dirección}</td>
                     <td>{cliente.Fecha_de_Nacimiento}</td>
@@ -163,7 +179,7 @@ const ValidarEmail = () => {
           </table>
         </div>
 
-        {/* Paginación - Solo se muestra si hay datos */}
+        {/* Paginación */}
         {!loading && clientData.length > 0 && (
           <div className='paginacion'>
             <Pagination
@@ -173,6 +189,7 @@ const ValidarEmail = () => {
               onChange={handleChangePage}
               showSizeChanger
               showQuickJumper
+              pageSizeOptions={['10', '20', '50', '100']}
             />
           </div>
         )}
