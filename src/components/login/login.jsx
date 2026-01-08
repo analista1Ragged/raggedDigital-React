@@ -40,14 +40,17 @@ const Login = (props) => {
                 usuario: usuario,
                 contrasena: contrasena
             });
-            if(response.data.qa == true){
-                Swal.fire({
-                    title: "Version de Prueba",
-                    text: "Comunicate con el area de soporte o intentalo mas tarde",
-                    icon: "info"
-                  });
-                return;
-            }
+            
+            /* COMENTADO: Bloque que impide el ingreso en versión de prueba
+                if(response.data.qa == true){
+                    Swal.fire({
+                        title: "Version de Prueba",
+                        text: "Comunicate con el area de soporte o intentalo mas tarde",
+                        icon: "info"
+                    });
+                    return;  // Esta línea detenía el proceso
+                }
+            */     
             
             if (response.data.message === "success") {
                 sessionStorage.setItem('log', usuario);

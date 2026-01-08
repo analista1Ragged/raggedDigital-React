@@ -520,7 +520,7 @@ const MyMenu = () => {
               )
             )}
             <div className="footer-bottom">
-              <p><strong>&copy; {currentYear} Ragged Digital - V004</strong></p>
+              <p><strong>&copy; {currentYear} Ragged Digital - V005</strong></p>
             </div>
           </Menu>
         </div>
